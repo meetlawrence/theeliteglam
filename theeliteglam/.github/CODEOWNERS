@@ -1,0 +1,11 @@
+# BookVerse API - CODEOWNERS
+
+# Critical files owned by DevOps Lead
+.github/workflows/          @ericayanru-dev @meetlawrence
+README.md                   @ericayanru-dev @meetlawrence
+CONTRIBUTING.md             @ericayanru-dev @meetlawrence
+eslint.config.mjs            @ericayanru-dev @meetlawrence
+.prettierrc                 @ericayanru-dev @meetlawrence
+
+# All other files - Require review from leads
+* @ericayanru-dev @meetlawrence

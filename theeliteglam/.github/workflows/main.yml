@@ -1,0 +1,46 @@
+name: CI - Main (Protected)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Linting
+        run: npm run lint:check
+
+
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI_TEST }}
+
+
+  # Extra protection for main branch
+  check-source:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.base_ref == 'main'
+    steps:
+      - name: Ensure PR comes from develop branch
+        run: |
+          if [ "${{ github.head_ref }}" != "develop" ]; then
+            echo "Error: Pull requests to main must come from 'develop' branch only!"
+            exit 1
+          else
+            echo " PR is from develop branch - Approved"
+          fi
