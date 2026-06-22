@@ -1,0 +1,203 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/back-end/db/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ====================== ADMIN ======================
+model Admin {
+  id       String  @id @default(cuid())
+  name     String
+  email    String  @unique
+  password String // Hashed password
+  avatar   String?
+  phone    String?
+  role     Role    @default(ADMIN)
+
+  isActive  Boolean   @default(true)
+  lastLogin DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admins")
+}
+
+enum Role {
+  ADMIN
+  SUPER_ADMIN
+}
+
+// ====================== CONTESTANT ======================
+model Contestant {
+  id String @id @default(cuid())
+
+  name     String
+  email    String  @unique
+  password String?
+  gender   Gender
+
+  avatar String?
+  phone  String
+
+  dateOfBirth DateTime
+  city        String
+  country     String
+
+  isVerified Boolean @default(false)
+
+  stageName String?
+  height    Float?
+  weight    Float?
+  bio       String?
+  portfolio String?
+
+  score Float?
+  rank  Int?
+
+  contestantCategories ContestantCategory[]
+
+  votes Vote[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+// ====================== EVENT / PAGEANT ======================
+model Event {
+  id          String      @id @default(cuid())
+  name        String
+  description String
+  startDate   DateTime
+  endDate     DateTime
+  location    String
+  status      EventStatus @default(UPCOMING)
+
+  categories Category[]
+  tickets    Ticket[]
+  votes      Vote[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  sponsors  Sponsor[]
+}
+
+enum EventStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+// ====================== CATEGORY ======================
+model Category {
+  id      String @id @default(cuid())
+  name    String // e.g., "Miss Beauty", "Mr. Talent"
+  eventId String
+  event   Event  @relation(fields: [eventId], references: [id])
+
+  createdAt            DateTime             @default(now())
+  contestantCategories ContestantCategory[]
+
+  @@index([eventId])
+}
+
+model Vote {
+  id           String @id @default(cuid())
+  contestantId String
+  eventId      String
+  count        Int
+
+  contestant Contestant @relation(fields: [contestantId], references: [id])
+  event      Event      @relation(fields: [eventId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@unique([contestantId, eventId])
+}
+
+model ContestantCategory {
+  contestantId String
+  categoryId   String
+
+  contestant Contestant @relation(fields: [contestantId], references: [id])
+
+  category Category @relation(fields: [categoryId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@id([contestantId, categoryId])
+  @@index([contestantId])
+  @@index([categoryId])
+}
+
+// ====================== TICKETS & SPONSORS ======================
+model Ticket {
+  id       String       @id @default(cuid())
+  name     String
+  email    String
+  phone    String?
+  eventId  String
+  amount   Float
+  quantity Int          @default(1)
+  total    Float
+  status   TicketStatus @default(PENDING) //Pending Ones User Initiat Payment Then Update Once Payment is Approved from Payment Gateway
+
+  event Event @relation(fields: [eventId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([eventId])
+}
+
+enum TicketStatus {
+  PENDING
+  PAID
+  CANCELLED
+}
+
+model Sponsor {
+  id          String      @id @default(cuid())
+  name        String
+  logo        String?
+  website     String?
+  description String?
+  tier        SponsorTier
+
+  eventId String
+  event   Event  @relation(fields: [eventId], references: [id])
+
+  createdAt DateTime @default(now())
+  @@index([eventId])
+}
+
+enum SponsorTier {
+  GOLD
+  SILVER
+  BRONZE
+}
+
+// ====================== SUBSCRIPTION ======================
+model Subscription {
+  id           String   @id @default(cuid())
+  email        String
+  subscribedAt DateTime @default(now())
+
+  @@unique([email])
+}

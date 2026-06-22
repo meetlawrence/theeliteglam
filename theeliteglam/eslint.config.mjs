@@ -25,15 +25,19 @@ const eslintConfig = defineConfig([
         ...globals.node,
         ...globals.jest,
       },
+      parserOptions: {
+        project: "./tsconfig.json", //This line is important
+      },
     },
     rules: {
       // Prettier formatting issues = errors
       "prettier/prettier": [
         "error",
         {
-          singleQuote: true,
+          singleQuote: false,
+          parser: "flow",
           semi: true,
-          endOfLine: "lf",
+          endOfLine: "auto",
           trailingComma: "es5",
           tabWidth: 2,
           printWidth: 100,
@@ -49,6 +53,7 @@ const eslintConfig = defineConfig([
       // General rules
       "no-console": "warn", // Warn on console logs
       eqeqeq: ["error", "always"], // Enforce strict equality
+      "no-var": "error",
     },
   },
 
