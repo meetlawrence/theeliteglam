@@ -17,16 +17,20 @@ model Admin {
   id       String  @id @default(cuid())
   name     String
   email    String  @unique
-  password String // Hashed password
+  passwordHash String // Hashed password
   avatar   String?
   phone    String?
   role     Role    @default(ADMIN)
 
+  emailVerified   Boolean        @default(false)
+  emailVerifiedAt DateTime?
+
   isActive  Boolean   @default(true)
   lastLogin DateTime?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  refreshTokens RefreshToken[]
 
   @@map("admins")
 }
@@ -184,6 +188,7 @@ model Sponsor {
   event   Event  @relation(fields: [eventId], references: [id])
 
   createdAt DateTime @default(now())
+
   @@index([eventId])
 }
 
@@ -200,4 +205,16 @@ model Subscription {
   subscribedAt DateTime @default(now())
 
   @@unique([email])
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  expiresAt DateTime
+  revoked   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  adminId String
+  admin      Admin    @relation(fields: [adminId], references: [id])
+
+  @@map("refresh_tokens")
 }
