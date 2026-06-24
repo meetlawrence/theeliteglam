@@ -10,7 +10,7 @@ export interface Admin {
   emailVerifiedAt: Date | null;
   createdAt: Date;
   updatedAt: Date;
-  lastLogin: Date | null;
+  lastLoginAt: Date | null;
   role: "SUPER_ADMIN" | "ADMIN";
   refreshTokens?: RefreshToken[]; // ← Fixed with import
 }

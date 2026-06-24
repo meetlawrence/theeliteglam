@@ -16,10 +16,16 @@ export interface ForgotPasswordRequest {
 export interface ResetPasswordRequest {
   token: string;
   newPassword: string;
+  confirmPassword: string;
 }
 
 export interface VerifyEmailRequest {
   token: string;
+}
+
+export interface ResetPassword {
+  newPassword: string;
+  confirmPassword: string;
 }
 
 export interface AuthResponse {

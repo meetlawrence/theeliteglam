@@ -4,8 +4,8 @@ import { AUTH_CONFIG } from "../../config/auth";
 
 const JWT_SECRET = new TextEncoder().encode(AUTH_CONFIG.JWT_SECRET!);
 
-const ISSUER = "autmint";
-const AUDIENCE = "autmint-users";
+const ISSUER = "theeliteglam";
+const AUDIENCE = "theeliteglam-users";
 
 export class JWT {
   /**
