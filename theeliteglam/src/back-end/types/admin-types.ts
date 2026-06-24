@@ -39,8 +39,13 @@ export interface CreateAdminData {
   name: string;
   email: string;
   passwordHash: string;
+  avatar?: string;
   emailVerified?: boolean;
   emailVerifiedAt?: Date | null;
   lastLoginAt?: Date | null;
   role?: "SUPER_ADMIN" | "ADMIN";
+  createdAt?: Date;
+  updatedAt?: Date;
+  lastLogin?: Date | null;
+  refreshTokens?: RefreshToken[]; // ← Fixed with import
 }

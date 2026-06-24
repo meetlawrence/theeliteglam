@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { authService } from "../../services/auth-service";
-import type { RegisterInput } from "../../types/auth-types";
+import { authService } from "../../../../back-end/services/auth-service";
+import type { RegisterInput } from "../../../../back-end/types/auth-types";
 
 export async function POST(req: NextRequest) {
   try {

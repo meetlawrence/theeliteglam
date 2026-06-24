@@ -25,8 +25,7 @@ model Admin {
   emailVerified   Boolean        @default(false)
   emailVerifiedAt DateTime?
 
-  isActive  Boolean   @default(true)
-  lastLogin DateTime?
+  lastLoginAt DateTime?
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt

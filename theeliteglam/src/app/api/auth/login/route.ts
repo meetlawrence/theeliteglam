@@ -1,13 +1,13 @@
 // src/app/api/auth/login/route.ts
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { authService } from "../../services/auth-service";
-import type { LoginInput } from "../../types/auth-types";
-import { AUTH_CONFIG } from "../../config/auth";
+import { AUTH_CONFIG } from "../../../../back-end/config/auth";
+import { authService } from "../../../../back-end/services/auth-service";
+import type { LoginInput } from "../../../../back-end/types/auth-types";
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    const body: LoginInput = await request.json();
+    const body: LoginInput = await req.json();
 
     const result = await authService.login(body);
 

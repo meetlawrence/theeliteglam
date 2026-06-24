@@ -1,4 +1,3 @@
-// src/lib/email/templates/welcome.tsx
 import {
   Body,
   Button,

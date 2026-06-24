@@ -167,6 +167,8 @@ export class AuthService {
     }
   }
 
+  // ====================== LOGOUT ======================
+
   // ====================== VERIFY EMAIL ======================
   async verifyEmail(token: string): Promise<AuthResponse> {
     try {

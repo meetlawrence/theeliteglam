@@ -1,4 +1,4 @@
-// src/lib/email/resend.ts
+// src/back-end/lib/email/resend.ts
 import { Resend } from "resend";
 import { AUTH_CONFIG } from "../../config/auth";
 
@@ -63,7 +63,7 @@ export async function sendEmail(to: string, payload: EmailPayload) {
     }
 
     const { data, error } = await resend.emails.send({
-      from: "theeliteglam <onboarding@resend.dev>",
+      from: "theeliteglam <theeliteglam@resend.dev>",
       to,
       subject,
       react: reactComponent,

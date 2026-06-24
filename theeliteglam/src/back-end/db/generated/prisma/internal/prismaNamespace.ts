@@ -1202,8 +1202,7 @@ export const AdminScalarFieldEnum = {
   role: 'role',
   emailVerified: 'emailVerified',
   emailVerifiedAt: 'emailVerifiedAt',
-  isActive: 'isActive',
-  lastLogin: 'lastLogin',
+  lastLoginAt: 'lastLoginAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
