@@ -22,7 +22,7 @@ export async function proxy(req: NextRequest) {
   // ====================== PROTECTED ROUTES ======================
   if (isProtectedRoute) {
     // If user has neither token → definitely send to login
-    if (!accessToken && !refreshToken) {
+    if (!accessToken || !refreshToken) {
       return NextResponse.redirect(new URL("/auth/login", req.url));
     }
 

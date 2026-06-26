@@ -12,6 +12,7 @@ export interface Admin {
   updatedAt: Date;
   lastLoginAt: Date | null;
   role: "SUPER_ADMIN" | "ADMIN";
+  isActive: boolean;
   refreshTokens?: RefreshToken[]; // ← Fixed with import
 }
 
@@ -21,18 +22,7 @@ export interface AdminUpdateData {
   email?: string;
   passwordHash?: string;
   emailVerified?: boolean;
-  emailVerifiedAt?: Date | null;
   lastLoginAt?: Date | null;
-  role?: "SUPER_ADMIN" | "ADMIN";
-  status?: "ACTIVE" | "SUSPENDED" | "DELETED";
-}
-
-export interface PublicAdmin {
-  id: string;
-  name: string;
-  email: string;
-  emailVerified: boolean;
-  createdAt: Date;
 }
 
 export interface CreateAdminData {
@@ -40,12 +30,30 @@ export interface CreateAdminData {
   email: string;
   passwordHash: string;
   avatar?: string;
-  emailVerified?: boolean;
-  emailVerifiedAt?: Date | null;
-  lastLoginAt?: Date | null;
+}
+
+export interface CreateAdminInput {
+  name: string;
+  email: string;
+  password: string;
+  role?: "ADMIN" | "SUPER_ADMIN";
+}
+
+export interface UpdateAdminInput {
+  name?: string;
+  email?: string;
+  phone?: string;
+  avatar?: string;
+  isActive?: boolean;
   role?: "SUPER_ADMIN" | "ADMIN";
+}
+
+export interface AdminResponse {
+  id: string;
+  name: string;
+  email: string;
+  role: "ADMIN" | "SUPER_ADMIN";
+  isActive: boolean;
+  lastLogin?: Date;
   createdAt?: Date;
-  updatedAt?: Date;
-  lastLogin?: Date | null;
-  refreshTokens?: RefreshToken[]; // ← Fixed with import
 }

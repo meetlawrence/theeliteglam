@@ -44,8 +44,6 @@ export class AuthService {
         name: data.name,
         email: data.email.toLowerCase(),
         passwordHash,
-        emailVerified: false,
-        role: "ADMIN",
       });
 
       // Generate verification token

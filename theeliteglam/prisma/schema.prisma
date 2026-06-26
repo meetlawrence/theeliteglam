@@ -20,12 +20,13 @@ model Admin {
   passwordHash String // Hashed password
   avatar   String?
   phone    String?
-  role     Role    @default(ADMIN)
+  role     Role    @default(SUPER_ADMIN)
 
   emailVerified   Boolean        @default(false)
   emailVerifiedAt DateTime?
 
   lastLoginAt DateTime?
+  isActive          Boolean         @default(false)
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -45,7 +46,6 @@ model Contestant {
 
   name     String
   email    String  @unique
-  password String?
   gender   Gender
 
   avatar String?
