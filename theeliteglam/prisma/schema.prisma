@@ -14,19 +14,19 @@ datasource db {
 
 // ====================== ADMIN ======================
 model Admin {
-  id       String  @id @default(cuid())
-  name     String
-  email    String  @unique
+  id           String  @id @default(cuid())
+  name         String
+  email        String  @unique
   passwordHash String // Hashed password
-  avatar   String?
-  phone    String?
-  role     Role    @default(SUPER_ADMIN)
+  avatar       String?
+  phone        String?
+  role         Role    @default(SUPER_ADMIN)
 
-  emailVerified   Boolean        @default(false)
+  emailVerified   Boolean   @default(false)
   emailVerifiedAt DateTime?
 
   lastLoginAt DateTime?
-  isActive          Boolean         @default(false)
+  isActive    Boolean   @default(false)
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -44,9 +44,9 @@ enum Role {
 model Contestant {
   id String @id @default(cuid())
 
-  name     String
-  email    String  @unique
-  gender   Gender
+  name   String
+  email  String @unique
+  gender Gender
 
   avatar String?
   phone  String
@@ -93,10 +93,10 @@ model Event {
   categories Category[]
   tickets    Ticket[]
   votes      Vote[]
+  sponsors   Sponsor[]
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  sponsors  Sponsor[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum EventStatus {
@@ -212,8 +212,8 @@ model RefreshToken {
   expiresAt DateTime
   revoked   Boolean  @default(false)
   createdAt DateTime @default(now())
-  adminId String
-  admin      Admin    @relation(fields: [adminId], references: [id])
+  adminId   String
+  admin     Admin    @relation(fields: [adminId], references: [id])
 
   @@map("refresh_tokens")
 }
