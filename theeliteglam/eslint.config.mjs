@@ -16,7 +16,7 @@ const eslintConfig = defineConfig([
 
   // Custom rules for your project
   {
-    files: ["**/*.{ts,tsx,js}"], // Only TypeScript files
+    files: ["**/*.{ts,tsx}"], // Only TypeScript files
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: "module",
@@ -28,14 +28,6 @@ const eslintConfig = defineConfig([
       parserOptions: {
         project: "./tsconfig.json", //This line is important
       },
-      overrides: [
-        {
-          files: ["jest.config.js"],
-          parserOptions: {
-            project: null, // ✅ disables TS project check for this file
-          },
-        },
-      ],
     },
     rules: {
       // Prettier formatting issues = errors

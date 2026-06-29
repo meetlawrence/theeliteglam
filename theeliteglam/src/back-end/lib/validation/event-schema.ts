@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const createEventSchema = z.object({
   name: z.string().min(3, "Event name must be at least 3 characters"),
@@ -19,5 +19,5 @@ export const updateEventSchema = z.object({
 });
 
 export const eventIdParamSchema = z.object({
-  id: z.string().min(1, "Event ID is required"),
+  id: z.string().cuid().min(1, "Event ID is required"),
 });

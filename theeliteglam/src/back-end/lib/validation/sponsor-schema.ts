@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const createSponsorSchema = z.object({
   name: z.string().min(2, "Sponsor name is required"),
@@ -18,5 +18,9 @@ export const updateSponsorSchema = z.object({
 });
 
 export const sponsorIdParamSchema = z.object({
-  id: z.string().min(1, "Sponsor ID is required"),
+  id: z.string().cuid().min(1, "Sponsor ID is required"),
+});
+
+export const eventIdSchema = z.object({
+  eventId: z.string().cuid().min(1, "Sponsor ID is required"),
 });

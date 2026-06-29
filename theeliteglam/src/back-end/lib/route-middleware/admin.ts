@@ -34,7 +34,7 @@ export async function authMiddleware(req: NextRequest) {
     return {
       success: false as const,
       response: NextResponse.json(
-        { success: false, message: "Invalid or expired token" },
+        { success: false, message: error || "Invalid or expired token" },
         { status: 401 },
       ),
     };

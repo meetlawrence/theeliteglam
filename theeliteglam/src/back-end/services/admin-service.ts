@@ -7,29 +7,29 @@ import {
   adminIdParamSchema,
   updateAdminSchema,
 } from "../lib/validation/admin-schema";
+import { formatZodError } from "../lib/utils/helper";
 
 export class AdminService {
   async createAdmin(data: CreateAdminInput, currentUserRole: string) {
     try {
-      const validation = createAdminSchema2.safeParse(data);
-      if (!validation.success) {
-        const messages = validation.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
-      }
       if (currentUserRole !== "SUPER_ADMIN") {
         throw new Error("Only SUPER_ADMIN can create new admins.");
       }
 
-      const existing = await adminRepo.findByEmail(data.email);
+      const validation = createAdminSchema2.safeParse(data);
+      if (!validation.success) {
+        return { success: false, error: formatZodError(validation.error) };
+      }
+      const existing = await adminRepo.findByEmail(validation.data.email);
       if (existing) throw new Error("Admin with this email already exists.");
 
       const passwordHash = await bcrypt.hash(data.password, AUTH_CONFIG.BCRYPT_SALT_ROUNDS);
 
       const admin = await adminRepo.createAdmin({
-        name: data.name,
-        email: data.email.toLowerCase(),
+        name: validation.data.name,
+        email: validation.data.email.toLowerCase(),
         password: passwordHash,
-        role: data.role,
+        role: validation.data.role,
       });
 
       return {
@@ -39,7 +39,7 @@ export class AdminService {
       };
     } catch (error) {
       console.error("Create admin error:", error);
-      return { success: false, error: "Failed to create admin" };
+      return { success: false, error: error || "Failed to create admin" };
     }
   }
 
@@ -53,7 +53,7 @@ export class AdminService {
       return { success: true, data: admins };
     } catch (error) {
       console.error("Get all admins error:", error);
-      return { success: false, error: "Failed to fetch admins" };
+      return { success: false, error: error || "Failed to fetch admins" };
     }
   }
 
@@ -61,59 +61,57 @@ export class AdminService {
     try {
       const validation = adminIdParamSchema.safeParse({ id });
       if (!validation.success) {
-        const messages = validation.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
+        return { success: false, error: formatZodError(validation.error) };
       }
-      const admin = await adminRepo.findById(id);
+      console.log(validation);
+      const admin = await adminRepo.findById(validation.data.id);
       if (!admin) throw new Error("Admin not found");
 
       return { success: true, data: admin };
     } catch (error) {
       console.error("Get admin error:", error);
-      return { success: false, error: "Failed to fetch admin" };
+      return { success: false, error: error || "Failed to fetch admin" };
     }
   }
 
   async updateAdmin(id: string, data: UpdateAdminInput, currentUserRole: string) {
     try {
-      const validation = adminIdParamSchema.safeParse({ id });
-      if (!validation.success) {
-        const messages = validation.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
-      }
-      const validation2 = updateAdminSchema.safeParse(data);
-      if (!validation2.success) {
-        const messages = validation2.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
-      }
       if (currentUserRole !== "SUPER_ADMIN") {
         throw new Error("Access denied.");
       }
 
-      const admin = await adminRepo.update(id, data);
+      const validation = adminIdParamSchema.safeParse({ id });
+      if (!validation.success) {
+        return { success: false, error: formatZodError(validation.error) };
+      }
+      const validation2 = updateAdminSchema.safeParse(data);
+      if (!validation2.success) {
+        return { success: false, error: formatZodError(validation2.error) };
+      }
+
+      const admin = await adminRepo.update(validation.data.id, validation2.data);
       return { success: true, message: "Admin updated successfully", data: admin };
     } catch (error) {
       console.error("Update admin error:", error);
-      return { success: false, error: "Failed to update admin" };
+      return { success: false, error: error || "Failed to update admin" };
     }
   }
 
   async deleteAdmin(id: string, currentUserRole: string) {
     try {
-      const validation = adminIdParamSchema.safeParse({ id });
-      if (!validation.success) {
-        const messages = validation.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
-      }
       if (currentUserRole !== "SUPER_ADMIN") {
         throw new Error("Only SUPER_ADMIN can delete admins.");
       }
+      const validation = adminIdParamSchema.safeParse({ id });
+      if (!validation.success) {
+        return { success: false, error: formatZodError(validation.error) };
+      }
 
-      await adminRepo.delete(id);
+      await adminRepo.delete(validation.data.id);
       return { success: true, message: "Admin deleted successfully" };
     } catch (error) {
       console.error("Delete admin error:", error);
-      return { success: false, error: "Failed to delete admin" };
+      return { success: false, error: error || "Failed to delete admin" };
     }
   }
 }
