@@ -6,28 +6,29 @@ import {
   eventIdParamSchema,
 } from "../lib/validation/event-schema";
 
+import { formatZodError } from "../lib/utils/helper";
+
 export class EventService {
   async createEvent(data: CreateEventInput, currentUserRole: string) {
     try {
-      const validation = createEventSchema.safeParse(data);
-      if (!validation.success) {
-        const messages = validation.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
-      }
       if (!["ADMIN", "SUPER_ADMIN"].includes(currentUserRole)) {
         throw new Error("Access denied.");
       }
+      const validation = createEventSchema.safeParse(data);
+      if (!validation.success) {
+        return { success: false, error: formatZodError(validation.error) };
+      }
 
-      const event = await eventModel.create(data);
+      const event = await eventModel.create(validation.data);
 
       return {
         success: true,
         message: "Event created successfully",
         data: event,
       };
-    } catch (error: any) {
+    } catch (error) {
       console.error("Create event error:", error);
-      return { success: false, error: error.message || "Failed to create event" };
+      return { success: false, error: error || "Failed to create event" };
     }
   }
 
@@ -35,9 +36,9 @@ export class EventService {
     try {
       const events = await eventModel.findAll();
       return { success: true, data: events };
-    } catch (error: any) {
+    } catch (error) {
       console.error("Get events error:", error);
-      return { success: false, error: "Failed to fetch events" };
+      return { success: false, error: error || "Failed to fetch events" };
     }
   }
 
@@ -45,60 +46,57 @@ export class EventService {
     try {
       const validation = eventIdParamSchema.safeParse({ id });
       if (!validation.success) {
-        const messages = validation.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
+        return { success: false, error: formatZodError(validation.error) };
       }
-      const event = await eventModel.findById(id);
+      const event = await eventModel.findById(validation.data.id);
       if (!event) throw new Error("Event not found");
 
       return { success: true, data: event };
-    } catch (error: any) {
+    } catch (error) {
       console.error("Get event error:", error);
-      return { success: false, error: error.message || "Failed to fetch event" };
+      return { success: false, error: error || "Failed to fetch event" };
     }
   }
 
   async updateEvent(id: string, data: UpdateEventInput, currentUserRole: string) {
     try {
-      let validation = eventIdParamSchema.safeParse({ id });
-      if (!validation.success) {
-        const messages = validation.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
-      }
-      const validation2 = updateEventSchema.safeParse(data);
-      if (!validation2.success) {
-        const messages = validation2.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
-      }
       if (!["ADMIN", "SUPER_ADMIN"].includes(currentUserRole)) {
         throw new Error("Access denied.");
       }
 
-      const event = await eventModel.update(id, data);
+      const validation = eventIdParamSchema.safeParse({ id });
+      if (!validation.success) {
+        return { success: false, error: formatZodError(validation.error) };
+      }
+      const validation2 = updateEventSchema.safeParse(data);
+      if (!validation2.success) {
+        return { success: false, error: formatZodError(validation2.error) };
+      }
+
+      const event = await eventModel.update(validation.data.id, validation2.data);
       return { success: true, message: "Event updated successfully", data: event };
-    } catch (error: any) {
+    } catch (error) {
       console.error("Update event error:", error);
-      return { success: false, error: error.message || "Failed to update event" };
+      return { success: false, error: error || "Failed to update event" };
     }
   }
 
   async deleteEvent(id: string, currentUserRole: string) {
     try {
-      const validation2 = updateEventSchema.safeParse({ id });
-      if (!validation2.success) {
-        const messages = validation2.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
-      }
-
       if (currentUserRole !== "SUPER_ADMIN") {
         throw new Error("Only SUPER_ADMIN can delete events.");
       }
 
-      await eventModel.delete(id);
+      const validation = eventIdParamSchema.safeParse({ id });
+      if (!validation.success) {
+        return { success: false, error: formatZodError(validation.error) };
+      }
+
+      await eventModel.delete(validation.data.id);
       return { success: true, message: "Event deleted successfully" };
-    } catch (error: any) {
+    } catch (error) {
       console.error("Delete event error:", error);
-      return { success: false, error: error.message || "Failed to delete event" };
+      return { success: false, error: error || "Failed to delete event" };
     }
   }
 }

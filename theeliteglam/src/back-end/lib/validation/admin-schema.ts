@@ -23,7 +23,7 @@ export const updateAdminSchema = z.object({
 });
 
 export const adminIdParamSchema = z.object({
-  id: z.string().min(1, "Admin ID is required"),
+  id: z.string().cuid().min(1, "Admin ID is required"),
 });
 
 export type CreateAdminInput = z.infer<typeof createAdminSchema>;

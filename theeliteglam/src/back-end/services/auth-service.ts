@@ -19,6 +19,8 @@ import type {
   ResetPasswordRequest,
 } from "../types/auth-types";
 
+import { formatZodError } from "../lib/utils/helper";
+
 export class AuthService {
   // ====================== SIGNUP ======================
   async signup(data: RegisterInput): Promise<AuthResponse> {
@@ -26,12 +28,11 @@ export class AuthService {
       // Server-side validation
       const validation = registerSchema.safeParse(data);
       if (!validation.success) {
-        const messages = validation.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
+        return { success: false, error: formatZodError(validation.error) };
       }
 
       // Check if user already exists
-      const existingUser = await adminRepo.findByEmail(data.email);
+      const existingUser = await adminRepo.findByEmail(validation.data.email);
       if (existingUser) {
         return { success: false, error: "User with this email already exists." };
       }
@@ -41,8 +42,8 @@ export class AuthService {
 
       // Create user
       const admin = await adminRepo.create({
-        name: data.name,
-        email: data.email.toLowerCase(),
+        name: validation.data.name,
+        email: validation.data.email.toLowerCase(),
         passwordHash,
       });
 
@@ -81,16 +82,15 @@ export class AuthService {
       // Server-side validation
       const validation = loginSchema.safeParse(data);
       if (!validation.success) {
-        const messages = validation.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
+        return { success: false, error: formatZodError(validation.error) };
       }
 
-      const admin = await adminRepo.findByEmail(data.email);
+      const admin = await adminRepo.findByEmail(validation.data.email);
       if (!admin) {
         return { success: false, error: "Invalid email or password." };
       }
 
-      const isPasswordValid = await bcrypt.compare(data.password, admin.passwordHash);
+      const isPasswordValid = await bcrypt.compare(validation.data.password, admin.passwordHash);
       if (!isPasswordValid) {
         return { success: false, error: "Invalid email or password." };
       }
@@ -192,11 +192,10 @@ export class AuthService {
     try {
       const validation = forgotPasswordSchema.safeParse(data);
       if (!validation.success) {
-        const messages = validation.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
+        return { success: false, error: formatZodError(validation.error) };
       }
 
-      const admin = await adminRepo.findByEmail(data.email);
+      const admin = await adminRepo.findByEmail(validation.data.email);
       if (!admin) {
         return { success: true }; // Don't reveal if email exists (security best practice)
       }
@@ -230,11 +229,10 @@ export class AuthService {
     try {
       const validation = resetPasswordSchema.safeParse(data);
       if (!validation.success) {
-        const messages = validation.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
+        return { success: false, error: formatZodError(validation.error) };
       }
 
-      const payload = await JWT.verifyToken(data.token);
+      const payload = await JWT.verifyToken(validation.data.token);
       if (payload.type !== "RESET") {
         return { success: false, error: "Invalid reset token." };
       }

@@ -4,45 +4,47 @@ import {
   createCategorySchema,
   updateCategorySchema,
   categoryIdParamSchema,
+  eventIdSchema,
 } from "../lib/validation/category-validation";
+
+import { formatZodError } from "../lib/utils/helper";
 
 export class CategoryService {
   async createCategory(data: CreateCategoryInput, currentUserRole: string) {
     try {
-      const validation = createCategorySchema.safeParse(data);
-      if (!validation.success) {
-        const messages = validation.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
-      }
       if (!["ADMIN", "SUPER_ADMIN"].includes(currentUserRole)) {
         throw new Error("Access denied.");
       }
 
-      const category = await categoryModel.create(data);
+      const validation = createCategorySchema.safeParse(data);
+      if (!validation.success) {
+        return { success: false, error: formatZodError(validation.error) };
+      }
+
+      const category = await categoryModel.create(validation.data);
 
       return {
         success: true,
         message: "Category created successfully",
         data: category,
       };
-    } catch (error: any) {
+    } catch (error) {
       console.error("Create category error:", error);
-      return { success: false, error: error.message || "Failed to create category" };
+      return { success: false, error: error || "Failed to create category" };
     }
   }
 
   async getCategoriesByEvent(eventId: string) {
     try {
-      const validation = categoryIdParamSchema.safeParse(eventId);
+      const validation = eventIdSchema.safeParse({ eventId });
       if (!validation.success) {
-        const messages = validation.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
+        return { success: false, error: formatZodError(validation.error) };
       }
-      const categories = await categoryModel.findByEventId(eventId);
+      const categories = await categoryModel.findByEventId(validation.data.eventId);
       return { success: true, data: categories };
-    } catch (error: any) {
+    } catch (error) {
       console.error("Get categories error:", error);
-      return { success: false, error: "Failed to fetch categories" };
+      return { success: false, error: error || "Failed to fetch categories" };
     }
   }
 
@@ -50,59 +52,57 @@ export class CategoryService {
     try {
       const validation = categoryIdParamSchema.safeParse(id);
       if (!validation.success) {
-        const messages = validation.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
+        return { success: false, error: formatZodError(validation.error) };
       }
-      const category = await categoryModel.findById(id);
+      const category = await categoryModel.findById(validation.data.id);
       if (!category) throw new Error("Category not found");
 
       return { success: true, data: category };
-    } catch (error: any) {
+    } catch (error) {
       console.error("Get category error:", error);
-      return { success: false, error: error.message || "Failed to fetch category" };
+      return { success: false, error: error || "Failed to fetch category" };
     }
   }
 
   async updateCategory(id: string, data: UpdateCategoryInput, currentUserRole: string) {
     try {
-      const validation = categoryIdParamSchema.safeParse(id);
-      if (!validation.success) {
-        const messages = validation.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
-      }
-      const validation2 = updateCategorySchema.safeParse(data);
-      if (!validation2.success) {
-        const messages = validation2.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
-      }
       if (!["ADMIN", "SUPER_ADMIN"].includes(currentUserRole)) {
         throw new Error("Access denied.");
       }
 
-      const category = await categoryModel.update(id, data);
+      const validation = categoryIdParamSchema.safeParse(id);
+      if (!validation.success) {
+        return { success: false, error: formatZodError(validation.error) };
+      }
+      const validation2 = updateCategorySchema.safeParse(data);
+      if (!validation2.success) {
+        return { success: false, error: formatZodError(validation2.error) };
+      }
+
+      const category = await categoryModel.update(validation.data.id, validation2.data);
       return { success: true, message: "Category updated successfully", data: category };
-    } catch (error: any) {
+    } catch (error) {
       console.error("Update category error:", error);
-      return { success: false, error: error.message || "Failed to update category" };
+      return { success: false, error: error || "Failed to update category" };
     }
   }
 
   async deleteCategory(id: string, currentUserRole: string) {
     try {
-      const validation = categoryIdParamSchema.safeParse(id);
-      if (!validation.success) {
-        const messages = validation.error.issues.map((e) => e.message).join(", ");
-        return { success: false, error: messages };
-      }
       if (currentUserRole !== "SUPER_ADMIN") {
         throw new Error("Only SUPER_ADMIN can delete categories.");
       }
 
-      await categoryModel.delete(id);
+      const validation = categoryIdParamSchema.safeParse(id);
+      if (!validation.success) {
+        return { success: false, error: formatZodError(validation.error) };
+      }
+
+      await categoryModel.delete(validation.data.id);
       return { success: true, message: "Category deleted successfully" };
-    } catch (error: any) {
+    } catch (error) {
       console.error("Delete category error:", error);
-      return { success: false, error: error.message || "Failed to delete category" };
+      return { success: false, error: error || "Failed to delete category" };
     }
   }
 }
