@@ -17,10 +17,17 @@ export const Role = {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
+export const ContestantCategories = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE'
+} as const
+
+export type ContestantCategories = (typeof ContestantCategories)[keyof typeof ContestantCategories]
+
+
 export const Gender = {
   MALE: 'MALE',
-  FEMALE: 'FEMALE',
-  OTHER: 'OTHER'
+  FEMALE: 'FEMALE'
 } as const
 
 export type Gender = (typeof Gender)[keyof typeof Gender]

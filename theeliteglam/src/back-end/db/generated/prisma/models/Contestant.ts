@@ -44,7 +44,6 @@ export type ContestantMinAggregateOutputType = {
   id: string | null
   name: string | null
   email: string | null
-  password: string | null
   gender: $Enums.Gender | null
   avatar: string | null
   phone: string | null
@@ -59,6 +58,7 @@ export type ContestantMinAggregateOutputType = {
   portfolio: string | null
   score: number | null
   rank: number | null
+  contestantCategories: $Enums.ContestantCategories | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -67,7 +67,6 @@ export type ContestantMaxAggregateOutputType = {
   id: string | null
   name: string | null
   email: string | null
-  password: string | null
   gender: $Enums.Gender | null
   avatar: string | null
   phone: string | null
@@ -82,6 +81,7 @@ export type ContestantMaxAggregateOutputType = {
   portfolio: string | null
   score: number | null
   rank: number | null
+  contestantCategories: $Enums.ContestantCategories | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -90,7 +90,6 @@ export type ContestantCountAggregateOutputType = {
   id: number
   name: number
   email: number
-  password: number
   gender: number
   avatar: number
   phone: number
@@ -105,6 +104,7 @@ export type ContestantCountAggregateOutputType = {
   portfolio: number
   score: number
   rank: number
+  contestantCategories: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -129,7 +129,6 @@ export type ContestantMinAggregateInputType = {
   id?: true
   name?: true
   email?: true
-  password?: true
   gender?: true
   avatar?: true
   phone?: true
@@ -144,6 +143,7 @@ export type ContestantMinAggregateInputType = {
   portfolio?: true
   score?: true
   rank?: true
+  contestantCategories?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -152,7 +152,6 @@ export type ContestantMaxAggregateInputType = {
   id?: true
   name?: true
   email?: true
-  password?: true
   gender?: true
   avatar?: true
   phone?: true
@@ -167,6 +166,7 @@ export type ContestantMaxAggregateInputType = {
   portfolio?: true
   score?: true
   rank?: true
+  contestantCategories?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -175,7 +175,6 @@ export type ContestantCountAggregateInputType = {
   id?: true
   name?: true
   email?: true
-  password?: true
   gender?: true
   avatar?: true
   phone?: true
@@ -190,6 +189,7 @@ export type ContestantCountAggregateInputType = {
   portfolio?: true
   score?: true
   rank?: true
+  contestantCategories?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -285,7 +285,6 @@ export type ContestantGroupByOutputType = {
   id: string
   name: string
   email: string
-  password: string | null
   gender: $Enums.Gender
   avatar: string | null
   phone: string
@@ -300,6 +299,7 @@ export type ContestantGroupByOutputType = {
   portfolio: string | null
   score: number | null
   rank: number | null
+  contestantCategories: $Enums.ContestantCategories
   createdAt: Date
   updatedAt: Date
   _count: ContestantCountAggregateOutputType | null
@@ -331,7 +331,6 @@ export type ContestantWhereInput = {
   id?: Prisma.StringFilter<"Contestant"> | string
   name?: Prisma.StringFilter<"Contestant"> | string
   email?: Prisma.StringFilter<"Contestant"> | string
-  password?: Prisma.StringNullableFilter<"Contestant"> | string | null
   gender?: Prisma.EnumGenderFilter<"Contestant"> | $Enums.Gender
   avatar?: Prisma.StringNullableFilter<"Contestant"> | string | null
   phone?: Prisma.StringFilter<"Contestant"> | string
@@ -346,9 +345,9 @@ export type ContestantWhereInput = {
   portfolio?: Prisma.StringNullableFilter<"Contestant"> | string | null
   score?: Prisma.FloatNullableFilter<"Contestant"> | number | null
   rank?: Prisma.IntNullableFilter<"Contestant"> | number | null
+  contestantCategories?: Prisma.EnumContestantCategoriesFilter<"Contestant"> | $Enums.ContestantCategories
   createdAt?: Prisma.DateTimeFilter<"Contestant"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Contestant"> | Date | string
-  contestantCategories?: Prisma.ContestantCategoryListRelationFilter
   votes?: Prisma.VoteListRelationFilter
 }
 
@@ -356,7 +355,6 @@ export type ContestantOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  password?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrder
   avatar?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -371,9 +369,9 @@ export type ContestantOrderByWithRelationInput = {
   portfolio?: Prisma.SortOrderInput | Prisma.SortOrder
   score?: Prisma.SortOrderInput | Prisma.SortOrder
   rank?: Prisma.SortOrderInput | Prisma.SortOrder
+  contestantCategories?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  contestantCategories?: Prisma.ContestantCategoryOrderByRelationAggregateInput
   votes?: Prisma.VoteOrderByRelationAggregateInput
 }
 
@@ -384,7 +382,6 @@ export type ContestantWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ContestantWhereInput[]
   NOT?: Prisma.ContestantWhereInput | Prisma.ContestantWhereInput[]
   name?: Prisma.StringFilter<"Contestant"> | string
-  password?: Prisma.StringNullableFilter<"Contestant"> | string | null
   gender?: Prisma.EnumGenderFilter<"Contestant"> | $Enums.Gender
   avatar?: Prisma.StringNullableFilter<"Contestant"> | string | null
   phone?: Prisma.StringFilter<"Contestant"> | string
@@ -399,9 +396,9 @@ export type ContestantWhereUniqueInput = Prisma.AtLeast<{
   portfolio?: Prisma.StringNullableFilter<"Contestant"> | string | null
   score?: Prisma.FloatNullableFilter<"Contestant"> | number | null
   rank?: Prisma.IntNullableFilter<"Contestant"> | number | null
+  contestantCategories?: Prisma.EnumContestantCategoriesFilter<"Contestant"> | $Enums.ContestantCategories
   createdAt?: Prisma.DateTimeFilter<"Contestant"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Contestant"> | Date | string
-  contestantCategories?: Prisma.ContestantCategoryListRelationFilter
   votes?: Prisma.VoteListRelationFilter
 }, "id" | "email">
 
@@ -409,7 +406,6 @@ export type ContestantOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  password?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrder
   avatar?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -424,6 +420,7 @@ export type ContestantOrderByWithAggregationInput = {
   portfolio?: Prisma.SortOrderInput | Prisma.SortOrder
   score?: Prisma.SortOrderInput | Prisma.SortOrder
   rank?: Prisma.SortOrderInput | Prisma.SortOrder
+  contestantCategories?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ContestantCountOrderByAggregateInput
@@ -440,7 +437,6 @@ export type ContestantScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Contestant"> | string
   name?: Prisma.StringWithAggregatesFilter<"Contestant"> | string
   email?: Prisma.StringWithAggregatesFilter<"Contestant"> | string
-  password?: Prisma.StringNullableWithAggregatesFilter<"Contestant"> | string | null
   gender?: Prisma.EnumGenderWithAggregatesFilter<"Contestant"> | $Enums.Gender
   avatar?: Prisma.StringNullableWithAggregatesFilter<"Contestant"> | string | null
   phone?: Prisma.StringWithAggregatesFilter<"Contestant"> | string
@@ -455,6 +451,7 @@ export type ContestantScalarWhereWithAggregatesInput = {
   portfolio?: Prisma.StringNullableWithAggregatesFilter<"Contestant"> | string | null
   score?: Prisma.FloatNullableWithAggregatesFilter<"Contestant"> | number | null
   rank?: Prisma.IntNullableWithAggregatesFilter<"Contestant"> | number | null
+  contestantCategories?: Prisma.EnumContestantCategoriesWithAggregatesFilter<"Contestant"> | $Enums.ContestantCategories
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Contestant"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Contestant"> | Date | string
 }
@@ -463,7 +460,6 @@ export type ContestantCreateInput = {
   id?: string
   name: string
   email: string
-  password?: string | null
   gender: $Enums.Gender
   avatar?: string | null
   phone: string
@@ -478,9 +474,9 @@ export type ContestantCreateInput = {
   portfolio?: string | null
   score?: number | null
   rank?: number | null
+  contestantCategories: $Enums.ContestantCategories
   createdAt?: Date | string
   updatedAt?: Date | string
-  contestantCategories?: Prisma.ContestantCategoryCreateNestedManyWithoutContestantInput
   votes?: Prisma.VoteCreateNestedManyWithoutContestantInput
 }
 
@@ -488,7 +484,6 @@ export type ContestantUncheckedCreateInput = {
   id?: string
   name: string
   email: string
-  password?: string | null
   gender: $Enums.Gender
   avatar?: string | null
   phone: string
@@ -503,9 +498,9 @@ export type ContestantUncheckedCreateInput = {
   portfolio?: string | null
   score?: number | null
   rank?: number | null
+  contestantCategories: $Enums.ContestantCategories
   createdAt?: Date | string
   updatedAt?: Date | string
-  contestantCategories?: Prisma.ContestantCategoryUncheckedCreateNestedManyWithoutContestantInput
   votes?: Prisma.VoteUncheckedCreateNestedManyWithoutContestantInput
 }
 
@@ -513,7 +508,6 @@ export type ContestantUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -528,9 +522,9 @@ export type ContestantUpdateInput = {
   portfolio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contestantCategories?: Prisma.EnumContestantCategoriesFieldUpdateOperationsInput | $Enums.ContestantCategories
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  contestantCategories?: Prisma.ContestantCategoryUpdateManyWithoutContestantNestedInput
   votes?: Prisma.VoteUpdateManyWithoutContestantNestedInput
 }
 
@@ -538,7 +532,6 @@ export type ContestantUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -553,9 +546,9 @@ export type ContestantUncheckedUpdateInput = {
   portfolio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contestantCategories?: Prisma.EnumContestantCategoriesFieldUpdateOperationsInput | $Enums.ContestantCategories
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  contestantCategories?: Prisma.ContestantCategoryUncheckedUpdateManyWithoutContestantNestedInput
   votes?: Prisma.VoteUncheckedUpdateManyWithoutContestantNestedInput
 }
 
@@ -563,7 +556,6 @@ export type ContestantCreateManyInput = {
   id?: string
   name: string
   email: string
-  password?: string | null
   gender: $Enums.Gender
   avatar?: string | null
   phone: string
@@ -578,6 +570,7 @@ export type ContestantCreateManyInput = {
   portfolio?: string | null
   score?: number | null
   rank?: number | null
+  contestantCategories: $Enums.ContestantCategories
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -586,7 +579,6 @@ export type ContestantUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -601,6 +593,7 @@ export type ContestantUpdateManyMutationInput = {
   portfolio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contestantCategories?: Prisma.EnumContestantCategoriesFieldUpdateOperationsInput | $Enums.ContestantCategories
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -609,7 +602,6 @@ export type ContestantUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -624,6 +616,7 @@ export type ContestantUncheckedUpdateManyInput = {
   portfolio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contestantCategories?: Prisma.EnumContestantCategoriesFieldUpdateOperationsInput | $Enums.ContestantCategories
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -632,7 +625,6 @@ export type ContestantCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  password?: Prisma.SortOrder
   gender?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -647,6 +639,7 @@ export type ContestantCountOrderByAggregateInput = {
   portfolio?: Prisma.SortOrder
   score?: Prisma.SortOrder
   rank?: Prisma.SortOrder
+  contestantCategories?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -662,7 +655,6 @@ export type ContestantMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  password?: Prisma.SortOrder
   gender?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -677,6 +669,7 @@ export type ContestantMaxOrderByAggregateInput = {
   portfolio?: Prisma.SortOrder
   score?: Prisma.SortOrder
   rank?: Prisma.SortOrder
+  contestantCategories?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -685,7 +678,6 @@ export type ContestantMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  password?: Prisma.SortOrder
   gender?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
   phone?: Prisma.SortOrder
@@ -700,6 +692,7 @@ export type ContestantMinOrderByAggregateInput = {
   portfolio?: Prisma.SortOrder
   score?: Prisma.SortOrder
   rank?: Prisma.SortOrder
+  contestantCategories?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -736,6 +729,10 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type EnumContestantCategoriesFieldUpdateOperationsInput = {
+  set?: $Enums.ContestantCategories
+}
+
 export type ContestantCreateNestedOneWithoutVotesInput = {
   create?: Prisma.XOR<Prisma.ContestantCreateWithoutVotesInput, Prisma.ContestantUncheckedCreateWithoutVotesInput>
   connectOrCreate?: Prisma.ContestantCreateOrConnectWithoutVotesInput
@@ -750,25 +747,10 @@ export type ContestantUpdateOneRequiredWithoutVotesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ContestantUpdateToOneWithWhereWithoutVotesInput, Prisma.ContestantUpdateWithoutVotesInput>, Prisma.ContestantUncheckedUpdateWithoutVotesInput>
 }
 
-export type ContestantCreateNestedOneWithoutContestantCategoriesInput = {
-  create?: Prisma.XOR<Prisma.ContestantCreateWithoutContestantCategoriesInput, Prisma.ContestantUncheckedCreateWithoutContestantCategoriesInput>
-  connectOrCreate?: Prisma.ContestantCreateOrConnectWithoutContestantCategoriesInput
-  connect?: Prisma.ContestantWhereUniqueInput
-}
-
-export type ContestantUpdateOneRequiredWithoutContestantCategoriesNestedInput = {
-  create?: Prisma.XOR<Prisma.ContestantCreateWithoutContestantCategoriesInput, Prisma.ContestantUncheckedCreateWithoutContestantCategoriesInput>
-  connectOrCreate?: Prisma.ContestantCreateOrConnectWithoutContestantCategoriesInput
-  upsert?: Prisma.ContestantUpsertWithoutContestantCategoriesInput
-  connect?: Prisma.ContestantWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ContestantUpdateToOneWithWhereWithoutContestantCategoriesInput, Prisma.ContestantUpdateWithoutContestantCategoriesInput>, Prisma.ContestantUncheckedUpdateWithoutContestantCategoriesInput>
-}
-
 export type ContestantCreateWithoutVotesInput = {
   id?: string
   name: string
   email: string
-  password?: string | null
   gender: $Enums.Gender
   avatar?: string | null
   phone: string
@@ -783,16 +765,15 @@ export type ContestantCreateWithoutVotesInput = {
   portfolio?: string | null
   score?: number | null
   rank?: number | null
+  contestantCategories: $Enums.ContestantCategories
   createdAt?: Date | string
   updatedAt?: Date | string
-  contestantCategories?: Prisma.ContestantCategoryCreateNestedManyWithoutContestantInput
 }
 
 export type ContestantUncheckedCreateWithoutVotesInput = {
   id?: string
   name: string
   email: string
-  password?: string | null
   gender: $Enums.Gender
   avatar?: string | null
   phone: string
@@ -807,9 +788,9 @@ export type ContestantUncheckedCreateWithoutVotesInput = {
   portfolio?: string | null
   score?: number | null
   rank?: number | null
+  contestantCategories: $Enums.ContestantCategories
   createdAt?: Date | string
   updatedAt?: Date | string
-  contestantCategories?: Prisma.ContestantCategoryUncheckedCreateNestedManyWithoutContestantInput
 }
 
 export type ContestantCreateOrConnectWithoutVotesInput = {
@@ -832,7 +813,6 @@ export type ContestantUpdateWithoutVotesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -847,16 +827,15 @@ export type ContestantUpdateWithoutVotesInput = {
   portfolio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contestantCategories?: Prisma.EnumContestantCategoriesFieldUpdateOperationsInput | $Enums.ContestantCategories
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  contestantCategories?: Prisma.ContestantCategoryUpdateManyWithoutContestantNestedInput
 }
 
 export type ContestantUncheckedUpdateWithoutVotesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -871,121 +850,9 @@ export type ContestantUncheckedUpdateWithoutVotesInput = {
   portfolio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contestantCategories?: Prisma.EnumContestantCategoriesFieldUpdateOperationsInput | $Enums.ContestantCategories
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  contestantCategories?: Prisma.ContestantCategoryUncheckedUpdateManyWithoutContestantNestedInput
-}
-
-export type ContestantCreateWithoutContestantCategoriesInput = {
-  id?: string
-  name: string
-  email: string
-  password?: string | null
-  gender: $Enums.Gender
-  avatar?: string | null
-  phone: string
-  dateOfBirth: Date | string
-  city: string
-  country: string
-  isVerified?: boolean
-  stageName?: string | null
-  height?: number | null
-  weight?: number | null
-  bio?: string | null
-  portfolio?: string | null
-  score?: number | null
-  rank?: number | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  votes?: Prisma.VoteCreateNestedManyWithoutContestantInput
-}
-
-export type ContestantUncheckedCreateWithoutContestantCategoriesInput = {
-  id?: string
-  name: string
-  email: string
-  password?: string | null
-  gender: $Enums.Gender
-  avatar?: string | null
-  phone: string
-  dateOfBirth: Date | string
-  city: string
-  country: string
-  isVerified?: boolean
-  stageName?: string | null
-  height?: number | null
-  weight?: number | null
-  bio?: string | null
-  portfolio?: string | null
-  score?: number | null
-  rank?: number | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  votes?: Prisma.VoteUncheckedCreateNestedManyWithoutContestantInput
-}
-
-export type ContestantCreateOrConnectWithoutContestantCategoriesInput = {
-  where: Prisma.ContestantWhereUniqueInput
-  create: Prisma.XOR<Prisma.ContestantCreateWithoutContestantCategoriesInput, Prisma.ContestantUncheckedCreateWithoutContestantCategoriesInput>
-}
-
-export type ContestantUpsertWithoutContestantCategoriesInput = {
-  update: Prisma.XOR<Prisma.ContestantUpdateWithoutContestantCategoriesInput, Prisma.ContestantUncheckedUpdateWithoutContestantCategoriesInput>
-  create: Prisma.XOR<Prisma.ContestantCreateWithoutContestantCategoriesInput, Prisma.ContestantUncheckedCreateWithoutContestantCategoriesInput>
-  where?: Prisma.ContestantWhereInput
-}
-
-export type ContestantUpdateToOneWithWhereWithoutContestantCategoriesInput = {
-  where?: Prisma.ContestantWhereInput
-  data: Prisma.XOR<Prisma.ContestantUpdateWithoutContestantCategoriesInput, Prisma.ContestantUncheckedUpdateWithoutContestantCategoriesInput>
-}
-
-export type ContestantUpdateWithoutContestantCategoriesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  stageName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  height?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  weight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  portfolio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  votes?: Prisma.VoteUpdateManyWithoutContestantNestedInput
-}
-
-export type ContestantUncheckedUpdateWithoutContestantCategoriesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  city?: Prisma.StringFieldUpdateOperationsInput | string
-  country?: Prisma.StringFieldUpdateOperationsInput | string
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  stageName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  height?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  weight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  portfolio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  votes?: Prisma.VoteUncheckedUpdateManyWithoutContestantNestedInput
 }
 
 
@@ -994,12 +861,10 @@ export type ContestantUncheckedUpdateWithoutContestantCategoriesInput = {
  */
 
 export type ContestantCountOutputType = {
-  contestantCategories: number
   votes: number
 }
 
 export type ContestantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  contestantCategories?: boolean | ContestantCountOutputTypeCountContestantCategoriesArgs
   votes?: boolean | ContestantCountOutputTypeCountVotesArgs
 }
 
@@ -1016,13 +881,6 @@ export type ContestantCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.E
 /**
  * ContestantCountOutputType without action
  */
-export type ContestantCountOutputTypeCountContestantCategoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ContestantCategoryWhereInput
-}
-
-/**
- * ContestantCountOutputType without action
- */
 export type ContestantCountOutputTypeCountVotesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.VoteWhereInput
 }
@@ -1032,7 +890,6 @@ export type ContestantSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   id?: boolean
   name?: boolean
   email?: boolean
-  password?: boolean
   gender?: boolean
   avatar?: boolean
   phone?: boolean
@@ -1047,9 +904,9 @@ export type ContestantSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   portfolio?: boolean
   score?: boolean
   rank?: boolean
+  contestantCategories?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  contestantCategories?: boolean | Prisma.Contestant$contestantCategoriesArgs<ExtArgs>
   votes?: boolean | Prisma.Contestant$votesArgs<ExtArgs>
   _count?: boolean | Prisma.ContestantCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["contestant"]>
@@ -1058,7 +915,6 @@ export type ContestantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   name?: boolean
   email?: boolean
-  password?: boolean
   gender?: boolean
   avatar?: boolean
   phone?: boolean
@@ -1073,6 +929,7 @@ export type ContestantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   portfolio?: boolean
   score?: boolean
   rank?: boolean
+  contestantCategories?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["contestant"]>
@@ -1081,7 +938,6 @@ export type ContestantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   id?: boolean
   name?: boolean
   email?: boolean
-  password?: boolean
   gender?: boolean
   avatar?: boolean
   phone?: boolean
@@ -1096,6 +952,7 @@ export type ContestantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   portfolio?: boolean
   score?: boolean
   rank?: boolean
+  contestantCategories?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["contestant"]>
@@ -1104,7 +961,6 @@ export type ContestantSelectScalar = {
   id?: boolean
   name?: boolean
   email?: boolean
-  password?: boolean
   gender?: boolean
   avatar?: boolean
   phone?: boolean
@@ -1119,13 +975,13 @@ export type ContestantSelectScalar = {
   portfolio?: boolean
   score?: boolean
   rank?: boolean
+  contestantCategories?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ContestantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "gender" | "avatar" | "phone" | "dateOfBirth" | "city" | "country" | "isVerified" | "stageName" | "height" | "weight" | "bio" | "portfolio" | "score" | "rank" | "createdAt" | "updatedAt", ExtArgs["result"]["contestant"]>
+export type ContestantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "gender" | "avatar" | "phone" | "dateOfBirth" | "city" | "country" | "isVerified" | "stageName" | "height" | "weight" | "bio" | "portfolio" | "score" | "rank" | "contestantCategories" | "createdAt" | "updatedAt", ExtArgs["result"]["contestant"]>
 export type ContestantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  contestantCategories?: boolean | Prisma.Contestant$contestantCategoriesArgs<ExtArgs>
   votes?: boolean | Prisma.Contestant$votesArgs<ExtArgs>
   _count?: boolean | Prisma.ContestantCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1135,14 +991,12 @@ export type ContestantIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 export type $ContestantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Contestant"
   objects: {
-    contestantCategories: Prisma.$ContestantCategoryPayload<ExtArgs>[]
     votes: Prisma.$VotePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     email: string
-    password: string | null
     gender: $Enums.Gender
     avatar: string | null
     phone: string
@@ -1157,6 +1011,7 @@ export type $ContestantPayload<ExtArgs extends runtime.Types.Extensions.Internal
     portfolio: string | null
     score: number | null
     rank: number | null
+    contestantCategories: $Enums.ContestantCategories
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["contestant"]>
@@ -1553,7 +1408,6 @@ readonly fields: ContestantFieldRefs;
  */
 export interface Prisma__ContestantClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  contestantCategories<T extends Prisma.Contestant$contestantCategoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Contestant$contestantCategoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ContestantCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   votes<T extends Prisma.Contestant$votesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Contestant$votesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1587,7 +1441,6 @@ export interface ContestantFieldRefs {
   readonly id: Prisma.FieldRef<"Contestant", 'String'>
   readonly name: Prisma.FieldRef<"Contestant", 'String'>
   readonly email: Prisma.FieldRef<"Contestant", 'String'>
-  readonly password: Prisma.FieldRef<"Contestant", 'String'>
   readonly gender: Prisma.FieldRef<"Contestant", 'Gender'>
   readonly avatar: Prisma.FieldRef<"Contestant", 'String'>
   readonly phone: Prisma.FieldRef<"Contestant", 'String'>
@@ -1602,6 +1455,7 @@ export interface ContestantFieldRefs {
   readonly portfolio: Prisma.FieldRef<"Contestant", 'String'>
   readonly score: Prisma.FieldRef<"Contestant", 'Float'>
   readonly rank: Prisma.FieldRef<"Contestant", 'Int'>
+  readonly contestantCategories: Prisma.FieldRef<"Contestant", 'ContestantCategories'>
   readonly createdAt: Prisma.FieldRef<"Contestant", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Contestant", 'DateTime'>
 }
@@ -1994,30 +1848,6 @@ export type ContestantDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many Contestants to delete.
    */
   limit?: number
-}
-
-/**
- * Contestant.contestantCategories
- */
-export type Contestant$contestantCategoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ContestantCategory
-   */
-  select?: Prisma.ContestantCategorySelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ContestantCategory
-   */
-  omit?: Prisma.ContestantCategoryOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ContestantCategoryInclude<ExtArgs> | null
-  where?: Prisma.ContestantCategoryWhereInput
-  orderBy?: Prisma.ContestantCategoryOrderByWithRelationInput | Prisma.ContestantCategoryOrderByWithRelationInput[]
-  cursor?: Prisma.ContestantCategoryWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ContestantCategoryScalarFieldEnum | Prisma.ContestantCategoryScalarFieldEnum[]
 }
 
 /**

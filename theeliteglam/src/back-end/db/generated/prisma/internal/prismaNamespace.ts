@@ -387,9 +387,7 @@ export const ModelName = {
   Admin: 'Admin',
   Contestant: 'Contestant',
   Event: 'Event',
-  Category: 'Category',
   Vote: 'Vote',
-  ContestantCategory: 'ContestantCategory',
   Ticket: 'Ticket',
   Sponsor: 'Sponsor',
   Subscription: 'Subscription',
@@ -409,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admin" | "contestant" | "event" | "category" | "vote" | "contestantCategory" | "ticket" | "sponsor" | "subscription" | "refreshToken"
+    modelProps: "admin" | "contestant" | "event" | "vote" | "ticket" | "sponsor" | "subscription" | "refreshToken"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -635,80 +633,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Category: {
-      payload: Prisma.$CategoryPayload<ExtArgs>
-      fields: Prisma.CategoryFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.CategoryFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.CategoryFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>
-        }
-        findFirst: {
-          args: Prisma.CategoryFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.CategoryFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>
-        }
-        findMany: {
-          args: Prisma.CategoryFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>[]
-        }
-        create: {
-          args: Prisma.CategoryCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>
-        }
-        createMany: {
-          args: Prisma.CategoryCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.CategoryCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>[]
-        }
-        delete: {
-          args: Prisma.CategoryDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>
-        }
-        update: {
-          args: Prisma.CategoryUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>
-        }
-        deleteMany: {
-          args: Prisma.CategoryDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.CategoryUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.CategoryUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>[]
-        }
-        upsert: {
-          args: Prisma.CategoryUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CategoryPayload>
-        }
-        aggregate: {
-          args: Prisma.CategoryAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateCategory>
-        }
-        groupBy: {
-          args: Prisma.CategoryGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CategoryGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.CategoryCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CategoryCountAggregateOutputType> | number
-        }
-      }
-    }
     Vote: {
       payload: Prisma.$VotePayload<ExtArgs>
       fields: Prisma.VoteFieldRefs
@@ -780,80 +704,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.VoteCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.VoteCountAggregateOutputType> | number
-        }
-      }
-    }
-    ContestantCategory: {
-      payload: Prisma.$ContestantCategoryPayload<ExtArgs>
-      fields: Prisma.ContestantCategoryFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ContestantCategoryFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantCategoryPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ContestantCategoryFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantCategoryPayload>
-        }
-        findFirst: {
-          args: Prisma.ContestantCategoryFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantCategoryPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ContestantCategoryFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantCategoryPayload>
-        }
-        findMany: {
-          args: Prisma.ContestantCategoryFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantCategoryPayload>[]
-        }
-        create: {
-          args: Prisma.ContestantCategoryCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantCategoryPayload>
-        }
-        createMany: {
-          args: Prisma.ContestantCategoryCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ContestantCategoryCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantCategoryPayload>[]
-        }
-        delete: {
-          args: Prisma.ContestantCategoryDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantCategoryPayload>
-        }
-        update: {
-          args: Prisma.ContestantCategoryUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantCategoryPayload>
-        }
-        deleteMany: {
-          args: Prisma.ContestantCategoryDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ContestantCategoryUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ContestantCategoryUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantCategoryPayload>[]
-        }
-        upsert: {
-          args: Prisma.ContestantCategoryUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantCategoryPayload>
-        }
-        aggregate: {
-          args: Prisma.ContestantCategoryAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateContestantCategory>
-        }
-        groupBy: {
-          args: Prisma.ContestantCategoryGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ContestantCategoryGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ContestantCategoryCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ContestantCategoryCountAggregateOutputType> | number
         }
       }
     }
@@ -1215,7 +1065,6 @@ export const ContestantScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
-  password: 'password',
   gender: 'gender',
   avatar: 'avatar',
   phone: 'phone',
@@ -1230,6 +1079,7 @@ export const ContestantScalarFieldEnum = {
   portfolio: 'portfolio',
   score: 'score',
   rank: 'rank',
+  contestantCategories: 'contestantCategories',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1245,21 +1095,12 @@ export const EventScalarFieldEnum = {
   endDate: 'endDate',
   location: 'location',
   status: 'status',
+  categories: 'categories',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
-
-
-export const CategoryScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  eventId: 'eventId',
-  createdAt: 'createdAt'
-} as const
-
-export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
 export const VoteScalarFieldEnum = {
@@ -1271,15 +1112,6 @@ export const VoteScalarFieldEnum = {
 } as const
 
 export type VoteScalarFieldEnum = (typeof VoteScalarFieldEnum)[keyof typeof VoteScalarFieldEnum]
-
-
-export const ContestantCategoryScalarFieldEnum = {
-  contestantId: 'contestantId',
-  categoryId: 'categoryId',
-  createdAt: 'createdAt'
-} as const
-
-export type ContestantCategoryScalarFieldEnum = (typeof ContestantCategoryScalarFieldEnum)[keyof typeof ContestantCategoryScalarFieldEnum]
 
 
 export const TicketScalarFieldEnum = {
@@ -1456,6 +1288,20 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'ContestantCategories'
+ */
+export type EnumContestantCategoriesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContestantCategories'>
+    
+
+
+/**
+ * Reference to a field of type 'ContestantCategories[]'
+ */
+export type ListEnumContestantCategoriesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContestantCategories[]'>
+    
+
+
+/**
  * Reference to a field of type 'EventStatus'
  */
 export type EnumEventStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EventStatus'>
@@ -1609,9 +1455,7 @@ export type GlobalOmitConfig = {
   admin?: Prisma.AdminOmit
   contestant?: Prisma.ContestantOmit
   event?: Prisma.EventOmit
-  category?: Prisma.CategoryOmit
   vote?: Prisma.VoteOmit
-  contestantCategory?: Prisma.ContestantCategoryOmit
   ticket?: Prisma.TicketOmit
   sponsor?: Prisma.SponsorOmit
   subscription?: Prisma.SubscriptionOmit
