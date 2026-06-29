@@ -66,7 +66,7 @@ model Contestant {
   score Float?
   rank  Int?
 
-  contestantCategories ContestantCategory[]
+  contestantCategories ContestantCategories
 
   votes Vote[]
 
@@ -74,10 +74,14 @@ model Contestant {
   updatedAt DateTime @updatedAt
 }
 
+enum ContestantCategories {
+  MALE
+  FEMALE
+}
+
 enum Gender {
   MALE
   FEMALE
-  OTHER
 }
 
 // ====================== EVENT / PAGEANT ======================
@@ -90,7 +94,7 @@ model Event {
   location    String
   status      EventStatus @default(UPCOMING)
 
-  categories Category[]
+  categories String[]
   tickets    Ticket[]
   votes      Vote[]
   sponsors   Sponsor[]
@@ -106,18 +110,6 @@ enum EventStatus {
   CANCELLED
 }
 
-// ====================== CATEGORY ======================
-model Category {
-  id      String @id @default(cuid())
-  name    String // e.g., "Miss Beauty", "Mr. Talent"
-  eventId String
-  event   Event  @relation(fields: [eventId], references: [id])
-
-  createdAt            DateTime             @default(now())
-  contestantCategories ContestantCategory[]
-
-  @@index([eventId])
-}
 
 model Vote {
   id           String @id @default(cuid())
@@ -133,20 +125,6 @@ model Vote {
   @@unique([contestantId, eventId])
 }
 
-model ContestantCategory {
-  contestantId String
-  categoryId   String
-
-  contestant Contestant @relation(fields: [contestantId], references: [id])
-
-  category Category @relation(fields: [categoryId], references: [id])
-
-  createdAt DateTime @default(now())
-
-  @@id([contestantId, categoryId])
-  @@index([contestantId])
-  @@index([categoryId])
-}
 
 // ====================== TICKETS & SPONSORS ======================
 model Ticket {

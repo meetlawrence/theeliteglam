@@ -33,20 +33,10 @@ export type Contestant = Prisma.ContestantModel
  */
 export type Event = Prisma.EventModel
 /**
- * Model Category
- * 
- */
-export type Category = Prisma.CategoryModel
-/**
  * Model Vote
  * 
  */
 export type Vote = Prisma.VoteModel
-/**
- * Model ContestantCategory
- * 
- */
-export type ContestantCategory = Prisma.ContestantCategoryModel
 /**
  * Model Ticket
  * 

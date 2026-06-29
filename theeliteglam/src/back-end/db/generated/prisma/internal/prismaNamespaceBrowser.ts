@@ -54,9 +54,7 @@ export const ModelName = {
   Admin: 'Admin',
   Contestant: 'Contestant',
   Event: 'Event',
-  Category: 'Category',
   Vote: 'Vote',
-  ContestantCategory: 'ContestantCategory',
   Ticket: 'Ticket',
   Sponsor: 'Sponsor',
   Subscription: 'Subscription',
@@ -102,7 +100,6 @@ export const ContestantScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
-  password: 'password',
   gender: 'gender',
   avatar: 'avatar',
   phone: 'phone',
@@ -117,6 +114,7 @@ export const ContestantScalarFieldEnum = {
   portfolio: 'portfolio',
   score: 'score',
   rank: 'rank',
+  contestantCategories: 'contestantCategories',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -132,21 +130,12 @@ export const EventScalarFieldEnum = {
   endDate: 'endDate',
   location: 'location',
   status: 'status',
+  categories: 'categories',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
-
-
-export const CategoryScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  eventId: 'eventId',
-  createdAt: 'createdAt'
-} as const
-
-export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
 export const VoteScalarFieldEnum = {
@@ -158,15 +147,6 @@ export const VoteScalarFieldEnum = {
 } as const
 
 export type VoteScalarFieldEnum = (typeof VoteScalarFieldEnum)[keyof typeof VoteScalarFieldEnum]
-
-
-export const ContestantCategoryScalarFieldEnum = {
-  contestantId: 'contestantId',
-  categoryId: 'categoryId',
-  createdAt: 'createdAt'
-} as const
-
-export type ContestantCategoryScalarFieldEnum = (typeof ContestantCategoryScalarFieldEnum)[keyof typeof ContestantCategoryScalarFieldEnum]
 
 
 export const TicketScalarFieldEnum = {

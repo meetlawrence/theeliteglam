@@ -194,6 +194,13 @@ export type IntNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedIntNullableFilter<$PrismaModel> | number | null
 }
 
+export type EnumContestantCategoriesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ContestantCategories | Prisma.EnumContestantCategoriesFieldRefInput<$PrismaModel>
+  in?: $Enums.ContestantCategories[] | Prisma.ListEnumContestantCategoriesFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ContestantCategories[] | Prisma.ListEnumContestantCategoriesFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumContestantCategoriesFilter<$PrismaModel> | $Enums.ContestantCategories
+}
+
 export type EnumGenderWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.Gender | Prisma.EnumGenderFieldRefInput<$PrismaModel>
   in?: $Enums.Gender[] | Prisma.ListEnumGenderFieldRefInput<$PrismaModel>
@@ -234,6 +241,16 @@ export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
+}
+
+export type EnumContestantCategoriesWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ContestantCategories | Prisma.EnumContestantCategoriesFieldRefInput<$PrismaModel>
+  in?: $Enums.ContestantCategories[] | Prisma.ListEnumContestantCategoriesFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ContestantCategories[] | Prisma.ListEnumContestantCategoriesFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumContestantCategoriesWithAggregatesFilter<$PrismaModel> | $Enums.ContestantCategories
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumContestantCategoriesFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumContestantCategoriesFilter<$PrismaModel>
 }
 
 export type EnumEventStatusFilter<$PrismaModel = never> = {
@@ -523,6 +540,13 @@ export type NestedFloatNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedFloatNullableFilter<$PrismaModel> | number | null
 }
 
+export type NestedEnumContestantCategoriesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ContestantCategories | Prisma.EnumContestantCategoriesFieldRefInput<$PrismaModel>
+  in?: $Enums.ContestantCategories[] | Prisma.ListEnumContestantCategoriesFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ContestantCategories[] | Prisma.ListEnumContestantCategoriesFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumContestantCategoriesFilter<$PrismaModel> | $Enums.ContestantCategories
+}
+
 export type NestedEnumGenderWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.Gender | Prisma.EnumGenderFieldRefInput<$PrismaModel>
   in?: $Enums.Gender[] | Prisma.ListEnumGenderFieldRefInput<$PrismaModel>
@@ -563,6 +587,16 @@ export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumContestantCategoriesWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ContestantCategories | Prisma.EnumContestantCategoriesFieldRefInput<$PrismaModel>
+  in?: $Enums.ContestantCategories[] | Prisma.ListEnumContestantCategoriesFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ContestantCategories[] | Prisma.ListEnumContestantCategoriesFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumContestantCategoriesWithAggregatesFilter<$PrismaModel> | $Enums.ContestantCategories
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumContestantCategoriesFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumContestantCategoriesFilter<$PrismaModel>
 }
 
 export type NestedEnumEventStatusFilter<$PrismaModel = never> = {
