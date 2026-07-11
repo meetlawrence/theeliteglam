@@ -12,11 +12,11 @@ export class EventService {
   async createEvent(data: CreateEventInput, currentUserRole: string) {
     try {
       if (!["ADMIN", "SUPER_ADMIN"].includes(currentUserRole)) {
-        throw new Error("Access denied.");
+        return { success: false, error: "Access denied.", status: 403 };
       }
       const validation = createEventSchema.safeParse(data);
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { success: false, error: formatZodError(validation.error), status: 400 };
       }
 
       const event = await eventModel.create(validation.data);
@@ -28,17 +28,17 @@ export class EventService {
       };
     } catch (error) {
       console.error("Create event error:", error);
-      return { success: false, error: error || "Failed to create event" };
+      return { success: false, error: error || "Failed to create event", status: 500 };
     }
   }
 
   async getAllEvents() {
     try {
       const events = await eventModel.findAll();
-      return { success: true, data: events };
+      return { success: true, data: events, status: 200 };
     } catch (error) {
       console.error("Get events error:", error);
-      return { success: false, error: error || "Failed to fetch events" };
+      return { success: false, error: error || "Failed to fetch events", status: 500 };
     }
   }
 
@@ -46,57 +46,59 @@ export class EventService {
     try {
       const validation = eventIdParamSchema.safeParse({ id });
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { success: false, error: formatZodError(validation.error), status: 400 };
       }
       const event = await eventModel.findById(validation.data.id);
-      if (!event) throw new Error("Event not found");
+      if (!event) {
+        return { success: false, error: "Event not found", status: 404 };
+      }
 
-      return { success: true, data: event };
+      return { success: true, data: event, status: 200 };
     } catch (error) {
       console.error("Get event error:", error);
-      return { success: false, error: error || "Failed to fetch event" };
+      return { success: false, error: error || "Failed to fetch event", status: 500 };
     }
   }
 
   async updateEvent(id: string, data: UpdateEventInput, currentUserRole: string) {
     try {
       if (!["ADMIN", "SUPER_ADMIN"].includes(currentUserRole)) {
-        throw new Error("Access denied.");
+        return { success: false, error: "Access denied.", status: 403 };
       }
 
       const validation = eventIdParamSchema.safeParse({ id });
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { success: false, error: formatZodError(validation.error), status: 400 };
       }
       const validation2 = updateEventSchema.safeParse(data);
       if (!validation2.success) {
-        return { success: false, error: formatZodError(validation2.error) };
+        return { success: false, error: formatZodError(validation2.error), status: 400 };
       }
 
       const event = await eventModel.update(validation.data.id, validation2.data);
-      return { success: true, message: "Event updated successfully", data: event };
+      return { success: true, message: "Event updated successfully", data: event, status: 200 };
     } catch (error) {
       console.error("Update event error:", error);
-      return { success: false, error: error || "Failed to update event" };
+      return { success: false, error: error || "Failed to update event", status: 500 };
     }
   }
 
   async deleteEvent(id: string, currentUserRole: string) {
     try {
       if (currentUserRole !== "SUPER_ADMIN") {
-        throw new Error("Only SUPER_ADMIN can delete events.");
+        return { success: false, error: "Only SUPER_ADMIN can delete events.", status: 403 };
       }
 
       const validation = eventIdParamSchema.safeParse({ id });
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { success: false, error: formatZodError(validation.error), status: 400 };
       }
 
       await eventModel.delete(validation.data.id);
-      return { success: true, message: "Event deleted successfully" };
+      return { success: true, message: "Event deleted successfully", status: 200 };
     } catch (error) {
       console.error("Delete event error:", error);
-      return { success: false, error: error || "Failed to delete event" };
+      return { success: false, error: error || "Failed to delete event", status: 500 };
     }
   }
 }

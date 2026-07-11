@@ -11,7 +11,7 @@ export class EventModel {
         endDate: new Date(data.endDate),
         location: data.location,
         status: data.status || "UPCOMING",
-        categories: data.categories || [],
+        categories: data.categories,
       },
     });
   }
@@ -25,6 +25,9 @@ export class EventModel {
   async findById(id: string) {
     return await prisma.event.findUnique({
       where: { id },
+      include: {
+        ticketTypes: true,
+      },
     });
   }
 

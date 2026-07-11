@@ -18,7 +18,7 @@ export class CategoryService {
 
       const validation = createCategorySchema.safeParse(data);
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { success: false, error: formatZodError(validation.error), status: 400 };
       }
 
       const category = await categoryModel.create(validation.data);
@@ -27,10 +27,11 @@ export class CategoryService {
         success: true,
         message: "Category created successfully",
         data: category,
+        status: 201,
       };
     } catch (error) {
       console.error("Create category error:", error);
-      return { success: false, error: error || "Failed to create category" };
+      return { success: false, error: error || "Failed to create category", status: 500 };
     }
   }
 
@@ -38,13 +39,13 @@ export class CategoryService {
     try {
       const validation = eventIdSchema.safeParse({ eventId });
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { success: false, error: formatZodError(validation.error), status: 400 };
       }
       const categories = await categoryModel.findByEventId(validation.data.eventId);
-      return { success: true, data: categories };
+      return { success: true, data: categories, status: 200 };
     } catch (error) {
       console.error("Get categories error:", error);
-      return { success: false, error: error || "Failed to fetch categories" };
+      return { success: false, error: error || "Failed to fetch categories", status: 500 };
     }
   }
 
@@ -52,15 +53,15 @@ export class CategoryService {
     try {
       const validation = categoryIdParamSchema.safeParse(id);
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { success: false, error: formatZodError(validation.error), status: 400 };
       }
       const category = await categoryModel.findById(validation.data.id);
       if (!category) throw new Error("Category not found");
 
-      return { success: true, data: category };
+      return { success: true, data: category, status: 200 };
     } catch (error) {
       console.error("Get category error:", error);
-      return { success: false, error: error || "Failed to fetch category" };
+      return { success: false, error: error || "Failed to fetch category", status: 500 };
     }
   }
 
@@ -72,18 +73,23 @@ export class CategoryService {
 
       const validation = categoryIdParamSchema.safeParse(id);
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { success: false, error: formatZodError(validation.error), status: 400 };
       }
       const validation2 = updateCategorySchema.safeParse(data);
       if (!validation2.success) {
-        return { success: false, error: formatZodError(validation2.error) };
+        return { success: false, error: formatZodError(validation2.error), status: 400 };
       }
 
       const category = await categoryModel.update(validation.data.id, validation2.data);
-      return { success: true, message: "Category updated successfully", data: category };
+      return {
+        success: true,
+        message: "Category updated successfully",
+        data: category,
+        status: 200,
+      };
     } catch (error) {
       console.error("Update category error:", error);
-      return { success: false, error: error || "Failed to update category" };
+      return { success: false, error: error || "Failed to update category", status: 500 };
     }
   }
 
@@ -95,14 +101,14 @@ export class CategoryService {
 
       const validation = categoryIdParamSchema.safeParse(id);
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { success: false, error: formatZodError(validation.error), status: 400 };
       }
 
       await categoryModel.delete(validation.data.id);
-      return { success: true, message: "Category deleted successfully" };
+      return { success: true, message: "Category deleted successfully", status: 200 };
     } catch (error) {
       console.error("Delete category error:", error);
-      return { success: false, error: error || "Failed to delete category" };
+      return { success: false, error: error || "Failed to delete category", status: 500 };
     }
   }
 }

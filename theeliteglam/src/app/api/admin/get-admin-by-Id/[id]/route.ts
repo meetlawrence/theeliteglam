@@ -26,7 +26,7 @@ export async function GET(req: NextRequest, { params }: ProductParams) {
     }
 
     const result = await adminService.getAdminById(id);
-    return NextResponse.json(result);
+    return NextResponse.json(result, { status: result.status || 200 });
   } catch (error) {
     return NextResponse.json(
       { success: false, message: error || "Invalid token" },

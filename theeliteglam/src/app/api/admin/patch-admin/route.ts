@@ -19,7 +19,7 @@ export async function PATCH(req: NextRequest) {
     const body = await req.json();
     const result = await adminService.updateAdmin(id, body, payload.role);
 
-    return NextResponse.json(result);
+    return NextResponse.json(result, { status: result.status || 200 });
   } catch (error) {
     return NextResponse.json({ success: false, message: error }, { status: 400 });
   }

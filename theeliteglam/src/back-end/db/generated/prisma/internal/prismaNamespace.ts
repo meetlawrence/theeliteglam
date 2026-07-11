@@ -387,6 +387,7 @@ export const ModelName = {
   Admin: 'Admin',
   Contestant: 'Contestant',
   Event: 'Event',
+  TicketType: 'TicketType',
   Vote: 'Vote',
   Ticket: 'Ticket',
   Sponsor: 'Sponsor',
@@ -407,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admin" | "contestant" | "event" | "vote" | "ticket" | "sponsor" | "subscription" | "refreshToken"
+    modelProps: "admin" | "contestant" | "event" | "ticketType" | "vote" | "ticket" | "sponsor" | "subscription" | "refreshToken"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -630,6 +631,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.EventCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.EventCountAggregateOutputType> | number
+        }
+      }
+    }
+    TicketType: {
+      payload: Prisma.$TicketTypePayload<ExtArgs>
+      fields: Prisma.TicketTypeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TicketTypeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketTypePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TicketTypeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketTypePayload>
+        }
+        findFirst: {
+          args: Prisma.TicketTypeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketTypePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TicketTypeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketTypePayload>
+        }
+        findMany: {
+          args: Prisma.TicketTypeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketTypePayload>[]
+        }
+        create: {
+          args: Prisma.TicketTypeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketTypePayload>
+        }
+        createMany: {
+          args: Prisma.TicketTypeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TicketTypeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketTypePayload>[]
+        }
+        delete: {
+          args: Prisma.TicketTypeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketTypePayload>
+        }
+        update: {
+          args: Prisma.TicketTypeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketTypePayload>
+        }
+        deleteMany: {
+          args: Prisma.TicketTypeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TicketTypeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TicketTypeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketTypePayload>[]
+        }
+        upsert: {
+          args: Prisma.TicketTypeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TicketTypePayload>
+        }
+        aggregate: {
+          args: Prisma.TicketTypeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTicketType>
+        }
+        groupBy: {
+          args: Prisma.TicketTypeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TicketTypeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TicketTypeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TicketTypeCountAggregateOutputType> | number
         }
       }
     }
@@ -1079,6 +1154,7 @@ export const ContestantScalarFieldEnum = {
   portfolio: 'portfolio',
   score: 'score',
   rank: 'rank',
+  eventId: 'eventId',
   contestantCategories: 'contestantCategories',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1101,6 +1177,18 @@ export const EventScalarFieldEnum = {
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+export const TicketTypeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  price: 'price',
+  capacity: 'capacity',
+  benefits: 'benefits',
+  eventId: 'eventId'
+} as const
+
+export type TicketTypeScalarFieldEnum = (typeof TicketTypeScalarFieldEnum)[keyof typeof TicketTypeScalarFieldEnum]
 
 
 export const VoteScalarFieldEnum = {
@@ -1455,6 +1543,7 @@ export type GlobalOmitConfig = {
   admin?: Prisma.AdminOmit
   contestant?: Prisma.ContestantOmit
   event?: Prisma.EventOmit
+  ticketType?: Prisma.TicketTypeOmit
   vote?: Prisma.VoteOmit
   ticket?: Prisma.TicketOmit
   sponsor?: Prisma.SponsorOmit
