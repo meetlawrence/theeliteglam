@@ -5,7 +5,8 @@ export interface CreateEventInput {
   endDate: string;
   location: string;
   status?: "UPCOMING" | "ONGOING" | "COMPLETED" | "CANCELLED";
-  categories?: string[]; // Array of category names
+  categories?: string[];
+  // Array of category names
 }
 
 export interface UpdateEventInput {

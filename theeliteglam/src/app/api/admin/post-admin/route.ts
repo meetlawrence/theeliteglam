@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const result = await adminService.createAdmin(body, payload.role);
 
-    return NextResponse.json(result, { status: 201 });
+    return NextResponse.json(result, { status: result.status || 201 });
   } catch (error) {
     return NextResponse.json({ success: false, message: error }, { status: 400 });
   }

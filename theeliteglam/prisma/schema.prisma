@@ -66,6 +66,8 @@ model Contestant {
   score Float?
   rank  Int?
 
+  eventId              String
+  event                Event                @relation(fields: [eventId], references: [id])
   contestantCategories ContestantCategories
 
   votes Vote[]
@@ -93,14 +95,16 @@ model Event {
   endDate     DateTime
   location    String
   status      EventStatus @default(UPCOMING)
+  categories  String[]
 
-  categories String[]
-  tickets    Ticket[]
-  votes      Vote[]
-  sponsors   Sponsor[]
+  tickets  Ticket[]
+  votes    Vote[]
+  sponsors Sponsor[]
+  ticketTypes TicketType[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  contestants Contestant[]
 }
 
 enum EventStatus {
@@ -110,6 +114,15 @@ enum EventStatus {
   CANCELLED
 }
 
+model TicketType {
+  id       String   @id @default(cuid())
+  name     String
+  price    Float
+  capacity Int?
+  benefits String[]
+  eventId  String
+  event    Event    @relation(fields: [eventId], references: [id])
+}
 
 model Vote {
   id           String @id @default(cuid())
@@ -124,7 +137,6 @@ model Vote {
 
   @@unique([contestantId, eventId])
 }
-
 
 // ====================== TICKETS & SPONSORS ======================
 model Ticket {
@@ -184,6 +196,7 @@ model Subscription {
   @@unique([email])
 }
 
+// ====================== RefreshToken ======================
 model RefreshToken {
   id        String   @id @default(uuid())
   token     String   @unique
@@ -191,7 +204,7 @@ model RefreshToken {
   revoked   Boolean  @default(false)
   createdAt DateTime @default(now())
   adminId   String
-  admin     Admin    @relation(fields: [adminId], references: [id])
+  admin     Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
 
   @@map("refresh_tokens")
 }

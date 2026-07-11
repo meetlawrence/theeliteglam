@@ -13,6 +13,7 @@ export interface CreateContestantInput {
   city: string;
   country: string;
   contestantCategories: "MALE" | "FEMALE";
+  eventId: string;
 }
 
 export interface UpdateContestantInput {
@@ -27,6 +28,7 @@ export interface UpdateContestantInput {
   score?: number;
   rank?: number;
   contestantCategories?: "MALE" | "FEMALE";
+  eventId?: string;
 }
 
 export interface ContestantResponse {

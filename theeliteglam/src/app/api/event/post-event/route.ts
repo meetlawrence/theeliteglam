@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { eventService } from "../../../../back-end/services/event-service";
 import { authMiddleware } from "../../../../back-end/lib/route-middleware/admin";
 
@@ -15,7 +16,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const result = await eventService.createEvent(body, payload.role);
 
-    return NextResponse.json(result, { status: 201 });
+    return NextResponse.json(result, { status: result.status || 201 });
   } catch (error: any) {
     return NextResponse.json({ success: false, message: error.message }, { status: 400 });
   }

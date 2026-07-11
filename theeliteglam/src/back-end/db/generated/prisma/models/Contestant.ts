@@ -58,6 +58,7 @@ export type ContestantMinAggregateOutputType = {
   portfolio: string | null
   score: number | null
   rank: number | null
+  eventId: string | null
   contestantCategories: $Enums.ContestantCategories | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -81,6 +82,7 @@ export type ContestantMaxAggregateOutputType = {
   portfolio: string | null
   score: number | null
   rank: number | null
+  eventId: string | null
   contestantCategories: $Enums.ContestantCategories | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -104,6 +106,7 @@ export type ContestantCountAggregateOutputType = {
   portfolio: number
   score: number
   rank: number
+  eventId: number
   contestantCategories: number
   createdAt: number
   updatedAt: number
@@ -143,6 +146,7 @@ export type ContestantMinAggregateInputType = {
   portfolio?: true
   score?: true
   rank?: true
+  eventId?: true
   contestantCategories?: true
   createdAt?: true
   updatedAt?: true
@@ -166,6 +170,7 @@ export type ContestantMaxAggregateInputType = {
   portfolio?: true
   score?: true
   rank?: true
+  eventId?: true
   contestantCategories?: true
   createdAt?: true
   updatedAt?: true
@@ -189,6 +194,7 @@ export type ContestantCountAggregateInputType = {
   portfolio?: true
   score?: true
   rank?: true
+  eventId?: true
   contestantCategories?: true
   createdAt?: true
   updatedAt?: true
@@ -299,6 +305,7 @@ export type ContestantGroupByOutputType = {
   portfolio: string | null
   score: number | null
   rank: number | null
+  eventId: string
   contestantCategories: $Enums.ContestantCategories
   createdAt: Date
   updatedAt: Date
@@ -345,9 +352,11 @@ export type ContestantWhereInput = {
   portfolio?: Prisma.StringNullableFilter<"Contestant"> | string | null
   score?: Prisma.FloatNullableFilter<"Contestant"> | number | null
   rank?: Prisma.IntNullableFilter<"Contestant"> | number | null
+  eventId?: Prisma.StringFilter<"Contestant"> | string
   contestantCategories?: Prisma.EnumContestantCategoriesFilter<"Contestant"> | $Enums.ContestantCategories
   createdAt?: Prisma.DateTimeFilter<"Contestant"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Contestant"> | Date | string
+  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   votes?: Prisma.VoteListRelationFilter
 }
 
@@ -369,9 +378,11 @@ export type ContestantOrderByWithRelationInput = {
   portfolio?: Prisma.SortOrderInput | Prisma.SortOrder
   score?: Prisma.SortOrderInput | Prisma.SortOrder
   rank?: Prisma.SortOrderInput | Prisma.SortOrder
+  eventId?: Prisma.SortOrder
   contestantCategories?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  event?: Prisma.EventOrderByWithRelationInput
   votes?: Prisma.VoteOrderByRelationAggregateInput
 }
 
@@ -396,9 +407,11 @@ export type ContestantWhereUniqueInput = Prisma.AtLeast<{
   portfolio?: Prisma.StringNullableFilter<"Contestant"> | string | null
   score?: Prisma.FloatNullableFilter<"Contestant"> | number | null
   rank?: Prisma.IntNullableFilter<"Contestant"> | number | null
+  eventId?: Prisma.StringFilter<"Contestant"> | string
   contestantCategories?: Prisma.EnumContestantCategoriesFilter<"Contestant"> | $Enums.ContestantCategories
   createdAt?: Prisma.DateTimeFilter<"Contestant"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Contestant"> | Date | string
+  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   votes?: Prisma.VoteListRelationFilter
 }, "id" | "email">
 
@@ -420,6 +433,7 @@ export type ContestantOrderByWithAggregationInput = {
   portfolio?: Prisma.SortOrderInput | Prisma.SortOrder
   score?: Prisma.SortOrderInput | Prisma.SortOrder
   rank?: Prisma.SortOrderInput | Prisma.SortOrder
+  eventId?: Prisma.SortOrder
   contestantCategories?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -451,6 +465,7 @@ export type ContestantScalarWhereWithAggregatesInput = {
   portfolio?: Prisma.StringNullableWithAggregatesFilter<"Contestant"> | string | null
   score?: Prisma.FloatNullableWithAggregatesFilter<"Contestant"> | number | null
   rank?: Prisma.IntNullableWithAggregatesFilter<"Contestant"> | number | null
+  eventId?: Prisma.StringWithAggregatesFilter<"Contestant"> | string
   contestantCategories?: Prisma.EnumContestantCategoriesWithAggregatesFilter<"Contestant"> | $Enums.ContestantCategories
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Contestant"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Contestant"> | Date | string
@@ -477,6 +492,7 @@ export type ContestantCreateInput = {
   contestantCategories: $Enums.ContestantCategories
   createdAt?: Date | string
   updatedAt?: Date | string
+  event: Prisma.EventCreateNestedOneWithoutContestantsInput
   votes?: Prisma.VoteCreateNestedManyWithoutContestantInput
 }
 
@@ -498,6 +514,7 @@ export type ContestantUncheckedCreateInput = {
   portfolio?: string | null
   score?: number | null
   rank?: number | null
+  eventId: string
   contestantCategories: $Enums.ContestantCategories
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -525,6 +542,7 @@ export type ContestantUpdateInput = {
   contestantCategories?: Prisma.EnumContestantCategoriesFieldUpdateOperationsInput | $Enums.ContestantCategories
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  event?: Prisma.EventUpdateOneRequiredWithoutContestantsNestedInput
   votes?: Prisma.VoteUpdateManyWithoutContestantNestedInput
 }
 
@@ -546,6 +564,7 @@ export type ContestantUncheckedUpdateInput = {
   portfolio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
   contestantCategories?: Prisma.EnumContestantCategoriesFieldUpdateOperationsInput | $Enums.ContestantCategories
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -570,6 +589,7 @@ export type ContestantCreateManyInput = {
   portfolio?: string | null
   score?: number | null
   rank?: number | null
+  eventId: string
   contestantCategories: $Enums.ContestantCategories
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -616,6 +636,7 @@ export type ContestantUncheckedUpdateManyInput = {
   portfolio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
   contestantCategories?: Prisma.EnumContestantCategoriesFieldUpdateOperationsInput | $Enums.ContestantCategories
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -639,6 +660,7 @@ export type ContestantCountOrderByAggregateInput = {
   portfolio?: Prisma.SortOrder
   score?: Prisma.SortOrder
   rank?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
   contestantCategories?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -669,6 +691,7 @@ export type ContestantMaxOrderByAggregateInput = {
   portfolio?: Prisma.SortOrder
   score?: Prisma.SortOrder
   rank?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
   contestantCategories?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -692,6 +715,7 @@ export type ContestantMinOrderByAggregateInput = {
   portfolio?: Prisma.SortOrder
   score?: Prisma.SortOrder
   rank?: Prisma.SortOrder
+  eventId?: Prisma.SortOrder
   contestantCategories?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -702,6 +726,16 @@ export type ContestantSumOrderByAggregateInput = {
   weight?: Prisma.SortOrder
   score?: Prisma.SortOrder
   rank?: Prisma.SortOrder
+}
+
+export type ContestantListRelationFilter = {
+  every?: Prisma.ContestantWhereInput
+  some?: Prisma.ContestantWhereInput
+  none?: Prisma.ContestantWhereInput
+}
+
+export type ContestantOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type ContestantScalarRelationFilter = {
@@ -733,6 +767,48 @@ export type EnumContestantCategoriesFieldUpdateOperationsInput = {
   set?: $Enums.ContestantCategories
 }
 
+export type ContestantCreateNestedManyWithoutEventInput = {
+  create?: Prisma.XOR<Prisma.ContestantCreateWithoutEventInput, Prisma.ContestantUncheckedCreateWithoutEventInput> | Prisma.ContestantCreateWithoutEventInput[] | Prisma.ContestantUncheckedCreateWithoutEventInput[]
+  connectOrCreate?: Prisma.ContestantCreateOrConnectWithoutEventInput | Prisma.ContestantCreateOrConnectWithoutEventInput[]
+  createMany?: Prisma.ContestantCreateManyEventInputEnvelope
+  connect?: Prisma.ContestantWhereUniqueInput | Prisma.ContestantWhereUniqueInput[]
+}
+
+export type ContestantUncheckedCreateNestedManyWithoutEventInput = {
+  create?: Prisma.XOR<Prisma.ContestantCreateWithoutEventInput, Prisma.ContestantUncheckedCreateWithoutEventInput> | Prisma.ContestantCreateWithoutEventInput[] | Prisma.ContestantUncheckedCreateWithoutEventInput[]
+  connectOrCreate?: Prisma.ContestantCreateOrConnectWithoutEventInput | Prisma.ContestantCreateOrConnectWithoutEventInput[]
+  createMany?: Prisma.ContestantCreateManyEventInputEnvelope
+  connect?: Prisma.ContestantWhereUniqueInput | Prisma.ContestantWhereUniqueInput[]
+}
+
+export type ContestantUpdateManyWithoutEventNestedInput = {
+  create?: Prisma.XOR<Prisma.ContestantCreateWithoutEventInput, Prisma.ContestantUncheckedCreateWithoutEventInput> | Prisma.ContestantCreateWithoutEventInput[] | Prisma.ContestantUncheckedCreateWithoutEventInput[]
+  connectOrCreate?: Prisma.ContestantCreateOrConnectWithoutEventInput | Prisma.ContestantCreateOrConnectWithoutEventInput[]
+  upsert?: Prisma.ContestantUpsertWithWhereUniqueWithoutEventInput | Prisma.ContestantUpsertWithWhereUniqueWithoutEventInput[]
+  createMany?: Prisma.ContestantCreateManyEventInputEnvelope
+  set?: Prisma.ContestantWhereUniqueInput | Prisma.ContestantWhereUniqueInput[]
+  disconnect?: Prisma.ContestantWhereUniqueInput | Prisma.ContestantWhereUniqueInput[]
+  delete?: Prisma.ContestantWhereUniqueInput | Prisma.ContestantWhereUniqueInput[]
+  connect?: Prisma.ContestantWhereUniqueInput | Prisma.ContestantWhereUniqueInput[]
+  update?: Prisma.ContestantUpdateWithWhereUniqueWithoutEventInput | Prisma.ContestantUpdateWithWhereUniqueWithoutEventInput[]
+  updateMany?: Prisma.ContestantUpdateManyWithWhereWithoutEventInput | Prisma.ContestantUpdateManyWithWhereWithoutEventInput[]
+  deleteMany?: Prisma.ContestantScalarWhereInput | Prisma.ContestantScalarWhereInput[]
+}
+
+export type ContestantUncheckedUpdateManyWithoutEventNestedInput = {
+  create?: Prisma.XOR<Prisma.ContestantCreateWithoutEventInput, Prisma.ContestantUncheckedCreateWithoutEventInput> | Prisma.ContestantCreateWithoutEventInput[] | Prisma.ContestantUncheckedCreateWithoutEventInput[]
+  connectOrCreate?: Prisma.ContestantCreateOrConnectWithoutEventInput | Prisma.ContestantCreateOrConnectWithoutEventInput[]
+  upsert?: Prisma.ContestantUpsertWithWhereUniqueWithoutEventInput | Prisma.ContestantUpsertWithWhereUniqueWithoutEventInput[]
+  createMany?: Prisma.ContestantCreateManyEventInputEnvelope
+  set?: Prisma.ContestantWhereUniqueInput | Prisma.ContestantWhereUniqueInput[]
+  disconnect?: Prisma.ContestantWhereUniqueInput | Prisma.ContestantWhereUniqueInput[]
+  delete?: Prisma.ContestantWhereUniqueInput | Prisma.ContestantWhereUniqueInput[]
+  connect?: Prisma.ContestantWhereUniqueInput | Prisma.ContestantWhereUniqueInput[]
+  update?: Prisma.ContestantUpdateWithWhereUniqueWithoutEventInput | Prisma.ContestantUpdateWithWhereUniqueWithoutEventInput[]
+  updateMany?: Prisma.ContestantUpdateManyWithWhereWithoutEventInput | Prisma.ContestantUpdateManyWithWhereWithoutEventInput[]
+  deleteMany?: Prisma.ContestantScalarWhereInput | Prisma.ContestantScalarWhereInput[]
+}
+
 export type ContestantCreateNestedOneWithoutVotesInput = {
   create?: Prisma.XOR<Prisma.ContestantCreateWithoutVotesInput, Prisma.ContestantUncheckedCreateWithoutVotesInput>
   connectOrCreate?: Prisma.ContestantCreateOrConnectWithoutVotesInput
@@ -745,6 +821,107 @@ export type ContestantUpdateOneRequiredWithoutVotesNestedInput = {
   upsert?: Prisma.ContestantUpsertWithoutVotesInput
   connect?: Prisma.ContestantWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ContestantUpdateToOneWithWhereWithoutVotesInput, Prisma.ContestantUpdateWithoutVotesInput>, Prisma.ContestantUncheckedUpdateWithoutVotesInput>
+}
+
+export type ContestantCreateWithoutEventInput = {
+  id?: string
+  name: string
+  email: string
+  gender: $Enums.Gender
+  avatar?: string | null
+  phone: string
+  dateOfBirth: Date | string
+  city: string
+  country: string
+  isVerified?: boolean
+  stageName?: string | null
+  height?: number | null
+  weight?: number | null
+  bio?: string | null
+  portfolio?: string | null
+  score?: number | null
+  rank?: number | null
+  contestantCategories: $Enums.ContestantCategories
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  votes?: Prisma.VoteCreateNestedManyWithoutContestantInput
+}
+
+export type ContestantUncheckedCreateWithoutEventInput = {
+  id?: string
+  name: string
+  email: string
+  gender: $Enums.Gender
+  avatar?: string | null
+  phone: string
+  dateOfBirth: Date | string
+  city: string
+  country: string
+  isVerified?: boolean
+  stageName?: string | null
+  height?: number | null
+  weight?: number | null
+  bio?: string | null
+  portfolio?: string | null
+  score?: number | null
+  rank?: number | null
+  contestantCategories: $Enums.ContestantCategories
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  votes?: Prisma.VoteUncheckedCreateNestedManyWithoutContestantInput
+}
+
+export type ContestantCreateOrConnectWithoutEventInput = {
+  where: Prisma.ContestantWhereUniqueInput
+  create: Prisma.XOR<Prisma.ContestantCreateWithoutEventInput, Prisma.ContestantUncheckedCreateWithoutEventInput>
+}
+
+export type ContestantCreateManyEventInputEnvelope = {
+  data: Prisma.ContestantCreateManyEventInput | Prisma.ContestantCreateManyEventInput[]
+  skipDuplicates?: boolean
+}
+
+export type ContestantUpsertWithWhereUniqueWithoutEventInput = {
+  where: Prisma.ContestantWhereUniqueInput
+  update: Prisma.XOR<Prisma.ContestantUpdateWithoutEventInput, Prisma.ContestantUncheckedUpdateWithoutEventInput>
+  create: Prisma.XOR<Prisma.ContestantCreateWithoutEventInput, Prisma.ContestantUncheckedCreateWithoutEventInput>
+}
+
+export type ContestantUpdateWithWhereUniqueWithoutEventInput = {
+  where: Prisma.ContestantWhereUniqueInput
+  data: Prisma.XOR<Prisma.ContestantUpdateWithoutEventInput, Prisma.ContestantUncheckedUpdateWithoutEventInput>
+}
+
+export type ContestantUpdateManyWithWhereWithoutEventInput = {
+  where: Prisma.ContestantScalarWhereInput
+  data: Prisma.XOR<Prisma.ContestantUpdateManyMutationInput, Prisma.ContestantUncheckedUpdateManyWithoutEventInput>
+}
+
+export type ContestantScalarWhereInput = {
+  AND?: Prisma.ContestantScalarWhereInput | Prisma.ContestantScalarWhereInput[]
+  OR?: Prisma.ContestantScalarWhereInput[]
+  NOT?: Prisma.ContestantScalarWhereInput | Prisma.ContestantScalarWhereInput[]
+  id?: Prisma.StringFilter<"Contestant"> | string
+  name?: Prisma.StringFilter<"Contestant"> | string
+  email?: Prisma.StringFilter<"Contestant"> | string
+  gender?: Prisma.EnumGenderFilter<"Contestant"> | $Enums.Gender
+  avatar?: Prisma.StringNullableFilter<"Contestant"> | string | null
+  phone?: Prisma.StringFilter<"Contestant"> | string
+  dateOfBirth?: Prisma.DateTimeFilter<"Contestant"> | Date | string
+  city?: Prisma.StringFilter<"Contestant"> | string
+  country?: Prisma.StringFilter<"Contestant"> | string
+  isVerified?: Prisma.BoolFilter<"Contestant"> | boolean
+  stageName?: Prisma.StringNullableFilter<"Contestant"> | string | null
+  height?: Prisma.FloatNullableFilter<"Contestant"> | number | null
+  weight?: Prisma.FloatNullableFilter<"Contestant"> | number | null
+  bio?: Prisma.StringNullableFilter<"Contestant"> | string | null
+  portfolio?: Prisma.StringNullableFilter<"Contestant"> | string | null
+  score?: Prisma.FloatNullableFilter<"Contestant"> | number | null
+  rank?: Prisma.IntNullableFilter<"Contestant"> | number | null
+  eventId?: Prisma.StringFilter<"Contestant"> | string
+  contestantCategories?: Prisma.EnumContestantCategoriesFilter<"Contestant"> | $Enums.ContestantCategories
+  createdAt?: Prisma.DateTimeFilter<"Contestant"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Contestant"> | Date | string
 }
 
 export type ContestantCreateWithoutVotesInput = {
@@ -768,6 +945,7 @@ export type ContestantCreateWithoutVotesInput = {
   contestantCategories: $Enums.ContestantCategories
   createdAt?: Date | string
   updatedAt?: Date | string
+  event: Prisma.EventCreateNestedOneWithoutContestantsInput
 }
 
 export type ContestantUncheckedCreateWithoutVotesInput = {
@@ -788,6 +966,7 @@ export type ContestantUncheckedCreateWithoutVotesInput = {
   portfolio?: string | null
   score?: number | null
   rank?: number | null
+  eventId: string
   contestantCategories: $Enums.ContestantCategories
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -830,9 +1009,105 @@ export type ContestantUpdateWithoutVotesInput = {
   contestantCategories?: Prisma.EnumContestantCategoriesFieldUpdateOperationsInput | $Enums.ContestantCategories
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  event?: Prisma.EventUpdateOneRequiredWithoutContestantsNestedInput
 }
 
 export type ContestantUncheckedUpdateWithoutVotesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stageName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  height?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  weight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
+  contestantCategories?: Prisma.EnumContestantCategoriesFieldUpdateOperationsInput | $Enums.ContestantCategories
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ContestantCreateManyEventInput = {
+  id?: string
+  name: string
+  email: string
+  gender: $Enums.Gender
+  avatar?: string | null
+  phone: string
+  dateOfBirth: Date | string
+  city: string
+  country: string
+  isVerified?: boolean
+  stageName?: string | null
+  height?: number | null
+  weight?: number | null
+  bio?: string | null
+  portfolio?: string | null
+  score?: number | null
+  rank?: number | null
+  contestantCategories: $Enums.ContestantCategories
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ContestantUpdateWithoutEventInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stageName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  height?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  weight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contestantCategories?: Prisma.EnumContestantCategoriesFieldUpdateOperationsInput | $Enums.ContestantCategories
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  votes?: Prisma.VoteUpdateManyWithoutContestantNestedInput
+}
+
+export type ContestantUncheckedUpdateWithoutEventInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stageName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  height?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  weight?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  score?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  rank?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  contestantCategories?: Prisma.EnumContestantCategoriesFieldUpdateOperationsInput | $Enums.ContestantCategories
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  votes?: Prisma.VoteUncheckedUpdateManyWithoutContestantNestedInput
+}
+
+export type ContestantUncheckedUpdateManyWithoutEventInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
@@ -904,9 +1179,11 @@ export type ContestantSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   portfolio?: boolean
   score?: boolean
   rank?: boolean
+  eventId?: boolean
   contestantCategories?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   votes?: boolean | Prisma.Contestant$votesArgs<ExtArgs>
   _count?: boolean | Prisma.ContestantCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["contestant"]>
@@ -929,9 +1206,11 @@ export type ContestantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   portfolio?: boolean
   score?: boolean
   rank?: boolean
+  eventId?: boolean
   contestantCategories?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["contestant"]>
 
 export type ContestantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -952,9 +1231,11 @@ export type ContestantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   portfolio?: boolean
   score?: boolean
   rank?: boolean
+  eventId?: boolean
   contestantCategories?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["contestant"]>
 
 export type ContestantSelectScalar = {
@@ -975,22 +1256,29 @@ export type ContestantSelectScalar = {
   portfolio?: boolean
   score?: boolean
   rank?: boolean
+  eventId?: boolean
   contestantCategories?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ContestantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "gender" | "avatar" | "phone" | "dateOfBirth" | "city" | "country" | "isVerified" | "stageName" | "height" | "weight" | "bio" | "portfolio" | "score" | "rank" | "contestantCategories" | "createdAt" | "updatedAt", ExtArgs["result"]["contestant"]>
+export type ContestantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "gender" | "avatar" | "phone" | "dateOfBirth" | "city" | "country" | "isVerified" | "stageName" | "height" | "weight" | "bio" | "portfolio" | "score" | "rank" | "eventId" | "contestantCategories" | "createdAt" | "updatedAt", ExtArgs["result"]["contestant"]>
 export type ContestantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   votes?: boolean | Prisma.Contestant$votesArgs<ExtArgs>
   _count?: boolean | Prisma.ContestantCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type ContestantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type ContestantIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type ContestantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+}
+export type ContestantIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+}
 
 export type $ContestantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Contestant"
   objects: {
+    event: Prisma.$EventPayload<ExtArgs>
     votes: Prisma.$VotePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1011,6 +1299,7 @@ export type $ContestantPayload<ExtArgs extends runtime.Types.Extensions.Internal
     portfolio: string | null
     score: number | null
     rank: number | null
+    eventId: string
     contestantCategories: $Enums.ContestantCategories
     createdAt: Date
     updatedAt: Date
@@ -1408,6 +1697,7 @@ readonly fields: ContestantFieldRefs;
  */
 export interface Prisma__ContestantClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  event<T extends Prisma.EventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventDefaultArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   votes<T extends Prisma.Contestant$votesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Contestant$votesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1455,6 +1745,7 @@ export interface ContestantFieldRefs {
   readonly portfolio: Prisma.FieldRef<"Contestant", 'String'>
   readonly score: Prisma.FieldRef<"Contestant", 'Float'>
   readonly rank: Prisma.FieldRef<"Contestant", 'Int'>
+  readonly eventId: Prisma.FieldRef<"Contestant", 'String'>
   readonly contestantCategories: Prisma.FieldRef<"Contestant", 'ContestantCategories'>
   readonly createdAt: Prisma.FieldRef<"Contestant", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Contestant", 'DateTime'>
@@ -1712,6 +2003,10 @@ export type ContestantCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exte
    */
   data: Prisma.ContestantCreateManyInput | Prisma.ContestantCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContestantIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1782,6 +2077,10 @@ export type ContestantUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Exte
    * Limit how many Contestants to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ContestantIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

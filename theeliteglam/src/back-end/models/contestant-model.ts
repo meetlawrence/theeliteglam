@@ -2,6 +2,12 @@ import { prisma } from "../db/db-connect";
 import type { CreateContestantInput, UpdateContestantInput } from "../types/contestant-types";
 
 export class ContestantModel {
+  async findByEmail(email: string) {
+    return prisma.contestant.findUnique({
+      where: { email: email.toLowerCase() },
+    });
+  }
+
   async create(data: CreateContestantInput) {
     return await prisma.contestant.create({
       data: {
@@ -18,6 +24,7 @@ export class ContestantModel {
         city: data.city,
         country: data.country,
         contestantCategories: data.contestantCategories,
+        eventId: data.eventId,
       },
     });
   }
@@ -30,6 +37,13 @@ export class ContestantModel {
 
   async findAll() {
     return await prisma.contestant.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+  }
+
+  async findByEventId(eventId: string) {
+    return await prisma.contestant.findMany({
+      where: { eventId },
       orderBy: { createdAt: "desc" },
     });
   }

@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { categoryService } from "../../../../back-end/services/category-service";
 import { authMiddleware } from "../../../../back-end/lib/route-middleware/admin";
 
@@ -19,7 +20,7 @@ export async function GET(req: NextRequest) {
     }
 
     const result = await categoryService.getCategoriesByEvent(eventId);
-    return NextResponse.json(result);
+    return NextResponse.json(result, { status: result.status || 200 });
   } catch (error: any) {
     return NextResponse.json({ success: false, message: error.message }, { status: 401 });
   }

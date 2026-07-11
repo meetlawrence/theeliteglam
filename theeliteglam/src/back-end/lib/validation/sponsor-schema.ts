@@ -22,5 +22,5 @@ export const sponsorIdParamSchema = z.object({
 });
 
 export const eventIdSchema = z.object({
-  eventId: z.string().cuid().min(1, "Sponsor ID is required"),
+  eventId: z.string().cuid().min(1, "Event ID is required"),
 });

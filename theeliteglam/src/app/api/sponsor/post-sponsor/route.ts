@@ -1,4 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { sponsorService } from "../../../../back-end/services/sponsor-service";
 import { authMiddleware } from "../../../../back-end/lib/route-middleware/admin";
 
@@ -14,8 +15,8 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const result = await sponsorService.createSponsor(body, payload.role);
 
-    return NextResponse.json(result, { status: 201 });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 400 });
+    return NextResponse.json(result, { status: result.status || 200 });
+  } catch (error) {
+    return NextResponse.json({ success: false, message: error }, { status: 404 });
   }
 }

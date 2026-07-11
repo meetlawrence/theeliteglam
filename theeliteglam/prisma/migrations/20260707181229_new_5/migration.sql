@@ -9,7 +9,7 @@
 
 */
 -- CreateEnum
-CREATE TYPE "ContestantCategory" AS ENUM ('MALE', 'FEMALE');
+CREATE TYPE "ContestantCategories" AS ENUM ('MALE', 'FEMALE');
 
 -- AlterEnum
 BEGIN;
@@ -29,9 +29,12 @@ ALTER TABLE "ContestantCategory" DROP CONSTRAINT "ContestantCategory_categoryId_
 -- DropForeignKey
 ALTER TABLE "ContestantCategory" DROP CONSTRAINT "ContestantCategory_contestantId_fkey";
 
+-- DropForeignKey
+ALTER TABLE "refresh_tokens" DROP CONSTRAINT "refresh_tokens_adminId_fkey";
+
 -- AlterTable
 ALTER TABLE "Contestant" DROP COLUMN "password",
-ADD COLUMN     "contestantCategories" "ContestantCategory" NOT NULL;
+ADD COLUMN     "contestantCategories" "ContestantCategories" NOT NULL;
 
 -- AlterTable
 ALTER TABLE "Event" ADD COLUMN     "categories" TEXT[];
@@ -41,3 +44,6 @@ DROP TABLE "Category";
 
 -- DropTable
 DROP TABLE "ContestantCategory";
+
+-- AddForeignKey
+ALTER TABLE "refresh_tokens" ADD CONSTRAINT "refresh_tokens_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "admins"("id") ON DELETE CASCADE ON UPDATE CASCADE;

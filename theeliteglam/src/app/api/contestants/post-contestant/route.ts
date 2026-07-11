@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const result = await contestantService.createContestant(body);
 
-    return NextResponse.json(result, { status: 201 });
+    return NextResponse.json(result, { status: result.status || 200 });
   } catch (error) {
     return NextResponse.json({ success: false, message: error }, { status: 400 });
   }

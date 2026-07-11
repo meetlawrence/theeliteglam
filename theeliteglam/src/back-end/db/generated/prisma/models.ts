@@ -11,6 +11,7 @@
 export type * from './models/Admin'
 export type * from './models/Contestant'
 export type * from './models/Event'
+export type * from './models/TicketType'
 export type * from './models/Vote'
 export type * from './models/Ticket'
 export type * from './models/Sponsor'

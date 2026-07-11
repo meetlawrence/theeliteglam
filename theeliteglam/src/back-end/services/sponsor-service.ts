@@ -13,23 +13,24 @@ export class SponsorService {
   async createSponsor(data: CreateSponsorInput, currentUserRole: string) {
     try {
       if (!["ADMIN", "SUPER_ADMIN"].includes(currentUserRole)) {
-        throw new Error("Access denied.");
+        return { success: false, error: "Access denied.", status: 403 };
       }
       const validation = createSponsorSchema.safeParse(data);
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { status: 400, success: false, error: formatZodError(validation.error) };
       }
 
       const sponsor = await sponsorModel.create(validation.data);
 
       return {
+        status: 200,
         success: true,
         message: "Sponsor created successfully",
         data: sponsor,
       };
     } catch (error) {
       console.error("Create sponsor error:", error);
-      return { success: false, error: error || "Failed to create sponsor" };
+      return { success: false, error: error || "Failed to create sponsor", status: 500 };
     }
   }
 
@@ -37,13 +38,13 @@ export class SponsorService {
     try {
       const validation = eventIdSchema.safeParse({ eventId });
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { success: false, error: formatZodError(validation.error), status: 400 };
       }
       const sponsors = await sponsorModel.findByEventId(validation.data.eventId);
-      return { success: true, data: sponsors };
+      return { success: true, data: sponsors, status: 200 };
     } catch (error) {
       console.error("Get sponsors error:", error);
-      return { success: false, error: error || "Failed to fetch sponsors" };
+      return { success: false, error: error || "Failed to fetch sponsors", status: 500 };
     }
   }
 
@@ -51,55 +52,57 @@ export class SponsorService {
     try {
       const validation = sponsorIdParamSchema.safeParse({ id });
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { success: false, error: formatZodError(validation.error), status: 400 };
       }
       const sponsor = await sponsorModel.findById(validation.data.id);
-      if (!sponsor) throw new Error("Sponsor not found");
+      if (!sponsor) {
+        return { success: false, error: "Sponsor not found", status: 404 };
+      }
 
-      return { success: true, data: sponsor };
+      return { success: true, data: sponsor, status: 200 };
     } catch (error) {
       console.error("Get sponsor error:", error);
-      return { success: false, error: error || "Failed to fetch sponsor" };
+      return { success: false, error: error || "Failed to fetch sponsor", status: 500 };
     }
   }
 
   async updateSponsor(id: string, data: UpdateSponsorInput, currentUserRole: string) {
     try {
       if (!["ADMIN", "SUPER_ADMIN"].includes(currentUserRole)) {
-        throw new Error("Access denied.");
+        return { success: false, error: "Access denied.", status: 403 };
       }
       const validation = sponsorIdParamSchema.safeParse({ id });
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { success: false, error: formatZodError(validation.error), status: 400 };
       }
       const validation2 = updateSponsorSchema.safeParse(data);
       if (!validation2.success) {
-        return { success: false, error: formatZodError(validation2.error) };
+        return { success: false, error: formatZodError(validation2.error), status: 400 };
       }
 
       const sponsor = await sponsorModel.update(validation.data.id, validation2.data);
-      return { success: true, message: "Sponsor updated successfully", data: sponsor };
+      return { success: true, message: "Sponsor updated successfully", data: sponsor, status: 200 };
     } catch (error) {
       console.error("Update sponsor error:", error);
-      return { success: false, error: error || "Failed to update sponsor" };
+      return { success: false, error: error || "Failed to update sponsor", status: 500 };
     }
   }
 
   async deleteSponsor(id: string, currentUserRole: string) {
     try {
       if (currentUserRole !== "SUPER_ADMIN") {
-        throw new Error("Only SUPER_ADMIN can delete sponsors.");
+        return { success: false, error: "Only SUPER_ADMIN can delete sponsors.", status: 403 };
       }
       const validation = sponsorIdParamSchema.safeParse({ id });
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { success: false, error: formatZodError(validation.error), status: 400 };
       }
 
       await sponsorModel.delete(validation.data.id);
-      return { success: true, message: "Sponsor deleted successfully" };
+      return { success: true, message: "Sponsor deleted successfully", status: 200 };
     } catch (error) {
       console.error("Delete sponsor error:", error);
-      return { success: false, error: error || "Failed to delete sponsor" };
+      return { success: false, error: error || "Failed to delete sponsor", status: 500 };
     }
   }
 }
