@@ -4,8 +4,8 @@ import {
   CreateTicketTypeSchema,
   UpdateTicketTypeSchema,
   ticketTypeIdSchema,
-  ticketTypEventchema,
-} from "../lib/validation/ticket-shema";
+  ticketTypEventSchema,
+} from "../lib/validation/ticket-schema";
 
 import { formatZodError } from "../lib/utils/helper";
 
@@ -35,7 +35,7 @@ export class TicketTypeService {
 
   async getTicketTypesByEventId(eventId: string) {
     try {
-      const validation = ticketTypEventchema.safeParse({ eventId });
+      const validation = ticketTypEventSchema.safeParse({ eventId });
       if (!validation.success) {
         return { success: false, error: formatZodError(validation.error), status: 400 };
       }
