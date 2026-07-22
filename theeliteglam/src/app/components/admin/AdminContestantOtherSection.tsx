@@ -35,7 +35,9 @@ export default function AdminContestantOtherSection({
         {contestants.map((contestant) => {
           const status = statusMap[contestant.id] ?? "active";
           const highlighted = highlightedId === contestant.id;
-          const rowClass = highlighted ? "border-[#C9A84C] bg-[#111006]" : "border-[#1a170e] bg-[#0D0D0D]";
+          const rowClass = highlighted
+            ? "border-[#C9A84C] bg-[#111006]"
+            : "border-[#1a170e] bg-[#0D0D0D]";
 
           return (
             <div
@@ -44,12 +46,18 @@ export default function AdminContestantOtherSection({
               className={`${rowClass} border p-3 flex items-center gap-3`}
             >
               <div className="relative w-14 h-14">
-                <img src={contestant.image} alt={contestant.name} className="object-cover w-full h-full" />
+                <img
+                  src={contestant.image}
+                  alt={contestant.name}
+                  className="object-cover w-full h-full"
+                />
               </div>
               <div className="flex-1">
                 <button onClick={() => onSelect(contestant)} className="text-left">
                   <div className="font-serif text-sm text-[#F5EDD6]">{contestant.name}</div>
-                  <div className="text-[0.75rem] text-[#9A8C6A]">{contestant.number} · {contestant.state}</div>
+                  <div className="text-[0.75rem] text-[#9A8C6A]">
+                    {contestant.number} · {contestant.state}
+                  </div>
                 </button>
               </div>
               <div className="text-xs text-[#9A8C6A]">{statusLabel(status)}</div>

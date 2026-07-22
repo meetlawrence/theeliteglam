@@ -58,7 +58,11 @@ export default function AdminContestantCategorySection({
                       onClick={() => onSelect(contestant)}
                       className="flex items-center gap-3 text-left w-full"
                     >
-                      <img src={contestant.image} alt={contestant.name} className="w-10 h-10 object-cover" />
+                      <img
+                        src={contestant.image}
+                        alt={contestant.name}
+                        className="w-10 h-10 object-cover"
+                      />
                       <div>
                         <div className="font-serif text-sm text-[#F5EDD6]">{contestant.name}</div>
                         <div className="text-[0.7rem] text-[#9A8C6A]">{contestant.number}</div>
@@ -66,7 +70,9 @@ export default function AdminContestantCategorySection({
                     </button>
                   </td>
                   <td className="px-3 py-3 align-top text-[#F5EDD6]">{contestant.state}</td>
-                  <td className="px-3 py-3 align-top text-[#F5EDD6]">{contestant.votes.toLocaleString()}</td>
+                  <td className="px-3 py-3 align-top text-[#F5EDD6]">
+                    {contestant.votes.toLocaleString()}
+                  </td>
                   <td className="px-3 py-3 align-top text-[#9A8C6A]">{statusLabel(status)}</td>
                   <td className="px-3 py-3 align-top">
                     <AdminButton label="Edit" variant="ghost" onClick={() => onEdit(contestant)} />

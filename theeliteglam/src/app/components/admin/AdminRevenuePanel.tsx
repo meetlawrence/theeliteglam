@@ -1,6 +1,15 @@
 "use client";
 
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, CartesianGrid } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  Cell,
+  CartesianGrid,
+} from "recharts";
 import { AdminButton } from "./AdminButton";
 
 interface RevenuePoint {
@@ -19,12 +28,13 @@ interface RevenueStats {
 function calculateStats(data: RevenuePoint[]): RevenueStats {
   const total = data.reduce((sum, item) => sum + item.value, 0);
   const average = Math.round(total / data.length);
-  const highest = Math.max(...data.map(d => d.value));
-  const highestWeek = data.find(d => d.value === highest)?.label || "";
-  
-  const growth = data.length > 1 
-    ? Math.round(((data[data.length - 1].value - data[0].value) / data[0].value) * 100)
-    : 0;
+  const highest = Math.max(...data.map((d) => d.value));
+  const highestWeek = data.find((d) => d.value === highest)?.label || "";
+
+  const growth =
+    data.length > 1
+      ? Math.round(((data[data.length - 1].value - data[0].value) / data[0].value) * 100)
+      : 0;
 
   return { total, average, highest, highestWeek, growth: `${growth > 0 ? "+" : ""}${growth}%` };
 }
@@ -66,16 +76,22 @@ export function AdminRevenuePanel({ data }: { data: RevenuePoint[] }) {
         </div>
         <div className="bg-[#0d0d0d] border border-[#1a170e] p-2">
           <p className="text-[#9A8C6A] text-xs uppercase tracking-widest mb-0.5">Weekly Avg</p>
-          <p className="text-[#F5EDD6] font-serif text-base">${(stats.average / 1000).toFixed(1)}K</p>
+          <p className="text-[#F5EDD6] font-serif text-base">
+            ${(stats.average / 1000).toFixed(1)}K
+          </p>
         </div>
         <div className="bg-[#0d0d0d] border border-[#1a170e] p-2">
           <p className="text-[#9A8C6A] text-xs uppercase tracking-widest mb-0.5">Highest Week</p>
-          <p className="text-[#F5EDD6] font-serif text-base">${(stats.highest / 1000).toFixed(1)}K</p>
+          <p className="text-[#F5EDD6] font-serif text-base">
+            ${(stats.highest / 1000).toFixed(1)}K
+          </p>
           <p className="text-[#9A8C6A] text-xs">{stats.highestWeek}</p>
         </div>
         <div className="bg-[#0d0d0d] border border-[#1a170e] p-2">
           <p className="text-[#9A8C6A] text-xs uppercase tracking-widest mb-0.5">Growth</p>
-          <p className={`font-serif text-base ${stats.growth.includes("+") ? "text-[#4ade80]" : "text-[#ef4444]"}`}>
+          <p
+            className={`font-serif text-base ${stats.growth.includes("+") ? "text-[#4ade80]" : "text-[#ef4444]"}`}
+          >
             {stats.growth}
           </p>
         </div>
@@ -84,8 +100,21 @@ export function AdminRevenuePanel({ data }: { data: RevenuePoint[] }) {
       <ResponsiveContainer width="100%" height={240}>
         <BarChart data={data} margin={{ top: 20, right: 20, left: 0, bottom: 20 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#1a170e" vertical={false} />
-          <XAxis dataKey="label" stroke="#444" tick={{ fontSize: 11, fill: "#9A8C6A" }} axisLine={{ stroke: "#1a170e" }} tickLine={false} />
-          <YAxis stroke="#1a170e" tick={{ fontSize: 11, fill: "#9A8C6A" }} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}K`} axisLine={false} tickLine={false} width={50} />
+          <XAxis
+            dataKey="label"
+            stroke="#444"
+            tick={{ fontSize: 11, fill: "#9A8C6A" }}
+            axisLine={{ stroke: "#1a170e" }}
+            tickLine={false}
+          />
+          <YAxis
+            stroke="#1a170e"
+            tick={{ fontSize: 11, fill: "#9A8C6A" }}
+            tickFormatter={(v) => `$${(v / 1000).toFixed(0)}K`}
+            axisLine={false}
+            tickLine={false}
+            width={50}
+          />
           <Tooltip content={<CustomTooltip />} />
           <Bar dataKey="value" isAnimationActive animationDuration={800}>
             {data.map((entry, index) => (

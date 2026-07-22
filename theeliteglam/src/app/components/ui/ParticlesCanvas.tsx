@@ -70,18 +70,8 @@ export function ParticleCanvas() {
     window.addEventListener("resize", resize);
 
     const drawGlow = (particle: Particle) => {
-      const glowStrength = Math.max(
-        0,
-        Math.min(1, (particle.life / particle.baseLife) * particle.glow),
-      );
-      const gradient = ctx.createRadialGradient(
-        particle.x,
-        particle.y,
-        0,
-        particle.x,
-        particle.y,
-        particle.radius * 4,
-      );
+      const glowStrength = Math.max(0, Math.min(1, (particle.life / particle.baseLife) * particle.glow));
+      const gradient = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, particle.radius * 4);
       gradient.addColorStop(0, `hsla(${particle.hue}, 92%, 75%, ${0.18 * glowStrength})`);
       gradient.addColorStop(0.35, `hsla(${particle.hue}, 92%, 75%, ${0.05 * glowStrength})`);
       gradient.addColorStop(1, "rgba(0,0,0,0)");

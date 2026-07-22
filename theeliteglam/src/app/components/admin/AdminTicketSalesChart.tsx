@@ -1,6 +1,14 @@
 "use client";
 
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
+import {
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+} from "recharts";
 import type { TicketSalePoint } from "./AdminTicketTypes";
 
 export default function AdminTicketSalesChart({ data }: { data: TicketSalePoint[] }) {
@@ -22,10 +30,32 @@ export default function AdminTicketSalesChart({ data }: { data: TicketSalePoint[
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#1a170e" vertical={false} />
-            <XAxis dataKey="day" stroke="#9A8C6A" tick={{ fontSize: 11, fill: "#9A8C6A" }} axisLine={false} tickLine={false} />
-            <YAxis stroke="#9A8C6A" tick={{ fontSize: 11, fill: "#9A8C6A" }} axisLine={false} tickLine={false} width={40} />
-            <Tooltip contentStyle={{ background: "#080808", borderColor: "#1a170e" }} labelStyle={{ color: "#F5EDD6" }} formatter={(value) => [`${value}`, "Tickets"]} />
-            <Area type="monotone" dataKey="sold" stroke="#C9A84C" fillOpacity={1} fill="url(#colorSold)" />
+            <XAxis
+              dataKey="day"
+              stroke="#9A8C6A"
+              tick={{ fontSize: 11, fill: "#9A8C6A" }}
+              axisLine={false}
+              tickLine={false}
+            />
+            <YAxis
+              stroke="#9A8C6A"
+              tick={{ fontSize: 11, fill: "#9A8C6A" }}
+              axisLine={false}
+              tickLine={false}
+              width={40}
+            />
+            <Tooltip
+              contentStyle={{ background: "#080808", borderColor: "#1a170e" }}
+              labelStyle={{ color: "#F5EDD6" }}
+              formatter={(value) => [`${value}`, "Tickets"]}
+            />
+            <Area
+              type="monotone"
+              dataKey="sold"
+              stroke="#C9A84C"
+              fillOpacity={1}
+              fill="url(#colorSold)"
+            />
           </AreaChart>
         </ResponsiveContainer>
       </div>

@@ -1,7 +1,6 @@
 /* Tailwind directives */
 @import "tailwindcss";
 
-
 @theme {
   /* Colors */
   --color-background: #080808;
@@ -12,6 +11,9 @@
   --color-popover-foreground: #F5EDD6;
   --color-primary: #C9A84C;
   --color-primary-foreground: #080808;
+  --color-gold: #C9A84C;
+  --color-gold-dark: #8B6914;
+  --color-gold-light: #F0C04A;
   --color-secondary: #1A1A1A;
   --color-secondary-foreground: #C9A84C;
   --color-muted: #1E1E1E;
@@ -33,190 +35,12 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* Font Weights */
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-
+  /* Fonts */
   --font-cinzel: "Cinzel", serif;
   --font-raleway: "Raleway", sans-serif;
   --font-playfair: "Playfair Display", serif;
-}
 
-/* Dark Mode Variant */
-@variant dark (&:where(.dark, .dark *));
-
-@layer utilities {
-  .font-cinzel {
-    font-family: var(--font-cinzel);
-  }
-
-  .font-raleway {
-    font-family: var(--font-raleway);
-  }
-
-  .font-playfair {
-    font-family: var(--font-playfair);
-  }
-
-  /* Color aliases for voting modal */
-  .bg-gold {
-    @apply bg-primary;
-  }
-
-  .bg-gold\/4 {
-    @apply bg-primary/4;
-  }
-
-  .bg-gold\/5 {
-    @apply bg-primary/5;
-  }
-
-  .bg-gold\/6 {
-    @apply bg-primary/6;
-  }
-
-  .bg-gold\/8 {
-    @apply bg-primary/8;
-  }
-
-  .border-gold {
-    @apply border-primary;
-  }
-
-  .border-gold\/4 {
-    @apply border-primary/4;
-  }
-
-  .border-gold\/8 {
-    @apply border-primary/8;
-  }
-
-  .border-gold\/10 {
-    @apply border-primary/10;
-  }
-
-  .border-gold\/12 {
-    @apply border-primary/12;
-  }
-
-  .border-gold\/15 {
-    @apply border-primary/15;
-  }
-
-  .border-gold\/20 {
-    @apply border-primary/20;
-  }
-
-  .border-gold\/22 {
-    @apply border-primary/22;
-  }
-
-  .border-gold\/25 {
-    @apply border-primary/25;
-  }
-
-  .border-gold\/30 {
-    @apply border-primary/30;
-  }
-
-  .border-gold\/35 {
-    @apply border-primary/35;
-  }
-
-  .border-gold\/50 {
-    @apply border-primary/50;
-  }
-
-  .text-gold {
-    @apply text-primary;
-  }
-
-  .text-cream {
-    @apply text-foreground;
-  }
-
-  .text-muted {
-    @apply text-muted-foreground;
-  }
-
-  .text-muted-light {
-    @apply text-muted-foreground/80;
-  } 
-
-  .text-muted-dark {
-    @apply text-muted-foreground/60;
-  }
-
-  .text-tan {
-    @apply text-muted-foreground/75;
-  }
-
-  .text-highlight {
-    @apply text-accent;
-  }
-
-  .bg-gradient-to-br {
-    @apply bg-gradient-to-br;
-  }
-
-  .from-gold {
-    @apply from-primary;
-  }
-
-  .to-gold-dark {
-    @apply to-primary/75;
-  }
-
-  .shadow-gold {
-    @apply shadow-primary;
-  }
-
-  .shadow-gold\/35 {
-    @apply shadow-primary/35;
-  }
-
-  .hover\:bg-gold\/10:hover {
-    @apply hover:bg-primary/10;
-  }
-
-  .hover\:shadow-gold\/35:hover {
-    @apply hover:shadow-primary/35;
-  }
-
-  .z-600 {
-    z-index: 600;
-  }
-
-  .z-500 {
-    z-index: 500;
-  }
-
-  .w-13 {
-    width: 3.25rem;
-  }
-
-  .h-13 {
-    height: 3.25rem;
-  }
-
-  .w-15 {
-    width: 3.75rem;
-  }
-
-  .h-15 {
-    height: 3.75rem;
-  }
-
-  .w-16 {
-    width: 4rem;
-  }
-
-  .h-16 {
-    height: 4rem;
-  }
-}
-
-@theme {
+  /* Animations */
   --animate-breathe: breathe 4s ease-in-out infinite;
 
   @keyframes breathe {
@@ -235,7 +59,6 @@
     @apply border-border outline-ring/50;
   }
 
-  /* Typography defaults */
   h1 {
     @apply text-2xl font-medium leading-normal;
   }
@@ -257,15 +80,19 @@
   input {
     @apply text-base font-normal leading-normal;
   }
-}
 
-/* Dark mode overrides using the @variant */
-@variant dark {
-  :root {
-    --color-border: oklch(0.269 0 0);
-    --color-input: oklch(0.269 0 0);
-    --color-ring: oklch(0.439 0 0);
-    --color-destructive: oklch(0.396 0.141 25.723);
-    --color-destructive-foreground: oklch(0.637 0.237 25.331);
+  /* Force override browser autofill background and text color globally */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active,
+  input:-internal-autofill-selected {
+    -webkit-box-shadow: 0 0 0 1000px #101010 inset !important;
+    -webkit-text-fill-color: #F5EDD6 !important;
+    caret-color: #F5EDD6 !important;
+    color: #F5EDD6 !important;
+    background-color: #101010 !important;
+    background-image: none !important;
+    transition: background-color 5000s ease-in-out 0s !important;
   }
 }
