@@ -1,4 +1,9 @@
-import type { ActivityItem, RevenuePoint, StatSummary, TaskItem } from "@/app/components/admin/AdminDashboardTypes";
+import type {
+  ActivityItem,
+  RevenuePoint,
+  StatSummary,
+  TaskItem,
+} from "@/app/components/admin/AdminDashboardTypes";
 
 export const stats: StatSummary[] = [
   { label: "Ticket Sales", value: "84.2K", change: "+12.4%", trend: "up" },

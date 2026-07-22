@@ -30,7 +30,7 @@ export default function EventsBanner({ onNavigate }: EventsBannerProps) {
 
   return (
     <section ref={bannerRef} className="bg-[#080808]">
-      <div className="relative h-[92vh] min-h-[580px] flex items-end overflow-hidden">
+      <div className="relative h-[92vh] min-h-145 flex items-end overflow-hidden">
         <div className="absolute inset-0">
           <video
             autoPlay
@@ -57,7 +57,8 @@ export default function EventsBanner({ onNavigate }: EventsBannerProps) {
             Season 2026 · 2027
           </div>
           <h1 className="font-cinzel text-[clamp(2.2rem,6vw,5rem)] text-[#F5EDD6] tracking-[0.06em] leading-[1.05] mb-6 max-w-[800px]">
-            The Elite Glam<br />
+            The Elite Glam
+            <br />
             <span className="bg-[linear-gradient(135deg,#C9A84C,#F0C04A)] bg-clip-text text-transparent block">
               Events
             </span>
@@ -66,9 +67,24 @@ export default function EventsBanner({ onNavigate }: EventsBannerProps) {
             Mark your calendars. The stage is set, the lights are rising — glory awaits.
           </p>
           <div className="flex flex-wrap gap-4">
-            <EventCTA icon={<Ticket size={15} />} label="Get Tickets" variant="primary" onClick={() => onNavigate("tickets")} />
-            <EventCTA icon={<UserPlus size={15} />} label="Register Now" variant="ghost" onClick={() => onNavigate("register")} />
-            <EventCTA icon={<Star size={15} />} label="Vote Now" variant="accent" onClick={() => onNavigate("contestants")} />
+            <EventCTA
+              icon={<Ticket size={15} />}
+              label="Get Tickets"
+              variant="primary"
+              onClick={() => onNavigate("tickets")}
+            />
+            <EventCTA
+              icon={<UserPlus size={15} />}
+              label="Register Now"
+              variant="ghost"
+              onClick={() => onNavigate("register")}
+            />
+            <EventCTA
+              icon={<Star size={15} />}
+              label="Vote Now"
+              variant="accent"
+              onClick={() => onNavigate("contestants")}
+            />
           </div>
         </div>
       </div>

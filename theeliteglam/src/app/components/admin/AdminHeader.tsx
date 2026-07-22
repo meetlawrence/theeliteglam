@@ -6,9 +6,15 @@ import { Bell, LogOut, Menu, X } from "lucide-react";
 interface AdminHeaderProps {
   mobileOpen: boolean;
   onMobileMenuToggle: () => void;
+  user: { name: string; role?: string };
 }
 
-export function AdminHeader({ mobileOpen, onMobileMenuToggle }: AdminHeaderProps) {
+const handleSignout = async () => {
+  await fetch("/api/auth/logout", { method: "POST" });
+  window.location.href = "/admin"; // Force redirect to login
+};
+
+export function AdminHeader({ mobileOpen, onMobileMenuToggle, user }: AdminHeaderProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const section = searchParams?.get("section") || "";
@@ -23,13 +29,22 @@ export function AdminHeader({ mobileOpen, onMobileMenuToggle }: AdminHeaderProps
 
     // fallback to path-based detection
     if (pathname?.includes("/dashboard")) return { title: "Overview", sub: "Season 2026" };
-    if (pathname?.includes("/contestants")) return { title: "Contestants", sub: "Manage Candidates" };
+    if (pathname?.includes("/contestants"))
+      return { title: "Contestants", sub: "Manage Candidates" };
     if (pathname?.includes("/financials")) return { title: "Financials", sub: "Revenue Report" };
     if (pathname?.includes("/tickets")) return { title: "Tickets", sub: "Sales & Access" };
     return { title: "Portal", sub: "Admin" };
   };
 
   const { title, sub } = getPageInfo();
+  const initials = user?.name
+    ? user.name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part) => part[0]?.toUpperCase())
+        .join("")
+    : "AD";
 
   return (
     <header className="flex items-center justify-between gap-4 py-2 border-b border-[#C9A84C]/10">
@@ -52,13 +67,15 @@ export function AdminHeader({ mobileOpen, onMobileMenuToggle }: AdminHeaderProps
         <button className="relative p-2 text-muted-foreground hover:text-[#F5EDD6]">
           <Bell />
         </button>
-        <div className="hidden sm:flex items-center gap-4 bg-[#0D0D0D] border border-[#1a170e] px-4 py-2">
-          <div className="bg-[#C9A84C] text-[#080808] font-bold text-xs px-2 py-1">AD</div>
-          <div>
-            <div className="text-[#F5EDD6] text-xs font-bold">Admin User</div>
-            <div className="text-muted-foreground text-[0.6rem]">superadmin</div>
-          </div>
-          <LogOut className="w-4 h-4 text-muted-foreground ml-4 cursor-pointer hover:text-[#C9A84C]" />
+        <div className="hidden sm:flex items-center gap-3 bg-[#0D0D0D] border border-[#1a170e] px-3 py-2">
+          <div className="bg-[#C9A84C] text-[#080808] font-bold text-xs px-2 py-1">{initials}</div>
+          <button onClick={handleSignout}>
+            <LogOut className="w-4 h-4 text-muted-foreground cursor-pointer hover:text-[#C9A84C]" />
+          </button>
+        </div>
+        <div className="sm:hidden flex items-center gap-3 bg-[#0D0D0D] border border-[#1a170e] px-3 py-2">
+          <div className="bg-[#C9A84C] text-[#080808] font-bold text-xs px-2 py-1">{initials}</div>
+          <LogOut className="w-4 h-4 text-muted-foreground cursor-pointer hover:text-[#C9A84C]" />
         </div>
       </div>
     </header>

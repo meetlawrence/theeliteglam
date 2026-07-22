@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     console.error("Forgot Password API Error:", error);
     return NextResponse.json(
       { success: false, error: "Failed to process request." },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

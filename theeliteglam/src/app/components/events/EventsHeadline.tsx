@@ -28,19 +28,22 @@ export default function EventsHeadline() {
       ref={headlineRef}
       className={`mx-auto px-8 py-28 grid lg:grid-cols-[1fr_1fr] gap-20 items-center transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"}`}
     >
-      <div>
+      <div className="">
         <SectionLabel text="Headline Event" />
         <h2 className="font-cinzel text-[clamp(1.8rem,4vw,3.2rem)] text-[#F5EDD6] tracking-[0.06em] leading-[1.1] mt-6 mb-6">
-          The Return of<br />
+          The Return of
+          <br />
           <span className="bg-[linear-gradient(135deg,#C9A84C,#F0C04A)] bg-clip-text text-transparent block">
             The Elite Glam
           </span>
         </h2>
         <p className="font-raleway text-[0.97rem] text-muted-foreground leading-[1.85] mb-5">
-          Following a successful inaugural edition, The EliteGlam returns bigger, bolder, and more prestigious than ever.
+          Following a successful inaugural edition, The EliteGlam returns bigger, bolder, and more
+          prestigious than ever.
         </p>
         <p className="font-raleway text-[0.97rem] text-muted-foreground leading-[1.85] mb-10">
-          Season II brings together outstanding contestants from across Nigeria and around the world to compete for the nation’s most coveted crowns.
+          Season II brings together outstanding contestants from across Nigeria and around the world
+          to compete for the nation’s most coveted crowns.
         </p>
         <div className="flex flex-wrap gap-12">
           {[
@@ -50,7 +53,9 @@ export default function EventsHeadline() {
           ].map(({ value, label }) => (
             <div key={label}>
               <div className="font-cinzel text-[1.3rem] text-accent tracking-wider">{value}</div>
-              <div className="font-raleway text-[0.68rem] tracking-[0.25em] uppercase text-muted-foreground mt-1">{label}</div>
+              <div className="font-raleway text-[0.68rem] tracking-[0.25em] uppercase text-muted-foreground mt-1">
+                {label}
+              </div>
             </div>
           ))}
         </div>

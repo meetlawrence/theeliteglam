@@ -10,7 +10,6 @@ import { useContestants } from "./useContestants";
 export default function ContestantsSection() {
   const {
     pool,
-    voted,
     carouselGender,
     setCarouselGender,
     carouselIdx,
@@ -27,7 +26,6 @@ export default function ContestantsSection() {
     gridPool,
     femaleRanked,
     maleRanked,
-    VOTE_LIMIT,
   } = useContestants();
 
   return (
@@ -38,10 +36,8 @@ export default function ContestantsSection() {
         setCarouselIdx={setCarouselIdx}
         carouselGender={carouselGender}
         setCarouselGender={setCarouselGender}
-        voted={voted}
         openVotePayment={openVotePayment}
         flash={flash}
-        VOTE_LIMIT={VOTE_LIMIT}
       />
 
       <ContestantGrid
@@ -49,18 +45,14 @@ export default function ContestantsSection() {
         gridFilter={gridFilter}
         setGridFilter={setGridFilter}
         openVotePayment={openVotePayment}
-        voted={voted}
         setSelected={setSelected}
-        VOTE_LIMIT={VOTE_LIMIT}
         flash={flash}
       />
 
       <ContestantModals
         selected={selected}
         voteTarget={voteTarget}
-        voted={voted}
         flash={flash}
-        VOTE_LIMIT={VOTE_LIMIT}
         openVotePayment={openVotePayment}
         onCloseSelected={() => setSelected(null)}
         onCloseVoteTarget={() => setVoteTarget(null)}
