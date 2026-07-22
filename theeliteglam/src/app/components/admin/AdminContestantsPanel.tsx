@@ -17,13 +17,20 @@ export default function AdminContestantsPanel() {
   const [modalOpen, setModalOpen] = useState(false);
   const [active, setActive] = useState<Contestant | null>(null);
   const [filter, setFilter] = useState<"all" | "finalist" | "eliminated">("all");
-  const [statusMap, setStatusMap] = useState<Record<number, "active" | "finalist" | "eliminated">>(() => Object.fromEntries(base.map((c) => [c.id, "active"])) as Record<number, "active" | "finalist" | "eliminated">);
+  const [statusMap, setStatusMap] = useState<Record<number, "active" | "finalist" | "eliminated">>(
+    () =>
+      Object.fromEntries(base.map((c) => [c.id, "active"])) as Record<
+        number,
+        "active" | "finalist" | "eliminated"
+      >
+  );
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return list
       .filter((c) => {
-        const nameMatch = !q || c.name.toLowerCase().includes(q) || c.number.toLowerCase().includes(q);
+        const nameMatch =
+          !q || c.name.toLowerCase().includes(q) || c.number.toLowerCase().includes(q);
         const status = statusMap[c.id] ?? "active";
         const statusMatch = filter === "all" ? true : status === filter;
         return nameMatch && statusMatch;
@@ -61,7 +68,12 @@ export default function AdminContestantsPanel() {
   const pieData = useMemo(() => {
     const copy = [...list].sort((a, b) => b.votes - a.votes);
     const max = copy.length ? copy[0].votes : 1;
-    return copy.map((c) => ({ id: c.id, name: c.number || c.name.split(" ")[0], votes: c.votes, pct: Math.round((c.votes / max) * 100) }));
+    return copy.map((c) => ({
+      id: c.id,
+      name: c.number || c.name.split(" ")[0],
+      votes: c.votes,
+      pct: Math.round((c.votes / max) * 100),
+    }));
   }, [list]);
 
   const [highlightedId, setHighlightedId] = useState<number | null>(null);
@@ -115,7 +127,9 @@ export default function AdminContestantsPanel() {
         </div>
 
         <AdminContestantOtherSection
-          contestants={filtered.filter((c) => !["male", "female"].includes((c.gender || "").toLowerCase()))}
+          contestants={filtered.filter(
+            (c) => !["male", "female"].includes((c.gender || "").toLowerCase())
+          )}
           statusMap={statusMap}
           highlightedId={highlightedId}
           onSelect={(contestant) => {
@@ -135,7 +149,10 @@ export default function AdminContestantsPanel() {
         status={active ? statusMap[active.id] : undefined}
         onClose={() => setModalOpen(false)}
         onSave={handleSave}
-        onDelete={(id) => { handleEliminate(id); setModalOpen(false); }}
+        onDelete={(id) => {
+          handleEliminate(id);
+          setModalOpen(false);
+        }}
         onMarkFinalist={(id) => handleMarkFinalist(id)}
         onRestore={(id) => handleRestore(id)}
       />

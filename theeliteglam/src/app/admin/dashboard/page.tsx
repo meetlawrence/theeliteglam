@@ -1,9 +1,13 @@
 import { DashboardContainer } from "@/app/components/admin/dashboard/DashboardContainer";
 
-export default function DashboardPage() {
+type DashboardPageProps = {
+  user?: { name?: string; role?: string };
+};
+
+export default async function DashboardPage({ user }: DashboardPageProps) {
   return (
     <main>
-      <DashboardContainer />
+      <DashboardContainer user={user} />
     </main>
   );
 }

@@ -29,26 +29,22 @@ export const NIGERIA_PILLARS = [
   {
     heading: "Empowering Voices",
     body: "Every contestant carries a story, a community, and a purpose. We provide a platform where those voices can inspire meaningful change.",
-    image:
-      "/images/img1.jpg",
+    image: "/images/img1.jpg",
   },
   {
     heading: "Celebrating Diversity",
     body: "From the Yoruba south-west to the Hausa north, Nigeria's mosaic of cultures is our greatest strength.",
-    image:
-      "/images/img2.webp",
+    image: "/images/img2.webp",
   },
   {
     heading: "Championing Inclusivity",
     body: "The EliteGlam welcomes individuals from all backgrounds, tribes, and walks of life. Beauty knows no boundaries.",
-    image:
-      "/images/img3.jpg",
+    image: "/images/img3.jpg",
   },
   {
     heading: "Redefining Beauty Standards",
     body: "We celebrate confidence, authenticity, intelligence, and character alongside physical beauty.",
-    image:
-      "/images/img4.jpg",
+    image: "/images/img4.jpg",
   },
 ];
 

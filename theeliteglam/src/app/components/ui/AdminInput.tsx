@@ -1,4 +1,12 @@
-export function AdminInput({ label, type = "text", placeholder }: { label: string, type?: string, placeholder: string }) {
+export function AdminInput({
+  label,
+  type = "text",
+  placeholder,
+}: {
+  label: string;
+  type?: string;
+  placeholder: string;
+}) {
   return (
     <div className="flex flex-col gap-2">
       <label className="text-[0.65rem] uppercase tracking-[0.2em] text-[#9A8C6A]">{label}</label>
