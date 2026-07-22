@@ -6,7 +6,13 @@ import AdminTicketSalesChart from "./AdminTicketSalesChart";
 import AdminTicketCategoryTable from "./AdminTicketCategoryTable";
 import AdminTicketTransactions from "./AdminTicketTransactions";
 import AdminTicketVerification from "./AdminTicketVerification";
-import type { TicketMetric, TicketSalePoint, TicketCategory, TicketTransaction, TicketVerificationRecord } from "./AdminTicketTypes";
+import type {
+  TicketMetric,
+  TicketSalePoint,
+  TicketCategory,
+  TicketTransaction,
+  TicketVerificationRecord,
+} from "./AdminTicketTypes";
 
 const ticketMetrics: TicketMetric[] = [
   { label: "Tickets Sold", value: "5.2K", note: "Cumulative sold tickets" },
@@ -30,17 +36,69 @@ const ticketCategories: TicketCategory[] = [
 ];
 
 const recentTransactions: TicketTransaction[] = [
-  { id: "tx-1", buyer: "Amara N.", ticketType: "VIP", quantity: 2, total: "$190", status: "Completed" },
-  { id: "tx-2", buyer: "Leah O.", ticketType: "General Admission", quantity: 4, total: "$180", status: "Pending" },
-  { id: "tx-3", buyer: "Blessing A.", ticketType: "Premium", quantity: 1, total: "$150", status: "Completed" },
-  { id: "tx-4", buyer: "Tomi K.", ticketType: "VIP", quantity: 3, total: "$285", status: "Refunded" },
+  {
+    id: "tx-1",
+    buyer: "Amara N.",
+    ticketType: "VIP",
+    quantity: 2,
+    total: "$190",
+    status: "Completed",
+  },
+  {
+    id: "tx-2",
+    buyer: "Leah O.",
+    ticketType: "General Admission",
+    quantity: 4,
+    total: "$180",
+    status: "Pending",
+  },
+  {
+    id: "tx-3",
+    buyer: "Blessing A.",
+    ticketType: "Premium",
+    quantity: 1,
+    total: "$150",
+    status: "Completed",
+  },
+  {
+    id: "tx-4",
+    buyer: "Tomi K.",
+    ticketType: "VIP",
+    quantity: 3,
+    total: "$285",
+    status: "Refunded",
+  },
 ];
 
 const verificationHistoryInitial: TicketVerificationRecord[] = [
-  { code: "TK-56213", buyer: "Amara N.", ticketType: "VIP", status: "Valid", timestamp: "Just now" },
-  { code: "TK-48291", buyer: "Leah O.", ticketType: "General Admission", status: "Invalid", timestamp: "5 min ago" },
-  { code: "TK-79902", buyer: "Blessing A.", ticketType: "Premium", status: "Already Used", timestamp: "12 min ago" },
-  { code: "TK-31415", buyer: "Tomi K.", ticketType: "VIP", status: "Valid", timestamp: "20 min ago" },
+  {
+    code: "TK-56213",
+    buyer: "Amara N.",
+    ticketType: "VIP",
+    status: "Valid",
+    timestamp: "Just now",
+  },
+  {
+    code: "TK-48291",
+    buyer: "Leah O.",
+    ticketType: "General Admission",
+    status: "Invalid",
+    timestamp: "5 min ago",
+  },
+  {
+    code: "TK-79902",
+    buyer: "Blessing A.",
+    ticketType: "Premium",
+    status: "Already Used",
+    timestamp: "12 min ago",
+  },
+  {
+    code: "TK-31415",
+    buyer: "Tomi K.",
+    ticketType: "VIP",
+    status: "Valid",
+    timestamp: "20 min ago",
+  },
 ];
 
 const validTicketLedger: Record<string, { buyer: string; ticketType: string }> = {
@@ -50,8 +108,13 @@ const validTicketLedger: Record<string, { buyer: string; ticketType: string }> =
 };
 
 export default function AdminTicketsPanel() {
-  const [verificationHistory, setVerificationHistory] = useState<TicketVerificationRecord[]>(verificationHistoryInitial);
-  const totalRevenue = useMemo(() => ticketSales.reduce((sum, point) => sum + point.revenue, 0), []);
+  const [verificationHistory, setVerificationHistory] = useState<TicketVerificationRecord[]>(
+    verificationHistoryInitial
+  );
+  const totalRevenue = useMemo(
+    () => ticketSales.reduce((sum, point) => sum + point.revenue, 0),
+    []
+  );
 
   const verifyTicket = (code: string) => {
     const cleanedCode = code.trim().toUpperCase();
@@ -63,8 +126,8 @@ export default function AdminTicketsPanel() {
     const status: TicketVerificationRecord["status"] = existing
       ? "Already Used"
       : recordData
-      ? "Valid"
-      : "Invalid";
+        ? "Valid"
+        : "Invalid";
 
     const newRecord: TicketVerificationRecord = {
       code: cleanedCode,
@@ -80,7 +143,9 @@ export default function AdminTicketsPanel() {
   return (
     <div className="space-y-6">
       <div className="border border-[#1a170e] bg-[#080808] p-10 shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
-        <p className="text-[0.65rem] uppercase tracking-[0.36em] text-[#C9A84C]">Tickets Management</p>
+        <p className="text-[0.65rem] uppercase tracking-[0.36em] text-[#C9A84C]">
+          Tickets Management
+        </p>
         <h1 className="mt-3 text-4xl font-serif text-[#F5EDD6]">Event Tickets</h1>
       </div>
 
@@ -94,7 +159,9 @@ export default function AdminTicketsPanel() {
         <div className="space-y-6">
           <div className="border border-[#1a170e] bg-[#080808] p-4">
             <p className="text-muted-foreground">Manage event tickets, sales, and attendees.</p>
-            <p className="text-[#666] text-sm mt-4">Total revenue from weekly ticket sales: ${totalRevenue.toLocaleString()}</p>
+            <p className="text-[#666] text-sm mt-4">
+              Total revenue from weekly ticket sales: ${totalRevenue.toLocaleString()}
+            </p>
           </div>
 
           <AdminTicketCategoryTable categories={ticketCategories} />

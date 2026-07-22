@@ -1,47 +1,37 @@
-"use client";
+import { cloneElement, isValidElement } from "react";
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import { JWT } from "@/back-end/lib/utils/jwt";
+import { adminRepo } from "@/back-end/models/admin-models";
+import DashboardClientLayout from "./DashboardClientLayout";
 
-import { useState } from "react";
-import { AdminSidebar } from "@/app/components/admin/AdminSidebar";
-import { AdminHeader } from "@/app/components/admin/AdminHeader";
-import { AdminFooter } from "@/app/components/admin/AdminFooter";
-import { SidebarLink } from "@/app/components/admin/AdminDashboardTypes";
+export default async function Layout({ children }: { children: React.ReactNode }) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("accessToken")?.value;
 
-const ADMIN_LINKS: SidebarLink[] = [
-  { label: "Overview", href: "/admin/dashboard", active: true },
-  { label: "Contestants", href: "/admin/contestants", active: false },
-  { label: "Financials", href: "/admin/financials", active: false },
-  { label: "Tickets", href: "/admin/tickets", active: false },
-];
+  // The Security Guard: If no token, bounce to login
+  if (!token) {
+    redirect("/admin");
+  }
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const payload = await JWT.verifyToken(token);
+  if (!payload) {
+    redirect("/admin");
+  }
+
+  const admin = await adminRepo.findById(payload.adminId);
+  if (!admin) {
+    redirect("/admin");
+  }
+
+  const user = { name: admin.name, role: admin.role };
+  const pageWithUser = isValidElement(children)
+    ? cloneElement(children, { user })
+    : children;
 
   return (
-    <div className={`flex min-h-screen bg-[#050505] ${mobileSidebarOpen ? "overflow-hidden" : ""}`}>
-      <AdminSidebar links={ADMIN_LINKS} />
-
-      {mobileSidebarOpen && (
-        <div className="fixed inset-0 z-50 md:hidden">
-          <div className="absolute inset-0 bg-black/70" onClick={() => setMobileSidebarOpen(false)} />
-          <div className="relative h-full w-72">
-            <AdminSidebar links={ADMIN_LINKS} mobile onClose={() => setMobileSidebarOpen(false)} />
-          </div>
-        </div>
-      )}
-      
-      <div className="flex flex-1 flex-col">
-        <div className="px-6 py-4 sticky top-0 z-30 bg-[#050505] md:px-10">
-          <AdminHeader mobileOpen={mobileSidebarOpen} onMobileMenuToggle={() => setMobileSidebarOpen((value) => !value)} />
-        </div>
-        
-        <main className="flex-1 overflow-y-auto p-6 md:p-10">
-          {children}
-        </main>
-
-        <div className="px-6 sticky bottom-0 z-30 bg-[#050505] md:px-10">
-          <AdminFooter />
-        </div>
-      </div>
-    </div>
+    <DashboardClientLayout user={user}>
+      {pageWithUser}
+    </DashboardClientLayout>
   );
 }

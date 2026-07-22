@@ -5,5 +5,5 @@ export default function Blog() {
     <main>
       <BlogSection />
     </main>
-  )
+  );
 }

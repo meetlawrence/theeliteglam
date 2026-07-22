@@ -10,14 +10,11 @@ export function AboutSection() {
         </div>
 
         <div className="bg-gold/5 border border-gold/15 p-8">
-        <h2 className="font-cinzel text-xl text-gold tracking-wider mb-4">
+          <h2 className="font-cinzel text-xl text-gold tracking-wider mb-4">
             I go build am later biko😓😓
-        </h2>
-        <p className="font-raleway text-sm text-muted leading-relaxed">
-            Mek I rest small
-        </p>
+          </h2>
+          <p className="font-raleway text-sm text-muted leading-relaxed">Mek I rest small</p>
         </div>
-
       </div>
     </section>
   );

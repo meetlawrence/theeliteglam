@@ -15,14 +15,21 @@ interface AdminContestantPieChartProps {
 
 const COLORS = ["#C9A84C", "#94753A", "#A68552", "#B8956A", "#8B6914", "#6F5A2E"];
 
-export default function AdminContestantPieChart({ data, onSliceClick }: AdminContestantPieChartProps) {
+export default function AdminContestantPieChart({
+  data,
+  onSliceClick,
+}: AdminContestantPieChartProps) {
   return (
     <div className="mt-3">
       <div className="mb-3 text-xs text-[#9A8C6A]">Top Contestants (Votes)</div>
       <div className="bg-[#0D0D0D] border border-[#1a170e] p-3">
         <ResponsiveContainer width="100%" height={260}>
           <PieChart>
-            <Tooltip formatter={(value) => (typeof value === "number" ? value.toLocaleString() : String(value))} />
+            <Tooltip
+              formatter={(value) =>
+                typeof value === "number" ? value.toLocaleString() : String(value)
+              }
+            />
             <Pie
               data={data}
               dataKey="votes"

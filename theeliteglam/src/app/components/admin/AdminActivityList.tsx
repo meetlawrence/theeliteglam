@@ -1,4 +1,4 @@
-import { ActivityItem } from "@/app/components/admin/AdminDashboardTypes";
+import type { ActivityItem } from "@/app/components/admin/AdminDashboardTypes";
 
 export function AdminActivityList({ activity }: { activity: ActivityItem[] }) {
   return (

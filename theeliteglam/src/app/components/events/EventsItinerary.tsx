@@ -42,7 +42,9 @@ export default function EventsItinerary() {
               key={day.day}
               onClick={() => setActiveDay(i)}
               className={`font-cinzel text-[0.72rem] tracking-[0.2em] uppercase transition-all duration-300 pb-4 px-8 ${
-                activeDay === i ? "text-accent border-b-2 border-accent" : "text-[#9A8C6A] border-b-2 border-transparent"
+                activeDay === i
+                  ? "text-accent border-b-2 border-accent"
+                  : "text-[#9A8C6A] border-b-2 border-transparent"
               }`}
             >
               {day.day}
@@ -69,7 +71,12 @@ export default function EventsItinerary() {
 
             <div className="flex flex-col gap-0">
               {day.events.map((ev, j) => (
-                <ItineraryRow key={ev.name} ev={ev} index={j} isLast={j === day.events.length - 1} />
+                <ItineraryRow
+                  key={ev.name}
+                  ev={ev}
+                  index={j}
+                  isLast={j === day.events.length - 1}
+                />
               ))}
             </div>
           </div>

@@ -1,4 +1,5 @@
-import { LucideIcon, DollarSign, Users, FileText, Eye, BarChart3, Ticket } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import { DollarSign, Users, FileText, Eye, BarChart3, Ticket } from "lucide-react";
 import type { StatSummary } from "@/app/components/admin/AdminDashboardTypes";
 
 interface AdminStatCardProps {
@@ -9,7 +10,13 @@ interface AdminStatCardProps {
   badgeColor?: "green" | "gold" | "neutral";
 }
 
-export function AdminStatCard({ label, value, badge, icon: Icon, badgeColor = "neutral" }: AdminStatCardProps) {
+export function AdminStatCard({
+  label,
+  value,
+  badge,
+  icon: Icon,
+  badgeColor = "neutral",
+}: AdminStatCardProps) {
   return (
     <div className="relative overflow-hidden border border-[#1a170e] bg-[#080808] p-4">
       {/* Top Section: Icon & Badge */}
@@ -18,9 +25,13 @@ export function AdminStatCard({ label, value, badge, icon: Icon, badgeColor = "n
           {Icon ? <Icon className="w-5 h-5 text-[#C9A84C]" /> : <div className="w-5 h-5" />}
         </div>
         {badge && (
-          <span className={`text-[0.6rem] px-2 py-1 uppercase tracking-widest ${
-            badgeColor === "green" ? "text-[#4ade80] bg-[#4ade80]/10" : "text-[#9A8C6A] bg-[#1a170e]"
-          }`}>
+          <span
+            className={`text-[0.6rem] px-2 py-1 uppercase tracking-widest ${
+              badgeColor === "green"
+                ? "text-[#4ade80] bg-[#4ade80]/10"
+                : "text-[#9A8C6A] bg-[#1a170e]"
+            }`}
+          >
             {badge}
           </span>
         )}
@@ -46,7 +57,7 @@ export function DashboardStats({ stats }: { stats: StatSummary[] }) {
     if (l.includes("applicant") || l.includes("applicants") || l.includes("users")) return Users;
     if (l.includes("pending") || l.includes("reviews")) return FileText;
     if (l.includes("votes") || l.includes("voters")) return BarChart3;
-    
+
     return null;
   };
 

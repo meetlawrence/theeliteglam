@@ -47,5 +47,5 @@ export const SPONSORS: Sponsor[] = [
     name: "meetLawrence Global Solutions",
     desc: "The official technical and support partner for the Elite Glam pageant.",
     logo: "mLGS",
-  }, 
+  },
 ];

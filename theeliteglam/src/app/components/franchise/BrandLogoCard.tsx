@@ -2,7 +2,15 @@
 
 import React, { useState } from "react";
 
-export default function BrandLogoCard({ item, index, inView }: { item: { brand: string; initials: string; image: string }; index: number; inView: boolean; }) {
+export default function BrandLogoCard({
+  item,
+  index,
+  inView,
+}: {
+  item: { brand: string; initials: string; image: string };
+  index: number;
+  inView: boolean;
+}) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -45,7 +53,8 @@ export default function BrandLogoCard({ item, index, inView }: { item: { brand: 
         style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(to top, rgba(13,13,13,0.92) 0%, rgba(13,13,13,0.55) 60%, rgba(13,13,13,0.4) 100%)",
+          background:
+            "linear-gradient(to top, rgba(13,13,13,0.92) 0%, rgba(13,13,13,0.55) 60%, rgba(13,13,13,0.4) 100%)",
         }}
       />
 

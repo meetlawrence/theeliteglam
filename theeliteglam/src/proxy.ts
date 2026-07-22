@@ -39,7 +39,7 @@ export async function proxy(req: NextRequest) {
             message: "Invalid or expired token.",
             error: e.message,
           },
-          { status: 401 },
+          { status: 401 }
         );
       }
     }
@@ -86,7 +86,7 @@ export async function proxy(req: NextRequest) {
         await tokenRepo.createRefreshToken(
           admin.id,
           newRefreshToken,
-          new Date(Date.now() + AUTH_CONFIG.JWT_REFRESH_EXPIRES_IN_SECONDS),
+          new Date(Date.now() + AUTH_CONFIG.JWT_REFRESH_EXPIRES_IN_SECONDS)
         );
 
         // Send response with new cookies

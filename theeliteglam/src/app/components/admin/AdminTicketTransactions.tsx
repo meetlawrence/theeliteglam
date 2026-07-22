@@ -3,7 +3,11 @@
 import type { TicketTransaction } from "./AdminTicketTypes";
 import { AdminButton } from "./AdminButton";
 
-export default function AdminTicketTransactions({ transactions }: { transactions: TicketTransaction[] }) {
+export default function AdminTicketTransactions({
+  transactions,
+}: {
+  transactions: TicketTransaction[];
+}) {
   return (
     <div className="border border-[#1a170e] bg-[#080808] p-4">
       <div className="mb-4 flex items-center justify-between">

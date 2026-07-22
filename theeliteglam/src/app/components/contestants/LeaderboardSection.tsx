@@ -1,6 +1,6 @@
 import LeaderboardCol from "./Leaderboard";
 import { Trophy } from "lucide-react";
-import { Contestant } from "./types";
+import type { Contestant } from "./types";
 
 export default function LeaderboardSection({
   femaleRanked,

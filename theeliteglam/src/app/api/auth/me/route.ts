@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
     console.error("Auth /me error:", error);
     return NextResponse.json(
       { success: false, error: "Invalid or expired token" },
-      { status: 401 },
+      { status: 401 }
     );
   }
 }
