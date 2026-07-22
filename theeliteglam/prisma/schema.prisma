@@ -67,7 +67,7 @@ model Contestant {
   rank  Int?
 
   eventId              String
-  event                Event                @relation(fields: [eventId], references: [id])
+  event                Event                @relation(fields: [eventId], references: [id], onDelete: Cascade)
   contestantCategories ContestantCategories
 
   votes Vote[]
@@ -97,9 +97,9 @@ model Event {
   status      EventStatus @default(UPCOMING)
   categories  String[]
 
-  tickets  Ticket[]
-  votes    Vote[]
-  sponsors Sponsor[]
+  tickets     Ticket[]
+  votes       Vote[]
+  sponsors    Sponsor[]
   ticketTypes TicketType[]
 
   createdAt   DateTime     @default(now())
@@ -122,6 +122,7 @@ model TicketType {
   benefits String[]
   eventId  String
   event    Event    @relation(fields: [eventId], references: [id])
+  tickets  Ticket[]
 }
 
 model Vote {
@@ -140,29 +141,40 @@ model Vote {
 
 // ====================== TICKETS & SPONSORS ======================
 model Ticket {
-  id       String       @id @default(cuid())
-  name     String
-  email    String
-  phone    String?
-  eventId  String
-  amount   Float
-  quantity Int          @default(1)
-  total    Float
-  status   TicketStatus @default(PENDING) //Pending Ones User Initiat Payment Then Update Once Payment is Approved from Payment Gateway
+  id            String       @id @default(cuid())
+  name          String
+  email         String
+  phoneNumber   String?
+  eventId       String
+  ticketTypeId  String
+  amount        Float?
+  quantity      Int          @default(1)
+  total         Float
+  reference     String       @unique
+  paymentMethod String?
+  status        TicketStatus @default(PENDING) //Pending Ones User Initiat Payment Then Update Once Payment is Approved from Payment Gateway
 
-  event Event @relation(fields: [eventId], references: [id])
+  tickettype TicketType @relation(fields: [ticketTypeId], references: [id])
+  event      Event      @relation(fields: [eventId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([email])
   @@index([eventId])
+  @@index([reference])
 }
 
 enum TicketStatus {
+  ABANDONED
+  FAILED
+  ONGOING
   PENDING
-  PAID
-  CANCELLED
+  PROCESSING
+  QUEUED
+  REVERSED
+  SUCCESS
+  USED
 }
 
 model Sponsor {

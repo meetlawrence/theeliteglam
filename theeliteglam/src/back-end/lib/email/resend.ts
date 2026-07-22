@@ -1,4 +1,5 @@
 // src/back-end/lib/email/resend.ts
+import "dotenv/config";
 import { Resend } from "resend";
 import { AUTH_CONFIG } from "../../config/auth";
 
@@ -63,7 +64,7 @@ export async function sendEmail(to: string, payload: EmailPayload) {
     }
 
     const { data, error } = await resend.emails.send({
-      from: "theeliteglam <theeliteglam@resend.dev>",
+      from: `theeliteglam <${process.env.RESEND_EMAIL}>`,
       to,
       subject,
       react: reactComponent,
