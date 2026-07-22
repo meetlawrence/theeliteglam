@@ -63,7 +63,7 @@ export async function sendEmail(to: string, payload: EmailPayload) {
     }
 
     const { data, error } = await resend.emails.send({
-      from: "theeliteglam <theeliteglam@resend.dev>",
+      from: "theeliteglam <ThEliteGlamLaw@resend.dev>",
       to,
       subject,
       react: reactComponent,
