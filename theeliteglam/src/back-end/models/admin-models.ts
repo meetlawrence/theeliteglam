@@ -1,6 +1,11 @@
 // src/back-end/models/admin-models.ts
 import { prisma } from "../../back-end/db/db-connect";
-import type { Admin, CreateAdminData, AdminUpdateData } from "../types/admin-types";
+import type {
+  Admin,
+  CreateAdminData,
+  AdminUpdateData,
+  CreateAdminInput,
+} from "../types/admin-types";
 
 export class AdminRepo {
   async findByEmail(email: string): Promise<Admin | null> {
@@ -9,31 +14,74 @@ export class AdminRepo {
     });
   }
 
-  async findById(id: string): Promise<Admin | null> {
-    return prisma.admin.findUnique({
+  async findById(id: string) {
+    return await prisma.admin.findUnique({
       where: { id },
-    });
-  }
-
-  async create(data: CreateAdminData): Promise<Admin> {
-    return prisma.admin.create({
-      data: {
-        name: data.name,
-        email: data.email.toLowerCase(),
-        passwordHash: data.passwordHash,
-        emailVerified: data.emailVerified ?? false,
-        emailVerifiedAt: data.emailVerifiedAt ?? null,
-        lastLoginAt: data.lastLoginAt ?? null,
-        role: data.role ?? "ADMIN",
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        isActive: true,
+        lastLoginAt: true,
+        createdAt: true,
       },
     });
   }
 
-  async update(id: string, data: AdminUpdateData): Promise<Admin | null> {
-    return prisma.admin.update({
+  async create(data: CreateAdminData): Promise<Admin> {
+    return await prisma.admin.create({
+      data: {
+        name: data.name,
+        email: data.email.toLowerCase(),
+        passwordHash: data.passwordHash,
+      },
+    });
+  }
+
+  async createAdmin(data: CreateAdminInput) {
+    return await prisma.admin.create({
+      data: {
+        name: data.name,
+        email: data.email.toLowerCase(),
+        passwordHash: data.password,
+        isActive: true,
+        role: data.role,
+      },
+    });
+  }
+
+  async getAll() {
+    return await prisma.admin.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        isActive: true,
+        emailVerified: true,
+        lastLoginAt: true,
+        createdAt: true,
+      },
+    });
+  }
+
+  async update(id: string, data: AdminUpdateData) {
+    return await prisma.admin.update({
       where: { id },
       data,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        isActive: true,
+      },
     });
+  }
+
+  async delete(id: string) {
+    return await prisma.admin.delete({ where: { id } });
   }
 
   async markEmailVerified(adminId: string): Promise<void> {

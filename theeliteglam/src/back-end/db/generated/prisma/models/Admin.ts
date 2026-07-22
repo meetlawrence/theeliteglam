@@ -34,6 +34,7 @@ export type AdminMinAggregateOutputType = {
   emailVerified: boolean | null
   emailVerifiedAt: Date | null
   lastLoginAt: Date | null
+  isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -49,6 +50,7 @@ export type AdminMaxAggregateOutputType = {
   emailVerified: boolean | null
   emailVerifiedAt: Date | null
   lastLoginAt: Date | null
+  isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -64,6 +66,7 @@ export type AdminCountAggregateOutputType = {
   emailVerified: number
   emailVerifiedAt: number
   lastLoginAt: number
+  isActive: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -81,6 +84,7 @@ export type AdminMinAggregateInputType = {
   emailVerified?: true
   emailVerifiedAt?: true
   lastLoginAt?: true
+  isActive?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -96,6 +100,7 @@ export type AdminMaxAggregateInputType = {
   emailVerified?: true
   emailVerifiedAt?: true
   lastLoginAt?: true
+  isActive?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -111,6 +116,7 @@ export type AdminCountAggregateInputType = {
   emailVerified?: true
   emailVerifiedAt?: true
   lastLoginAt?: true
+  isActive?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -199,6 +205,7 @@ export type AdminGroupByOutputType = {
   emailVerified: boolean
   emailVerifiedAt: Date | null
   lastLoginAt: Date | null
+  isActive: boolean
   createdAt: Date
   updatedAt: Date
   _count: AdminCountAggregateOutputType | null
@@ -235,6 +242,7 @@ export type AdminWhereInput = {
   emailVerified?: Prisma.BoolFilter<"Admin"> | boolean
   emailVerifiedAt?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
   lastLoginAt?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
+  isActive?: Prisma.BoolFilter<"Admin"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
   refreshTokens?: Prisma.RefreshTokenListRelationFilter
@@ -251,6 +259,7 @@ export type AdminOrderByWithRelationInput = {
   emailVerified?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   refreshTokens?: Prisma.RefreshTokenOrderByRelationAggregateInput
@@ -270,6 +279,7 @@ export type AdminWhereUniqueInput = Prisma.AtLeast<{
   emailVerified?: Prisma.BoolFilter<"Admin"> | boolean
   emailVerifiedAt?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
   lastLoginAt?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
+  isActive?: Prisma.BoolFilter<"Admin"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
   refreshTokens?: Prisma.RefreshTokenListRelationFilter
@@ -286,6 +296,7 @@ export type AdminOrderByWithAggregationInput = {
   emailVerified?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.AdminCountOrderByAggregateInput
@@ -307,6 +318,7 @@ export type AdminScalarWhereWithAggregatesInput = {
   emailVerified?: Prisma.BoolWithAggregatesFilter<"Admin"> | boolean
   emailVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Admin"> | Date | string | null
   lastLoginAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Admin"> | Date | string | null
+  isActive?: Prisma.BoolWithAggregatesFilter<"Admin"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Admin"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Admin"> | Date | string
 }
@@ -322,6 +334,7 @@ export type AdminCreateInput = {
   emailVerified?: boolean
   emailVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutAdminInput
@@ -338,6 +351,7 @@ export type AdminUncheckedCreateInput = {
   emailVerified?: boolean
   emailVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutAdminInput
@@ -354,6 +368,7 @@ export type AdminUpdateInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutAdminNestedInput
@@ -370,6 +385,7 @@ export type AdminUncheckedUpdateInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutAdminNestedInput
@@ -386,6 +402,7 @@ export type AdminCreateManyInput = {
   emailVerified?: boolean
   emailVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -401,6 +418,7 @@ export type AdminUpdateManyMutationInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -416,6 +434,7 @@ export type AdminUncheckedUpdateManyInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -431,6 +450,7 @@ export type AdminCountOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -446,6 +466,7 @@ export type AdminMaxOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -461,6 +482,7 @@ export type AdminMinOrderByAggregateInput = {
   emailVerified?: Prisma.SortOrder
   emailVerifiedAt?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -519,6 +541,7 @@ export type AdminCreateWithoutRefreshTokensInput = {
   emailVerified?: boolean
   emailVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -534,6 +557,7 @@ export type AdminUncheckedCreateWithoutRefreshTokensInput = {
   emailVerified?: boolean
   emailVerifiedAt?: Date | string | null
   lastLoginAt?: Date | string | null
+  isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -565,6 +589,7 @@ export type AdminUpdateWithoutRefreshTokensInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -580,6 +605,7 @@ export type AdminUncheckedUpdateWithoutRefreshTokensInput = {
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -626,6 +652,7 @@ export type AdminSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   emailVerified?: boolean
   emailVerifiedAt?: boolean
   lastLoginAt?: boolean
+  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   refreshTokens?: boolean | Prisma.Admin$refreshTokensArgs<ExtArgs>
@@ -643,6 +670,7 @@ export type AdminSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   emailVerified?: boolean
   emailVerifiedAt?: boolean
   lastLoginAt?: boolean
+  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["admin"]>
@@ -658,6 +686,7 @@ export type AdminSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   emailVerified?: boolean
   emailVerifiedAt?: boolean
   lastLoginAt?: boolean
+  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["admin"]>
@@ -673,11 +702,12 @@ export type AdminSelectScalar = {
   emailVerified?: boolean
   emailVerifiedAt?: boolean
   lastLoginAt?: boolean
+  isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type AdminOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "avatar" | "phone" | "role" | "emailVerified" | "emailVerifiedAt" | "lastLoginAt" | "createdAt" | "updatedAt", ExtArgs["result"]["admin"]>
+export type AdminOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "avatar" | "phone" | "role" | "emailVerified" | "emailVerifiedAt" | "lastLoginAt" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["admin"]>
 export type AdminInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   refreshTokens?: boolean | Prisma.Admin$refreshTokensArgs<ExtArgs>
   _count?: boolean | Prisma.AdminCountOutputTypeDefaultArgs<ExtArgs>
@@ -701,6 +731,7 @@ export type $AdminPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     emailVerified: boolean
     emailVerifiedAt: Date | null
     lastLoginAt: Date | null
+    isActive: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["admin"]>
@@ -1137,6 +1168,7 @@ export interface AdminFieldRefs {
   readonly emailVerified: Prisma.FieldRef<"Admin", 'Boolean'>
   readonly emailVerifiedAt: Prisma.FieldRef<"Admin", 'DateTime'>
   readonly lastLoginAt: Prisma.FieldRef<"Admin", 'DateTime'>
+  readonly isActive: Prisma.FieldRef<"Admin", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Admin", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Admin", 'DateTime'>
 }

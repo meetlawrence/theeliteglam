@@ -14,18 +14,19 @@ datasource db {
 
 // ====================== ADMIN ======================
 model Admin {
-  id       String  @id @default(cuid())
-  name     String
-  email    String  @unique
+  id           String  @id @default(cuid())
+  name         String
+  email        String  @unique
   passwordHash String // Hashed password
-  avatar   String?
-  phone    String?
-  role     Role    @default(ADMIN)
+  avatar       String?
+  phone        String?
+  role         Role    @default(SUPER_ADMIN)
 
-  emailVerified   Boolean        @default(false)
+  emailVerified   Boolean   @default(false)
   emailVerifiedAt DateTime?
 
   lastLoginAt DateTime?
+  isActive    Boolean   @default(false)
 
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -43,10 +44,9 @@ enum Role {
 model Contestant {
   id String @id @default(cuid())
 
-  name     String
-  email    String  @unique
-  password String?
-  gender   Gender
+  name   String
+  email  String @unique
+  gender Gender
 
   avatar String?
   phone  String
@@ -66,7 +66,9 @@ model Contestant {
   score Float?
   rank  Int?
 
-  contestantCategories ContestantCategory[]
+  eventId              String
+  event                Event                @relation(fields: [eventId], references: [id])
+  contestantCategories ContestantCategories
 
   votes Vote[]
 
@@ -74,10 +76,14 @@ model Contestant {
   updatedAt DateTime @updatedAt
 }
 
+enum ContestantCategories {
+  MALE
+  FEMALE
+}
+
 enum Gender {
   MALE
   FEMALE
-  OTHER
 }
 
 // ====================== EVENT / PAGEANT ======================
@@ -89,14 +95,16 @@ model Event {
   endDate     DateTime
   location    String
   status      EventStatus @default(UPCOMING)
+  categories  String[]
 
-  categories Category[]
-  tickets    Ticket[]
-  votes      Vote[]
+  tickets  Ticket[]
+  votes    Vote[]
+  sponsors Sponsor[]
+  ticketTypes TicketType[]
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  sponsors  Sponsor[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  contestants Contestant[]
 }
 
 enum EventStatus {
@@ -106,17 +114,14 @@ enum EventStatus {
   CANCELLED
 }
 
-// ====================== CATEGORY ======================
-model Category {
-  id      String @id @default(cuid())
-  name    String // e.g., "Miss Beauty", "Mr. Talent"
-  eventId String
-  event   Event  @relation(fields: [eventId], references: [id])
-
-  createdAt            DateTime             @default(now())
-  contestantCategories ContestantCategory[]
-
-  @@index([eventId])
+model TicketType {
+  id       String   @id @default(cuid())
+  name     String
+  price    Float
+  capacity Int?
+  benefits String[]
+  eventId  String
+  event    Event    @relation(fields: [eventId], references: [id])
 }
 
 model Vote {
@@ -131,21 +136,6 @@ model Vote {
   createdAt DateTime @default(now())
 
   @@unique([contestantId, eventId])
-}
-
-model ContestantCategory {
-  contestantId String
-  categoryId   String
-
-  contestant Contestant @relation(fields: [contestantId], references: [id])
-
-  category Category @relation(fields: [categoryId], references: [id])
-
-  createdAt DateTime @default(now())
-
-  @@id([contestantId, categoryId])
-  @@index([contestantId])
-  @@index([categoryId])
 }
 
 // ====================== TICKETS & SPONSORS ======================
@@ -206,14 +196,15 @@ model Subscription {
   @@unique([email])
 }
 
+// ====================== RefreshToken ======================
 model RefreshToken {
   id        String   @id @default(uuid())
   token     String   @unique
   expiresAt DateTime
   revoked   Boolean  @default(false)
   createdAt DateTime @default(now())
-  adminId String
-  admin      Admin    @relation(fields: [adminId], references: [id])
+  adminId   String
+  admin     Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
 
   @@map("refresh_tokens")
 }
