@@ -41,7 +41,12 @@ export function ParticleCanvas() {
       const type = types[Math.floor(Math.random() * types.length)];
       const life = Math.random() * 0.8 + 0.6;
       const hue = baseHue + Math.random() * 18 - 9;
-      const radius = type === "flare" ? Math.random() * 2 + 1 : type === "spark" ? Math.random() * 1.4 + 0.6 : Math.random() * 1.6 + 0.7;
+      const radius =
+        type === "flare"
+          ? Math.random() * 2 + 1
+          : type === "spark"
+            ? Math.random() * 1.4 + 0.6
+            : Math.random() * 1.6 + 0.7;
       return {
         x: Math.random() * canvas.offsetWidth,
         y: canvas.offsetHeight + Math.random() * 140,
@@ -65,8 +70,18 @@ export function ParticleCanvas() {
     window.addEventListener("resize", resize);
 
     const drawGlow = (particle: Particle) => {
-      const glowStrength = Math.max(0, Math.min(1, (particle.life / particle.baseLife) * particle.glow));
-      const gradient = ctx.createRadialGradient(particle.x, particle.y, 0, particle.x, particle.y, particle.radius * 4);
+      const glowStrength = Math.max(
+        0,
+        Math.min(1, (particle.life / particle.baseLife) * particle.glow)
+      );
+      const gradient = ctx.createRadialGradient(
+        particle.x,
+        particle.y,
+        0,
+        particle.x,
+        particle.y,
+        particle.radius * 4
+      );
       gradient.addColorStop(0, `hsla(${particle.hue}, 92%, 75%, ${0.18 * glowStrength})`);
       gradient.addColorStop(0.35, `hsla(${particle.hue}, 92%, 75%, ${0.05 * glowStrength})`);
       gradient.addColorStop(1, "rgba(0,0,0,0)");
@@ -132,7 +147,12 @@ export function ParticleCanvas() {
         particle.life -= 0.002;
         particle.twinkle += 0.06;
 
-        if (particle.life <= 0 || particle.y < -60 || particle.x < -60 || particle.x > canvas.offsetWidth + 60) {
+        if (
+          particle.life <= 0 ||
+          particle.y < -60 ||
+          particle.x < -60 ||
+          particle.x > canvas.offsetWidth + 60
+        ) {
           Object.assign(particle, createParticle());
           return;
         }

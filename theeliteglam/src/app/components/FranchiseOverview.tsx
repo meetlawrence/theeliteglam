@@ -16,7 +16,9 @@ export function OverviewSection() {
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setInView(true); },
+      ([entry]) => {
+        if (entry.isIntersecting) setInView(true);
+      },
       { threshold: 0.05 }
     );
     obs.observe(el);
@@ -48,7 +50,6 @@ export function OverviewSection() {
       />
 
       <div style={{ maxWidth: "1300px", margin: "0 auto", position: "relative" }}>
-
         {/* ── FRANCHISE OVERVIEW ── */}
         <div
           style={{
@@ -61,7 +62,16 @@ export function OverviewSection() {
           <SectionLabel text="Franchise Overview" />
 
           {/* Brand logo cards */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "1.5rem", marginTop: "2.5rem", marginBottom: "3rem" }} className="franchise-grid">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: "1.5rem",
+              marginTop: "2.5rem",
+              marginBottom: "3rem",
+            }}
+            className="franchise-grid"
+          >
             {ENDORSEMENTS.map((e, i) => (
               <BrandLogoCard key={e.brand} item={e} index={i} inView={inView} />
             ))}
@@ -74,8 +84,7 @@ export function OverviewSection() {
         <div
           style={{
             height: "1px",
-            background:
-              "linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent)",
+            background: "linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent)",
             marginBottom: "6rem",
           }}
         />
@@ -111,10 +120,17 @@ export function OverviewSection() {
               marginBottom: "3rem",
             }}
           >
-            We are proud to collaborate with world-class brands who share our commitment to excellence, beauty, and empowerment.
+            We are proud to collaborate with world-class brands who share our commitment to
+            excellence, beauty, and empowerment.
           </p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(270px, 1fr))", gap: "1.5rem" }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(270px, 1fr))",
+              gap: "1.5rem",
+            }}
+          >
             {SPONSORS.map((sponsor, i) => (
               <SponsorCard key={sponsor.name} sponsor={sponsor} index={i} inView={inView} />
             ))}
@@ -166,7 +182,8 @@ export function OverviewSection() {
                   maxWidth: "480px",
                 }}
               >
-                Align your brand with elegance, reach a global audience of 4M+, and support a movement that empowers people worldwide.
+                Align your brand with elegance, reach a global audience of 4M+, and support a
+                movement that empowers people worldwide.
               </p>
             </div>
             <SponsorButton onOpen={() => setModalOpen(true)} />

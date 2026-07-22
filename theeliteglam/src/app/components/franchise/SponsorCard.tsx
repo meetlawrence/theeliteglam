@@ -2,7 +2,15 @@
 
 import React, { useState } from "react";
 
-export default function SponsorCard({ sponsor, index, inView }: { sponsor: { name: string; desc: string; logo: string }; index: number; inView: boolean; }) {
+export default function SponsorCard({
+  sponsor,
+  index,
+  inView,
+}: {
+  sponsor: { name: string; desc: string; logo: string };
+  index: number;
+  inView: boolean;
+}) {
   const [hovered, setHovered] = useState(false);
 
   return (

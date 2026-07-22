@@ -6,7 +6,11 @@ import EventsGallery from "../../components/events/EventsGallery";
 import EventsExperience from "../../components/events/EventsExperience";
 import EventsItinerary from "../../components/events/EventsItinerary";
 
-export default function EventsPage({ onNavigate }: { onNavigate: (page: "tickets" | "register" | "contestants") => void }) {
+export default function EventsPage({
+  onNavigate,
+}: {
+  onNavigate: (page: "tickets" | "register" | "contestants") => void;
+}) {
   return (
     <main>
       <EventsBanner onNavigate={onNavigate} />
