@@ -1,5 +1,5 @@
 // src/back-end/models/admin-models.ts
-import { prisma } from "../../back-end/db/db-connect";
+import { prisma } from "@/back-end/db/db-connect";
 import type {
   Admin,
   CreateAdminData,
