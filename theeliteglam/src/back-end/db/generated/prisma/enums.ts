@@ -43,9 +43,15 @@ export type EventStatus = (typeof EventStatus)[keyof typeof EventStatus]
 
 
 export const TicketStatus = {
+  ABANDONED: 'ABANDONED',
+  FAILED: 'FAILED',
+  ONGOING: 'ONGOING',
   PENDING: 'PENDING',
-  PAID: 'PAID',
-  CANCELLED: 'CANCELLED'
+  PROCESSING: 'PROCESSING',
+  QUEUED: 'QUEUED',
+  REVERSED: 'REVERSED',
+  SUCCESS: 'SUCCESS',
+  USED: 'USED'
 } as const
 
 export type TicketStatus = (typeof TicketStatus)[keyof typeof TicketStatus]
