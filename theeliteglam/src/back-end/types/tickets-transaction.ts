@@ -1,4 +1,4 @@
-export type TicketStatus =
+export type TicketTransactionStatus =
   | "ABANDONED"
   | "FAILED"
   | "ONGOING"
@@ -18,14 +18,15 @@ export interface TicketType {
   quantity: number;
 }
 
-export interface UpdateTicket {
+export interface UpdateTicketTransaction {
   name?: string;
   email?: string;
   phoneNumber?: string;
-  status?: TicketStatus;
+  status?: TicketTransactionStatus;
+  clamed?: boolean
 }
 
-export interface Ticket {
+export interface TicketTransaction {
   name: string;
   email: string;
   phoneNumber?: string;

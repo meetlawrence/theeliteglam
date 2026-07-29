@@ -2,23 +2,15 @@ import "dotenv/config";
 
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { ticketService } from "@/back-end/services/ticket-service";
+import { ticketTransactionService } from "@/back-end/services/ticket-transaction-service";
 import { ticketTypeIdSchema, quantitySchema } from "@/back-end/lib/validation/ticket-schema";
 import { formatZodError } from "@/back-end/lib/utils/helper";
 import { ticketTypeRepo } from "@/back-end/models/ticket-type-models";
-import type { PriceValidationResult, QuantityValidationResult } from "@/back-end/types/tickets";
+import type { PriceValidationResult, QuantityValidationResult } from "@/back-end/types/tickets-transaction";
 
 export async function POST(req: NextRequest) {
   try {
     const { email, name, ticketTypeId, quantity, phoneNumber, eventId } = await req.json();
-    console.log("Request body:", {
-      email,
-      name,
-      ticketTypeId,
-      quantity,
-      phoneNumber,
-      eventId,
-    });
 
     const priceValidation = async function (id: string) {
       const validation = ticketTypeIdSchema.safeParse({ id });
@@ -59,7 +51,7 @@ export async function POST(req: NextRequest) {
         };
       }
 
-      const total = await ticketService.calculateTicketPrice(pricedata.price, quantity);
+      const total = await ticketTransactionService.calculateTicketPrice(pricedata.price, quantity);
       return total;
     }
     const amounts = await totalTicketPrice(validPrice, validQuantity, quantity);
@@ -74,7 +66,7 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({
         email,
         amount: amounts.paystackAmount,
-        callback_url: `${process.env.NEXT_PUBLIC_BASE_URL}/verify-payment`,
+        callback_url: `${process.env.NEXT_PUBLIC_BASE_URL}/components/verify-payment`,
       }),
     });
     if (!result.ok) {
@@ -83,7 +75,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Failed to initialize payment" }, { status: 500 });
     }
     const data = await result.json();
-    await ticketService.createTicket({
+    await ticketTransactionService.createTicketTransaction({
       email,
       name,
       ticketTypeId,
