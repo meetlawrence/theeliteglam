@@ -8,6 +8,7 @@ import VerifyEmail from "./templates/auth/verification-email-template";
 import ResetPasswordEmail from "./templates/auth/rest-password-email-template";
 import PasswordChangedEmail from "./templates/auth/password-changed-email-template";
 import LoginAlertEmail from "./templates/auth/login-alert-emaill-template";
+import TicketEmail from "./templates/ticket"
 
 const resend = new Resend(AUTH_CONFIG.RESEND_API_KEY);
 
@@ -25,6 +26,18 @@ type EmailPayload =
         device: string;
         time: string;
         ipAddress?: string;
+      };
+    }| {
+      type: "ticket";
+      props: {
+        firstName: string;
+        ticketReference: string;
+        quantity: number;
+        amount: number | null;
+        eventName?: string;
+        eventDate?: string;
+        qrCode?: string;      // single QR (base64)
+        qrCodes: string[];   // multiple QRs
       };
     };
 
@@ -57,6 +70,10 @@ export async function sendEmail(to: string, payload: EmailPayload) {
       case "login-alert":
         subject = "New login detected on your theeliteglam account";
         reactComponent = LoginAlertEmail(payload.props);
+        break;
+      case "ticket":
+        subject = `Your Ticket – ${payload.props.ticketReference}`;
+        reactComponent = TicketEmail(payload.props);
         break;
 
       default:

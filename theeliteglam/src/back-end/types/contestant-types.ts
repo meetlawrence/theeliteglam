@@ -2,16 +2,20 @@ export interface CreateContestantInput {
   name: string;
   email: string;
   gender: "MALE" | "FEMALE";
-  avatar?: string;
+  image?: string;
   stageName?: string;
-  height: number;
-  weight: number;
+  height?: number;
+  weight?: number;
   bio?: string;
   portfolio?: string;
   phone: string;
-  dateOfBirth: string;
-  city: string;
+  age: number;
+  state: string;
   country: string;
+  occupation: string;
+  advocacy: string;
+  funFact: string;
+  tribe: string;
   contestantCategories: "MALE" | "FEMALE";
   eventId: string;
 }
@@ -20,15 +24,24 @@ export interface UpdateContestantInput {
   name?: string;
   email?: string;
   phone?: string;
-  avatar?: string;
+  image?: string;
   stageName?: string;
   bio?: string;
   portfolio?: string;
+  number?: number;
+  age?: number;
+  state?: string;
+  country?: string;
+  occupation?: string;
+  advocacy?: string;
+  funFact?: string;
+  tribe?: string;
   isVerified?: boolean;
   score?: number;
   rank?: number;
   contestantCategories?: "MALE" | "FEMALE";
   eventId?: string;
+  status?: "ACTIVE" | "INACTIVE";
 }
 
 export interface ContestantResponse {

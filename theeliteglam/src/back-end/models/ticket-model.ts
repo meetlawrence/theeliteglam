@@ -1,41 +1,45 @@
 import { prisma } from "../db/db-connect";
-import type { Ticket, UpdateTicket } from "../types/tickets";
+import type { UpdateTicket, Ticket } from "../types/ticket";
 
 export class TicketModel {
   async create(data: Ticket) {
     return await prisma.ticket.create({
       data: {
-        email: data.email,
-        name: data.name,
-        amount: data.amount,
-        quantity: data.quantity,
-        total: data.total,
-        phoneNumber: data.phoneNumber,
-        ticketTypeId: data.ticketTypeId,
         reference: data.reference,
-        eventId: data.eventId,
+        status: data.status,
+        ticketTransactionId: data.ticketTransactionId,
       },
     });
   }
 
-  async findByEventId(eventId: string) {
-    return await prisma.ticket.findMany({
-      where: { eventId: eventId },
-      orderBy: { amount: "asc" },
-    });
-  }
-
-  async findByreference(reference: string) {
+  async findByTicketId(id: string) {
     return await prisma.ticket.findUnique({
-      where: { reference },
+      where: { id },
     });
   }
 
-  async update(reference: string, data: UpdateTicket) {
+  async update(id: string, data: UpdateTicket) {
     return await prisma.ticket.update({
-      where: { reference },
+      where: { id },
       data,
     });
+  }
+
+  // may use later
+  async createdata (data: Ticket) {
+    try {
+      return await prisma.$transaction(async (tx) => {
+        await tx.ticket.create({
+          data: {
+            reference: data.reference,
+            status: data.status,
+            ticketTransactionId: data.ticketTransactionId,
+          },
+        });
+      })
+    } catch (error) {
+      
+    }
   }
 }
 

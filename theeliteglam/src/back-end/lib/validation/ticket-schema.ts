@@ -15,7 +15,7 @@ export const UpdateTicketTypeSchema = z.object({
   benefits: z.array(z.string().min(2)).min(1, "At least one benefit required").optional(),
 });
 
-export const ticketSchema = z.object({
+export const ticketTransactionSchema = z.object({
   name: z.string().min(2, "Name is required"),
   email: z.string().email("Invalid email address"),
   amount: z.number().positive("Amount must be positive").optional(),
@@ -27,7 +27,7 @@ export const ticketSchema = z.object({
   reference: z.string().min(2, "Reference is required"),
 });
 
-export const UpdateTicketSchema = z.object({
+export const UpdateticketTransactionSchema = z.object({
   name: z.string().min(2, "Name is required").optional(),
   email: z.string().email("Invalid email address").optional(),
   phoneNumber: z.string().min(7).optional(),

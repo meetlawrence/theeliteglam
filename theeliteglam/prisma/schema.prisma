@@ -47,13 +47,19 @@ model Contestant {
   name   String
   email  String @unique
   gender Gender
+  number Int    @default(1)
+  status Status @default(PENDING)
 
-  avatar String?
-  phone  String
+  image String?
+  phone String
 
-  dateOfBirth DateTime
-  city        String
-  country     String
+  age        Int
+  state      String
+  country    String
+  occupation String
+  advocacy   String
+  funFact    String
+  tribe      String
 
   isVerified Boolean @default(false)
 
@@ -86,6 +92,12 @@ enum Gender {
   FEMALE
 }
 
+enum Status {
+  PENDING
+  ACTIVE
+  INACTIVE
+}
+
 // ====================== EVENT / PAGEANT ======================
 model Event {
   id          String      @id @default(cuid())
@@ -97,10 +109,10 @@ model Event {
   status      EventStatus @default(UPCOMING)
   categories  String[]
 
-  tickets     Ticket[]
-  votes       Vote[]
-  sponsors    Sponsor[]
-  ticketTypes TicketType[]
+  ticketTransaction TicketTransaction[]
+  votes             Vote[]
+  sponsors          Sponsor[]
+  ticketTypes       TicketType[]
 
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
@@ -115,14 +127,14 @@ enum EventStatus {
 }
 
 model TicketType {
-  id       String   @id @default(cuid())
-  name     String
-  price    Float
-  capacity Int?
-  benefits String[]
-  eventId  String
-  event    Event    @relation(fields: [eventId], references: [id])
-  tickets  Ticket[]
+  id                String              @id @default(cuid())
+  name              String
+  price             Float
+  capacity          Int?
+  benefits          String[]
+  eventId           String
+  event             Event               @relation(fields: [eventId], references: [id])
+  ticketTransaction TicketTransaction[]
 }
 
 model Vote {
@@ -140,19 +152,22 @@ model Vote {
 }
 
 // ====================== TICKETS & SPONSORS ======================
-model Ticket {
-  id            String       @id @default(cuid())
+model TicketTransaction {
+  id            String                 @id @default(cuid())
   name          String
   email         String
   phoneNumber   String?
   eventId       String
   ticketTypeId  String
   amount        Float?
-  quantity      Int          @default(1)
+  quantity      Int                    @default(1)
   total         Float
-  reference     String       @unique
+  reference     String                 @unique
   paymentMethod String?
-  status        TicketStatus @default(PENDING) //Pending Ones User Initiat Payment Then Update Once Payment is Approved from Payment Gateway
+  status        TicketTrasactionStatus @default(PENDING) //Pending Ones User Initiat Payment Then Update Once Payment is Approved from Payment Gateway
+  clamed        Boolean? @default(false)
+
+  tickets Ticket[]
 
   tickettype TicketType @relation(fields: [ticketTypeId], references: [id])
   event      Event      @relation(fields: [eventId], references: [id])
@@ -165,7 +180,7 @@ model Ticket {
   @@index([reference])
 }
 
-enum TicketStatus {
+enum TicketTrasactionStatus {
   ABANDONED
   FAILED
   ONGOING
@@ -174,6 +189,20 @@ enum TicketStatus {
   QUEUED
   REVERSED
   SUCCESS
+  USED
+}
+
+model Ticket {
+  id                  String            @id @default(cuid())
+  reference           String
+  status              TicketStatus      @default(PENDING)
+  ticketTransactionId String
+  ticketTransaction   TicketTransaction @relation(fields: [ticketTransactionId], references: [id])
+}
+
+enum TicketStatus {
+  PENDING
+  SEND
   USED
 }
 
