@@ -1,21 +1,55 @@
-export function AboutSection() {
-  return (
-    <section className="py-26 px-6 bg-[#0E0E0E]">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-12">
-          <h1 className="font-cinzel text-4xl text-cream tracking-widest mb-4">
-            About The Elite Glam
-          </h1>
-          <div className="h-px bg-gold/25 mb-6" />
-        </div>
+"use client";
 
-        <div className="bg-gold/5 border border-gold/15 p-8">
-          <h2 className="font-cinzel text-xl text-gold tracking-wider mb-4">
-            I go build am later biko😓😓
-          </h2>
-          <p className="font-raleway text-sm text-muted leading-relaxed">Mek I rest small</p>
-        </div>
-      </div>
-    </section>
+import { useEffect, useRef, useState } from "react";
+import { AboutFaqSection } from "./AboutFaqSection";
+import { AboutHeroSection } from "./AboutHeroSection";
+import { AboutLeadershipSection } from "./AboutLeadershipSection";
+import { AboutMaidenEditionSection } from "./AboutMaidenEditionSection";
+import { AboutMissionValuesSection } from "./AboutMissionValuesSection";
+import { AboutWinnersSection } from "./AboutWinnersSection";
+import { Divider } from "./AboutShared";
+import { BANNER_IMG, CEO_IMG, FAQS, MAIDEN_IMGS, MISSION_VISION_CARDS, RUNNERS_UP, VALUES, WINNERS } from "./aboutData";
+
+export function AboutSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setInView(true);
+      },
+      { threshold: 0.03 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="bg-[#080808]">
+      <AboutHeroSection bannerImage={BANNER_IMG} inView={inView} />
+
+      <AboutMissionValuesSection missionVisionCards={MISSION_VISION_CARDS} values={VALUES} inView={inView} />
+
+      <Divider />
+
+      <AboutLeadershipSection image={CEO_IMG} />
+
+      <Divider />
+
+      <AboutMaidenEditionSection images={MAIDEN_IMGS} />
+
+      <Divider />
+
+      <AboutWinnersSection winners={WINNERS} runnersUp={RUNNERS_UP} />
+
+      <Divider />
+
+      <AboutFaqSection faqs={FAQS} />
+    </div>
   );
 }

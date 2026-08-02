@@ -65,10 +65,10 @@ export default function EventsHeadline() {
         <div className="absolute top-5 right-5 bottom-0 left-0 border border-border bg-[#0D0D0D]" />
         <div className="absolute top-0 right-10 bottom-5 left-0">
           <Image
-            src="/banners/img2.jpeg"
+            src="/events/dinner/x.jpg"
             alt="Stage event highlight"
             fill
-            className="object-cover object-top"
+            className="object-cover "
           />
         </div>
         <div className="absolute inset-0 bg-[linear-gradient(135deg,transparent_60%,rgba(8,8,8,0.7)_100%)]" />

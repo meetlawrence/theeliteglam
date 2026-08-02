@@ -58,7 +58,7 @@ export default function EventsItinerary() {
             className={`${i === activeDay ? "grid grid-cols-1 gap-12 lg:grid-cols-[280px_1fr] lg:gap-16 items-start" : "hidden"} itinerary-inner`}
           >
             <div>
-              <div className="font-cinzel text-[3.5rem] text-[rgba(201,168,76,0.12)] leading-none tracking-[0.05em] mb-2">
+              <div className="font-cinzel text-[3.5rem] text-[rgba(201,168,76,0.12)] leading-none tracking-wider mb-2">
                 {day.day.replace("Day ", "")}
               </div>
               <div className="font-raleway text-[0.7rem] tracking-[0.25em] uppercase text-accent mb-2">

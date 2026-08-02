@@ -6,6 +6,7 @@ import FranchiseButton from "./franchise/FranchiseButton";
 import SponsorButton from "./franchise/SponsorButton";
 import PartnerModal from "./franchise/PartnerModal";
 import { ENDORSEMENTS, SPONSORS } from "./franchise/franchiseData";
+import { HOME_IMAGES } from "./homeData";
 
 export function OverviewSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -28,50 +29,22 @@ export function OverviewSection() {
   return (
     <section
       ref={ref}
-      style={{
-        background: "#0A0A0A",
-        padding: "7rem 2rem",
-        position: "relative",
-        overflow: "hidden",
-      }}
+      className="relative overflow-hidden bg-[#0A0A0A] px-8 py-28 lg:px-8"
     >
-      {/* Background texture */}
       <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage:
-            "url(https://images.unsplash.com/photo-1779167327036-f651fbf9a0d2?w=1800&h=900&fit=crop&auto=format)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          opacity: 0.04,
-          pointerEvents: "none",
-        }}
+        className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-[0.04]"
+        style={{ backgroundImage: `url(${HOME_IMAGES.franchiseBackground})` }}
       />
 
-      <div style={{ maxWidth: "1300px", margin: "0 auto", position: "relative" }}>
-        {/* ── FRANCHISE OVERVIEW ── */}
+      <div className="relative mx-auto max-w-[1300px]">
         <div
-          style={{
-            marginBottom: "7rem",
-            transition: "all 1s ease",
-            opacity: inView ? 1 : 0,
-            transform: inView ? "none" : "translateY(30px)",
-          }}
+          className={`mb-28 transition-all duration-1000 ${
+            inView ? "translate-y-0 opacity-100" : "translate-y-[30px] opacity-0"
+          }`}
         >
           <SectionLabel text="Franchise Overview" />
 
-          {/* Brand logo cards */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, 1fr)",
-              gap: "1.5rem",
-              marginTop: "2.5rem",
-              marginBottom: "3rem",
-            }}
-            className="franchise-grid"
-          >
+          <div className="mt-10 mb-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
             {ENDORSEMENTS.map((e, i) => (
               <BrandLogoCard key={e.brand} item={e} index={i} inView={inView} />
             ))}
@@ -80,108 +53,37 @@ export function OverviewSection() {
           <FranchiseButton />
         </div>
 
-        {/* Divider */}
-        <div
-          style={{
-            height: "1px",
-            background: "linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent)",
-            marginBottom: "6rem",
-          }}
-        />
+        <div className="mb-24 h-px bg-[linear-gradient(to_right,transparent,rgba(201,168,76,0.3),transparent)]" />
 
-        {/* ── SPONSORS ── */}
         <div
-          style={{
-            transition: "all 1s ease 0.3s",
-            opacity: inView ? 1 : 0,
-            transform: inView ? "none" : "translateY(30px)",
-          }}
+          className={`transition-all duration-1000 delay-300 ${
+            inView ? "translate-y-0 opacity-100" : "translate-y-[30px] opacity-0"
+          }`}
         >
           <SectionLabel text="Our Sponsors" />
-          <h2
-            style={{
-              fontFamily: "'Cinzel', serif",
-              fontSize: "clamp(1.6rem, 3.5vw, 2.8rem)",
-              color: "#F5EDD6",
-              letterSpacing: "0.06em",
-              marginTop: "1rem",
-              marginBottom: "0.75rem",
-            }}
-          >
+          <h2 className="mt-4 mb-3 font-['Cinzel',serif] text-[clamp(1.6rem,3.5vw,2.8rem)] tracking-[0.06em] text-[#F5EDD6]">
             Our Prestigious Partners
           </h2>
-          <p
-            style={{
-              fontFamily: "'Raleway', sans-serif",
-              fontSize: "0.95rem",
-              color: "#9A8C6A",
-              maxWidth: "500px",
-              lineHeight: 1.7,
-              marginBottom: "3rem",
-            }}
-          >
+          <p className="mb-12 max-w-[500px] font-['Raleway',sans-serif] text-[0.95rem] leading-[1.7] text-[#9A8C6A]">
             We are proud to collaborate with world-class brands who share our commitment to
             excellence, beauty, and empowerment.
           </p>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(270px, 1fr))",
-              gap: "1.5rem",
-            }}
-          >
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {SPONSORS.map((sponsor, i) => (
               <SponsorCard key={sponsor.name} sponsor={sponsor} index={i} inView={inView} />
             ))}
           </div>
 
-          {/* Become a sponsor CTA */}
-          <div
-            style={{
-              marginTop: "4rem",
-              padding: "3rem",
-              border: "1px solid rgba(201,168,76,0.2)",
-              background: "#0D0D0D",
-              display: "grid",
-              gridTemplateColumns: "1fr auto",
-              alignItems: "center",
-              gap: "2rem",
-            }}
-            className="sponsor-cta"
-          >
+          <div className="mt-16 grid items-center gap-8 rounded-[1px] border border-[rgba(201,168,76,0.2)] bg-[#0D0D0D] p-8 md:grid-cols-[1fr_auto] md:p-12">
             <div>
-              <div
-                style={{
-                  fontFamily: "'Raleway', sans-serif",
-                  fontSize: "0.7rem",
-                  letterSpacing: "0.35em",
-                  color: "#C9A84C",
-                  textTransform: "uppercase",
-                  marginBottom: "0.5rem",
-                }}
-              >
+              <div className="mb-2 font-['Raleway',sans-serif] text-[0.7rem] uppercase tracking-[0.35em] text-[#C9A84C]">
                 Partnership Opportunities
               </div>
-              <h3
-                style={{
-                  fontFamily: "'Cinzel', serif",
-                  fontSize: "1.4rem",
-                  color: "#F5EDD6",
-                  marginBottom: "0.5rem",
-                }}
-              >
+              <h3 className="mb-2 font-['Cinzel',serif] text-[1.4rem] text-[#F5EDD6]">
                 Become a Sponsor
               </h3>
-              <p
-                style={{
-                  fontFamily: "'Raleway', sans-serif",
-                  fontSize: "0.9rem",
-                  color: "#9A8C6A",
-                  lineHeight: 1.6,
-                  maxWidth: "480px",
-                }}
-              >
+              <p className="max-w-[480px] font-['Raleway',sans-serif] text-[0.9rem] leading-[1.6] text-[#9A8C6A]">
                 Align your brand with elegance, reach a global audience of 4M+, and support a
                 movement that empowers people worldwide.
               </p>
@@ -192,16 +94,6 @@ export function OverviewSection() {
       </div>
 
       {modalOpen && <PartnerModal onClose={() => setModalOpen(false)} />}
-
-      <style>{`
-        @media (max-width: 900px) {
-          .franchise-grid { grid-template-columns: repeat(2, 1fr) !important; }
-          .sponsor-cta { grid-template-columns: 1fr !important; }
-        }
-        @media (max-width: 500px) {
-          .franchise-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </section>
   );
 }

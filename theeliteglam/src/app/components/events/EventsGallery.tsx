@@ -37,19 +37,19 @@ export default function EventsGallery() {
       <div className="max-w-[1300px] mx-auto px-8">
         <SectionLabel text="Gallery" />
         <h2 className="font-cinzel text-[clamp(1.6rem,3.5vw,2.6rem)] text-[#F5EDD6] tracking-[0.06em] mt-4 mb-12">
-          Moments from the Stage
+          Moments from the Event
         </h2>
       </div>
 
       <div className="relative overflow-hidden">
         <div
-          className="flex transition-transform duration-[600ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+          className="flex transition-transform duration-600 ease-in-out"
           style={{ transform: `translateX(calc(-${activeSlide * 100}% / 1))` }}
         >
           {GALLERY.map((img, i) => (
-            <div key={i} className="min-w-full h-[520px] relative flex-shrink-0">
-              <div className="relative w-full h-full">
-                <Image src={img.url} alt={img.caption} fill className="object-cover object-top" />
+            <div key={i} className="min-w-full h-130 relative shrink-0 bg-[#020202]">
+              <div className="relative h-full w-full overflow-hidden">
+                <Image src={img.url} alt={img.caption} fill className="object-cover object-[center_30%]" />
               </div>
               <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(8,8,8,0.7)_0%,transparent_50%)]" />
               <div className="absolute bottom-10 left-1/2 -translate-x-1/2 font-cinzel text-[0.8rem] tracking-[0.3em] text-[#C9A84C] uppercase whitespace-nowrap">
@@ -62,14 +62,18 @@ export default function EventsGallery() {
         <CarouselBtn dir="left" onClick={prevSlide} />
         <CarouselBtn dir="right" onClick={nextSlide} />
 
-        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-          {GALLERY.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setActiveSlide(i)}
-              className={`rounded-full transition-all duration-300 ${i === activeSlide ? "w-6 bg-[#C9A84C]" : "w-2 bg-[rgba(201,168,76,0.3)]"} h-1`}
-            />
-          ))}
+        <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-2.5">
+          {GALLERY.map((_, i) => {
+            const isActive = i === activeSlide;
+            return (
+              <button
+                key={i}
+                onClick={() => setActiveSlide(i)}
+                aria-label={`Go to slide ${i + 1}`}
+                className={`h-1 rounded-full transition-all duration-300 ${isActive ? "w-8 bg-[#C9A84C]" : "w-3 bg-[rgba(201,168,76,0.3)]"}`}
+              />
+            );
+          })}
         </div>
       </div>
     </section>

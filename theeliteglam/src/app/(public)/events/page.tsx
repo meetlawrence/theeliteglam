@@ -1,23 +1,20 @@
 ﻿"use client";
 
-import EventsBanner from "../../components/events/EventsBanner";
-import EventsHeadline from "../../components/events/EventsHeadline";
-import EventsGallery from "../../components/events/EventsGallery";
-import EventsExperience from "../../components/events/EventsExperience";
-import EventsItinerary from "../../components/events/EventsItinerary";
+import { useRouter } from "next/navigation";
+import { EventsPageSection } from "@/app/components/events/EventsPageSection";
 
-export default function EventsPage({
-  onNavigate,
-}: {
-  onNavigate: (page: "tickets" | "register" | "contestants") => void;
-}) {
-  return (
-    <main>
-      <EventsBanner onNavigate={onNavigate} />
-      <EventsHeadline />
-      <EventsGallery />
-      <EventsExperience />
-      <EventsItinerary />
-    </main>
-  );
+export default function EventsPage() {
+  const router = useRouter();
+
+  const handleNavigate = (page: "tickets" | "register" | "contestants") => {
+    const routes: Record<"tickets" | "register" | "contestants", string> = {
+      tickets: "/tickets",
+      register: "/register",
+      contestants: "/contestants",
+    };
+
+    router.push(routes[page]);
+  };
+
+  return <EventsPageSection onNavigate={handleNavigate} />;
 }

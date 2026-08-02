@@ -44,8 +44,8 @@ export const SPONSORS: Sponsor[] = [
     logo: "EK",
   },
   {
-    name: "meetLawrence Global Solutions",
+    name: "RELiQ Global Solutions",
     desc: "The official technical and support partner for the Elite Glam pageant.",
-    logo: "mLGS",
+    logo: "RGS",
   },
 ];

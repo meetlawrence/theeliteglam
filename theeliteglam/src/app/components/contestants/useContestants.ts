@@ -3,152 +3,80 @@
 import { useEffect, useState } from "react";
 import type { Contestant, Gender } from "./types";
 
-const BASE: Contestant[] = [
-  {
-    id: 1,
-    name: "Adaeze Okonkwo",
-    state: "Lagos",
-    age: 23,
-    gender: "female",
-    number: "F01",
-    bio: "A fierce advocate for mental health awareness and female entrepreneurship across Southern Nigeria.",
-    image:
-      "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=700&q=80",
-    votes: 4821,
-    occupation: "Entrepreneur & Brand Strategist",
-    advocacy: "Mental Health Awareness",
-    funFact: "Speaks four Nigerian languages fluently.",
-    tribe: "Igbo",
-  },
-  {
-    id: 2,
-    name: "Fatima Abdullahi",
-    state: "Abuja",
-    age: 21,
-    gender: "female",
-    number: "F02",
-    bio: "A passionate medical student using her platform to drive community health initiatives in underserved areas.",
-    image:
-      "https://images.unsplash.com/photo-1770393391946-7d9b658deec3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=700&q=80",
-    votes: 3976,
-    occupation: "Medical Student",
-    advocacy: "Rural Healthcare Access",
-    funFact: "Founded a free health clinic at age 19.",
-    tribe: "Hausa-Fulani",
-  },
-  {
-    id: 3,
-    name: "Chisom Eze",
-    state: "Enugu",
-    age: 24,
-    gender: "female",
-    number: "F03",
-    bio: "A creative fashion designer committed to sustainable African fashion and environmental consciousness.",
-    image:
-      "https://images.unsplash.com/photo-1593351799227-75df2026356b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=700&q=80",
-    votes: 3502,
-    occupation: "Fashion Designer",
-    advocacy: "Sustainable Fashion & Climate Action",
-    funFact: "Her designs have been worn at Lagos Fashion Week.",
-    tribe: "Igbo",
-  },
-  {
-    id: 4,
-    name: "Blessing Idibia",
-    state: "Port Harcourt",
-    age: 22,
-    gender: "female",
-    number: "F04",
-    bio: "A gifted performing artist who uses music and drama to counsel and uplift at-risk youth in the Niger Delta.",
-    image:
-      "https://images.unsplash.com/photo-1713845784497-fe3d7ed176d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=700&q=80",
-    votes: 2988,
-    occupation: "Performing Artist & Counsellor",
-    advocacy: "Youth Development & Arts Therapy",
-    funFact: "Has performed in 6 countries before age 22.",
-    tribe: "Ijaw",
-  },
-  {
-    id: 5,
-    name: "Ngozi Obi",
-    state: "Anambra",
-    age: 25,
-    gender: "female",
-    number: "F05",
-    bio: "A legal practitioner championing gender equality and the rights of women and girls in the Nigerian legal system.",
-    image:
-      "https://images.unsplash.com/photo-1613876215075-276fd62c89a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=700&q=80",
-    votes: 2644,
-    occupation: "Legal Practitioner",
-    advocacy: "Gender Equality & Women's Rights",
-    funFact: "Called to bar at 23 with First Class Honours.",
-    tribe: "Igbo",
-  },
-  {
-    id: 6,
-    name: "Emeka Dike",
-    state: "Lagos",
-    age: 26,
-    gender: "male",
-    number: "M01",
-    bio: "A visionary architect and clean energy advocate designing sustainable housing for low-income communities.",
-    image:
-      "https://images.unsplash.com/photo-1642257859842-c95f9fa8121d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=700&q=80",
-    votes: 4413,
-    occupation: "Architect & Energy Consultant",
-    advocacy: "Clean Energy & Affordable Housing",
-    funFact: "Designed Nigeria's first solar-powered community centre.",
-    tribe: "Igbo",
-  },
-  {
-    id: 7,
-    name: "Tunde Bakare",
-    state: "Ogun",
-    age: 24,
-    gender: "male",
-    number: "M02",
-    bio: "An award-winning filmmaker using storytelling to reshape how Africa is perceived on the global stage.",
-    image:
-      "https://images.unsplash.com/photo-1624670319970-37aa780d4874?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=700&q=80",
-    votes: 3755,
-    occupation: "Filmmaker & Creative Director",
-    advocacy: "African Narrative & Media Representation",
-    funFact: "His debut short film screened at Cannes.",
-    tribe: "Yoruba",
-  },
-  {
-    id: 8,
-    name: "Chukwuma Eze",
-    state: "Rivers",
-    age: 23,
-    gender: "male",
-    number: "M03",
-    bio: "A professional sports coach using athletics to instil discipline, teamwork and leadership in young Nigerians.",
-    image:
-      "https://images.unsplash.com/photo-1659444003277-6cb0a5ffc8bd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=700&q=80",
-    votes: 3101,
-    occupation: "Sports Coach & Youth Mentor",
-    advocacy: "Youth Empowerment Through Sport",
-    funFact: "Trained three national athletics champions.",
-    tribe: "Igbo",
-  },
-  {
-    id: 9,
-    name: "Abubakar Musa",
-    state: "Kano",
-    age: 27,
-    gender: "male",
-    number: "M04",
-    bio: "A social entrepreneur revolutionising food production in Northern Nigeria through tech-driven agriculture.",
-    image:
-      "https://images.unsplash.com/photo-1588178454780-441fa5b99fa5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=700&q=80",
-    votes: 2719,
-    occupation: "Agricultural Innovator",
-    advocacy: "Food Security & Rural Development",
-    funFact: "His agri-tech startup feeds 10,000 families monthly.",
-    tribe: "Hausa",
-  },
-];
+const BASE: Contestant[] = [];
+
+function normalizeContestant(item: Record<string, unknown>, index: number): Contestant {
+  const genderValue = String(item.gender ?? item.Gender ?? "female").toLowerCase();
+  const gender = genderValue === "male" ? "male" : "female";
+
+  const rawId = item.id ?? item._id ?? item.contestantId;
+  const id = typeof rawId === "number" ? rawId : Number(rawId) || index + 1;
+
+  const votesValue =
+    typeof item.votes === "number"
+      ? item.votes
+      : typeof item.voteCount === "number"
+        ? item.voteCount
+        : typeof item._count === "object" && item._count !== null && "votes" in item._count
+          ? Number((item._count as { votes?: number }).votes ?? 0)
+          : 0;
+
+  const imageValue =
+    typeof item.image === "string" && item.image.trim()
+      ? item.image
+      : typeof item.photo === "string" && item.photo.trim()
+        ? item.photo
+        : "/images/placeholder.png";
+
+  return {
+    id,
+    name: String(item.name ?? item.fullName ?? "Unnamed contestant"),
+    state: String(item.state ?? item.location ?? ""),
+    age: Number(item.age) || 0,
+    gender,
+    number: String(item.number ?? item.contestantNumber ?? ""),
+    bio: String(item.bio ?? item.description ?? ""),
+    image: imageValue,
+    votes: votesValue,
+    occupation: String(item.occupation ?? ""),
+    advocacy: String(item.advocacy ?? ""),
+    funFact: String(item.funFact ?? item.fun_fact ?? ""),
+    tribe: String(item.tribe ?? ""),
+  };
+}
+
+function readStoredContestants(): Contestant[] {
+  if (typeof window === "undefined") {
+    return [];
+  }
+
+  try {
+    const raw = window.localStorage.getItem("eliteGlamClientContestants");
+    if (!raw) {
+      return [];
+    }
+
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed)
+      ? parsed.map((item: Record<string, unknown>, index: number) => normalizeContestant(item, index))
+      : [];
+  } catch (error) {
+    console.error("Failed to read stored contestants", error);
+    return [];
+  }
+}
+
+function writeStoredContestants(contestants: Contestant[]) {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  try {
+    window.localStorage.setItem("eliteGlamClientContestants", JSON.stringify(contestants));
+  } catch (error) {
+    console.error("Failed to persist contestants", error);
+  }
+}
 
 export function useContestants() {
   const [contestants, setContestants] = useState<Contestant[]>(BASE);
@@ -161,9 +89,68 @@ export function useContestants() {
   const [voteTarget, setVoteTarget] = useState<Contestant | null>(null);
 
   useEffect(() => {
+    let isMounted = true;
+
+    const loadContestants = async () => {
+      const storedContestants = readStoredContestants();
+
+      if (isMounted) {
+        setContestants(storedContestants);
+      }
+
+      try {
+        const response = await fetch("/api/contestants/get-contestants", { cache: "no-store" });
+        if (!response.ok) {
+          const message = response.status === 401 || response.status === 403
+            ? "Contestants API requires admin authentication"
+            : "Contestants API is unavailable";
+          throw new Error(message);
+        }
+
+        const payload = await response.json();
+        const rawData = Array.isArray(payload?.data)
+          ? payload.data
+          : Array.isArray(payload)
+            ? payload
+            : [];
+
+        const fetchedContestants = rawData.map((item: Record<string, unknown>, index: number) =>
+          normalizeContestant(item, index)
+        );
+
+        const mergedContestants = fetchedContestants.length
+          ? fetchedContestants
+          : storedContestants;
+
+        if (isMounted) {
+          setContestants(mergedContestants);
+        }
+
+        writeStoredContestants(mergedContestants);
+      } catch (error) {
+        console.error("Failed to fetch contestants", error);
+        if (isMounted) {
+          setContestants(storedContestants);
+        }
+      }
+    };
+
+    void loadContestants();
+
+    const handleContestantsUpdated = () => {
+      const nextContestants = readStoredContestants();
+      setContestants(nextContestants);
+    };
+
+    window.addEventListener("elite-glam-contestants-updated", handleContestantsUpdated);
+
     const timer = setTimeout(() => setCarouselIdx(0), 0);
-    return () => clearTimeout(timer);
-  }, [carouselGender]);
+    return () => {
+      isMounted = false;
+      window.removeEventListener("elite-glam-contestants-updated", handleContestantsUpdated);
+      clearTimeout(timer);
+    };
+  }, []);
 
   const handleVoteSuccess = (id: number, qty: number) => {
     setVoted((current) => ({ ...current, [id]: (current[id] ?? 0) + qty }));
