@@ -8,7 +8,8 @@ import VerifyEmail from "./templates/auth/verification-email-template";
 import ResetPasswordEmail from "./templates/auth/rest-password-email-template";
 import PasswordChangedEmail from "./templates/auth/password-changed-email-template";
 import LoginAlertEmail from "./templates/auth/login-alert-emaill-template";
-import TicketEmail from "./templates/ticket"
+import TicketEmail from "./templates/ticket";
+import{ContestantFormEmail} from "./templates/ContestantFormEmail"
 
 const resend = new Resend(AUTH_CONFIG.RESEND_API_KEY);
 
@@ -27,7 +28,8 @@ type EmailPayload =
         time: string;
         ipAddress?: string;
       };
-    }| {
+    }
+  | {
       type: "ticket";
       props: {
         firstName: string;
@@ -36,8 +38,17 @@ type EmailPayload =
         amount: number | null;
         eventName?: string;
         eventDate?: string;
-        qrCode?: string;      // single QR (base64)
-        qrCodes: string[];   // multiple QRs
+        qrCode?: string; // single QR (base64)
+        qrCodes: string[]; // multiple QRs
+      };
+    }
+  | {
+      type: "contestant-form";
+      props: {
+        firstName: string;
+        formLink: string;
+        reference: string;
+        eventName?: string;
       };
     };
 
@@ -74,6 +85,10 @@ export async function sendEmail(to: string, payload: EmailPayload) {
       case "ticket":
         subject = `Your Ticket – ${payload.props.ticketReference}`;
         reactComponent = TicketEmail(payload.props);
+        break;
+      case "contestant-form":
+        subject = `Complete your Contestant Registration – ${payload.props.eventName || "Event"}`;
+        reactComponent = ContestantFormEmail(payload.props);
         break;
 
       default:

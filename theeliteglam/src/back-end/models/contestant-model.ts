@@ -30,7 +30,14 @@ export class ContestantModel {
         tribe: data.tribe,
         contestantCategories: data.contestantCategories,
         eventId: data.eventId,
+        reference: data.reference
       },
+    });
+  }
+
+  findByreference(reference: string) {
+    return prisma.contestant.findUnique({
+      where: { reference: reference },
     });
   }
 

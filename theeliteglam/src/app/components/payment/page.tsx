@@ -16,7 +16,7 @@ export default function Payment() {
     e.preventDefault();
 
     try {
-      const result = await fetch("../../api/ticket/payment", {
+      const result = await fetch("../../api/contestants/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, ticketTypeId, quantity, phoneNumber, eventId, name }),

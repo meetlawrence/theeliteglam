@@ -8,6 +8,7 @@ export const createEventSchema = z.object({
   location: z.string().min(3, "Location is required"),
   status: z.enum(["UPCOMING", "ONGOING", "COMPLETED", "CANCELLED"]).optional(),
   categories: z.array(z.string().min(2)).min(1).max(5),
+  contestantFee: z.number().positive("Total must be positive"),
 });
 
 export const updateEventSchema = z.object({

@@ -52,7 +52,7 @@ export const EventStatus = {
 export type EventStatus = (typeof EventStatus)[keyof typeof EventStatus]
 
 
-export const TicketTrasactionStatus = {
+export const TransactionStatus = {
   ABANDONED: 'ABANDONED',
   FAILED: 'FAILED',
   ONGOING: 'ONGOING',
@@ -64,7 +64,7 @@ export const TicketTrasactionStatus = {
   USED: 'USED'
 } as const
 
-export type TicketTrasactionStatus = (typeof TicketTrasactionStatus)[keyof typeof TicketTrasactionStatus]
+export type TransactionStatus = (typeof TransactionStatus)[keyof typeof TransactionStatus]
 
 
 export const TicketStatus = {
