@@ -6,6 +6,7 @@ export interface CreateEventInput {
   location: string;
   status?: "UPCOMING" | "ONGOING" | "COMPLETED" | "CANCELLED";
   categories?: string[];
+  contestantFee: number;
   // Array of category names
 }
 
@@ -17,6 +18,7 @@ export interface UpdateEventInput {
   location?: string;
   status?: "UPCOMING" | "ONGOING" | "COMPLETED" | "CANCELLED";
   categories?: string[];
+  contestantFee?: number;
 }
 
 export interface EventResponse {

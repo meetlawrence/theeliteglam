@@ -1,4 +1,4 @@
-import { ticketTypeRepo } from "../models/ticket-type-models";
+
 import { ticketTransactionRepo } from "../models/ticket-transaction-model";
 import type { TicketTransaction, UpdateTicketTransaction } from "../types/tickets-transaction";
 import {
@@ -6,13 +6,8 @@ import {
   UpdateticketTransactionSchema,
   ticketTypEventSchema,
   referenceSchema,
-  ticketTypeIdSchema,
 } from "../lib/validation/ticket-schema";
 import { formatZodError } from "../lib/utils/helper";
-import QRCode from "qrcode";
-import { sendEmail } from "../lib/email/resend";
-import { randomUUID } from "crypto";
-import { uploadQRCode } from "../db/cloudinary";
 
 export class TicketTransactionService {
   async calculateTicketPrice(price: number, quantity: number) {
