@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useContestants } from "@/app/components/contestants/useContestants";
 import AdminContestantHeader from "./AdminContestantHeader";
 import AdminContestantFilters from "./AdminContestantFilters";
@@ -24,6 +24,15 @@ export default function AdminContestantsPanel() {
         "active" | "finalist" | "eliminated"
       >
   );
+
+  useEffect(() => {
+    setList(base);
+    setStatusMap((current) =>
+      Object.fromEntries(
+        base.map((contestant) => [contestant.id, current[contestant.id] ?? "active"])
+      ) as Record<number, "active" | "finalist" | "eliminated">
+    );
+  }, [base]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();

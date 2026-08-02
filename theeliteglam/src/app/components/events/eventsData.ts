@@ -1,27 +1,56 @@
+export const EVENTS_BANNER_MEDIA = {
+  image: "/banners/1.jpg",
+  video: "/banners/event.webm",
+};
+
 export const GALLERY = [
   {
-    url: "https://images.unsplash.com/photo-1733322992706-1210ca79f4df?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1200&q=80",
-    caption: "Runway — Grand Finale",
+    url: "/events/costume/1.jpg",
+    caption: "Costume",
   },
   {
-    url: "https://images.unsplash.com/photo-1571924848943-25c2c95bbb4b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1200&q=80",
-    caption: "Evening Gown Segment",
+    url: "/events/costume/2.jpg",
+    caption: "Costume",
   },
   {
-    url: "https://images.unsplash.com/photo-1733322991133-2de13aa12c57?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1200&q=80",
-    caption: "Coronation Walk",
+    url: "/events/costume/3.jpg",
+    caption: "Costume",
   },
   {
-    url: "https://images.unsplash.com/photo-1571924849183-a68a3879348d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1200&q=80",
-    caption: "Talent Showcase",
+    url: "/events/costume/4.jpg",
+    caption: "Costume",
   },
   {
-    url: "https://images.unsplash.com/photo-1603122630570-7fd434d470d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1200&q=80",
-    caption: "Stage Presence",
+    url: "/events/dinner/1.jpg",
+    caption: "Dinner",
   },
   {
-    url: "https://images.unsplash.com/flagged/photo-1553277004-39d655b57262?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1200&q=80",
-    caption: "Interview Round",
+    url: "/events/dinner/2.jpg",
+    caption: "Dinner",
+  },
+  {
+    url: "/events/dinner/3.jpg",
+    caption: "Dinner",
+  },
+  {
+    url: "/events/dinner/4.jpg",
+    caption: "Dinner",
+  },
+  {
+    url: "/events/cultural/1.jpg",
+    caption: "Cultural",
+  },
+  {
+    url: "/events/cultural/2.jpg",
+    caption: "Cultural",
+  },
+  {
+    url: "/events/cultural/3.jpg",
+    caption: "Cultural",
+  },
+  {
+    url: "/events/cultural/4.jpg",
+    caption: "Cultural",
   },
 ];
 
@@ -56,7 +85,7 @@ export const ITINERARY = [
     events: [
       { time: "10:00 AM", name: "Contestant Check-In & Accreditation" },
       { time: "2:00 PM", name: "Orientation & Brand Presentation" },
-      { time: "6:00 PM", name: "Welcome Gala Dinner — Black Tie" },
+      { time: "6:00 PM", name: "Welcome Gala Dinner (Black Tie)" },
     ],
   },
   {
@@ -64,9 +93,10 @@ export const ITINERARY = [
     date: "May 18, 2027",
     title: "Training & Media Activities",
     events: [
-      { time: "8:00 AM", name: "Morning Fitness" },
-      { time: "9:00 AM", name: "Runway Training" },
-      { time: "5:00 PM", name: "Press & Media Interaction" },
+      { time: "6:00 AM", name: "Morning Fitness" },
+      { time: "10:00 AM", name: "Workshops & Grooming Sessions" },
+      { time: "3:00 PM", name: "Press & Interviews" },
+      { time: "5:00 PM", name: "Photoshoots" },
     ],
   },
   {
@@ -74,9 +104,10 @@ export const ITINERARY = [
     date: "May 19, 2027",
     title: "Preliminary Competition",
     events: [
+      { time: "6:00 AM", name: "Morning Fitness" },
       { time: "10:00 AM", name: "Advocacy Presentations" },
-      { time: "3:00 PM", name: "Talent Showcase" },
-      { time: "7:00 PM", name: "Q&A with Judges — Live Stream" },
+      { time: "4:00 PM", name: "Talent Showcase" },
+      { time: "7:00 PM", name: "Q&A with Judges (Live Stream)" },
     ],
   },
   {
@@ -85,7 +116,7 @@ export const ITINERARY = [
     title: "Grand Finale & Coronation Night",
     events: [
       { time: "4:00 PM", name: "Red Carpet Arrival" },
-      { time: "6:30 PM", name: "Grand Finale Show — Main Stage" },
+      { time: "6:30 PM", name: "Grand Finale Show (Main Stage)" },
       { time: "9:00 PM", name: "Coronation & Prize Presentation" },
     ],
   },

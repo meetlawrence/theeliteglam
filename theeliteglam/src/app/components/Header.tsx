@@ -29,17 +29,43 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      return;
+    }
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+    };
+  }, [menuOpen]);
+
   // Helper to close menu and navigate
   const handleNav = (path: string) => {
     router.push(path);
     setMenuOpen(false);
   };
 
+
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 border-b ${scrolled ? "bg-black/96 border-[#C9A84C]/20" : "bg-black/35 border-[#C9A84C]/20"} backdrop-blur-md`}
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b ${
+        menuOpen
+          ? "bg-black border-[#C9A84C]/20"
+          : scrolled
+          ? "bg-black/96 border-[#C9A84C]/20"
+          : "bg-black/35 border-[#C9A84C]/20"
+      } backdrop-blur-md`}
     >
-      <div className="max-w-350 mx-auto px-8 h-19.5 flex items-center justify-between">
+      <div className="max-w-350 mx-auto px-8 h-19.5 flex items-center justify-between relative z-50">
         {/* Logo */}
         <button onClick={() => handleNav("/")} className="flex items-center shrink-0">
           <Image
@@ -74,24 +100,9 @@ export function Header() {
 
         {/* Desktop CTA Buttons */}
         <div className="hidden md:flex items-center gap-3 shrink-0">
-          <NavCta
-            label="Tickets"
-            icon={<Ticket size={13} />}
-            variant="ghost"
-            onClick={() => router.push("/tickets")}
-          />
-          <NavCta
-            label="Register"
-            icon={<UserPlus size={13} />}
-            variant="ghost"
-            onClick={() => router.push("/register")}
-          />
-          <NavCta
-            label="Vote"
-            icon={<Star size={13} />}
-            variant="filled"
-            onClick={() => router.push("/contestants")}
-          />
+          <NavCta label="Tickets" icon={<Ticket size={13} />} variant="ghost" onClick={() => handleNav("/tickets")} />
+          <NavCta label="Register" icon={<UserPlus size={13} />} variant="ghost" onClick={() => handleNav("/register")} />
+          <NavCta label="Vote" icon={<Star size={13} />} variant="filled" onClick={() => handleNav("/contestants")} />
         </div>
 
         {/* Mobile Toggle */}
@@ -105,43 +116,32 @@ export function Header() {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden absolute top-19.5 left-0 w-full bg-black/98 border-b border-[#C9A84C]/20 p-6 flex flex-col gap-6">
-          {NAV_LINKS.map(({ label, page }) => {
+        <div className="md:hidden absolute top-19.5 left-0 w-full bg-black/98 border-b border-[#C9A84C]/20 p-6 flex flex-col gap-10 animate-[fadeInUp_600ms_ease-out]">
+          {NAV_LINKS.map(({ label, page }, index) => {
             const isActive = pathname === page;
             return (
               <button
                 key={label}
                 onClick={() => handleNav(page)}
-                className={`relative text-left uppercase tracking-widest text-sm py-2 border-b border-[#C9A84C]/10 transition-colors ${isActive ? "text-accent" : "text-muted-foreground"}`}
+                className={`relative text-center uppercase tracking-widest text-sm py-2 border-b border-[#C9A84C]/10 transition-all duration-200 ${
+                  isActive ? "text-accent" : "text-muted-foreground"
+                }`}
+                style={{ animationDelay: `${index * 180}ms` }}
               >
                 {label}
+
                 {isActive && (
-                  <div className="absolute bg-linear-to-r from-transparent via-accent to-transparent" />
+                  <div className="absolute left-0 bottom-0 h-px w-full bg-gradient-to-r from-transparent via-[#C9A84C] to-transparent" />
                 )}
               </button>
             );
           })}
 
           {/* Mobile CTA Buttons */}
-          <div className="flex flex-row flex-wrap gap-3">
-            <NavCta
-              label="Tickets"
-              icon={<Ticket size={13} />}
-              variant="ghost"
-              onClick={() => handleNav("/tickets")}
-            />
-            <NavCta
-              label="Register"
-              icon={<UserPlus size={13} />}
-              variant="ghost"
-              onClick={() => handleNav("/register")}
-            />
-            <NavCta
-              label="Vote"
-              icon={<Star size={13} />}
-              variant="filled"
-              onClick={() => handleNav("/contestants")}
-            />
+          <div className="flex flex-row flex-wrap gap-3 justify-center" style={{ animationDelay: `${NAV_LINKS.length * 180}ms` }}>
+            <NavCta label="Tickets" icon={<Ticket size={13} />} variant="ghost" onClick={() => handleNav("/tickets")} />
+            <NavCta label="Register" icon={<UserPlus size={13} />} variant="ghost" onClick={() => handleNav("/register")} />
+            <NavCta label="Vote" icon={<Star size={13} />} variant="filled" onClick={() => handleNav("/contestants")} />
           </div>
         </div>
       )}

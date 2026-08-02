@@ -1,9 +1,9 @@
-import ContestantsSection from "@/app/components/contestants/ContestantsSection";
+import { ContestantsPageSection } from "@/app/components/contestants/ContestantsPageSection";
 
 export default function ContestantsPage() {
   return (
     <main>
-      <ContestantsSection />
+      <ContestantsPageSection />
     </main>
   );
 }
