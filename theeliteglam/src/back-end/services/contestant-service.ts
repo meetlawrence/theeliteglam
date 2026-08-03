@@ -1,14 +1,18 @@
 import { contestantModel } from "../models/contestant-model";
+import { contestantTransactionRepo } from "../models/contestant-transaction-model";
 import type { CreateContestantInput, UpdateContestantInput } from "../types/contestant-types";
+import { ContestantTransactionStatus } from "../types/contestant-transaction-types";
 import {
   createContestantSchema,
   updateContestantSchema,
   contestantIdParamSchema,
+  referenceSchema,
 } from "../lib/validation/contestant-validation";
 
 import { formatZodError } from "../lib/utils/helper";
-
 import { eventIdSchema } from "../lib/validation/sponsor-schema";
+import { sendEmail } from "../lib/email/resend";
+
 
 export class ContestantService {
   async createContestant(data: CreateContestantInput) {
@@ -55,6 +59,25 @@ export class ContestantService {
       }
 
       const contestant = await contestantModel.findById(validation.data.id);
+      if (!contestant) {
+        return { success: false, error: "Contestant not found", status: 404 };
+      }
+
+      return { success: true, data: contestant };
+    } catch (error) {
+      console.error("Get contestant error:", error);
+      return { success: false, error: error || "Failed to fetch contestant", status: 500 };
+    }
+  }
+
+  async getContestantByreference(reference: string) {
+    try {
+
+      const validation = referenceSchema.safeParse({ id: reference });
+      if (!validation.success) {
+        return { success: false, error: formatZodError(validation.error), status: 400 };
+      }
+      const contestant = await contestantModel.findByreference(validation.data.id);
       if (!contestant) {
         return { success: false, error: "Contestant not found", status: 404 };
       }
@@ -125,6 +148,83 @@ export class ContestantService {
     } catch (error) {
       console.error("Delete contestant error:", error);
       return { success: false, error: error || "Failed to delete contestant", status: 500 };
+    }
+  }
+
+  async sentContestantFormLink(reference: string) {
+    try {
+      // 1. Validate reference
+      const validation = referenceSchema.safeParse({ id: reference });
+      if (!validation.success) {
+        return {
+          success: false,
+          error: formatZodError(validation.error),
+          status: 400,
+        };
+      }
+
+      // 2. Find the Contestant Transaction
+      const contestantTransaction = await contestantTransactionRepo.findByreference(reference);
+
+      if (!contestantTransaction) {
+        return {
+          success: false,
+          error: "Record not found",
+          status: 404,
+        };
+      }
+
+      // 3. If already claimed → stop
+      if (contestantTransaction.formSent == true) {
+        return {
+          success: false,
+          error: "Contestant form link has already been sent to your email",
+          status: 400,
+        };
+      }
+
+      // 4. Generate the form link
+      const formLink = `${process.env.NEXT_PUBLIC_BASE_URL}/contestant/form?reference=${contestantTransaction.reference}`;
+
+      // 5. Send email
+      const emailResult = await sendEmail(contestantTransaction.email, {
+        type: "contestant-form", // Make sure this email type exists
+        props: {
+          firstName: contestantTransaction.name.split(" ")[0] || contestantTransaction.name,
+          formLink,
+          reference: contestantTransaction.reference,
+          eventName: "Handcrafted Haven Workshop", // Replace with real event name later
+        },
+      });
+
+      // 6. Mark as claimed only if email succeeded
+      if (emailResult.success) {
+        await contestantTransactionRepo.update(reference, {
+          formSent : true,
+          status: "SUCCESS" as ContestantTransactionStatus,
+        });
+
+        return {
+          success: true,
+          message: "Contestant form link has been sent to your email",
+          emailSent: true,
+        };
+      }
+
+      // Email failed
+      return {
+        success: false,
+        error: "Contestant form link generated but email failed. Please try again.",
+        status: 500,
+      };
+    } catch (error: any) {
+      console.error("[ContestantService.sentContestantFormLink]", error);
+
+      return {
+        success: false,
+        error: "Failed to send contestant form link",
+        status: 500,
+      };
     }
   }
 }
