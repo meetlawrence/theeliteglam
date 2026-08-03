@@ -1,3 +1,5 @@
+import { boolean, string } from "zod";
+
 export interface CreateContestantInput {
   name: string;
   email: string;
@@ -18,6 +20,7 @@ export interface CreateContestantInput {
   tribe: string;
   contestantCategories: "MALE" | "FEMALE";
   eventId: string;
+  reference: string;
 }
 
 export interface UpdateContestantInput {
@@ -56,4 +59,9 @@ export interface ContestantResponse {
   score?: number;
   rank?: number;
   createdAt: Date;
+}
+
+export interface ContestantTransaction {
+  reference: string;
+  status: boolean;
 }

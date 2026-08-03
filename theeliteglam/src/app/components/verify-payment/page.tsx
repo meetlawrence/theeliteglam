@@ -25,7 +25,7 @@ export default function VerifyPayment() {
 
     const verifyPayment = async () => {
       try {
-        const res = await fetch(`../../api/ticket/verify-payment?reference=${reference}`);
+        const res = await fetch(`../../api/contestants/verify-payment?reference=${reference}`);
         const data = await res.json();
 
         if (res.ok && data.success) {

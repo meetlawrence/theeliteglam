@@ -5,10 +5,10 @@ import { authMiddleware } from "../../../../back-end/lib/route-middleware/admin"
 
 export async function GET(req: NextRequest) {
   try {
-    const authResult = await authMiddleware(req);
+    {/*const authResult = await authMiddleware(req);
     if (!authResult.success) {
       return authResult.response;
-    }
+    }*/}
 
     const result = await contestantService.getAllContestants();
     return NextResponse.json(result, { status: result.status || 200 });
