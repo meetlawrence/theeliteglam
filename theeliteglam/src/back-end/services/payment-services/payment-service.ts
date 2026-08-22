@@ -11,7 +11,6 @@ import { prisma } from "@/back-end/database/db-connect";
 import { ticketService } from "@/back-end/services/ticket-service";
 import { contestantService } from "@/back-end/services/contestant-service";
 
-
 function getGateway(method: GatewayType) {
   if (method === "PAYSTACK") return paystackGateway;
   if (method === "OPAY") return opayGateway;
@@ -270,6 +269,7 @@ export class PaymentService {
           };
         }
 
+        await paymentModel.markFulfilled(reference);
         return {
           success: true,
           message: "Payment verified. Contestant form link has been sent.",
@@ -397,6 +397,9 @@ export class PaymentService {
         // Always safe to resend form link (rate-limited inside service)
         const result = await contestantService.resendContestantFormLink(reference);
 
+        if (result.success && transaction.fulfillmentStatus !== "COMPLETED") {
+          await paymentModel.markFulfilled(reference);
+        }
         return result;
       }
 
