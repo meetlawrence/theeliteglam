@@ -1,0 +1,116 @@
+// src/back-end/lib/email/resend.ts
+import "dotenv/config";
+import { Resend } from "resend";
+import { AUTH_CONFIG } from "../../config/auth";
+
+import WelcomeEmail from "./templates/auth/welcome-email-template";
+import VerifyEmail from "./templates/auth/verification-email-template";
+import ResetPasswordEmail from "./templates/auth/rest-password-email-template";
+import PasswordChangedEmail from "./templates/auth/password-changed-email-template";
+import LoginAlertEmail from "./templates/auth/login-alert-emaill-template";
+import TicketEmail from "./templates/ticket";
+import{ContestantFormEmail} from "./templates/ContestantFormEmail"
+
+const resend = new Resend(AUTH_CONFIG.RESEND_API_KEY);
+
+// Strict union type for all possible emails
+type EmailPayload =
+  | { type: "welcome"; props: { firstName: string; dashboardUrl?: string } }
+  | { type: "verification"; props: { firstName: string; verifyUrl: string; code?: string } }
+  | { type: "password-reset"; props: { firstName: string; resetUrl: string } }
+  | { type: "password-changed"; props: { firstName: string } }
+  | {
+      type: "login-alert";
+      props: {
+        firstName: string;
+        location: string;
+        device: string;
+        time: string;
+        ipAddress?: string;
+      };
+    }
+  | {
+      type: "ticket";
+      props: {
+        firstName: string;
+        ticketReference: string;
+        quantity: number;
+        amount: number | null;
+        eventName?: string;
+        eventDate?: string;
+        qrCode?: string; // single QR (base64)
+        qrCodes: string[]; // multiple QRs
+        tickets: string[]
+      };
+    }
+  | {
+      type: "contestant-form";
+      props: {
+        firstName: string;
+        formLink: string;
+        reference: string;
+        eventName?: string;
+      };
+    };
+
+export async function sendEmail(to: string, payload: EmailPayload) {
+  try {
+    let subject = "";
+    let reactComponent: React.ReactElement;
+
+    switch (payload.type) {
+      case "welcome":
+        subject = `Welcome to theeliteglam, ${payload.props.firstName}!`;
+        reactComponent = WelcomeEmail(payload.props);
+        break;
+
+      case "verification":
+        subject = "Verify your theeliteglam account";
+        reactComponent = VerifyEmail(payload.props);
+        break;
+
+      case "password-reset":
+        subject = "Reset your theeliteglam password";
+        reactComponent = ResetPasswordEmail(payload.props);
+        break;
+
+      case "password-changed":
+        subject = "Your theeliteglam password has been changed";
+        reactComponent = PasswordChangedEmail(payload.props);
+        break;
+
+      case "login-alert":
+        subject = "New login detected on your theeliteglam account";
+        reactComponent = LoginAlertEmail(payload.props);
+        break;
+      case "ticket":
+        subject = `Your Ticket – ${payload.props.ticketReference}`;
+        reactComponent = TicketEmail(payload.props);
+        break;
+      case "contestant-form":
+        subject = `Complete your Contestant Registration – ${payload.props.eventName || "Event"}`;
+        reactComponent = ContestantFormEmail(payload.props);
+        break;
+
+      default:
+        throw new Error(`Unknown email type: ${JSON.stringify(payload)}`);
+    }
+
+    const { data, error } = await resend.emails.send({
+      from: `theeliteglam <${process.env.RESEND_EMAIL}>`,
+      to,
+      subject,
+      react: reactComponent,
+    });
+
+    if (error) {
+      console.error("Resend Error:", error);
+      return { success: false, error: error.message };
+    }
+
+    return { success: true, data };
+  } catch (err: any) {
+    console.error("Send Email Error:", err);
+    return { success: false, error: err.message || "Failed to send email" };
+  }
+}
