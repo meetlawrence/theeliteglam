@@ -15,8 +15,7 @@ export async function claimIdempotencyKey(params: {
   method: string;
   path: string;
 }) {
-  const expiresAt = new Date();
-  expiresAt.setHours(expiresAt.getHours() + TTL_HOURS);
+  const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
   try {
     await prisma.idempotencyKey.create({

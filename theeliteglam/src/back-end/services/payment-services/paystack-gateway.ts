@@ -1,14 +1,10 @@
 import type { PaymentGateway } from "./payment-gateway";
-import type {
-  GatewayInitializeResult,
-  GatewayVerifyResult,
-} from "@/back-end/types/payment-types";
+import type { GatewayInitializeResult, GatewayVerifyResult } from "@/back-end/types/payment-types";
 import {
   paystackInitializeResponseSchema,
   paystackVerifyResponseSchema,
 } from "@/back-end/lib/validation/paystack-validation";
 
-const PAYSTACK_SECRET = process.env.PAYSTACK_SECRET_KEY;
 const BASE_URL = "https://api.paystack.co";
 
 function toKobo(amount: number) {
@@ -24,6 +20,7 @@ export class PaystackGateway implements PaymentGateway {
     metadata?: Record<string, string>;
   }): Promise<GatewayInitializeResult> {
     try {
+      const PAYSTACK_SECRET = process.env.PAYSTACK_SECRET_KEY;
       if (!PAYSTACK_SECRET) {
         return {
           success: false,
@@ -86,6 +83,7 @@ export class PaystackGateway implements PaymentGateway {
 
   async verify(reference: string): Promise<GatewayVerifyResult> {
     try {
+      const PAYSTACK_SECRET = process.env.PAYSTACK_SECRET_KEY;
       if (!PAYSTACK_SECRET) {
         return {
           success: false,
@@ -95,14 +93,11 @@ export class PaystackGateway implements PaymentGateway {
         };
       }
 
-      const res = await fetch(
-        `${BASE_URL}/transaction/verify/${encodeURIComponent(reference)}`,
-        {
-          headers: {
-            Authorization: `Bearer ${PAYSTACK_SECRET}`,
-          },
-        }
-      );
+      const res = await fetch(`${BASE_URL}/transaction/verify/${encodeURIComponent(reference)}`, {
+        headers: {
+          Authorization: `Bearer ${PAYSTACK_SECRET}`,
+        },
+      });
 
       const json = await res.json();
       const parsed = paystackVerifyResponseSchema.safeParse(json);
@@ -133,11 +128,7 @@ export class PaystackGateway implements PaymentGateway {
       const tx = data.data;
 
       const status =
-        tx.status === "success"
-          ? "SUCCESS"
-          : tx.status === "failed"
-            ? "FAILED"
-            : "PENDING";
+        tx.status === "success" ? "SUCCESS" : tx.status === "failed" ? "FAILED" : "PENDING";
 
       return {
         success: true,
