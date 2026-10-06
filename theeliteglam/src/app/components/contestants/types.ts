@@ -2,7 +2,9 @@ export type Gender = "female" | "male";
 
 export interface Contestant {
   id: number;
+  databaseId: string;
   name: string;
+  stageName: string;
   state: string;
   age: number;
   gender: Gender;

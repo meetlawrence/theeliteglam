@@ -1,8 +1,8 @@
+"use client";
+
 import { useState, useEffect, useRef } from "react";
 import SectionLabel from "./franchise/SectionLabel";
 import BrandLogoCard from "./franchise/BrandLogoCard";
-import SponsorCard from "./franchise/SponsorCard";
-import FranchiseButton from "./franchise/FranchiseButton";
 import SponsorButton from "./franchise/SponsorButton";
 import PartnerModal from "./franchise/PartnerModal";
 import { ENDORSEMENTS, SPONSORS } from "./franchise/franchiseData";
@@ -37,24 +37,26 @@ export function OverviewSection() {
       />
 
       <div className="relative mx-auto max-w-[1300px]">
+        {/* Endorsements Section */}
         <div
           className={`mb-28 transition-all duration-1000 ${
             inView ? "translate-y-0 opacity-100" : "translate-y-[30px] opacity-0"
           }`}
         >
-          <SectionLabel text="Franchise Overview" />
-
-          <div className="mt-10 mb-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          <SectionLabel text="Endorsements" />
+          <h2 className="mt-4 mb-3 font-['Cinzel',serif] text-[clamp(1.6rem,3.5vw,2.8rem)] tracking-[0.06em] text-[#F5EDD6]">
+            International Franchise
+          </h2>
+          <div className="mt-10 mb-12 grid gap-6 grid-cols-2 lg:grid-cols-5 items-center justify-center">
             {ENDORSEMENTS.map((e, i) => (
               <BrandLogoCard key={e.brand} item={e} index={i} inView={inView} />
             ))}
           </div>
-
-          <FranchiseButton />
         </div>
 
         <div className="mb-24 h-px bg-[linear-gradient(to_right,transparent,rgba(201,168,76,0.3),transparent)]" />
 
+        {/* Sponsors Carousel Section */}
         <div
           className={`transition-all duration-1000 delay-300 ${
             inView ? "translate-y-0 opacity-100" : "translate-y-[30px] opacity-0"
@@ -62,19 +64,15 @@ export function OverviewSection() {
         >
           <SectionLabel text="Our Sponsors" />
           <h2 className="mt-4 mb-3 font-['Cinzel',serif] text-[clamp(1.6rem,3.5vw,2.8rem)] tracking-[0.06em] text-[#F5EDD6]">
-            Our Prestigious Partners
+            Sponsors & Partners
           </h2>
-          <p className="mb-12 max-w-[500px] font-['Raleway',sans-serif] text-[0.95rem] leading-[1.7] text-[#9A8C6A]">
-            We are proud to collaborate with world-class brands who share our commitment to
-            excellence, beauty, and empowerment.
-          </p>
 
-          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {SPONSORS.map((sponsor, i) => (
-              <SponsorCard key={sponsor.name} sponsor={sponsor} index={i} inView={inView} />
+          <div className="mt-10 mb-12 grid gap-6 grid-cols-2 lg:grid-cols-5 items-center justify-center">
+            {SPONSORS.map((e, i) => (
+              <BrandLogoCard key={e.brand} item={e} index={i} inView={inView} />
             ))}
           </div>
-
+          
           <div className="mt-16 grid items-center gap-8 rounded-[1px] border border-[rgba(201,168,76,0.2)] bg-[#0D0D0D] p-8 md:grid-cols-[1fr_auto] md:p-12">
             <div>
               <div className="mb-2 font-['Raleway',sans-serif] text-[0.7rem] uppercase tracking-[0.35em] text-[#C9A84C]">

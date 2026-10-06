@@ -14,7 +14,7 @@ type TimelineStep = {
 
 const TIMELINE: TimelineStep[] = [
   {
-    date: "October 1, 2026",
+    date: "November 1, 2026",
     title: "Registration Opens",
     desc: "Contestants submit their profiles, portfolios, and personal statements.",
     icon: "01",
@@ -72,7 +72,7 @@ export function SearchBeginsSection() {
           className={`text-center mb-20 transition-all duration-1000 ease-out ${inView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
         >
           <div className="font-raleway text-[0.7rem] tracking-[0.5em] text-[#C9A84C] uppercase mb-4">
-            2026 · 2027 Season
+            2027 Season
           </div>
           <h2 className="font-cinzel text-[clamp(2rem,5vw,4rem)] text-[#F5EDD6] tracking-[0.08em] mb-4 leading-[1.1]">
             The Search Begins

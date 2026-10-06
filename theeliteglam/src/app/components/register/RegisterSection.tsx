@@ -4,6 +4,7 @@ import { RegisterBanner } from "./RegisterBanner";
 import { EligibilitySection } from "./EligibilitySection";
 import { ProcessSection } from "./ProcessSection";
 import { RegistrationSection as RegistrationContent } from "./RegistrationSection";
+import { Divider } from "../ui/SectionDivider";
 
 export function RegisterSection() {
   return (
@@ -12,12 +13,12 @@ export function RegisterSection() {
 
       <EligibilitySection />
 
-      <div className="h-[1px] bg-gradient-to-r from-transparent via-[#C9A84C]/20 to-transparent mx-8" />
+      <Divider />
 
       <ProcessSection />
 
-      <div className="h-[1px] bg-gradient-to-r from-transparent via-[#C9A84C]/20 to-transparent mx-8" />
-
+      <Divider />
+      
       <RegistrationContent />
     </div>
   );

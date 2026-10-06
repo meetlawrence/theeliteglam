@@ -23,10 +23,10 @@ export default function NigeriaPillarCard({
           src={pillar.image}
           alt={pillar.heading}
           fill
-          className="object-cover object-top opacity-[0.35] transition-opacity duration-500 group-hover:opacity-50"
+          className="object-cover object-top opacity-[0.9] transition-opacity duration-500 group-hover:opacity-50"
         />
       </div>
-      <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.95)_0%,rgba(0,0,0,0.6)_50%,rgba(0,0,0,0.2)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,0.9)_0%,rgba(0,0,0,0.4)_50%,rgba(0,0,0,0.009)_100%)]" />
       <div className="relative">
         <div className="font-cinzel text-base mb-3 text-primary group-hover:text-accent transition-colors duration-300">
           {pillar.heading}

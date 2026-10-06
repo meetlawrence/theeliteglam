@@ -54,7 +54,6 @@ export function Header() {
     setMenuOpen(false);
   };
 
-
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b ${
@@ -107,38 +106,42 @@ export function Header() {
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden p-2 border border-[#C9A84C]/30 text-[#C9A84C]"
+          className="md:hidden p-2 border border-[#C9A84C]/30 text-[#C9A84C] relative z-50"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Full Screen Overlay */}
       {menuOpen && (
-        <div className="md:hidden absolute top-19.5 left-0 w-full bg-black/98 border-b border-[#C9A84C]/20 p-6 flex flex-col gap-10 animate-[fadeInUp_600ms_ease-out]">
-          {NAV_LINKS.map(({ label, page }, index) => {
-            const isActive = pathname === page;
-            return (
-              <button
-                key={label}
-                onClick={() => handleNav(page)}
-                className={`relative text-center uppercase tracking-widest text-sm py-2 border-b border-[#C9A84C]/10 transition-all duration-200 ${
-                  isActive ? "text-accent" : "text-muted-foreground"
-                }`}
-                style={{ animationDelay: `${index * 180}ms` }}
-              >
-                {label}
+        <div className="md:hidden fixed inset-0 top-[78px] w-full h-[calc(100vh-78px)] bg-black/98 border-b border-[#C9A84C]/20 p-8 flex flex-col justify-between overflow-y-auto z-40 animate-[fadeInUp_600ms_ease-out]">
+          
+          {/* Navigation Links Group */}
+          <div className="flex flex-col gap-1 pt-4 pb-10">
+            {NAV_LINKS.map(({ label, page }, index) => {
+              const isActive = pathname === page;
+              return (
+                <button
+                  key={label}
+                  onClick={() => handleNav(page)}
+                  className={`relative text-center uppercase tracking-widest text-base py-6 border-b border-[#C9A84C]/10 transition-all duration-200 ${
+                    isActive ? "text-accent" : "text-muted-foreground hover:text-[#C9A84C]"
+                  }`}
+                  style={{ animationDelay: `${index * 180}ms` }}
+                >
+                  {label}
 
-                {isActive && (
-                  <div className="absolute left-0 bottom-0 h-px w-full bg-gradient-to-r from-transparent via-[#C9A84C] to-transparent" />
-                )}
-              </button>
-            );
-          })}
+                  {isActive && (
+                    <div className="absolute left-0 bottom-0 h-px w-full bg-gradient-to-r from-transparent via-[#C9A84C] to-transparent" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
 
-          {/* Mobile CTA Buttons */}
-          <div className="flex flex-row flex-wrap gap-3 justify-center" style={{ animationDelay: `${NAV_LINKS.length * 180}ms` }}>
+          {/* Mobile CTA Buttons Group at the bottom */}
+          <div className="flex flex-row flex-wrap gap-10 justify-center pb-28" style={{ animationDelay: `${NAV_LINKS.length * 180}ms` }}>
             <NavCta label="Tickets" icon={<Ticket size={13} />} variant="ghost" onClick={() => handleNav("/tickets")} />
             <NavCta label="Register" icon={<UserPlus size={13} />} variant="ghost" onClick={() => handleNav("/register")} />
             <NavCta label="Vote" icon={<Star size={13} />} variant="filled" onClick={() => handleNav("/contestants")} />

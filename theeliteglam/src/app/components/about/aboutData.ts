@@ -1,9 +1,9 @@
 import { createElement } from "react";
 import { Eye, Heart, Sparkles, Star } from "lucide-react";
 
-export const BANNER_IMG = "/banners/1.jpg";
+export const BANNER_IMG = "/banners/img1.jpg";
 
-export const BANNER_VIDEO = "/banners/loop1.webm";
+export const BANNER_VIDEO = "/banners/logo1.webm";
 
 export const CEO_IMG =
   "images/img1.jpg";
@@ -79,24 +79,24 @@ export const MISSION_VISION_CARDS = [
 
 export const WINNERS = [
   {
-    name: "Chiamaka Osei",
+    name: "Oma Osele",
     title: "Miss Elite Glam 2025",
     state: "Lagos · Igbo",
-    age: "22",
-    occupation: "Fashion Entrepreneur",
+    age: "28",
+    occupation: "Medical Scientist",
     advocacy: "Girls' Education & Digital Literacy",
     quote: "This crown is not mine alone — it belongs to every girl who dared to dream beyond her circumstances.",
-    image: "https://images.unsplash.com/photo-1744973148696-9a57300bcea6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+    image: "images/img1.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
   {
-    name: "Obiora Mensah",
+    name: "Umana Sambo",
     title: "Mister Elite Glam 2025",
-    state: "Abuja · Igbo-Hausa",
-    age: "25",
-    occupation: "Software Engineer & Social Innovator",
+    state: "Uyo · Ibibio",
+    age: "35",
+    occupation: "Department of Tourism Officer",
     advocacy: "Youth Tech Empowerment",
     quote: "Beauty is the courage to stand for something greater than yourself. I carry that with every step.",
-    image: "https://images.unsplash.com/photo-1605980776566-0486c3ac7617?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+    image: "https://images/?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
 ];
 
@@ -106,27 +106,27 @@ export const RUNNERS_UP = [
     title: "1st Runner-Up · Female",
     state: "Enugu · Igbo",
     occupation: "Medical Researcher",
-    image: "https://images.unsplash.com/photo-1527203561188-dae1bc1a417f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600&q=80",
+    image: "https://images/?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
   {
     name: "Zainab Garba",
     title: "2nd Runner-Up · Female",
     state: "Kano · Hausa",
     occupation: "Media Personality",
-    image: "https://images.unsplash.com/photo-1664629153284-d178cc713317?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600&q=80",
+    image: "https://images/?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
   {
-    name: "Chidi Okafor",
+    name: "Emmanuel Oliver",
     title: "1st Runner-Up · Male",
-    state: "Rivers · Igbo",
+    state: "Cross River",
     occupation: "Civil Engineer",
-    image: "https://images.unsplash.com/photo-1565884280295-98eb83e41c65?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600&q=80",
+    image: "https://images/?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
   {
-    name: "Seun Adeyemi",
+    name: "Bernard Williams",
     title: "2nd Runner-Up · Male",
-    state: "Lagos · Yoruba",
+    state: "Cross River",
     occupation: "Fashion Designer",
-    image: "https://images.unsplash.com/photo-1583123810408-23e7b5d1af9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=600&q=80",
+    image: "https://images/?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
 ];
