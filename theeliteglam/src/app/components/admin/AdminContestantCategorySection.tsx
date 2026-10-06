@@ -68,7 +68,6 @@ export default function AdminContestantCategorySection({
                       </div>
                     </button>
                   </td>
-                  
                   <td className="px-3 py-3 align-top text-[#F5EDD6]">
                     {contestant.votes.toLocaleString()}
                   </td>
