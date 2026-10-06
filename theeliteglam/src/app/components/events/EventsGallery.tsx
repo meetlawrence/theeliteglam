@@ -30,7 +30,7 @@ export default function EventsGallery() {
   const nextSlide = () => setActiveSlide((prev) => (prev + 1) % GALLERY.length);
 
   return (
-    <section
+    <section id="gallery"
       ref={galleryRef}
       className={`bg-[#060606] py-24 overflow-hidden transition-all duration-1000 ${inView ? "opacity-100" : "opacity-0"}`}
     >

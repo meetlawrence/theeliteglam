@@ -41,11 +41,11 @@ export default function TimelineCard({
         <div className="font-raleway text-[0.68rem] tracking-[0.25em] text-[#C9A84C] uppercase">
           {step.date}
         </div>
-        {/* {step.tag && (
+        {step.tag && (
           <span className="font-raleway text-[0.58rem] tracking-[0.18em] uppercase text-accent border border-[rgba(240,192,74,0.35)] px-2 py-0.5 bg-[rgba(240,192,74,0.06)]">
             {step.tag}
           </span>
-        )} */}
+        )}
       </div>
 
       <h3 className="font-cinzel text-[1.1rem] text-[#F5EDD6] tracking-wider mb-3 leading-[1.3]">

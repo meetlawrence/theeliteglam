@@ -9,8 +9,11 @@ import { RegistrationPaymentModal } from "./RegistrationPaymentModal";
 export function RegistrationSection() {
   const ref = useRef<HTMLDivElement>(null);
   const [paid, setPaid] = useState(false);
+  const [paymentReference, setPaymentReference] = useState("");
+  const [paymentError, setPaymentError] = useState("");
   const [showPayment, setShowPayment] = useState(false);
   const [inView, setInView] = useState(false);
+  const paymentVerificationInProgress = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -25,9 +28,56 @@ export function RegistrationSection() {
     return () => obs.disconnect();
   }, []);
 
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.get("application") !== "contestant") return;
+
+    const reference = searchParams.get("reference");
+    if (!reference) return;
+
+    let isActive = true;
+    paymentVerificationInProgress.current = true;
+
+    const verifyPayment = async () => {
+      try {
+        const response = await fetch(
+          `/api/contestants/verify-payment?reference=${encodeURIComponent(reference)}`,
+          { cache: "no-store" },
+        );
+        const result: { success?: boolean; error?: string } = await response.json();
+
+        if (!response.ok || !result.success) {
+          throw new Error(result.error || "Payment verification failed.");
+        }
+
+        if (isActive) {
+          setPaymentReference(reference);
+          setPaid(true);
+        }
+      } catch (error) {
+        if (isActive) {
+          setPaymentError(
+            error instanceof Error
+              ? error.message
+              : "Unable to verify your payment. Please try again.",
+          );
+        }
+      } finally {
+        if (isActive) paymentVerificationInProgress.current = false;
+      }
+    };
+
+    void verifyPayment();
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
   return (
-    <div ref={ref} className="max-w-[760px] mx-auto pt-24 pb-32 px-8">
-      {!paid ? (
+    <div id="apply" ref={ref} className="max-w-[760px] mx-auto pt-24 pb-32 px-8">
+      {paid ? (
+        <ApplicationForm reference={paymentReference} />
+      ) : (
         <div className={`transition-all duration-1000 ease-out ${inView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
           <SectionLabel text="Registration" />
           <h2 className="font-['Cinzel',serif] text-[clamp(1.8rem,3.5vw,2.6rem)] text-[#F5EDD6] tracking-[0.05em] leading-[1.1] mt-4 mb-3">
@@ -73,8 +123,18 @@ export function RegistrationSection() {
               ))}
             </div>
 
+            {paymentError && (
+              <p role="alert" className="font-['Raleway',sans-serif] text-[0.78rem] text-[#C96B5D] mb-4">
+                {paymentError}
+              </p>
+            )}
+
             <button
-              onClick={() => setShowPayment(true)}
+              onClick={() => {
+                if (paymentVerificationInProgress.current) return;
+                setPaymentError("");
+                setShowPayment(true);
+              }}
               className="w-full py-4.5 bg-gradient-to-br from-[#C9A84C] to-[#8B6914] border-none text-[#080808] font-['Cinzel',serif] text-[0.82rem] tracking-[0.22em] uppercase cursor-pointer flex items-center justify-center gap-2.5 transition-opacity hover:opacity-95"
             >
               <UserPlus size={15} />
@@ -86,17 +146,11 @@ export function RegistrationSection() {
             Registrations close 30 November 2026. · Applications are subject to review and acceptance is not guaranteed.
           </p>
         </div>
-      ) : (
-        <ApplicationForm />
       )}
 
       {showPayment && (
         <RegistrationPaymentModal
           onClose={() => setShowPayment(false)}
-          onSuccess={() => {
-            setShowPayment(false);
-            setPaid(true);
-          }}
         />
       )}
     </div>

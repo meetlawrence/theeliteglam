@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { ReactNode } from "react";
-import { SectionLabel } from "./AboutShared";
+import { SectionLabel } from "../ui/SectionDivider";
 
 type MissionVisionCardData = {
   tag: string;
@@ -24,7 +24,7 @@ type AboutMissionValuesSectionProps = {
 
 export function AboutMissionValuesSection({ missionVisionCards, values, inView }: AboutMissionValuesSectionProps) {
   return (
-    <div className="mx-auto max-w-[1300px] px-8 py-28 transition-all duration-1000">
+    <div id="mission" className="mx-auto max-w-[1300px] px-8 py-28 transition-all duration-1000">
       <SectionLabel text="What Drives Us" />
 
       <div className="mt-10 mb-16 grid gap-6 lg:grid-cols-2">

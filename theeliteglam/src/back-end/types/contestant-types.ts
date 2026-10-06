@@ -1,5 +1,3 @@
-import { boolean, string } from "zod";
-
 export interface CreateContestantInput {
   name: string;
   email: string;
@@ -27,10 +25,13 @@ export interface UpdateContestantInput {
   name?: string;
   email?: string;
   phone?: string;
-  image?: string;
-  stageName?: string;
-  bio?: string;
-  portfolio?: string;
+  gender?: "MALE" | "FEMALE";
+  image?: string | null;
+  stageName?: string | null;
+  height?: number | null;
+  weight?: number | null;
+  bio?: string | null;
+  portfolio?: string | null;
   number?: number;
   age?: number;
   state?: string;
@@ -44,7 +45,7 @@ export interface UpdateContestantInput {
   rank?: number;
   contestantCategories?: "MALE" | "FEMALE";
   eventId?: string;
-  status?: "ACTIVE" | "INACTIVE";
+  status?: "PENDING" | "ACTIVE" | "INACTIVE";
 }
 
 export interface ContestantResponse {

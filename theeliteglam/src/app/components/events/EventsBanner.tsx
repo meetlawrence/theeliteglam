@@ -69,7 +69,7 @@ export default function EventsBanner({ onNavigate }: EventsBannerProps) {
         >
           <div className="flex items-center gap-3 text-[0.68rem] tracking-[0.5em] uppercase text-primary mb-4">
             <span className="inline-block w-8 h-px bg-primary" />
-            Season 2026 · 2027
+            Season 2
           </div>
 
           <h1 className="font-cinzel text-[clamp(2.2rem,6vw,5rem)] text-[#F5EDD6] tracking-[0.06em] leading-[1.05] mb-6 max-w-[800px]">
@@ -81,7 +81,7 @@ export default function EventsBanner({ onNavigate }: EventsBannerProps) {
           </h1>
 
           <p className="font-playfair text-[1.1rem] text-[#9A8C6A] italic mb-10 max-w-[520px] leading-[1.7]">
-            Mark your calendars. The stage is set, the lights are rising — glory awaits.
+            Mark your calendars. The stage is set, the lights are rising, glory awaits.
           </p>
 
           {/* Action CTAs */}

@@ -5,6 +5,8 @@ import type { Contestant, Gender } from "./types";
 
 export function ContestantGrid({
   gridPool,
+  isLoading,
+  loadError,
   gridFilter,
   setGridFilter,
   openVotePayment,
@@ -12,6 +14,8 @@ export function ContestantGrid({
   flash,
 }: {
   gridPool: Contestant[];
+  isLoading: boolean;
+  loadError: string;
   gridFilter: "all" | Gender;
   setGridFilter: (f: "all" | Gender) => void;
   openVotePayment: (c: Contestant) => void;
@@ -38,17 +42,27 @@ export function ContestantGrid({
           </div>
         </div>
 
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(210px,1fr))] gap-5">
-          {gridPool.map((c) => (
-            <GridCard
-              key={c.id}
-              contestant={c}
-              flashing={flash === c.id}
-              onVote={() => openVotePayment(c)}
-              onSelect={() => setSelected(c)}
-            />
-          ))}
-        </div>
+        {isLoading ? (
+          <p className="py-12 text-center font-raleway text-sm text-[#C4B896]">
+            Loading approved contestants...
+          </p>
+        ) : loadError ? null : gridPool.length === 0 ? (
+          <p className="py-12 text-center font-raleway text-sm text-[#C4B896]">
+            No approved contestants are available for this selection.
+          </p>
+        ) : (
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(210px,1fr))] gap-5">
+            {gridPool.map((c) => (
+              <GridCard
+                key={c.id}
+                contestant={c}
+                flashing={flash === c.id}
+                onVote={() => openVotePayment(c)}
+                onSelect={() => setSelected(c)}
+              />
+            ))}
+          </div>
+        )}
 
         <div className="mt-12 text-center">{/* CTA left to parent if needed */}</div>
       </div>

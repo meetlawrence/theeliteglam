@@ -7,93 +7,132 @@ import { SelectField } from "./SelectField";
 import { TextareaField } from "./TextareaField";
 import { STATES, TRIBES } from "./constants";
 
-export function ApplicationForm() {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    gender: "",
-    dob: "",
-    stateOfOrigin: "",
-    tribe: "",
-    occupation: "",
-    employer: "",
-    instagram: "",
-    tiktok: "",
-    advocacy: "",
-    bio: "",
-    funFact: "",
-    agreeTerms: false,
-    agreePhoto: false,
-  });
+type ContestantCategory = "MALE" | "FEMALE";
+
+type ApplicationFormData = {
+  name: string;
+  email: string;
+  gender: string;
+  image: string;
+  stageName: string;
+  height: string;
+  weight: string;
+  bio: string;
+  portfolio: string;
+  phone: string;
+  age: string;
+  state: string;
+  country: string;
+  occupation: string;
+  advocacy: string;
+  funFact: string;
+  tribe: string;
+  contestantCategories: string;
+};
+
+const initialFormData: ApplicationFormData = {
+  name: "",
+  email: "",
+  gender: "",
+  image: "",
+  stageName: "",
+  height: "",
+  weight: "",
+  bio: "",
+  portfolio: "",
+  phone: "",
+  age: "",
+  state: "",
+  country: "",
+  occupation: "",
+  advocacy: "",
+  funFact: "",
+  tribe: "",
+  contestantCategories: "",
+};
+
+function isContestantCategory(value: string): value is ContestantCategory {
+  return value === "MALE" || value === "FEMALE";
+}
+
+function isValidUrl(value: string) {
+  if (!value) return true;
+
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+export function ApplicationForm({ reference }: { reference: string }) {
+  const [formData, setFormData] = useState(initialFormData);
   const [submitted, setSubmitted] = useState(false);
   const [section, setSection] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
-  const set = (key: string, value: string | boolean) =>
-    setFormData((f) => ({ ...f, [key]: value }));
-
-  const buildPayload = () => {
-    const fullName = [formData.firstName.trim(), formData.lastName.trim()].filter(Boolean).join(" ");
-    const dob = new Date(formData.dob);
-    const today = new Date();
-    let age = today.getFullYear() - dob.getFullYear();
-    const monthDiff = today.getMonth() - dob.getMonth();
-
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-      age -= 1;
-    }
-
-    return {
-      id: Date.now(),
-      name: fullName,
-      email: formData.email.trim(),
-      gender: formData.gender.toLowerCase() === "male" ? "male" : "female",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80",
-      phone: formData.phone.trim(),
-      age: Number.isFinite(age) && age > 0 ? age : 18,
-      state: formData.stateOfOrigin.trim(),
-      number: "",
-      bio: formData.bio.trim(),
-      occupation: formData.occupation.trim(),
-      advocacy: formData.advocacy.trim(),
-      funFact: formData.funFact.trim(),
-      tribe: formData.tribe.trim(),
-      votes: 0,
-    };
-  };
+  const set = (key: keyof ApplicationFormData, value: string) =>
+    setFormData((current) => ({ ...current, [key]: value }));
 
   const sections = [
     {
       title: "Personal Information",
       fields: (
         <div className="flex flex-col gap-5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <FormField label="First Name" type="text" value={formData.firstName} onChange={(v) => set("firstName", v)} required placeholder="Amaka" />
-            <FormField label="Last Name" type="text" value={formData.lastName} onChange={(v) => set("lastName", v)} required placeholder="Okafor" />
-          </div>
-          <FormField label="Email Address" type="email" value={formData.email} onChange={(v) => set("email", v)} required placeholder="amaka@email.com" />
-          <FormField label="Phone Number" type="tel" value={formData.phone} onChange={(v) => set("phone", v)} required placeholder="+234 801 234 5678" />
-          <FormField label="Date of Birth" type="date" value={formData.dob} onChange={(v) => set("dob", v)} required placeholder="" />
+          <FormField
+            label="Full Name"
+            type="text"
+            value={formData.name}
+            onChange={(value) => set("name", value)}
+            required
+            placeholder="Amaka Okafor"
+          />
+          <FormField
+            label="Email Address"
+            type="email"
+            value={formData.email}
+            onChange={(value) => set("email", value)}
+            required
+            placeholder="amaka@email.com"
+          />
+          <FormField
+            label="Phone Number"
+            type="tel"
+            value={formData.phone}
+            onChange={(value) => set("phone", value)}
+            required
+            placeholder="+234 801 234 5678"
+          />
+          <FormField
+            label="Age"
+            type="number"
+            value={formData.age}
+            onChange={(value) => set("age", value)}
+            required
+            placeholder="25"
+          />
           <div>
             <label className="block font-['Raleway',sans-serif] text-[0.72rem] tracking-[0.2em] text-[#9A8C6A] uppercase mb-[0.5rem]">
-              Gender Category
+              Gender
             </label>
             <div className="grid grid-cols-2 gap-3">
-              {['Female', 'Male'].map((g) => (
+              {(["FEMALE", "MALE"] as const).map((gender) => (
                 <button
-                  key={g}
+                  key={gender}
                   type="button"
-                  onClick={() => set('gender', g)}
+                  onClick={() => {
+                    set("gender", gender);
+                    set("contestantCategories", gender);
+                  }}
                   className={`py-3.5 px-4 font-['Cinzel',serif] text-[0.78rem] tracking-[0.15em] uppercase cursor-pointer transition-all ${
-                    formData.gender === g
-                      ? 'bg-[#C9A84C]/12 border border-[#C9A84C] text-[#F0C04A]'
-                      : 'bg-white/[0.02] border border-[#C9A84C]/20 text-[#9A8C6A]'
+                    formData.gender === gender
+                      ? "bg-[#C9A84C]/12 border border-[#C9A84C] text-[#F0C04A]"
+                      : "bg-white/[0.02] border border-[#C9A84C]/20 text-[#9A8C6A]"
                   }`}
                 >
-                  {g}
+                  {gender}
                 </button>
               ))}
             </div>
@@ -102,131 +141,150 @@ export function ApplicationForm() {
       ),
     },
     {
-      title: "Background & Heritage",
+      title: "Background & Profile",
       fields: (
         <div className="flex flex-col gap-5">
+          <FormField
+            label="Stage Name (optional)"
+            type="text"
+            value={formData.stageName}
+            onChange={(value) => set("stageName", value)}
+            placeholder="Your public or stage name"
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <FormField
+              label="Height (cm, optional)"
+              type="number"
+              value={formData.height}
+              onChange={(value) => set("height", value)}
+              placeholder="175"
+            />
+            <FormField
+              label="Weight (kg, optional)"
+              type="number"
+              value={formData.weight}
+              onChange={(value) => set("weight", value)}
+              placeholder="65"
+            />
+          </div>
           <SelectField
-            label="State of Origin"
-            value={formData.stateOfOrigin}
-            onChange={(v) => set("stateOfOrigin", v)}
+            label="State"
+            value={formData.state}
+            onChange={(value) => set("state", value)}
             options={STATES}
             placeholder="Select state"
+          />
+          <FormField
+            label="Country"
+            type="text"
+            value={formData.country}
+            onChange={(value) => set("country", value)}
+            required
+            placeholder="Nigeria"
           />
           <SelectField
             label="Tribe / Ethnic Group"
             value={formData.tribe}
-            onChange={(v) => set("tribe", v)}
+            onChange={(value) => set("tribe", value)}
             options={TRIBES}
             placeholder="Select tribe"
           />
-          <FormField label="Occupation / Profession" type="text" value={formData.occupation} onChange={(v) => set("occupation", v)} required placeholder="e.g. Medical Student, Fashion Designer" />
-          <FormField label="Employer / Institution (optional)" type="text" value={formData.employer} onChange={(v) => set("employer", v)} placeholder="e.g. University of Lagos" />
+          <FormField
+            label="Occupation / Profession"
+            type="text"
+            value={formData.occupation}
+            onChange={(value) => set("occupation", value)}
+            required
+            placeholder="e.g. Medical Student, Fashion Designer"
+          />
         </div>
       ),
     },
     {
-      title: "Platform & Advocacy",
+      title: "Application Details",
       fields: (
         <div className="flex flex-col gap-5">
           <TextareaField
-            label="Your Advocacy / Cause"
+            label="Advocacy / Cause"
             value={formData.advocacy}
-            onChange={(v) => set("advocacy", v)}
+            onChange={(value) => set("advocacy", value)}
             required
-            placeholder="Describe the cause or issue you are most passionate about and how you are already making an impact…"
+            placeholder="Describe the cause or issue you are most passionate about and how you are making an impact…"
             rows={4}
           />
           <TextareaField
             label="Personal Bio"
             value={formData.bio}
-            onChange={(v) => set("bio", v)}
-            required
-            placeholder="Tell us about yourself — your background, achievements, and what drives you…"
+            onChange={(value) => set("bio", value)}
+            placeholder="Tell us about yourself, your background, and what drives you…"
             rows={5}
           />
-          <FormField label="Fun Fact About You" type="text" value={formData.funFact} onChange={(v) => set("funFact", v)} placeholder="Something surprising or memorable" />
-        </div>
-      ),
-    },
-    {
-      title: "Social Media",
-      fields: (
-        <div className="flex flex-col gap-5">
-          <FormField label="Instagram Handle" type="text" value={formData.instagram} onChange={(v) => set("instagram", v)} placeholder="@yourhandle" />
-          <FormField label="TikTok Handle (optional)" type="text" value={formData.tiktok} onChange={(v) => set("tiktok", v)} placeholder="@yourhandle" />
-
-          <div className="h-[1px] bg-[#C9A84C]/10 my-2" />
-
-          <div>
-            <label className="block font-['Raleway',sans-serif] text-[0.72rem] tracking-[0.2em] text-[#9A8C6A] uppercase mb-[0.5rem]">
-              Profile Photo
-            </label>
-            <div className="border border-dashed border-[#C9A84C]/25 p-10 text-center bg-[#C9A84C]/[0.03] cursor-pointer">
-              <div className="text-[2rem] mb-3 text-[#C9A84C]">↑</div>
-              <div className="font-['Cinzel',serif] text-[0.78rem] text-[#C4B896] tracking-[0.1em] mb-1.5">
-                Upload a recent photo
-              </div>
-              <div className="font-['Raleway',sans-serif] text-[0.68rem] text-[#5A5040] tracking-[0.1em]">
-                JPG or PNG · Minimum 800×1000px · Max 5MB
-              </div>
-            </div>
-          </div>
-
-          <div className="h-[1px] bg-[#C9A84C]/10 my-2" />
-
-          <div className="flex flex-col gap-4">
-            {[
-              { key: "agreeTerms", text: "I confirm that all information provided is accurate and that I meet the eligibility requirements for The Elite Glam Season 2." },
-              { key: "agreePhoto", text: "I consent to The Elite Glam using my submitted photo and information for internal selection purposes." },
-            ].map(({ key, text }) => {
-              const checked = Boolean((formData as Record<string, string | boolean>)[key]);
-              return (
-                <button
-                  key={key}
-                  type="button"
-                  onClick={() => set(key, !checked)}
-                  className="flex items-start gap-3.5 bg-transparent border-none cursor-pointer text-left p-0"
-                >
-                  <div className={`w-[18px] h-[18px] shrink-0 border flex items-center justify-center mt-0.5 transition-colors ${checked ? "border-[#C9A84C] bg-[#C9A84C]/12" : "border-[#C9A84C]/25 bg-transparent"}`}>
-                    {checked && <Check size={11} className="text-[#F0C04A]" />}
-                  </div>
-                  <span className="font-['Raleway',sans-serif] text-[0.82rem] text-[#9A8C6A] leading-[1.65]">
-                    {text}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+          <FormField
+            label="Fun Fact"
+            type="text"
+            value={formData.funFact}
+            onChange={(value) => set("funFact", value)}
+            required
+            placeholder="Something surprising or memorable"
+          />
+          <FormField
+            label="Profile Image URL (optional)"
+            type="url"
+            value={formData.image}
+            onChange={(value) => set("image", value)}
+            placeholder="https://example.com/profile.jpg"
+          />
+          <FormField
+            label="Portfolio URL (optional)"
+            type="url"
+            value={formData.portfolio}
+            onChange={(value) => set("portfolio", value)}
+            placeholder="https://example.com/portfolio"
+          />
         </div>
       ),
     },
   ];
 
-  const isLast = section === sections.length - 1;
+  const age = Number(formData.age);
+  const height = formData.height ? Number(formData.height) : undefined;
+  const weight = formData.weight ? Number(formData.weight) : undefined;
   const canSubmit =
-    Boolean(formData.agreeTerms) &&
-    Boolean(formData.agreePhoto) &&
-    Boolean(formData.gender) &&
-    Boolean(formData.firstName.trim()) &&
-    Boolean(formData.lastName.trim()) &&
-    Boolean(formData.email.trim()) &&
-    Boolean(formData.phone.trim()) &&
-    Boolean(formData.dob) &&
-    Boolean(formData.stateOfOrigin) &&
-    Boolean(formData.tribe) &&
-    Boolean(formData.occupation.trim()) &&
-    Boolean(formData.advocacy.trim()) &&
-    Boolean(formData.bio.trim()) &&
-    Boolean(formData.funFact.trim());
+    formData.name.trim().length >= 2 &&
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim()) &&
+    formData.phone.trim().length >= 7 &&
+    Number.isInteger(age) &&
+    age > 0 &&
+    formData.state.trim().length >= 2 &&
+    formData.country.trim().length >= 2 &&
+    formData.occupation.trim().length >= 2 &&
+    formData.advocacy.trim().length >= 2 &&
+    formData.funFact.trim().length >= 2 &&
+    formData.tribe.trim().length >= 2 &&
+    isContestantCategory(formData.gender) &&
+    isContestantCategory(formData.contestantCategories) &&
+    (!formData.stageName || formData.stageName.trim().length >= 2) &&
+    (height === undefined || (Number.isFinite(height) && height > 0)) &&
+    (weight === undefined || (Number.isFinite(weight) && weight > 0)) &&
+    isValidUrl(formData.image.trim()) &&
+    isValidUrl(formData.portfolio.trim());
 
   const handleNext = async () => {
-    if (!isLast) {
-      setSection((s) => s + 1);
+    if (section < sections.length - 1) {
+      setSection((current) => current + 1);
       return;
     }
 
     if (!canSubmit) {
-      setSubmitError("Please complete every required field and confirm both declarations to submit.");
+      setSubmitError("Please complete all required fields with valid values.");
+      return;
+    }
+
+    if (
+      !isContestantCategory(formData.gender) ||
+      !isContestantCategory(formData.contestantCategories)
+    ) {
+      setSubmitError("Select a valid gender and contestant category.");
       return;
     }
 
@@ -234,16 +292,49 @@ export function ApplicationForm() {
     setSubmitError("");
 
     try {
-      const storedRaw = window.localStorage.getItem("eliteGlamClientContestants");
-      const stored = storedRaw ? JSON.parse(storedRaw) : [];
-      const nextPayload = buildPayload();
-      const nextEntries = Array.isArray(stored) ? [...stored, nextPayload] : [nextPayload];
+      const payload = {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        gender: formData.gender,
+        ...(formData.image.trim() && { image: formData.image.trim() }),
+        ...(formData.stageName.trim() && { stageName: formData.stageName.trim() }),
+        ...(height !== undefined && { height }),
+        ...(weight !== undefined && { weight }),
+        ...(formData.bio.trim() && { bio: formData.bio.trim() }),
+        ...(formData.portfolio.trim() && { portfolio: formData.portfolio.trim() }),
+        phone: formData.phone.trim(),
+        age,
+        state: formData.state.trim(),
+        country: formData.country.trim(),
+        occupation: formData.occupation.trim(),
+        advocacy: formData.advocacy.trim(),
+        funFact: formData.funFact.trim(),
+        tribe: formData.tribe.trim(),
+        contestantCategories: formData.contestantCategories,
+      };
 
-      window.localStorage.setItem("eliteGlamClientContestants", JSON.stringify(nextEntries));
-      window.dispatchEvent(new Event("elite-glam-contestants-updated"));
+      const response = await fetch(
+        `/api/contestants/post-contestant?reference=${encodeURIComponent(reference)}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
+      const result: { success?: boolean; error?: string; message?: string } =
+        await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || result.message || "Unable to submit your application.");
+      }
+
       setSubmitted(true);
     } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : "Unable to submit your application right now.");
+      setSubmitError(
+        error instanceof Error
+          ? error.message
+          : "Unable to submit your application right now.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -259,16 +350,15 @@ export function ApplicationForm() {
           Application Submitted
         </div>
         <h2 className="font-['Cinzel',serif] text-[clamp(1.6rem,3vw,2.2rem)] text-[#F5EDD6] tracking-[0.04em] leading-[1.15] mb-4">
-          You've Applied, {formData.firstName}.
+          You&apos;ve Applied, {formData.name.trim().split(/\s+/)[0]}.
         </h2>
         <p className="font-['Playfair_Display',serif] text-[1rem] text-[#9A8C6A] italic leading-[1.8] max-w-[460px] mx-auto mb-10">
           Your application for The Elite Glam Season 2 has been received. We will review every submission with care.
         </p>
-
         <div className="bg-[#C9A84C]/[0.05] border border-[#C9A84C]/15 py-7 px-8 mb-8 text-left">
           <div className="flex flex-col gap-3.5">
             {[
-              `A confirmation has been sent to ${formData.email}`,
+              `Your application has been recorded for ${formData.email.trim()}`,
               "Shortlisted applicants will be contacted within 4 weeks",
               "Virtual auditions will be held in December 2026",
               "Keep an eye on your inbox — and your spam folder",
@@ -282,13 +372,14 @@ export function ApplicationForm() {
             ))}
           </div>
         </div>
-
         <p className="font-['Raleway',sans-serif] text-[0.72rem] text-[#5A5040] leading-[1.6]">
           Questions? Contact us at <span className="text-[#9A8C6A]">apply@theeliteglam.com</span>
         </p>
       </div>
     );
   }
+
+  const isLast = section === sections.length - 1;
 
   return (
     <div>
@@ -307,10 +398,10 @@ export function ApplicationForm() {
       </p>
 
       <div className="flex gap-1 mb-10">
-        {sections.map((_, i) => (
+        {sections.map((_, index) => (
           <div
-            key={i}
-            className={`flex-1 h-[3px] transition-colors duration-400 ${i <= section ? "bg-[#C9A84C]" : "bg-[#C9A84C]/12"}`}
+            key={index}
+            className={`flex-1 h-[3px] transition-colors duration-400 ${index <= section ? "bg-[#C9A84C]" : "bg-[#C9A84C]/12"}`}
           />
         ))}
       </div>
@@ -328,7 +419,7 @@ export function ApplicationForm() {
         {section > 0 && (
           <button
             type="button"
-            onClick={() => setSection((s) => s - 1)}
+            onClick={() => setSection((current) => current - 1)}
             className="bg-transparent border border-[#C9A84C]/20 text-[#9A8C6A] py-3.5 px-6 font-['Raleway',sans-serif] text-[0.72rem] tracking-[0.18em] uppercase cursor-pointer"
           >
             ← Back
@@ -357,9 +448,11 @@ export function ApplicationForm() {
 
       {isLast && !canSubmit && !submitError && (
         <p className="font-['Raleway',sans-serif] text-[0.72rem] text-[#5A5040] mt-4 text-right tracking-[0.05em]">
-          Please complete every required field and agree to both declarations above to submit.
+          Please complete all required fields with valid values before submitting.
         </p>
       )}
     </div>
   );
 }
+
+export default ApplicationForm;

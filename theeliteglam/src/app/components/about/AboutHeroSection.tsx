@@ -14,13 +14,13 @@ export function AboutHeroSection({ bannerImage, inView }: AboutHeroSectionProps)
         <div className="absolute inset-0">
         <img src={bannerImage} alt="" className="absolute inset-0 w-full h-full object-cover object-center" />
         <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            poster={bannerImage}
-            className="absolute inset-0 w-full h-full object-cover object-center"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          poster={bannerImage}
+          className="absolute inset-0 w-full h-full object-cover object-center"
         >
             <source src={BANNER_VIDEO} type="video/webm" />
             Your browser does not support the video tag.

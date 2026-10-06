@@ -1,4 +1,4 @@
-import { SectionLabel } from "./AboutShared";
+import { SectionLabel } from "../ui/SectionDivider";
 
 type AboutMaidenEditionSectionProps = {
   images: string[];
