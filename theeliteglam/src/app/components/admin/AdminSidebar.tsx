@@ -79,7 +79,7 @@ export function AdminSidebar({ links, mobile = false, onClose }: AdminSidebarPro
               }`}
             >
               <Icon className="w-5 h-5" />
-              <span className="text-[0.7rem] font-bold tracking-[0.2em] uppercase">
+              <span className="font-raleway text-xs tracking-[0.18em] uppercase">
                 {item.name}
               </span>
             </Link>
@@ -105,7 +105,7 @@ export function AdminSidebar({ links, mobile = false, onClose }: AdminSidebarPro
               }`}
             >
               <Icon className="w-5 h-5" />
-              <span className="text-[0.7rem] font-bold tracking-[0.2em] uppercase">
+              <span className="font-raleway text-xs tracking-[0.18em] uppercase">
                 {item.name}
               </span>
             </Link>

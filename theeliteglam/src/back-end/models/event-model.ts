@@ -1,4 +1,4 @@
-import { prisma } from "@/back-end/database/db-connect";
+import { prisma } from "../db/db-connect";
 import type { CreateEventInput, UpdateEventInput } from "../types/event-types";
 
 export class EventModel {

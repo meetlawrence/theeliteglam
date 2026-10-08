@@ -47,7 +47,7 @@ export default function EventsHeadline() {
         </p>
         <div className="flex flex-wrap gap-12">
           {[
-            { value: "Lagos", label: "Venue" },
+            { value: "Lagos", label: "Location" },
             { value: "May 2027", label: "Grand Finale" },
             { value: "₦2M Each", label: "Worth of Prizes" },
           ].map(({ value, label }) => (

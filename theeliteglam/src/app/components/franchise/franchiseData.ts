@@ -1,51 +1,53 @@
 export type Endorsement = {
   brand: string;
-  initials: string;
+  desc: string;
   image: string;
 };
 
 export type Sponsor = {
-  name: string;
+  brand: string;
   desc: string;
-  logo: string;
+  image: string;
 };
 
 export const ENDORSEMENTS: Endorsement[] = [
   {
-    brand: "Mister Universe",
-    initials: "MrU",
+    brand: "Mister Continental World",
+    desc: "",
     image:
-      "https://images.unsplash.com/photo-1541554685626-8016b713c293?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80",
+      "franchise/mister-continental.jpg?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80",
   },
   {
     brand: "Miss Continental World",
-    initials: "MCW",
+    desc: "",
     image:
-      "https://images.unsplash.com/photo-1706564373290-3870ef23993f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80",
+      "franchise/miss-continental.jpg?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80",
+  },
+
+  {
+    brand: "Mister Universe",
+    desc: "",
+    image:
+      "franchise/mister-universe.jpg?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80",
   },
   {
-    brand: "Mister Continental World",
-    initials: "MrCW",
+    brand: "Mr Grand International",
+    desc: "",
     image:
-      "https://images.unsplash.com/photo-1546572797-e8c933a75a1f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80",
-  },
-  {
-    brand: "Grand International",
-    initials: "GI",
-    image:
-      "https://images.unsplash.com/photo-1543132220-4bf3de6e10ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80",
+      "franchise/Mister-grand.png?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80",
   },
 ];
 
 export const SPONSORS: Sponsor[] = [
   {
-    name: "Em'Kay",
+    brand: "Em'Kay",
     desc: "The official sponsor for the Elite Glam pageant.",
-    logo: "EK",
+    image: "sponsors/emkay.jpg?crop=entropy&cs=tinysrgb&fit=min&fm=jpg&w=800&q=80",
   },
   {
-    name: "RELiQ Global Solutions",
+    brand: "RELiQ",
     desc: "The official technical and support partner for the Elite Glam pageant.",
-    logo: "RGS",
+    image: "sponsors/reliq.jpg?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80",
   },
+
 ];

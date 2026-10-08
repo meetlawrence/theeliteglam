@@ -1,4 +1,4 @@
-import { prisma } from "@/back-end/database/db-connect";
+import { prisma } from "../db/db-connect";
 import type { CreateSponsorInput, UpdateSponsorInput } from "../types/sponsor-types";
 
 export class SponsorModel {

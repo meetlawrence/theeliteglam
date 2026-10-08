@@ -1,13 +1,14 @@
+
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 import { contestantService } from "../../../../back-end/services/contestant-service";
-import { paymentModel } from "@/back-end/models/payment-model";
-import { contestantModel } from "@/back-end/models/contestant-model";
+import { authMiddleware } from "../../../../back-end/lib/route-middleware/admin";
+import { contestantTransactionService } from "@/back-end/services/contestant-transaction-service";
 
 export async function POST(req: NextRequest) {
   try {
-    const reference = req.nextUrl.searchParams.get("reference");
+    const reference1 = req.nextUrl.searchParams.get("reference");
 
     const {
       name,
@@ -28,6 +29,8 @@ export async function POST(req: NextRequest) {
       funFact,
       tribe,
       contestantCategories,
+      eventId,
+      reference,
     } = await req.json();
 
     // =========================================================
@@ -35,13 +38,15 @@ export async function POST(req: NextRequest) {
     // POST /api/contestant?reference=PAYSTACK_REFERENCE
     // =========================================================
 
-    if (reference) {
+    if (reference1) {
       // 1. Find the payment transaction
       const transaction =
-        await paymentModel.findByReference(reference);
+        await contestantTransactionService.getContestantTransactionByReference(
+          reference1,
+        );
 
       // Transaction must exist
-      if (!transaction) {
+      if (!transaction.success || !transaction.data) {
         return NextResponse.json(
           {
             success: false,
@@ -52,7 +57,7 @@ export async function POST(req: NextRequest) {
       }
 
       // 2. Payment must be successful
-      if (transaction.status !== "SUCCESS") {
+      if (transaction.data.status !== "SUCCESS") {
         return NextResponse.json(
           {
             success: false,
@@ -63,11 +68,12 @@ export async function POST(req: NextRequest) {
       }
 
       // 3. Prevent duplicate contestant registration
-      const contestantExists = await contestantModel.findByReference(
-        transaction.reference,
-      );
+      const contestantExists =
+        await contestantService.getContestantByreference(
+          transaction.data.reference,
+        );
 
-      if (contestantExists) {
+      if (contestantExists.success && contestantExists.data) {
         return NextResponse.json(
           {
             success: false,
@@ -97,13 +103,16 @@ export async function POST(req: NextRequest) {
         funFact,
         tribe,
         contestantCategories,
-        eventId: transaction.eventId,
-        reference: transaction.reference,
-        paymentTransactionId: transaction.id,
+
+        // These come from the verified transaction,
+        // NOT from the client request.
+        eventId: transaction.data.eventId,
+        reference: transaction.data.reference,
       };
 
       // 5. Create contestant
-      const result = await contestantService.createContestant(contestantData, transaction.reference);
+      const result =
+        await contestantService.createContestant(contestantData);
 
       return NextResponse.json(result, {
         status: result.status || 200,
@@ -114,6 +123,39 @@ export async function POST(req: NextRequest) {
     // ADMIN FLOW
     // POST /api/contestant
     // =========================================================
+
+    const authResult = await authMiddleware(req);
+
+    if (!authResult.success) {
+      return authResult.response;
+    }
+
+    const result = await contestantService.createContestant({
+      name,
+      email,
+      gender,
+      image,
+      stageName,
+      height,
+      weight,
+      bio,
+      portfolio,
+      phone,
+      age,
+      state,
+      country,
+      occupation,
+      advocacy,
+      funFact,
+      tribe,
+      contestantCategories,
+      eventId,
+      reference,
+    });
+
+    return NextResponse.json(result, {
+      status: result.status || 200,
+    });
   } catch (error) {
     console.error("Create contestant error:", error);
 
@@ -126,3 +168,4 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+

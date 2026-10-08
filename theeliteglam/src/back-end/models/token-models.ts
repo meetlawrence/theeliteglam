@@ -1,7 +1,7 @@
 // src/back-end/models/token-models.ts
 import "dotenv/config";
 
-import { prisma } from "@/back-end/database/db-connect";
+import { prisma } from "../../back-end/db/db-connect";
 import type { RefreshToken } from "../types/token-types";
 
 export class TokenRepo {
