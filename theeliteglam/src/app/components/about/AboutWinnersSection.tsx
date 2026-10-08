@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { SectionLabel } from "./AboutShared";
+import { SectionLabel } from "../ui/SectionDivider";
 
 type WinnerData = {
   name: string;
@@ -29,7 +29,7 @@ type AboutWinnersSectionProps = {
 
 export function AboutWinnersSection({ winners, runnersUp }: AboutWinnersSectionProps) {
   return (
-    <div className="mx-auto max-w-[1300px] px-8 py-28">
+    <div id="past-winners" className="mx-auto max-w-[1300px] px-8 py-28">
       <SectionLabel text="Hall of Champions" />
       <h2 className="mt-4 mb-3 font-['Cinzel',serif] text-[clamp(1.8rem,3.5vw,2.8rem)] leading-[1.1] tracking-[0.05em] text-[#F5EDD6]">
         Past{" "}

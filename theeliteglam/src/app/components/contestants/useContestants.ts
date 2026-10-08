@@ -3,83 +3,40 @@
 import { useEffect, useState } from "react";
 import type { Contestant, Gender } from "./types";
 
-const BASE: Contestant[] = [];
-
 function normalizeContestant(item: Record<string, unknown>, index: number): Contestant {
-  const genderValue = String(item.gender ?? item.Gender ?? "female").toLowerCase();
-  const gender = genderValue === "male" ? "male" : "female";
-
-  const rawId = item.id ?? item._id ?? item.contestantId;
-  const id = typeof rawId === "number" ? rawId : Number(rawId) || index + 1;
-
-  const votesValue =
-    typeof item.votes === "number"
-      ? item.votes
-      : typeof item.voteCount === "number"
-        ? item.voteCount
-        : typeof item._count === "object" && item._count !== null && "votes" in item._count
-          ? Number((item._count as { votes?: number }).votes ?? 0)
-          : 0;
-
-  const imageValue =
-    typeof item.image === "string" && item.image.trim()
-      ? item.image
-      : typeof item.photo === "string" && item.photo.trim()
-        ? item.photo
-        : "/images/placeholder.png";
+  const genderValue = String(item.gender ?? "").toLowerCase();
+  const gender: Gender = genderValue === "male" ? "male" : "female";
+  const voteCount =
+    typeof item._count === "object" && item._count !== null && "votes" in item._count
+      ? Number((item._count as { votes?: number }).votes ?? 0)
+      : Number(item.votes ?? item.score ?? 0);
 
   return {
-    id,
-    name: String(item.name ?? item.fullName ?? "Unnamed contestant"),
-    state: String(item.state ?? item.location ?? ""),
+    id: index + 1,
+    databaseId: String(item.id ?? ""),
+    name: String(item.stageName || item.name || "Contestant"),
+    state: String(item.state ?? ""),
     age: Number(item.age) || 0,
     gender,
-    number: String(item.number ?? item.contestantNumber ?? ""),
-    bio: String(item.bio ?? item.description ?? ""),
-    image: imageValue,
-    votes: votesValue,
+    number: String(item.rank ?? item.number ?? String(index + 1).padStart(2, "0")),
+    bio: String(item.bio ?? ""),
+    image:
+      typeof item.image === "string" && item.image.trim()
+        ? item.image
+        : "/images/contestant-placeholder.svg",
+    votes: Number.isFinite(voteCount) ? voteCount : 0,
     occupation: String(item.occupation ?? ""),
     advocacy: String(item.advocacy ?? ""),
-    funFact: String(item.funFact ?? item.fun_fact ?? ""),
+    funFact: String(item.funFact ?? ""),
     tribe: String(item.tribe ?? ""),
   };
 }
 
-function readStoredContestants(): Contestant[] {
-  if (typeof window === "undefined") {
-    return [];
-  }
-
-  try {
-    const raw = window.localStorage.getItem("eliteGlamClientContestants");
-    if (!raw) {
-      return [];
-    }
-
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed)
-      ? parsed.map((item: Record<string, unknown>, index: number) => normalizeContestant(item, index))
-      : [];
-  } catch (error) {
-    console.error("Failed to read stored contestants", error);
-    return [];
-  }
-}
-
-function writeStoredContestants(contestants: Contestant[]) {
-  if (typeof window === "undefined") {
-    return;
-  }
-
-  try {
-    window.localStorage.setItem("eliteGlamClientContestants", JSON.stringify(contestants));
-  } catch (error) {
-    console.error("Failed to persist contestants", error);
-  }
-}
-
 export function useContestants() {
-  const [contestants, setContestants] = useState<Contestant[]>(BASE);
+  const [contestants, setContestants] = useState<Contestant[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
+  const [reloadKey, setReloadKey] = useState(0);
   const [voted, setVoted] = useState<Record<number, number>>({});
   const [carouselGender, setCarouselGender] = useState<Gender>("female");
   const [carouselIdx, setCarouselIdx] = useState(0);
@@ -92,70 +49,82 @@ export function useContestants() {
     let isMounted = true;
 
     const loadContestants = async () => {
-      const storedContestants = readStoredContestants();
-
-      if (isMounted) {
-        setContestants(storedContestants);
-      }
+      setIsLoading(true);
+      setLoadError("");
 
       try {
-        const response = await fetch("/api/contestants/get-contestants", { cache: "no-store" });
-        if (!response.ok) {
-          const message = response.status === 401 || response.status === 403
-            ? "Contestants API requires admin authentication"
-            : "Contestants API is unavailable";
-          throw new Error(message);
+        const response = await fetch("/api/contestants/get-contestants", {
+          cache: "no-store",
+        });
+        const payload = await response.json();
+
+        if (!response.ok || payload?.success === false) {
+          throw new Error(
+            payload?.error ||
+              payload?.message ||
+              "Contestants API is unavailable",
+          );
         }
 
-        const payload = await response.json();
-        const rawData = Array.isArray(payload?.data)
+        const rawData: unknown = Array.isArray(payload?.data)
           ? payload.data
           : Array.isArray(payload)
             ? payload
-            : [];
+            : null;
+        if (!Array.isArray(rawData)) {
+          throw new Error("Contestants API returned an invalid response");
+        }
 
-        const fetchedContestants = rawData.map((item: Record<string, unknown>, index: number) =>
-          normalizeContestant(item, index)
+        const approvedContestants = rawData.reduce<Contestant[]>(
+          (approved, item) => {
+            if (
+              item &&
+              typeof item === "object" &&
+              "status" in item &&
+              String(item.status).toUpperCase() === "ACTIVE"
+            ) {
+              approved.push(
+                normalizeContestant(
+                  item as Record<string, unknown>,
+                  approved.length,
+                ),
+              );
+            }
+            return approved;
+          },
+          [],
         );
 
-        const mergedContestants = fetchedContestants.length
-          ? fetchedContestants
-          : storedContestants;
-
-        if (isMounted) {
-          setContestants(mergedContestants);
-        }
-
-        writeStoredContestants(mergedContestants);
+        if (isMounted) setContestants(approvedContestants);
       } catch (error) {
-        console.error("Failed to fetch contestants", error);
+        console.error("Failed to fetch approved contestants", error);
         if (isMounted) {
-          setContestants(storedContestants);
+          setContestants([]);
+          setLoadError(
+            error instanceof Error
+              ? error.message
+              : "Unable to load contestants.",
+          );
         }
+      } finally {
+        if (isMounted) setIsLoading(false);
       }
     };
 
     void loadContestants();
-
-    const handleContestantsUpdated = () => {
-      const nextContestants = readStoredContestants();
-      setContestants(nextContestants);
-    };
-
-    window.addEventListener("elite-glam-contestants-updated", handleContestantsUpdated);
-
-    const timer = setTimeout(() => setCarouselIdx(0), 0);
     return () => {
       isMounted = false;
-      window.removeEventListener("elite-glam-contestants-updated", handleContestantsUpdated);
-      clearTimeout(timer);
     };
-  }, []);
+  }, [reloadKey]);
 
   const handleVoteSuccess = (id: number, qty: number) => {
     setVoted((current) => ({ ...current, [id]: (current[id] ?? 0) + qty }));
     setContestants((current) =>
-      current.map((c) => (c.id === id ? { ...c, votes: c.votes + qty } : c))
+      current.map((contestant) =>
+        contestant.id === id
+          ? { ...contestant, votes: contestant.votes + qty }
+          : contestant,
+      ),
     );
     setFlash(id);
     setTimeout(() => setFlash(null), 900);
@@ -167,7 +136,7 @@ export function useContestants() {
 
   const pool = contestants.filter((contestant) => contestant.gender === carouselGender);
   const gridPool = contestants.filter(
-    (contestant) => gridFilter === "all" || contestant.gender === gridFilter
+    (contestant) => gridFilter === "all" || contestant.gender === gridFilter,
   );
   const femaleRanked = [...contestants]
     .filter((contestant) => contestant.gender === "female")
@@ -178,6 +147,9 @@ export function useContestants() {
 
   return {
     pool,
+    isLoading,
+    loadError,
+    reloadContestants: () => setReloadKey((current) => current + 1),
     contestants,
     voted,
     carouselGender,

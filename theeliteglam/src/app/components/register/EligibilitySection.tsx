@@ -22,7 +22,7 @@ export function EligibilitySection() {
   }, []);
 
   return (
-    <div ref={ref} className="max-w-[1300px] mx-auto px-8 pt-28 pb-20">
+    <div id="eligibility-criteria" ref={ref} className="max-w-[1300px] mx-auto px-8 pt-28 pb-20">
       <div className={`transition-all duration-1000 ease-out ${inView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
         <SectionLabel text="Who Can Apply" />
         <h2 className="font-['Cinzel',serif] text-[clamp(1.8rem,3.5vw,2.6rem)] text-[#F5EDD6] tracking-[0.05em] leading-[1.1] mt-4 mb-12">

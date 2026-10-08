@@ -1,60 +1,46 @@
-import { prisma } from "@/back-end/database/db-connect";
-
-type CreateTicketInput = {
-  reference: string;
-  status?: "PENDING" | "SENT" | "USED";
-  paymentTransactionId: string;
-  ticketTypeId: string;
-  eventId: string;
-  ticket: string;
-};
+import { prisma } from "../db/db-connect";
+import type { UpdateTicket, Ticket } from "../types/ticket";
 
 export class TicketModel {
-  async findByPaymentTransactionId(paymentTransactionId: string) {
-    return prisma.ticket.findMany({
-      where: { paymentTransactionId },
-    });
-  }
-
-  async findById(id: string) {
-    return prisma.ticket.findUnique({
-      where: { id },
-    });
-  }
-
-  async countSoldByTicketType(ticketTypeId: string) {
-    return prisma.ticket.count({
-      where: {
-        ticketTypeId,
-        paymentTransaction: {
-          status: "SUCCESS",
-        },
+  async create(data: Ticket) {
+    return await prisma.ticket.create({
+      data: {
+        reference: data.reference,
+        status: data.status,
+        ticketTransactionId: data.ticketTransactionId,
       },
     });
   }
 
-  async createMany(tickets: CreateTicketInput[]) {
-    return prisma.ticket.createManyAndReturn({
-      data: tickets,
-    });
-  }
-
-  async updateStatusByPaymentTransactionId(
-    paymentTransactionId: string,
-    status: "PENDING" | "SENT" | "USED"
-  ) {
-    return prisma.ticket.updateMany({
-      where: { paymentTransactionId },
-      data: { status },
-    });
-  }
-
-  async markAsUsed(id: string) {
-    return prisma.ticket.update({
+  async findByTicketId(id: string) {
+    return await prisma.ticket.findUnique({
       where: { id },
-      data: { status: "USED" },
     });
+  }
+
+  async update(id: string, data: UpdateTicket) {
+    return await prisma.ticket.update({
+      where: { id },
+      data,
+    });
+  }
+
+  // may use later
+  async createdata (data: Ticket) {
+    try {
+      return await prisma.$transaction(async (tx) => {
+        await tx.ticket.create({
+          data: {
+            reference: data.reference,
+            status: data.status,
+            ticketTransactionId: data.ticketTransactionId,
+          },
+        });
+      })
+    } catch (error) {
+      
+    }
   }
 }
 
-export const ticketModel = new TicketModel();
+export const ticketRepo = new TicketModel();

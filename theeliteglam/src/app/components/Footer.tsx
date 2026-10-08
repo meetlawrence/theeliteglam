@@ -2,25 +2,21 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { PiTiktokLogo } from "react-icons/pi";
 import { FiYoutube, FiFacebook, FiInstagram } from "react-icons/fi";
 import { ArrowRight, Mail, Phone, MapPin } from "lucide-react";
 
 const LINKS = {
-  "The Pageant": ["About Us", "History", "Our Mission", "Past Winners", "Gallery"],
-  Participate: [
-    "Register",
-    "Contestant FAQ",
-    "Judging Criteria",
-    "Audition Cities",
-    "Scholarships",
+  "The Pageant": [
+    { label: "Our Mission", href: "/about#mission" },
+    { label: "Past Winners", href: "/about#past-winners" },
+    { label: "Gallery", href: "/events#gallery" },
   ],
-  Franchise: [
-    "Become a Franchisee",
-    "Sponsor Packages",
-    "Media Kit",
-    "Brand Guidelines",
-    "Contact",
+  "Participate": [
+    { label: "Register", href: "/register" },
+    { label: "Eligibility Criteria", href: "/register#eligibility-criteria" },
+    { label: "Contestant FAQ", href: "/about#faq" },
   ],
 };
 
@@ -47,7 +43,7 @@ const SOCIALS = [
   },
 ];
 
-export function Footer({ onNavigate }: { onNavigate?: (page: "register") => void }) {
+export function Footer() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
@@ -87,7 +83,7 @@ export function Footer({ onNavigate }: { onNavigate?: (page: "register") => void
                 />
                 <button
                   type="submit"
-                  className="bg-linear-to-br from-[#C9A84C] to-[#8B6914] text-[#080808] px-6 py-3.5 font-cinzel text-xs tracking-[0.15em] uppercase flex items-center gap-2 transition-opacity hover:opacity-90"
+                  className="bg-linear-to-br from-[#C9A84C] to-[#8B6914] text-[#080808] px-6 py-3.5 font-cinzel text-xs tracking-[0.15em] uppercase flex items-center gap-2 transition-opacity hover:opacity-95 cursor-pointer"
                 >
                   Subscribe <ArrowRight size={14} />
                 </button>
@@ -98,7 +94,7 @@ export function Footer({ onNavigate }: { onNavigate?: (page: "register") => void
       </div>
 
       {/* Main footer body */}
-      <div className="max-w-325 mx-auto px-8 pt-20 pb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr] gap-12">
+      <div className="max-w-325 mx-auto px-8 pt-20 pb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr] gap-12">
         {/* Brand column */}
         <div className="lg:col-span-1">
           <div className="flex items-center gap-2 mb-6">
@@ -136,12 +132,12 @@ export function Footer({ onNavigate }: { onNavigate?: (page: "register") => void
           </div>
           <div className="flex flex-col gap-3 font-raleway text-xs text-muted-foreground">
             {[
-              { icon: Mail, text: "theeliteglampageant@gmail.com" },
+              { icon: Mail, text: "info@theeliteglam.com" },
               { icon: Phone, text: "+1 (347) 466-3081" },
               { icon: MapPin, text: "Lagos, Nigeria" },
-            ].map((item, i) => (
-              <div key={i} className="flex items-center gap-2">
-                <span className="text-[#C9A84C]">{<item.icon size={13} />}</span>
+            ].map((item) => (
+              <div key={item.text} className="flex items-center gap-2">
+                <span className="text-[#C9A84C]"><item.icon size={13} /></span>
                 {item.text}
               </div>
             ))}
@@ -155,15 +151,15 @@ export function Footer({ onNavigate }: { onNavigate?: (page: "register") => void
               {cat}
             </h4>
             <div className="flex flex-col gap-3">
-              {links.map((link) => (
-                <button
-                  key={link}
-                  onClick={() => link === "Register" && onNavigate?.("register")}
+              {links.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
                   className="group font-raleway text-sm text-muted-foreground hover:text-[#C9A84C] transition-colors flex items-center gap-2 text-left"
                 >
-                  <span className="hidden group-hover:block text-[10px] text-[#C9A84C]">✦</span>{" "}
-                  {link}
-                </button>
+                  <span className="hidden group-hover:block text-[10px] text-[#C9A84C]">✦</span>
+                  {item.label}
+                </Link>
               ))}
             </div>
           </div>
@@ -172,16 +168,21 @@ export function Footer({ onNavigate }: { onNavigate?: (page: "register") => void
 
       {/* Bottom bar */}
       <div className="border-t border-[#C9A84C]/10 py-6 px-8">
-        <div className="max-w-325 mx-auto flex justify-between items-center flex-wrap gap-4 font-raleway text-xs  tracking-[0.08em] text-[#5A5040]">
-          <p>
-            © 2025 The Elite Glam. All rights reserved. Unveiling Excellence. Embracing Diversity
-          </p>
-          <div className="flex gap-8">
-            {["Privacy Policy", "Terms of Use", "Cookie Policy"].map((item) => (
-              <a key={item} href="#" className="hover:text-[#C9A84C] transition-colors">
-                {item}
+        <div className="max-w-325 mx-auto flex justify-around items-center flex-wrap gap-4 font-raleway text-xs text-[#5A5040]">
+          <div className="flex items-center gap-6 flex-wrap">
+            <p>© 2025 The Elite Glam. All rights reserved.</p>
+            <span className="text-[#C9A84C]/30 hidden sm:inline">•</span>
+            <p className="text-[#8B7D60]">
+              Website by{" "}
+              <a
+                href="https://meetlawrence.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#C9A84C] hover:underline tracking-wide transition-colors"
+              >
+                MeetLawrence
               </a>
-            ))}
+            </p>
           </div>
         </div>
       </div>

@@ -22,8 +22,7 @@ interface TicketEmailProps {
   eventName?: string;
   eventDate?: string;
   qrCode?: string;          // single QR (base64)
-  qrCodes: string[];// multiple QRs
-  tickets: string[]
+  qrCodes: string[];       // multiple QRs
 }
 
 export const TicketEmail = ({
@@ -35,7 +34,6 @@ export const TicketEmail = ({
   eventDate,
   qrCode,
   qrCodes,
-  tickets,
 }: TicketEmailProps) => {
   const previewText = `Your ticket for ${eventName} is ready!`;
 
@@ -117,7 +115,7 @@ export const TicketEmail = ({
                     alt={`Ticket ${index + 1} QR Code`}
                     style={qrImage}
                   />
-                  <Text style={ticketNumber}>Ticket {tickets[index]}</Text>
+                  <Text style={ticketNumber}>Ticket #{index + 1}</Text>
                 </Section>
               ))}
           </Section>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { SectionLabel } from "./AboutShared";
+import { SectionLabel } from "../ui/SectionDivider";
 
 type FaqItemData = {
   q: string;
@@ -17,7 +17,7 @@ export function AboutFaqSection({ faqs }: AboutFaqSectionProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
-    <div className="mx-auto max-w-[860px] px-8 py-28">
+    <div id="faq" className="mx-auto max-w-[860px] px-8 py-28">
       <SectionLabel text="Frequently Asked Questions" />
       <h2 className="mt-4 mb-12 font-['Cinzel',serif] text-[clamp(1.6rem,3vw,2.4rem)] leading-[1.15] tracking-[0.05em] text-[#F5EDD6]">
         Everything You Need to Know

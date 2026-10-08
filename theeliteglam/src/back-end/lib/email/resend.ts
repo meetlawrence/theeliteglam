@@ -40,7 +40,6 @@ type EmailPayload =
         eventDate?: string;
         qrCode?: string; // single QR (base64)
         qrCodes: string[]; // multiple QRs
-        tickets: string[]
       };
     }
   | {

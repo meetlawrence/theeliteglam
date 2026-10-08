@@ -5,6 +5,29 @@ export type StatSummary = {
   trend: "up" | "down";
 };
 
+export type Contestant = {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string | null;
+  image?: string | null;
+  gender: string;
+  age: number;
+  state: string;
+  country?: string;
+  tribe?: string;
+  occupation?: string;
+  height?: number | null;
+  weight?: number | null;
+  portfolio?: string | null;
+  advocacy?: string;
+  funFact?: string;
+  bio?: string | null;
+  stageName?: string | null;
+  contestantCategories: string;
+  status: string;
+}
+
 export type ActivityItem = {
   id: string;
   time: string;

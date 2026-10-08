@@ -1,4 +1,4 @@
-import { prisma } from "@/back-end/database/db-connect";
+import { prisma } from "../db/db-connect";
 import type { CreateCategoryInput, UpdateCategoryInput } from "../types/category-types";
 
 export class CategoryModel {

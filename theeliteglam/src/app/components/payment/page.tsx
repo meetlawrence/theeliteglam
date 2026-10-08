@@ -1,119 +1,131 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { payloadSearcher } from "recharts/types/chart/SunburstChart";
 
 export default function Payment() {
   const router = useRouter();
-
-  // Form state
   const [email, setEmail] = useState("");
-  const [ticketTypeId, setTicketId] = useState<string | undefined>(undefined);
-  const [quantity, setQuantity] = useState<number | undefined>(undefined);
+  const [ticketTypeId, setTicketId] = useState("");
+  const [quantity, setQuantity] = useState<number>(1);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [eventId, setEventId] = useState("");
   const [name, setName] = useState("");
-  const [method, setMethod] = useState<"PAYSTACK" | "OPAY">("PAYSTACK");
-  const [purpose, setPurpose] = useState<"TICKET" | "CONTESTANT">("CONTESTANT");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Build payload with optional fields
-    const payload: any = {
-      purpose,
-      method,
-      eventId,
-      email,
-      phoneNumber,
-      name,
-    };
-
-    if (ticketTypeId) payload.ticketTypeId = ticketTypeId;
-    if (quantity) payload.quantity = quantity;
-
     try {
-      const result = await fetch("/api/payment/initialize", {
+      const result = await fetch("../../api/contestants/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ email, ticketTypeId, quantity, phoneNumber, eventId, name }),
       });
 
+      console.log("Payment API Response 3:", result);
       const paystackResult = await result.json();
-      console.log("Payment API Response:", paystackResult);
 
-      if (result.ok && paystackResult.data?.authorizationUrl) {
-        router.push(paystackResult.data.authorizationUrl);
+      if (result.status) {
+        router.push(paystackResult.data.authorization_url);
       }
     } catch (err) {
       console.error("Unexpected error:", err);
     }
   };
-
   return (
     <div className="login-form-container">
       <div className="login-form">
         <form onSubmit={handleSubmit}>
-          <h2>Initialize Payment</h2>
+          <h2>Buy Ticket</h2>
 
-          {/* Purpose */}
-          <div className="login-field">
-            <label>Purpose</label>
-            <select value={purpose} onChange={(e) => setPurpose(e.target.value as "TICKET" | "CONTESTANT")}>
-              <option value="CONTESTANT">Contestant</option>
-              <option value="TICKET">Ticket</option>
-            </select>
-          </div>
-
-          {/* Method */}
-          <div className="login-field">
-            <label>Payment Method</label>
-            <select value={method} onChange={(e) => setMethod(e.target.value as "PAYSTACK" | "OPAY")}>
-              <option value="PAYSTACK">Paystack</option>
-              <option value="OPAY">Opay</option>
-            </select>
-          </div>
-
-          {/* Email */}
+          {/* EMAIL */}
           <div className="login-field">
             <label>Email</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            <div className="input-group">
+              <input
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
           </div>
 
-          {/* Name */}
+          {/* EMAIL */}
           <div className="login-field">
-            <label>Name</label>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+            <label>name</label>
+            <div className="input-group">
+              <input
+                type="text"
+                placeholder="joe"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
           </div>
 
-          {/* Ticket ID (optional) */}
+          {/* Ticket ID */}
           <div className="login-field">
-            <label>Ticket Type ID (optional)</label>
-            <input type="text" value={ticketTypeId ?? ""} onChange={(e) => setTicketId(e.target.value || undefined)} />
+            <label>Ticket ID</label>
+            <div className="input-group">
+              <input
+                type="text"
+                placeholder="Ticket ID"
+                value={ticketTypeId}
+                onChange={(e) => setTicketId(e.target.value)}
+                required
+              />
+            </div>
           </div>
 
-          {/* Quantity (optional) */}
+          {/* Quantity */}
           <div className="login-field">
-            <label>Quantity (optional)</label>
-            <input
-              type="number"
-              value={quantity ?? ""}
-              onChange={(e) => setQuantity(e.target.value ? Number(e.target.value) : undefined)}
-            />
+            <label>Quantity</label>
+            <div className="input-group">
+              <input
+                type="number"
+                placeholder="1"
+                value={quantity}
+                onChange={(e) => setQuantity(Number(e.target.value))}
+                required
+              />
+            </div>
           </div>
 
           {/* Phone Number */}
           <div className="login-field">
             <label>Phone Number</label>
-            <input type="tel" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} required />
+            <div className="input-group">
+              <input
+                type="tel"
+                placeholder="+2348012345678"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                required
+              />
+            </div>
           </div>
 
           {/* Event ID */}
           <div className="login-field">
             <label>Event ID</label>
-            <input type="text" value={eventId} onChange={(e) => setEventId(e.target.value)} required />
+            <div className="input-group">
+              <input
+                type="text"
+                placeholder="Event ID"
+                value={eventId}
+                onChange={(e) => setEventId(e.target.value)}
+                required
+              />
+            </div>
           </div>
 
-          <button type="submit" className="amount">Submit</button>
+          {/* SUBMIT BUTTON */}
+          <button type="submit" className="amount">
+            Submit
+          </button>
         </form>
       </div>
     </div>

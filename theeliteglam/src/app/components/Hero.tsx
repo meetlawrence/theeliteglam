@@ -15,7 +15,7 @@ export function HeroSection({
 
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black pt-19.5">
-      <div className="absolute inset-0 opacity-35">
+      <div className="absolute inset-0 opacity-30">
         <img src={HOME_IMAGES.heroBackgroundImage} alt="" className="absolute inset-0 h-full w-full object-cover object-center" />
         <video
           autoPlay

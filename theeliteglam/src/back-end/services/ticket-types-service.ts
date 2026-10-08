@@ -5,7 +5,7 @@ import {
   UpdateTicketTypeSchema,
   ticketTypeIdSchema,
   ticketTypEventSchema,
-} from "../lib/validation/ticket-validations";
+} from "../lib/validation/ticket-schema";
 
 import { formatZodError } from "../lib/utils/helper";
 

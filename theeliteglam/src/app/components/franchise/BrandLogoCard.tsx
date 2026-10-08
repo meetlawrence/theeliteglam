@@ -7,7 +7,7 @@ export default function BrandLogoCard({
   index,
   inView,
 }: {
-  item: { brand: string; initials: string; image: string };
+  item: { brand: string; desc: string; image: string };
   index: number;
   inView: boolean;
 }) {
@@ -17,82 +17,49 @@ export default function BrandLogoCard({
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      className="group relative flex flex-col items-center justify-center text-center overflow-hidden cursor-default transition-all duration-500 ease-out aspect-square w-full"
       style={{
-        position: "relative",
         border: `1px solid ${hovered ? "rgba(201,168,76,0.45)" : "rgba(201,168,76,0.12)"}`,
-        padding: "2.5rem 1.5rem",
-        transition: "all 0.4s ease",
         opacity: inView ? 1 : 0,
         transform: inView ? "none" : "translateY(24px)",
         transitionDelay: inView ? `${0.2 + index * 0.07}s` : "0s",
-        cursor: "default",
-        boxShadow: hovered ? "0 0 40px rgba(201,168,76,0.10)" : "none",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "1rem",
-        textAlign: "center",
-        overflow: "hidden",
-        minHeight: "260px",
+        boxShadow: hovered ? "0 0 40px rgba(201,168,76,0.12)" : "none",
         background: "#0D0D0D",
+        padding: "2rem 1rem",
+        borderRadius: "5%",
       }}
     >
+      {/* 
+      */}
       <div
+        className="absolute inset-0 z-0 transition-all duration-500 ease-out"
         style={{
-          position: "absolute",
-          inset: 0,
           backgroundImage: `url(${item.image})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center top",
-          opacity: hovered ? 0.55 : 0.38,
-          transition: "opacity 0.5s ease",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(to top, rgba(13,13,13,0.92) 0%, rgba(13,13,13,0.55) 60%, rgba(13,13,13,0.4) 100%)",
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          filter: hovered ? "brightness(0.3) blur(7px)" : "brightness(1) blur(0px)",
+          transform: hovered ? "scale(1.03)" : "scale(1)",
         }}
       />
 
-      <div
-        style={{
-          position: "relative",
-          width: "64px",
-          height: "64px",
-          border: `1px solid ${hovered ? "rgba(201,168,76,0.55)" : "rgba(201,168,76,0.22)"}`,
-          background: hovered
-            ? "linear-gradient(135deg, rgba(201,168,76,0.18), rgba(201,168,76,0.06))"
-            : "rgba(13,13,13,0.7)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontFamily: "'Cinzel', serif",
-          fontSize: "0.75rem",
-          color: hovered ? "#F0C04A" : "#C9A84C",
-          letterSpacing: "0.06em",
-          transition: "all 0.4s ease",
-          backdropFilter: "blur(4px)",
-        }}
-      >
-        {item.initials}
-      </div>
+      {/* 
 
-      <div
+      */}
+      <div 
+        className="relative z-10 pointer-events-none transition-opacity duration-500 ease-out"
         style={{
-          position: "relative",
-          fontFamily: "'Cinzel', serif",
-          fontSize: "0.82rem",
-          color: hovered ? "#F5EDD6" : "#C4B896",
-          letterSpacing: "0.08em",
-          lineHeight: 1.4,
-          transition: "color 0.4s ease",
+          opacity: hovered ? 1 : 0, 
         }}
       >
-        {item.brand}
+        <span className="font-['Cinzel',serif] text-[0.7rem] tracking-[0.2em] text-[#C9A84C] uppercase drop-shadow-lg">
+          {item.brand}
+        </span>
+        {item.desc && (
+          <p className="mt-2 font-['Raleway',sans-serif] text-[0.75rem] text-[#9A8C6A] leading-[1.4] transition-colors duration-300 group-hover:text-[#B5A582]">
+            {item.desc}
+          </p>
+        )}
       </div>
     </div>
   );

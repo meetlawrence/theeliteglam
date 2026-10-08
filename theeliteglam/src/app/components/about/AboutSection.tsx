@@ -7,7 +7,7 @@ import { AboutLeadershipSection } from "./AboutLeadershipSection";
 import { AboutMaidenEditionSection } from "./AboutMaidenEditionSection";
 import { AboutMissionValuesSection } from "./AboutMissionValuesSection";
 import { AboutWinnersSection } from "./AboutWinnersSection";
-import { Divider } from "./AboutShared";
+import { Divider } from "../ui/SectionDivider";
 import { BANNER_IMG, CEO_IMG, FAQS, MAIDEN_IMGS, MISSION_VISION_CARDS, RUNNERS_UP, VALUES, WINNERS } from "./aboutData";
 
 export function AboutSection() {

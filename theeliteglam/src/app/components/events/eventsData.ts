@@ -68,12 +68,12 @@ export const NIGERIA_PILLARS = [
   {
     heading: "Championing Inclusivity",
     body: "The EliteGlam welcomes individuals from all backgrounds, tribes, and walks of life. Beauty knows no boundaries.",
-    image: "/images/img3.jpg",
+    image: "/images/img5.jpg",
   },
   {
     heading: "Redefining Beauty Standards",
     body: "We celebrate confidence, authenticity, intelligence, and character alongside physical beauty.",
-    image: "/images/img4.jpg",
+    image: "/images/img6.jpg",
   },
 ];
 

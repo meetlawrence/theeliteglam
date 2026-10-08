@@ -5,44 +5,112 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../src/back-end/database/generated/prisma"
+  output   = "../src/back-end/db/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-// ======================
-// ENUMS
-// ======================
+// ====================== ADMIN ======================
+model Admin {
+  id           String  @id @default(cuid())
+  name         String
+  email        String  @unique
+  passwordHash String // Hashed password
+  avatar       String?
+  phone        String?
+  role         Role    @default(SUPER_ADMIN)
 
-enum PaymentPurpose {
-  TICKET
-  CONTESTANT
+  emailVerified   Boolean   @default(false)
+  emailVerifiedAt DateTime?
+
+  lastLoginAt DateTime?
+  isActive    Boolean   @default(false)
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  refreshTokens RefreshToken[]
+
+  @@map("admins")
 }
 
-enum PaymentGateway {
-  PAYSTACK
-  OPAY
+enum Role {
+  ADMIN
+  SUPER_ADMIN
 }
 
-enum PaymentStatus {
-  PENDING
-  SUCCESS
-  FAILED
+// ====================== CONTESTANT ======================
+
+model ContestantTransaction {
+  id            String                 @id @default(cuid())
+  name          String
+  email         String
+  phoneNumber   String?
+  amount        Float?
+  reference     String                 @unique
+  paymentMethod String?
+  status        TransactionStatus @default(PENDING) //Pending Ones User Initiat Payment Then Update Once Payment is Approved from Payment Gateway
+  clamed        Boolean?               @default(false)
+  formSent     Boolean?               @default(false)
+
+  contestant Contestant?
+  eventId    String
+  event      Event       @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([reference])
 }
 
-enum FulfillmentStatus {
-  PENDING
-  PROCESSING
-  COMPLETED
-  FAILED
+model Contestant {
+  id String @id @default(cuid())
+
+  name   String
+  email  String @unique
+  gender Gender
+  number Int    @default(1)
+  status Status @default(PENDING)
+
+  image String?
+  phone String
+
+  age                     Int
+  state                   String
+  country                 String
+  occupation              String
+  advocacy                String
+  funFact                 String
+  tribe                   String
+  reference String @unique
+
+  isVerified Boolean @default(false)
+
+  stageName String?
+  height    Float?
+  weight    Float?
+  bio       String?
+  portfolio String?
+
+  score Float?
+  rank  Int?
+
+  eventId               String
+  event                 Event                 @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  contestantTransaction ContestantTransaction @relation(fields: [reference], references: [reference], onDelete: Cascade)
+  contestantCategories  ContestantCategories
+
+  votes Vote[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-enum TicketStatus {
-  PENDING
-  SENT
-  USED
+enum ContestantCategories {
+  MALE
+  FEMALE
 }
 
 enum Gender {
@@ -56,9 +124,27 @@ enum Status {
   INACTIVE
 }
 
-enum ContestantCategories {
-  MALE
-  FEMALE
+// ====================== EVENT / PAGEANT ======================
+model Event {
+  id            String      @id @default(cuid())
+  name          String
+  description   String
+  startDate     DateTime
+  endDate       DateTime
+  location      String
+  contestantFee Int
+  status        EventStatus @default(UPCOMING)
+  categories    String[]
+
+  ticketTransaction TicketTransaction[]
+  votes             Vote[]
+  sponsors          Sponsor[]
+  ticketTypes       TicketType[]
+
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+  contestants            Contestant[]
+  contestantTransactions ContestantTransaction[]
 }
 
 enum EventStatus {
@@ -68,177 +154,85 @@ enum EventStatus {
   CANCELLED
 }
 
-enum SponsorTier {
-  GOLD
-  SILVER
-  BRONZE
-}
-
-enum Role {
-  ADMIN
-  SUPER_ADMIN
-}
-
-// ======================
-// EVENT
-// ======================
-
-model Event {
-  id            String      @id @default(cuid())
-  name          String
-  description   String
-  startDate     DateTime
-  endDate       DateTime
-  location      String
-  contestantFee Decimal     @db.Decimal(12, 2)
-  status        EventStatus @default(UPCOMING)
-  categories    String[]
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-
-  ticketTypes         TicketType[]
-  tickets             Ticket[]
-  contestants         Contestant[]
-  paymentTransactions PaymentTransaction[]
-  votes               Vote[]
-  sponsors            Sponsor[]
-}
-
-// ======================
-// TICKET TYPE
-// ======================
-
 model TicketType {
-  id       String   @id @default(cuid())
-  name     String
-  price    Decimal  @db.Decimal(12, 2)
-  capacity Int?
-  benefits String[]
-  eventId  String
-  event    Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  tickets  Ticket[]
-}
-
-// ======================
-// PAYMENT TRANSACTION (SINGLE SOURCE OF TRUTH)
-// ======================
-
-model PaymentTransaction {
-  id                String            @id @default(cuid())
-  reference         String            @unique
-  purpose           PaymentPurpose
-  gateway           PaymentGateway
-  gatewayReference  String?
-  amount            Decimal           @db.Decimal(12, 2)
-  currency          String            @default("NGN")
-  status            PaymentStatus     @default(PENDING)
-  fulfillmentStatus FulfillmentStatus @default(PENDING)
-  email             String
-  phoneNumber       String?
-  name              String?
+  id                String              @id @default(cuid())
+  name              String
+  price             Float
+  capacity          Int?
+  benefits          String[]
   eventId           String
-  ticketTypeId      String?
-  quantity          Int?
-  metadata          Json?
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-
-  event      Event       @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  tickets    Ticket[]
-  contestant Contestant?
-
-  @@index([email])
-  @@index([eventId])
-  @@index([status])
-  @@index([purpose])
+  event             Event               @relation(fields: [eventId], references: [id])
+  ticketTransaction TicketTransaction[]
 }
-
-// ======================
-// TICKET (fulfillment only)
-// ======================
-
-model Ticket {
-  id                   String             @id @default(cuid())
-  reference            String
-  status               TicketStatus       @default(PENDING)
-  paymentTransactionId String
-  paymentTransaction   PaymentTransaction @relation(fields: [paymentTransactionId], references: [id], onDelete: Cascade)
-  ticket               String             @unique
-  ticketTypeId         String
-  ticketType           TicketType         @relation(fields: [ticketTypeId], references: [id])
-  eventId              String
-  event                Event              @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  createdAt            DateTime           @default(now())
-  updatedAt            DateTime           @updatedAt
-
-  @@unique([paymentTransactionId, reference]) // real protection
-  @@index([paymentTransactionId])
-  @@index([eventId])
-  @@index([reference])
-}
-
-// ======================
-// CONTESTANT (fulfillment only)
-// ======================
-
-model Contestant {
-  id                   String                @id @default(cuid())
-  name                 String
-  email                String
-  gender               Gender
-  number               Int                   @default(1)
-  status               Status                @default(PENDING)
-  image                String?
-  phone                String
-  age                  Int?
-  state                String?
-  country              String?
-  occupation           String?
-  advocacy             String?
-  funFact              String?
-  tribe                String?
-  reference            String                @unique // same as PaymentTransaction.reference
-  isVerified           Boolean               @default(false)
-  stageName            String?
-  height               Float?
-  weight               Float?
-  bio                  String?
-  portfolio            String?
-  score                Float?
-  rank                 Int?
-  eventId              String
-  event                Event                 @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  paymentTransactionId String                @unique
-  paymentTransaction   PaymentTransaction    @relation(fields: [paymentTransactionId], references: [id], onDelete: Cascade)
-  contestantCategories ContestantCategories?
-  votes                Vote[]
-  createdAt            DateTime              @default(now())
-  updatedAt            DateTime              @updatedAt
-
-  @@index([email])
-  @@index([reference])
-  @@index([eventId])
-}
-
-// ======================
-// VOTE
-// ======================
 
 model Vote {
-  id           String     @id @default(cuid())
+  id           String @id @default(cuid())
   contestantId String
   eventId      String
   count        Int
-  contestant   Contestant @relation(fields: [contestantId], references: [id], onDelete: Cascade)
-  event        Event      @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  createdAt    DateTime   @default(now())
+
+  contestant Contestant @relation(fields: [contestantId], references: [id])
+  event      Event      @relation(fields: [eventId], references: [id])
+
+  createdAt DateTime @default(now())
 
   @@unique([contestantId, eventId])
 }
 
-// ======================
-// SPONSOR
-// ======================
+// ====================== TICKETS & SPONSORS ======================
+model TicketTransaction {
+  id            String                 @id @default(cuid())
+  name          String
+  email         String
+  phoneNumber   String?
+  eventId       String
+  ticketTypeId  String
+  amount        Float?
+  quantity      Int                    @default(1)
+  total         Float
+  reference     String                 @unique
+  paymentMethod String?
+  status        TransactionStatus @default(PENDING) //Pending Ones User Initiat Payment Then Update Once Payment is Approved from Payment Gateway
+  clamed        Boolean?               @default(false)
+
+  tickets Ticket[]
+
+  tickettype TicketType @relation(fields: [ticketTypeId], references: [id])
+  event      Event      @relation(fields: [eventId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([eventId])
+  @@index([reference])
+}
+
+enum TransactionStatus {
+  ABANDONED
+  FAILED
+  ONGOING
+  PENDING
+  PROCESSING
+  QUEUED
+  REVERSED
+  SUCCESS
+  USED
+}
+
+model Ticket {
+  id                  String            @id @default(cuid())
+  reference           String
+  status              TicketStatus      @default(PENDING)
+  ticketTransactionId String
+  ticketTransaction   TicketTransaction @relation(fields: [ticketTransactionId], references: [id])
+}
+
+enum TicketStatus {
+  PENDING
+  SEND
+  USED
+}
 
 model Sponsor {
   id          String      @id @default(cuid())
@@ -247,36 +241,31 @@ model Sponsor {
   website     String?
   description String?
   tier        SponsorTier
-  eventId     String
-  event       Event       @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  createdAt   DateTime    @default(now())
+
+  eventId String
+  event   Event  @relation(fields: [eventId], references: [id])
+
+  createdAt DateTime @default(now())
 
   @@index([eventId])
 }
 
-// ======================
-// ADMIN + AUTH (unchanged)
-// ======================
-
-model Admin {
-  id              String         @id @default(cuid())
-  name            String
-  email           String         @unique
-  passwordHash    String
-  avatar          String?
-  phone           String?
-  role            Role           @default(SUPER_ADMIN)
-  emailVerified   Boolean        @default(false)
-  emailVerifiedAt DateTime?
-  lastLoginAt     DateTime?
-  isActive        Boolean        @default(false)
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  refreshTokens   RefreshToken[]
-
-  @@map("admins")
+enum SponsorTier {
+  GOLD
+  SILVER
+  BRONZE
 }
 
+// ====================== SUBSCRIPTION ======================
+model Subscription {
+  id           String   @id @default(cuid())
+  email        String
+  subscribedAt DateTime @default(now())
+
+  @@unique([email])
+}
+
+// ====================== RefreshToken ======================
 model RefreshToken {
   id        String   @id @default(uuid())
   token     String   @unique
@@ -287,26 +276,4 @@ model RefreshToken {
   admin     Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
 
   @@map("refresh_tokens")
-}
-
-model Subscription {
-  id           String   @id @default(cuid())
-  email        String
-  subscribedAt DateTime @default(now())
-
-  @@unique([email])
-}
-
-model IdempotencyKey {
-  id         String   @id @default(cuid())
-  key        String   @unique
-  method     String
-  path       String
-  statusCode Int      @default(0) // 0 = pending
-  response   Json?
-  createdAt  DateTime @default(now())
-  expiresAt  DateTime
-
-  @@index([expiresAt])
-  @@map("idempotency_keys")
 }
