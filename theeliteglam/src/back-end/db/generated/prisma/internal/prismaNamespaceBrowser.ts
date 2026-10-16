@@ -55,6 +55,7 @@ export const ModelName = {
   ContestantTransaction: 'ContestantTransaction',
   Contestant: 'Contestant',
   Event: 'Event',
+  EventItineraryDay: 'EventItineraryDay',
   TicketType: 'TicketType',
   Vote: 'Vote',
   TicketTransaction: 'TicketTransaction',
@@ -163,6 +164,12 @@ export const EventScalarFieldEnum = {
   contestantFee: 'contestantFee',
   status: 'status',
   categories: 'categories',
+  registrationOpenDate: 'registrationOpenDate',
+  registrationCloseDate: 'registrationCloseDate',
+  auditionsDate: 'auditionsDate',
+  preliminaryDate: 'preliminaryDate',
+  grandFinaleDate: 'grandFinaleDate',
+  itineraryTitle: 'itineraryTitle',
   isRegistrationOpen: 'isRegistrationOpen',
   isTicketsOpen: 'isTicketsOpen',
   isVotingOpen: 'isVotingOpen',
@@ -172,6 +179,20 @@ export const EventScalarFieldEnum = {
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+export const EventItineraryDayScalarFieldEnum = {
+  id: 'id',
+  dayNumber: 'dayNumber',
+  title: 'title',
+  date: 'date',
+  schedule: 'schedule',
+  eventId: 'eventId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EventItineraryDayScalarFieldEnum = (typeof EventItineraryDayScalarFieldEnum)[keyof typeof EventItineraryDayScalarFieldEnum]
 
 
 export const TicketTypeScalarFieldEnum = {
@@ -285,6 +306,13 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const NullableJsonNullValueInput = {
