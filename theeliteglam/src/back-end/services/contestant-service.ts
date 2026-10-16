@@ -30,6 +30,12 @@ export class ContestantService {
 
       const contestant = await contestantModel.create(validation.data);
 
+      if (validation.data.reference) {
+        await contestantTransactionRepo.update(validation.data.reference, {
+          formSent: true, 
+        });
+      }
+
       return {
         success: true,
         message: "Contestant created successfully",
@@ -151,7 +157,7 @@ export class ContestantService {
     }
   }
 
-  async sentContestantFormLink(reference: string) {
+  async resendContestantFormLink(reference: string) {
     try {
       // 1. Validate reference
       const validation = referenceSchema.safeParse({ id: reference });
@@ -183,17 +189,25 @@ export class ContestantService {
         };
       }
 
+      if (contestantTransaction.status !== "SUCCESS") {
+      return {
+        success: false,
+        error: "Payment has not been completed or verified yet.",
+        status: 400,
+      };
+    }
+
       // 4. Generate the form link
       const formLink = `${process.env.NEXT_PUBLIC_BASE_URL}/contestant/form?reference=${contestantTransaction.reference}`;
 
       // 5. Send email
       const emailResult = await sendEmail(contestantTransaction.email, {
-        type: "contestant-form", // Make sure this email type exists
+        type: "contestant-form",
         props: {
           firstName: contestantTransaction.name.split(" ")[0] || contestantTransaction.name,
           formLink,
           reference: contestantTransaction.reference,
-          eventName: "Handcrafted Haven Workshop", // Replace with real event name later
+          eventName: "The Elite Glam Pageant Season 2", 
         },
       });
 
@@ -218,7 +232,7 @@ export class ContestantService {
         status: 500,
       };
     } catch (error: any) {
-      console.error("[ContestantService.sentContestantFormLink]", error);
+      console.error("[ContestantService.resendContestantFormLink]", error);
 
       return {
         success: false,

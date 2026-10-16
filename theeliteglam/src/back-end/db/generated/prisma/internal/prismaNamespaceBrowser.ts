@@ -110,7 +110,7 @@ export const ContestantTransactionScalarFieldEnum = {
   reference: 'reference',
   paymentMethod: 'paymentMethod',
   status: 'status',
-  clamed: 'clamed',
+  claimed: 'claimed',
   formSent: 'formSent',
   eventId: 'eventId',
   createdAt: 'createdAt',

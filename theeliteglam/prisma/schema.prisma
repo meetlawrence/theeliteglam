@@ -50,8 +50,8 @@ model ContestantTransaction {
   amount        Float?
   reference     String                 @unique
   paymentMethod String?
-  status        TransactionStatus @default(PENDING) //Pending Ones User Initiat Payment Then Update Once Payment is Approved from Payment Gateway
-  clamed        Boolean?               @default(false)
+  status        TransactionStatus @default(PENDING) //Pending Ones User Initiate Payment Then Update Once Payment is Approved from Payment Gateway
+  claimed        Boolean?               @default(false)
   formSent     Boolean?               @default(false)
 
   contestant Contestant?
