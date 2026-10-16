@@ -126,23 +126,34 @@ enum Status {
 
 // ====================== EVENT / PAGEANT ======================
 model Event {
-  id              String      @id @default(cuid())
-  name            String
-  description     String
-  startDate       DateTime
-  endDate         DateTime
-  location        String
-  contestantFee   Int
-  status          EventStatus @default(UPCOMING)
-  categories      String[]
+  id             String      @id @default(cuid())
+  name           String
+  description    String
+  startDate      DateTime
+  endDate        DateTime
+  location       String
+  contestantFee  Int
+  status         EventStatus @default(UPCOMING)
+  categories     String[]
+
+  // --- CRITICAL DATES ---
+  registrationOpenDate  DateTime?
+  registrationCloseDate DateTime?
+  auditionsDate         DateTime?
+  preliminaryDate       DateTime?
+  grandFinaleDate       DateTime?
+
+  // --- ITINERARY SECTION CUSTOMIZATION ---
+  itineraryTitle        String?   @default("FOUR DAYS OF EXCELLENCE") // e.g. "FOUR DAYS OF EXCELLENCE"
 
   // --- DASHBOARD CONTROLS ---
-  isRegistrationOpen    Boolean   @default(false) 
-  isTicketsOpen         Boolean   @default(false) 
-  isVotingOpen          Boolean   @default(false) 
-  isContestantsVisible  Boolean   @default(false) 
+  isRegistrationOpen   Boolean   @default(false) 
+  isTicketsOpen        Boolean   @default(false) 
+  isVotingOpen         Boolean   @default(false) 
+  isContestantsVisible Boolean   @default(false) 
 
-  // Relations
+  // --- RELATIONS ---
+  itineraryDays          EventItineraryDay[]
   ticketTransaction      TicketTransaction[]
   votes                  Vote[]
   sponsors               Sponsor[]
@@ -152,6 +163,26 @@ model Event {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// --- EVENT ITINERARY MODEL ---
+model EventItineraryDay {
+  id          String   @id @default(cuid())
+  dayNumber   Int      // e.g., 1, 2, 3, 4
+  title       String   // e.g., "ARRIVAL & WELCOME RECEPTION"
+  date        DateTime // e.g., 2027-05-17
+  
+  // Store array of schedule objects: [{ time: "10:00 AM", title: "Contestant Check-In & Accreditation" }]
+  schedule    Json     
+
+  eventId     String
+  event       Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([eventId, dayNumber])
+  @@map("event_itinerary_days")
 }
 
 enum EventStatus {

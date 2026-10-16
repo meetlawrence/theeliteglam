@@ -4,25 +4,44 @@ import { prisma } from "../src/back-end/db/db-connect";
 async function main() {
   const sampleEndDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
 
+  // 1. UPSERT EVENT WITH ALL CRITICAL DATES & ITINERARY TITLE
   await prisma.event.upsert({
     where: { id: "evt_sample_1" },
     update: {
+      contestantFee: 25000,
       isRegistrationOpen: true,
       isTicketsOpen: false,
       isVotingOpen: false,
       isContestantsVisible: false,
+      registrationOpenDate: new Date("2027-01-15"),
+      registrationCloseDate: new Date("2027-03-31"),
+      auditionsDate: new Date("2027-04-10"),
+      preliminaryDate: new Date("2027-05-01"),
+      grandFinaleDate: new Date("2027-05-20"),
+      itineraryTitle: "FOUR DAYS OF EXCELLENCE",
     },
     create: {
       id: "evt_sample_1",
       name: "Annual National Pageant 2026",
       description: "A national beauty and advocacy pageant.",
-      startDate: new Date(),
+      startDate: new Date("2027-05-17"),
       endDate: sampleEndDate,
       location: "Lagos, Nigeria",
-      contestantFee: 50000,
+      contestantFee: 25000,
       status: "UPCOMING",
       categories: ["MALE", "FEMALE"],
 
+      // Critical Dates
+      registrationOpenDate: new Date("2027-01-15"),
+      registrationCloseDate: new Date("2027-03-31"),
+      auditionsDate: new Date("2027-04-10"),
+      preliminaryDate: new Date("2027-05-01"),
+      grandFinaleDate: new Date("2027-05-20"),
+
+      // Itinerary Custom Title
+      itineraryTitle: "FOUR DAYS OF EXCELLENCE",
+
+      // Dashboard Controls
       isRegistrationOpen: true,
       isTicketsOpen: false,
       isVotingOpen: false,
@@ -30,29 +49,98 @@ async function main() {
     },
   });
 
+  // 2. SEED ITINERARY DAYS
+  const itineraryDays = [
+    {
+      dayNumber: 1,
+      title: "ARRIVAL & WELCOME RECEPTION",
+      date: new Date("2027-05-17"),
+      schedule: [
+        { time: "10:00 AM", title: "CONTESTANT CHECK-IN & ACCREDITATION" },
+        { time: "2:00 PM", title: "ORIENTATION & BRAND PRESENTATION" },
+        { time: "6:00 PM", title: "WELCOME GALA DINNER (BLACK TIE)" },
+      ],
+    },
+    {
+      dayNumber: 2,
+      title: "REHEARSALS & MEDIA DAY",
+      date: new Date("2027-05-18"),
+      schedule: [
+        { time: "09:00 AM", title: "RUNWAY & CHOREOGRAPHY DRILLS" },
+        { time: "01:00 PM", title: "SPONSOR PHOTO SHOOT" },
+        { time: "04:00 PM", title: "PRESS CONFERENCE & INTERVIEWS" },
+      ],
+    },
+    {
+      dayNumber: 3,
+      title: "PRELIMINARY COMPETITION",
+      date: new Date("2027-05-19"),
+      schedule: [
+        { time: "10:00 AM", title: "JUDGES INTERVIEW ROUND" },
+        { time: "03:00 PM", title: "NATIONAL COSTUME & TALENT DISPLAY" },
+        { time: "07:00 PM", title: "PRELIMINARY EVENING GOWN SHOWCASE" },
+      ],
+    },
+    {
+      dayNumber: 4,
+      title: "GRAND FINALE & CORONATION",
+      date: new Date("2027-05-20"),
+      schedule: [
+        { time: "11:00 AM", title: "FINAL DRESS REHEARSAL" },
+        { time: "05:00 PM", title: "RED CARPET & VIP ARRIVALS" },
+        { time: "07:00 PM", title: "GRAND FINALE & CROWNING CEREMONY" },
+      ],
+    },
+  ];
+
+  for (const day of itineraryDays) {
+    await prisma.eventItineraryDay.upsert({
+      where: {
+        eventId_dayNumber: {
+          eventId: "evt_sample_1",
+          dayNumber: day.dayNumber,
+        },
+      },
+      update: {
+        title: day.title,
+        date: day.date,
+        schedule: day.schedule,
+      },
+      create: {
+        eventId: "evt_sample_1",
+        dayNumber: day.dayNumber,
+        title: day.title,
+        date: day.date,
+        schedule: day.schedule,
+      },
+    });
+  }
+
+  // 3. CONTESTANT TRANSACTIONS (Updated amount to 25000)
   const transactions = [
-    { id: "tx_01", name: "Amina Bello", email: "amina.bello@example.com", phoneNumber: "+2348011111111", amount: 50000, reference: "REF-CONTESTANT-01", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
-    { id: "tx_02", name: "Chinedu Okafor", email: "chinedu.o@example.com", phoneNumber: "+2348022222222", amount: 50000, reference: "REF-CONTESTANT-02", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
-    { id: "tx_03", name: "Fatima Danladi", email: "fatima.d@example.com", phoneNumber: "+2348033333333", amount: 50000, reference: "REF-CONTESTANT-03", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
-    { id: "tx_04", name: "David Adeleke", email: "david.a@example.com", phoneNumber: "+2348044444444", amount: 50000, reference: "REF-CONTESTANT-04", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
-    { id: "tx_05", name: "Grace Eze", email: "grace.e@example.com", phoneNumber: "+2348055555555", amount: 50000, reference: "REF-CONTESTANT-05", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
-    { id: "tx_06", name: "Ibrahim Musa", email: "ibrahim.m@example.com", phoneNumber: "+2348066666666", amount: 50000, reference: "REF-CONTESTANT-06", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
-    { id: "tx_07", name: "Blessing Johnson", email: "blessing.j@example.com", phoneNumber: "+2348077777777", amount: 50000, reference: "REF-CONTESTANT-07", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
-    { id: "tx_08", name: "Tariq Bello", email: "tariq.b@example.com", phoneNumber: "+2348088888888", amount: 50000, reference: "REF-CONTESTANT-08", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
-    { id: "tx_09", name: "Nneka Okoro", email: "nneka.o@example.com", phoneNumber: "+2348099999999", amount: 50000, reference: "REF-CONTESTANT-09", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
-    { id: "tx_10", name: "Yusuf Ahmed", email: "yusuf.a@example.com", phoneNumber: "+2348100000000", amount: 50000, reference: "REF-CONTESTANT-10", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
-    { id: "tx_11", name: "Oluwaseun Adeyemi", email: "oluwaseun.a@example.com", phoneNumber: "+2348111111111", amount: 50000, reference: "REF-CONTESTANT-11", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
-    { id: "tx_12", name: "Zainab Mohammed", email: "zainab.m@example.com", phoneNumber: "+2348122222222", amount: 50000, reference: "REF-CONTESTANT-12", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_01", name: "Amina Bello", email: "amina.bello@example.com", phoneNumber: "+2348011111111", amount: 25000, reference: "REF-CONTESTANT-01", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_02", name: "Chinedu Okafor", email: "chinedu.o@example.com", phoneNumber: "+2348022222222", amount: 25000, reference: "REF-CONTESTANT-02", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_03", name: "Fatima Danladi", email: "fatima.d@example.com", phoneNumber: "+2348033333333", amount: 25000, reference: "REF-CONTESTANT-03", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_04", name: "David Adeleke", email: "david.a@example.com", phoneNumber: "+2348044444444", amount: 25000, reference: "REF-CONTESTANT-04", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_05", name: "Grace Eze", email: "grace.e@example.com", phoneNumber: "+2348055555555", amount: 25000, reference: "REF-CONTESTANT-05", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_06", name: "Ibrahim Musa", email: "ibrahim.m@example.com", phoneNumber: "+2348066666666", amount: 25000, reference: "REF-CONTESTANT-06", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_07", name: "Blessing Johnson", email: "blessing.j@example.com", phoneNumber: "+2348077777777", amount: 25000, reference: "REF-CONTESTANT-07", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_08", name: "Tariq Bello", email: "tariq.b@example.com", phoneNumber: "+2348088888888", amount: 25000, reference: "REF-CONTESTANT-08", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_09", name: "Nneka Okoro", email: "nneka.o@example.com", phoneNumber: "+2348099999999", amount: 25000, reference: "REF-CONTESTANT-09", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_10", name: "Yusuf Ahmed", email: "yusuf.a@example.com", phoneNumber: "+2348100000000", amount: 25000, reference: "REF-CONTESTANT-10", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_11", name: "Oluwaseun Adeyemi", email: "oluwaseun.a@example.com", phoneNumber: "+2348111111111", amount: 25000, reference: "REF-CONTESTANT-11", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_12", name: "Zainab Mohammed", email: "zainab.m@example.com", phoneNumber: "+2348122222222", amount: 25000, reference: "REF-CONTESTANT-12", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
   ];
 
   for (const tx of transactions) {
     await prisma.contestantTransaction.upsert({
       where: { reference: tx.reference },
-      update: {},
+      update: { amount: 25000 },
       create: tx,
     });
   }
 
+  // 4. CONTESTANTS
   const contestants = [
     { id: "cnt_01", name: "Amina Bello", email: "amina.bello@example.com", gender: "FEMALE" as const, number: 1, status: "PENDING" as const, image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80", phone: "+2348011111111", age: 22, state: "Lagos", country: "Nigeria", occupation: "Model", advocacy: "Education for all", funFact: "I love painting landscapes.", tribe: "Yoruba", reference: "REF-CONTESTANT-01", isVerified: false, stageName: "Amina B", height: 1.75, weight: 58.5, bio: "Passionate about youth development.", eventId: "evt_sample_1", contestantCategories: "FEMALE" as const },
     { id: "cnt_02", name: "Chinedu Okafor", email: "chinedu.o@example.com", gender: "MALE" as const, number: 2, status: "PENDING" as const, image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80", phone: "+2348022222222", age: 25, state: "Anambra", country: "Nigeria", occupation: "Software Engineer", advocacy: "Tech literacy in rural areas", funFact: "I play the saxophone.", tribe: "Igbo", reference: "REF-CONTESTANT-02", isVerified: false, stageName: "Chinedu O", height: 1.85, weight: 76.0, bio: "Tech enthusiast and fitness lover.", eventId: "evt_sample_1", contestantCategories: "MALE" as const },
@@ -75,6 +163,8 @@ async function main() {
       create: contestant,
     });
   }
+
+  console.log("Database seeded successfully with updated event details and itinerary!");
 }
 
 main()
