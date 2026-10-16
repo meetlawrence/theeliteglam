@@ -72,3 +72,8 @@ export type Subscription = Prisma.SubscriptionModel
  * 
  */
 export type RefreshToken = Prisma.RefreshTokenModel
+/**
+ * Model IdempotencyKey
+ * 
+ */
+export type IdempotencyKey = Prisma.IdempotencyKeyModel

@@ -43,6 +43,10 @@ export type EventMinAggregateOutputType = {
   location: string | null
   contestantFee: number | null
   status: $Enums.EventStatus | null
+  isRegistrationOpen: boolean | null
+  isTicketsOpen: boolean | null
+  isVotingOpen: boolean | null
+  isContestantsVisible: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +60,10 @@ export type EventMaxAggregateOutputType = {
   location: string | null
   contestantFee: number | null
   status: $Enums.EventStatus | null
+  isRegistrationOpen: boolean | null
+  isTicketsOpen: boolean | null
+  isVotingOpen: boolean | null
+  isContestantsVisible: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -70,6 +78,10 @@ export type EventCountAggregateOutputType = {
   contestantFee: number
   status: number
   categories: number
+  isRegistrationOpen: number
+  isTicketsOpen: number
+  isVotingOpen: number
+  isContestantsVisible: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -93,6 +105,10 @@ export type EventMinAggregateInputType = {
   location?: true
   contestantFee?: true
   status?: true
+  isRegistrationOpen?: true
+  isTicketsOpen?: true
+  isVotingOpen?: true
+  isContestantsVisible?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -106,6 +122,10 @@ export type EventMaxAggregateInputType = {
   location?: true
   contestantFee?: true
   status?: true
+  isRegistrationOpen?: true
+  isTicketsOpen?: true
+  isVotingOpen?: true
+  isContestantsVisible?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -120,6 +140,10 @@ export type EventCountAggregateInputType = {
   contestantFee?: true
   status?: true
   categories?: true
+  isRegistrationOpen?: true
+  isTicketsOpen?: true
+  isVotingOpen?: true
+  isContestantsVisible?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -221,6 +245,10 @@ export type EventGroupByOutputType = {
   contestantFee: number
   status: $Enums.EventStatus
   categories: string[]
+  isRegistrationOpen: boolean
+  isTicketsOpen: boolean
+  isVotingOpen: boolean
+  isContestantsVisible: boolean
   createdAt: Date
   updatedAt: Date
   _count: EventCountAggregateOutputType | null
@@ -258,6 +286,10 @@ export type EventWhereInput = {
   contestantFee?: Prisma.IntFilter<"Event"> | number
   status?: Prisma.EnumEventStatusFilter<"Event"> | $Enums.EventStatus
   categories?: Prisma.StringNullableListFilter<"Event">
+  isRegistrationOpen?: Prisma.BoolFilter<"Event"> | boolean
+  isTicketsOpen?: Prisma.BoolFilter<"Event"> | boolean
+  isVotingOpen?: Prisma.BoolFilter<"Event"> | boolean
+  isContestantsVisible?: Prisma.BoolFilter<"Event"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   ticketTransaction?: Prisma.TicketTransactionListRelationFilter
@@ -278,6 +310,10 @@ export type EventOrderByWithRelationInput = {
   contestantFee?: Prisma.SortOrder
   status?: Prisma.SortOrder
   categories?: Prisma.SortOrder
+  isRegistrationOpen?: Prisma.SortOrder
+  isTicketsOpen?: Prisma.SortOrder
+  isVotingOpen?: Prisma.SortOrder
+  isContestantsVisible?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   ticketTransaction?: Prisma.TicketTransactionOrderByRelationAggregateInput
@@ -301,6 +337,10 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
   contestantFee?: Prisma.IntFilter<"Event"> | number
   status?: Prisma.EnumEventStatusFilter<"Event"> | $Enums.EventStatus
   categories?: Prisma.StringNullableListFilter<"Event">
+  isRegistrationOpen?: Prisma.BoolFilter<"Event"> | boolean
+  isTicketsOpen?: Prisma.BoolFilter<"Event"> | boolean
+  isVotingOpen?: Prisma.BoolFilter<"Event"> | boolean
+  isContestantsVisible?: Prisma.BoolFilter<"Event"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   ticketTransaction?: Prisma.TicketTransactionListRelationFilter
@@ -321,6 +361,10 @@ export type EventOrderByWithAggregationInput = {
   contestantFee?: Prisma.SortOrder
   status?: Prisma.SortOrder
   categories?: Prisma.SortOrder
+  isRegistrationOpen?: Prisma.SortOrder
+  isTicketsOpen?: Prisma.SortOrder
+  isVotingOpen?: Prisma.SortOrder
+  isContestantsVisible?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.EventCountOrderByAggregateInput
@@ -343,6 +387,10 @@ export type EventScalarWhereWithAggregatesInput = {
   contestantFee?: Prisma.IntWithAggregatesFilter<"Event"> | number
   status?: Prisma.EnumEventStatusWithAggregatesFilter<"Event"> | $Enums.EventStatus
   categories?: Prisma.StringNullableListFilter<"Event">
+  isRegistrationOpen?: Prisma.BoolWithAggregatesFilter<"Event"> | boolean
+  isTicketsOpen?: Prisma.BoolWithAggregatesFilter<"Event"> | boolean
+  isVotingOpen?: Prisma.BoolWithAggregatesFilter<"Event"> | boolean
+  isContestantsVisible?: Prisma.BoolWithAggregatesFilter<"Event"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
 }
@@ -357,6 +405,10 @@ export type EventCreateInput = {
   contestantFee: number
   status?: $Enums.EventStatus
   categories?: Prisma.EventCreatecategoriesInput | string[]
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   ticketTransaction?: Prisma.TicketTransactionCreateNestedManyWithoutEventInput
@@ -377,6 +429,10 @@ export type EventUncheckedCreateInput = {
   contestantFee: number
   status?: $Enums.EventStatus
   categories?: Prisma.EventCreatecategoriesInput | string[]
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   ticketTransaction?: Prisma.TicketTransactionUncheckedCreateNestedManyWithoutEventInput
@@ -397,6 +453,10 @@ export type EventUpdateInput = {
   contestantFee?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   categories?: Prisma.EventUpdatecategoriesInput | string[]
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTicketsOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVotingOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isContestantsVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ticketTransaction?: Prisma.TicketTransactionUpdateManyWithoutEventNestedInput
@@ -417,6 +477,10 @@ export type EventUncheckedUpdateInput = {
   contestantFee?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   categories?: Prisma.EventUpdatecategoriesInput | string[]
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTicketsOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVotingOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isContestantsVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ticketTransaction?: Prisma.TicketTransactionUncheckedUpdateManyWithoutEventNestedInput
@@ -437,6 +501,10 @@ export type EventCreateManyInput = {
   contestantFee: number
   status?: $Enums.EventStatus
   categories?: Prisma.EventCreatecategoriesInput | string[]
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -451,6 +519,10 @@ export type EventUpdateManyMutationInput = {
   contestantFee?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   categories?: Prisma.EventUpdatecategoriesInput | string[]
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTicketsOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVotingOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isContestantsVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -465,6 +537,10 @@ export type EventUncheckedUpdateManyInput = {
   contestantFee?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   categories?: Prisma.EventUpdatecategoriesInput | string[]
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTicketsOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVotingOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isContestantsVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -492,6 +568,10 @@ export type EventCountOrderByAggregateInput = {
   contestantFee?: Prisma.SortOrder
   status?: Prisma.SortOrder
   categories?: Prisma.SortOrder
+  isRegistrationOpen?: Prisma.SortOrder
+  isTicketsOpen?: Prisma.SortOrder
+  isVotingOpen?: Prisma.SortOrder
+  isContestantsVisible?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -509,6 +589,10 @@ export type EventMaxOrderByAggregateInput = {
   location?: Prisma.SortOrder
   contestantFee?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isRegistrationOpen?: Prisma.SortOrder
+  isTicketsOpen?: Prisma.SortOrder
+  isVotingOpen?: Prisma.SortOrder
+  isContestantsVisible?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -522,6 +606,10 @@ export type EventMinOrderByAggregateInput = {
   location?: Prisma.SortOrder
   contestantFee?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isRegistrationOpen?: Prisma.SortOrder
+  isTicketsOpen?: Prisma.SortOrder
+  isVotingOpen?: Prisma.SortOrder
+  isContestantsVisible?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -637,6 +725,10 @@ export type EventCreateWithoutContestantTransactionsInput = {
   contestantFee: number
   status?: $Enums.EventStatus
   categories?: Prisma.EventCreatecategoriesInput | string[]
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   ticketTransaction?: Prisma.TicketTransactionCreateNestedManyWithoutEventInput
@@ -656,6 +748,10 @@ export type EventUncheckedCreateWithoutContestantTransactionsInput = {
   contestantFee: number
   status?: $Enums.EventStatus
   categories?: Prisma.EventCreatecategoriesInput | string[]
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   ticketTransaction?: Prisma.TicketTransactionUncheckedCreateNestedManyWithoutEventInput
@@ -691,6 +787,10 @@ export type EventUpdateWithoutContestantTransactionsInput = {
   contestantFee?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   categories?: Prisma.EventUpdatecategoriesInput | string[]
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTicketsOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVotingOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isContestantsVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ticketTransaction?: Prisma.TicketTransactionUpdateManyWithoutEventNestedInput
@@ -710,6 +810,10 @@ export type EventUncheckedUpdateWithoutContestantTransactionsInput = {
   contestantFee?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   categories?: Prisma.EventUpdatecategoriesInput | string[]
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTicketsOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVotingOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isContestantsVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ticketTransaction?: Prisma.TicketTransactionUncheckedUpdateManyWithoutEventNestedInput
@@ -729,6 +833,10 @@ export type EventCreateWithoutContestantsInput = {
   contestantFee: number
   status?: $Enums.EventStatus
   categories?: Prisma.EventCreatecategoriesInput | string[]
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   ticketTransaction?: Prisma.TicketTransactionCreateNestedManyWithoutEventInput
@@ -748,6 +856,10 @@ export type EventUncheckedCreateWithoutContestantsInput = {
   contestantFee: number
   status?: $Enums.EventStatus
   categories?: Prisma.EventCreatecategoriesInput | string[]
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   ticketTransaction?: Prisma.TicketTransactionUncheckedCreateNestedManyWithoutEventInput
@@ -783,6 +895,10 @@ export type EventUpdateWithoutContestantsInput = {
   contestantFee?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   categories?: Prisma.EventUpdatecategoriesInput | string[]
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTicketsOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVotingOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isContestantsVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ticketTransaction?: Prisma.TicketTransactionUpdateManyWithoutEventNestedInput
@@ -802,6 +918,10 @@ export type EventUncheckedUpdateWithoutContestantsInput = {
   contestantFee?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   categories?: Prisma.EventUpdatecategoriesInput | string[]
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTicketsOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVotingOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isContestantsVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ticketTransaction?: Prisma.TicketTransactionUncheckedUpdateManyWithoutEventNestedInput
@@ -821,6 +941,10 @@ export type EventCreateWithoutTicketTypesInput = {
   contestantFee: number
   status?: $Enums.EventStatus
   categories?: Prisma.EventCreatecategoriesInput | string[]
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   ticketTransaction?: Prisma.TicketTransactionCreateNestedManyWithoutEventInput
@@ -840,6 +964,10 @@ export type EventUncheckedCreateWithoutTicketTypesInput = {
   contestantFee: number
   status?: $Enums.EventStatus
   categories?: Prisma.EventCreatecategoriesInput | string[]
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   ticketTransaction?: Prisma.TicketTransactionUncheckedCreateNestedManyWithoutEventInput
@@ -875,6 +1003,10 @@ export type EventUpdateWithoutTicketTypesInput = {
   contestantFee?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   categories?: Prisma.EventUpdatecategoriesInput | string[]
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTicketsOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVotingOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isContestantsVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ticketTransaction?: Prisma.TicketTransactionUpdateManyWithoutEventNestedInput
@@ -894,6 +1026,10 @@ export type EventUncheckedUpdateWithoutTicketTypesInput = {
   contestantFee?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   categories?: Prisma.EventUpdatecategoriesInput | string[]
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTicketsOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVotingOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isContestantsVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ticketTransaction?: Prisma.TicketTransactionUncheckedUpdateManyWithoutEventNestedInput
@@ -913,6 +1049,10 @@ export type EventCreateWithoutVotesInput = {
   contestantFee: number
   status?: $Enums.EventStatus
   categories?: Prisma.EventCreatecategoriesInput | string[]
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   ticketTransaction?: Prisma.TicketTransactionCreateNestedManyWithoutEventInput
@@ -932,6 +1072,10 @@ export type EventUncheckedCreateWithoutVotesInput = {
   contestantFee: number
   status?: $Enums.EventStatus
   categories?: Prisma.EventCreatecategoriesInput | string[]
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   ticketTransaction?: Prisma.TicketTransactionUncheckedCreateNestedManyWithoutEventInput
@@ -967,6 +1111,10 @@ export type EventUpdateWithoutVotesInput = {
   contestantFee?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   categories?: Prisma.EventUpdatecategoriesInput | string[]
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTicketsOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVotingOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isContestantsVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ticketTransaction?: Prisma.TicketTransactionUpdateManyWithoutEventNestedInput
@@ -986,6 +1134,10 @@ export type EventUncheckedUpdateWithoutVotesInput = {
   contestantFee?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   categories?: Prisma.EventUpdatecategoriesInput | string[]
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTicketsOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVotingOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isContestantsVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ticketTransaction?: Prisma.TicketTransactionUncheckedUpdateManyWithoutEventNestedInput
@@ -1005,6 +1157,10 @@ export type EventCreateWithoutTicketTransactionInput = {
   contestantFee: number
   status?: $Enums.EventStatus
   categories?: Prisma.EventCreatecategoriesInput | string[]
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   votes?: Prisma.VoteCreateNestedManyWithoutEventInput
@@ -1024,6 +1180,10 @@ export type EventUncheckedCreateWithoutTicketTransactionInput = {
   contestantFee: number
   status?: $Enums.EventStatus
   categories?: Prisma.EventCreatecategoriesInput | string[]
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   votes?: Prisma.VoteUncheckedCreateNestedManyWithoutEventInput
@@ -1059,6 +1219,10 @@ export type EventUpdateWithoutTicketTransactionInput = {
   contestantFee?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   categories?: Prisma.EventUpdatecategoriesInput | string[]
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTicketsOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVotingOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isContestantsVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   votes?: Prisma.VoteUpdateManyWithoutEventNestedInput
@@ -1078,6 +1242,10 @@ export type EventUncheckedUpdateWithoutTicketTransactionInput = {
   contestantFee?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   categories?: Prisma.EventUpdatecategoriesInput | string[]
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTicketsOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVotingOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isContestantsVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   votes?: Prisma.VoteUncheckedUpdateManyWithoutEventNestedInput
@@ -1097,6 +1265,10 @@ export type EventCreateWithoutSponsorsInput = {
   contestantFee: number
   status?: $Enums.EventStatus
   categories?: Prisma.EventCreatecategoriesInput | string[]
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   ticketTransaction?: Prisma.TicketTransactionCreateNestedManyWithoutEventInput
@@ -1116,6 +1288,10 @@ export type EventUncheckedCreateWithoutSponsorsInput = {
   contestantFee: number
   status?: $Enums.EventStatus
   categories?: Prisma.EventCreatecategoriesInput | string[]
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   ticketTransaction?: Prisma.TicketTransactionUncheckedCreateNestedManyWithoutEventInput
@@ -1151,6 +1327,10 @@ export type EventUpdateWithoutSponsorsInput = {
   contestantFee?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   categories?: Prisma.EventUpdatecategoriesInput | string[]
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTicketsOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVotingOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isContestantsVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ticketTransaction?: Prisma.TicketTransactionUpdateManyWithoutEventNestedInput
@@ -1170,6 +1350,10 @@ export type EventUncheckedUpdateWithoutSponsorsInput = {
   contestantFee?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   categories?: Prisma.EventUpdatecategoriesInput | string[]
+  isRegistrationOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTicketsOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isVotingOpen?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isContestantsVisible?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ticketTransaction?: Prisma.TicketTransactionUncheckedUpdateManyWithoutEventNestedInput
@@ -1265,6 +1449,10 @@ export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   contestantFee?: boolean
   status?: boolean
   categories?: boolean
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   ticketTransaction?: boolean | Prisma.Event$ticketTransactionArgs<ExtArgs>
@@ -1286,6 +1474,10 @@ export type EventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   contestantFee?: boolean
   status?: boolean
   categories?: boolean
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["event"]>
@@ -1300,6 +1492,10 @@ export type EventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   contestantFee?: boolean
   status?: boolean
   categories?: boolean
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["event"]>
@@ -1314,11 +1510,15 @@ export type EventSelectScalar = {
   contestantFee?: boolean
   status?: boolean
   categories?: boolean
+  isRegistrationOpen?: boolean
+  isTicketsOpen?: boolean
+  isVotingOpen?: boolean
+  isContestantsVisible?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "startDate" | "endDate" | "location" | "contestantFee" | "status" | "categories" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
+export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "startDate" | "endDate" | "location" | "contestantFee" | "status" | "categories" | "isRegistrationOpen" | "isTicketsOpen" | "isVotingOpen" | "isContestantsVisible" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
 export type EventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   ticketTransaction?: boolean | Prisma.Event$ticketTransactionArgs<ExtArgs>
   votes?: boolean | Prisma.Event$votesArgs<ExtArgs>
@@ -1351,6 +1551,10 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     contestantFee: number
     status: $Enums.EventStatus
     categories: string[]
+    isRegistrationOpen: boolean
+    isTicketsOpen: boolean
+    isVotingOpen: boolean
+    isContestantsVisible: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["event"]>
@@ -1791,6 +1995,10 @@ export interface EventFieldRefs {
   readonly contestantFee: Prisma.FieldRef<"Event", 'Int'>
   readonly status: Prisma.FieldRef<"Event", 'EventStatus'>
   readonly categories: Prisma.FieldRef<"Event", 'String[]'>
+  readonly isRegistrationOpen: Prisma.FieldRef<"Event", 'Boolean'>
+  readonly isTicketsOpen: Prisma.FieldRef<"Event", 'Boolean'>
+  readonly isVotingOpen: Prisma.FieldRef<"Event", 'Boolean'>
+  readonly isContestantsVisible: Prisma.FieldRef<"Event", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Event", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Event", 'DateTime'>
 }
