@@ -1,35 +1,37 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { payloadSearcher } from "recharts/types/chart/SunburstChart";
 
 export default function Payment() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [ticketTypeId, setTicketId] = useState("");
   const [quantity, setQuantity] = useState<number>(1);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [eventId, setEventId] = useState("");
   const [name, setName] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrorMessage(null);
 
     try {
-      const result = await fetch("../../api/contestants/payment", {
+      const result = await fetch("/api/ticket/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, ticketTypeId, quantity, phoneNumber, eventId, name }),
       });
 
-      console.log("Payment API Response 3:", result);
       const paystackResult = await result.json();
 
-      if (result.status) {
-        router.push(paystackResult.data.authorization_url);
+      if (!result.ok || !paystackResult.status || !paystackResult.data?.authorization_url) {
+        setErrorMessage(paystackResult.error || paystackResult.message || "Unable to start payment.");
+        return;
       }
+
+      window.location.assign(paystackResult.data.authorization_url);
     } catch (err) {
       console.error("Unexpected error:", err);
+      setErrorMessage("Something went wrong while starting payment. Please try again.");
     }
   };
   return (
@@ -37,6 +39,7 @@ export default function Payment() {
       <div className="login-form">
         <form onSubmit={handleSubmit}>
           <h2>Buy Ticket</h2>
+          {errorMessage && <p role="alert">{errorMessage}</p>}
 
           {/* EMAIL */}
           <div className="login-field">

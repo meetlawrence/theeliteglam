@@ -4,14 +4,23 @@ import CTA from "./ui/CTA";
 import { Ticket, UserPlus, Star } from "lucide-react";
 import { HOME_IMAGES } from "./homeData";
 
-export function HeroSection({
-  onNavigate,
-}: {
+interface HeroSectionProps {
   onNavigate: (page: "tickets" | "register" | "contestants") => void;
-}) {
+  eventStatus?: {
+    isRegistrationOpen: boolean;
+    isTicketsOpen: boolean;
+    isVotingOpen: boolean;
+  };
+}
+
+export function HeroSection({ onNavigate, eventStatus }: HeroSectionProps) {
   const handleNavigate = (page: "tickets" | "register" | "contestants") => {
     onNavigate(page);
   };
+
+  const isTicketsOpen = eventStatus ? eventStatus.isTicketsOpen : false;
+  const isRegistrationOpen = eventStatus ? eventStatus.isRegistrationOpen : false;
+  const isVotingOpen = eventStatus ? eventStatus.isVotingOpen : false;
 
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black pt-19.5">
@@ -49,11 +58,17 @@ export function HeroSection({
           Where Beauty Meets Purpose
         </p>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons (Conditionally Rendered based on Database Timelines) */}
         <div className="flex flex-wrap justify-center gap-4 opacity-0 animate-[fadeInUp_1s_ease-out_0.6s_forwards]">
-          <CTA icon={<Ticket size={16} />} label="Get Tickets" variant="primary" onClick={() => handleNavigate("tickets")} />
-          <CTA icon={<UserPlus size={16} />} label="Register Now" variant="ghost" onClick={() => handleNavigate("register")} />
-          <CTA icon={<Star size={16} />} label="Vote Now" variant="accent" onClick={() => handleNavigate("contestants")} />
+          {isTicketsOpen && (
+            <CTA icon={<Ticket size={16} />} label="Get Tickets" variant="primary" onClick={() => handleNavigate("tickets")} />
+          )}
+          {isRegistrationOpen && (
+            <CTA icon={<UserPlus size={16} />} label="Register Now" variant="ghost" onClick={() => handleNavigate("register")} />
+          )}
+          {isVotingOpen && (
+            <CTA icon={<Star size={16} />} label="Vote Now" variant="accent" onClick={() => handleNavigate("contestants")} />
+          )}
         </div>
 
         <div className="mx-auto mt-12 flex flex-col items-center opacity-0 animate-[fadeInUp_1s_ease-out_0.75s_forwards]">

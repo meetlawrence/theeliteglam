@@ -1,8 +1,17 @@
 "use client";
-
 import { ArrowRight } from "lucide-react";
 
-export default function ApplyButton() {
+interface ApplyButtonProps {
+  eventStatus: {
+    isRegistrationOpen: boolean;
+  };
+}
+
+export default function ApplyButton({ eventStatus }: ApplyButtonProps) {
+  if (!eventStatus) return null;
+
+  if (!eventStatus.isRegistrationOpen) return null;
+
   const handleClick = () => {
     window.location.href = "/register#apply";
   };
