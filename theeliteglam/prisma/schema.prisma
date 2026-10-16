@@ -126,25 +126,32 @@ enum Status {
 
 // ====================== EVENT / PAGEANT ======================
 model Event {
-  id            String      @id @default(cuid())
-  name          String
-  description   String
-  startDate     DateTime
-  endDate       DateTime
-  location      String
-  contestantFee Int
-  status        EventStatus @default(UPCOMING)
-  categories    String[]
+  id              String      @id @default(cuid())
+  name            String
+  description     String
+  startDate       DateTime
+  endDate         DateTime
+  location        String
+  contestantFee   Int
+  status          EventStatus @default(UPCOMING)
+  categories      String[]
 
-  ticketTransaction TicketTransaction[]
-  votes             Vote[]
-  sponsors          Sponsor[]
-  ticketTypes       TicketType[]
+  // --- DASHBOARD CONTROLS ---
+  isRegistrationOpen    Boolean   @default(false) 
+  isTicketsOpen         Boolean   @default(false) 
+  isVotingOpen          Boolean   @default(false) 
+  isContestantsVisible  Boolean   @default(false) 
 
-  createdAt              DateTime                @default(now())
-  updatedAt              DateTime                @updatedAt
+  // Relations
+  ticketTransaction      TicketTransaction[]
+  votes                  Vote[]
+  sponsors               Sponsor[]
+  ticketTypes            TicketType[]
   contestants            Contestant[]
   contestantTransactions ContestantTransaction[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum EventStatus {
@@ -276,4 +283,20 @@ model RefreshToken {
   admin     Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
 
   @@map("refresh_tokens")
+}
+
+
+model IdempotencyKey {
+  id           String   @id @default(cuid())
+  key          String   @unique
+  method       String
+  path         String
+  statusCode   Int?     @default(0)
+  response     Json?
+  pending      Boolean  @default(true)
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("idempotency_keys")
 }

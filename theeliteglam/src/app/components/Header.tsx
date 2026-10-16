@@ -8,15 +8,16 @@ import { NavCta } from "@/app/components/ui/NavCta";
 
 const LOGO_PATH = "/logo.svg";
 
-const NAV_LINKS = [
-  { label: "Home", page: "/" },
-  { label: "Events", page: "/events" },
-  { label: "About", page: "/about" },
-  { label: "Contestants", page: "/contestants" },
-  { label: "Blog", page: "/blog" },
-];
+interface HeaderProps {
+  eventStatus?: {
+    isRegistrationOpen: boolean;
+    isTicketsOpen: boolean;
+    isVotingOpen: boolean;
+    isContestantsVisible: boolean;
+  };
+}
 
-export function Header() {
+export function Header({ eventStatus }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -47,6 +48,22 @@ export function Header() {
       document.documentElement.style.overflow = previousHtmlOverflow;
     };
   }, [menuOpen]);
+
+  // Determine visibility based on eventStatus
+  const isTicketsOpen = eventStatus ? eventStatus.isTicketsOpen : false;
+  const isRegistrationOpen = eventStatus ? eventStatus.isRegistrationOpen : false;
+  const isVotingOpen = eventStatus ? eventStatus.isVotingOpen : false;
+
+  const isContestantsVisible = eventStatus ? eventStatus.isContestantsVisible : false;
+
+  const NAV_LINKS = [
+    { label: "Home", page: "/" },
+    { label: "Events", page: "/events" },
+    { label: "About", page: "/about" },
+    ...(isContestantsVisible ? [{ label: "Contestants", page: "/contestants" }] : []),
+    { label: "Blog", page: "/blog" },
+  ];
+
 
   // Helper to close menu and navigate
   const handleNav = (path: string) => {
@@ -97,11 +114,17 @@ export function Header() {
           })}
         </div>
 
-        {/* Desktop CTA Buttons */}
+        {/* Desktop CTA Buttons (Conditionally Rendered) */}
         <div className="hidden md:flex items-center gap-3 shrink-0">
-          <NavCta label="Tickets" icon={<Ticket size={13} />} variant="ghost" onClick={() => handleNav("/tickets")} />
-          <NavCta label="Register" icon={<UserPlus size={13} />} variant="ghost" onClick={() => handleNav("/register")} />
-          <NavCta label="Vote" icon={<Star size={13} />} variant="filled" onClick={() => handleNav("/contestants")} />
+          {isTicketsOpen && (
+            <NavCta label="Tickets" icon={<Ticket size={13} />} variant="ghost" onClick={() => handleNav("/tickets")} />
+          )}
+          {isRegistrationOpen && (
+            <NavCta label="Register" icon={<UserPlus size={13} />} variant="ghost" onClick={() => handleNav("/register")} />
+          )}
+          {isVotingOpen && (
+            <NavCta label="Vote" icon={<Star size={13} />} variant="filled" onClick={() => handleNav("/contestants")} />
+          )}
         </div>
 
         {/* Mobile Toggle */}
@@ -128,7 +151,7 @@ export function Header() {
                   className={`relative text-center uppercase tracking-widest text-base py-6 border-b border-[#C9A84C]/10 transition-all duration-200 ${
                     isActive ? "text-accent" : "text-muted-foreground hover:text-[#C9A84C]"
                   }`}
-                  style={{ animationDelay: `${index * 180}ms` }}
+                  style={{ animationDelay: `${index * 150}ms` }}
                 >
                   {label}
 
@@ -140,11 +163,17 @@ export function Header() {
             })}
           </div>
 
-          {/* Mobile CTA Buttons Group at the bottom */}
-          <div className="flex flex-row flex-wrap gap-10 justify-center pb-28" style={{ animationDelay: `${NAV_LINKS.length * 180}ms` }}>
-            <NavCta label="Tickets" icon={<Ticket size={13} />} variant="ghost" onClick={() => handleNav("/tickets")} />
-            <NavCta label="Register" icon={<UserPlus size={13} />} variant="ghost" onClick={() => handleNav("/register")} />
-            <NavCta label="Vote" icon={<Star size={13} />} variant="filled" onClick={() => handleNav("/contestants")} />
+          {/* Mobile CTA Buttons Group at the bottom (Conditionally Rendered) */}
+          <div className="flex flex-row flex-wrap gap-10 justify-center pb-28" style={{ animationDelay: `${NAV_LINKS.length * 150}ms` }}>
+            {isTicketsOpen && (
+              <NavCta label="Tickets" icon={<Ticket size={13} />} variant="ghost" onClick={() => handleNav("/tickets")} />
+            )}
+            {isRegistrationOpen && (
+              <NavCta label="Register" icon={<UserPlus size={13} />} variant="ghost" onClick={() => handleNav("/register")} />
+            )}
+            {isVotingOpen && (
+              <NavCta label="Vote" icon={<Star size={13} />} variant="filled" onClick={() => handleNav("/contestants")} />
+            )}
           </div>
         </div>
       )}

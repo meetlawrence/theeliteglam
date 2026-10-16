@@ -45,7 +45,13 @@ const TIMELINE: TimelineStep[] = [
 
 const STATS = [{ label: "Prize Pool · 2 Winners", value: "₦2M Each", icon: "★" }];
 
-export function SearchBeginsSection() {
+interface SearchBeginsSectionProps {
+  eventStatus: {
+    isRegistrationOpen: boolean;
+  };
+}
+
+export function SearchBeginsSection({ eventStatus }: SearchBeginsSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
 
@@ -110,7 +116,7 @@ export function SearchBeginsSection() {
         <div
           className={`text-center mt-16 transition-all duration-1000 delay-600 ${inView ? "opacity-100" : "opacity-0"}`}
         >
-          <ApplyButton />
+          <ApplyButton eventStatus={eventStatus}/>
         </div>
       </div>
     </section>

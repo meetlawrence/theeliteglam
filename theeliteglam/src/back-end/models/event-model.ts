@@ -12,7 +12,7 @@ export class EventModel {
         location: data.location,
         status: data.status || "UPCOMING",
         categories: data.categories,
-        contestantFee: data.contestantFee
+        contestantFee: data.contestantFee,
       },
     });
   }

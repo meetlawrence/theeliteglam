@@ -3,10 +3,10 @@
 import { RegisterBanner } from "./RegisterBanner";
 import { EligibilitySection } from "./EligibilitySection";
 import { ProcessSection } from "./ProcessSection";
-import { RegistrationSection as RegistrationContent } from "./RegistrationSection";
+import {  RegistrationContent } from "./RegistrationContent";
 import { Divider } from "../ui/SectionDivider";
 
-export function RegisterSection() {
+export function RegisterSection({ eventId }: { eventId: string }) {
   return (
     <div className="bg-[#080808] min-h-screen text-[#F5EDD6]">
       <RegisterBanner />
@@ -19,7 +19,7 @@ export function RegisterSection() {
 
       <Divider />
       
-      <RegistrationContent />
+      <RegistrationContent eventId={eventId} />
     </div>
   );
 }
