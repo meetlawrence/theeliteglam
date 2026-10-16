@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { useContestants } from "@/app/components/contestants/useContestants";
+import { useContestants } from "@/app/components/contestant/useContestants";
 import AdminContestantHeader from "../../AdminContestantHeader";
 import AdminContestantBarChart from "../../AdminContestantBarChart";
 import AdminContestantCategorySection from "../../AdminContestantCategorySection";
 import AdminContestantOtherSection from "../../AdminContestantOtherSection";
 import { AdminContestantEditorModal } from "../../AdminContestantEditorModal";
-import type { Contestant } from "@/app/components/contestants/types";
+import type { Contestant } from "@/app/components/contestant/types";
 
 export function ContestantsView() {
   const { contestants, setContestants } = useContestants();

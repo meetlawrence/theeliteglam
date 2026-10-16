@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import { useContestants } from "@/app/components/contestants/useContestants";
+import { useContestants } from "@/app/components/contestant/useContestants";
 import AdminContestantHeader from "./AdminContestantHeader";
 import AdminContestantFilters from "./AdminContestantFilters";
 import AdminContestantPieChart from "./AdminContestantPieChart";
 import AdminContestantCategorySection from "./AdminContestantCategorySection";
 import AdminContestantOtherSection from "./AdminContestantOtherSection";
 import AdminContestantModal from "./AdminContestantModal";
-import type { Contestant } from "@/app/components/contestants/types";
+import type { Contestant } from "@/app/components/contestant/types";
 
 export default function AdminContestantsPanel() {
   const { contestants: base } = useContestants();
