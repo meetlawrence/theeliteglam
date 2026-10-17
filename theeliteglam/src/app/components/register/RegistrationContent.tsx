@@ -19,12 +19,23 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
   const [inView, setInView] = useState(false);
   const paymentVerificationInProgress = useRef(false);
 
-  // Form states for inline payment view
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        setIsSubmitting(false);
+      }
+    };
+    window.addEventListener("pageshow", handlePageShow);
+    return () => {
+      window.removeEventListener("pageshow", handlePageShow);
+    };
+  }, []);
 
   useEffect(() => {
     const el = ref.current;
@@ -142,7 +153,6 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
           </p>
 
           {!showPayment ? (
-            /* INITIAL INSTRUCTIONS & BUTTON VIEW */
             <div className="bg-[#0D0D0D] border border-[#C9A84C]/[0.18] p-10 mb-6">
               <div className="flex items-end justify-between mb-8">
                 <div>
@@ -190,11 +200,10 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
                 }}
                 className="w-full py-4.5 bg-gradient-to-br from-[#C9A84C] to-[#8B6914] border-none text-[#080808] font-['Cinzel',serif] text-[0.82rem] tracking-[0.22em] uppercase cursor-pointer flex items-center justify-center gap-2.5 transition-opacity hover:opacity-95"
               >
-                Unlock Application
+                Begin Application
               </button>
             </div>
           ) : (
-            /* REVEALED INLINE PAYMENT FORM VIEW */
             <div className="bg-[#0D0D0D] border border-[#C9A84C]/[0.28] p-10 mb-6 transition-all duration-500">
               <button
                 type="button"
