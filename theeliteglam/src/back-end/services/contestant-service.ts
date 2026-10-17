@@ -198,7 +198,7 @@ export class ContestantService {
     }
 
       // 4. Generate the form link
-      const formLink = `${process.env.NEXT_PUBLIC_BASE_URL}/contestant/form?reference=${contestantTransaction.reference}`;
+      const formLink = `${process.env.NEXT_PUBLIC_BASE_URL}/register/form?reference=${contestantTransaction.reference}`;
 
       // 5. Send email
       const emailResult = await sendEmail(contestantTransaction.email, {
