@@ -87,11 +87,10 @@ export async function GET(req: NextRequest) {
     // ============================================
 
     const expectedAmount = Number(transaction.data.amount) * 100;
-
     const paidAmount = Number(result.data.amount);
 
-    if (paidAmount !== expectedAmount) {
-      console.error("Payment amount mismatch:", {
+    if (paidAmount < expectedAmount) {
+      console.error("Payment amount is less than expected:", {
         reference,
         expectedAmount,
         paidAmount,
@@ -114,10 +113,11 @@ export async function GET(req: NextRequest) {
     // 7. UPDATE TRANSACTION STATUS
     // ============================================
 
-    const update = await contestantTransactionService.updateContestantTransaction(reference, 
-      { status: status as ContestantTransactionStatus }
-    );
-console.log("Updating transaction:", reference, status);
+    const update = await contestantTransactionService.updateContestantTransaction(reference, {
+      status: status as ContestantTransactionStatus,
+    });
+
+    console.log("Updating transaction:", reference, status);
 
     if (!update.success) {
       return NextResponse.json(
@@ -130,33 +130,24 @@ console.log("Updating transaction:", reference, status);
     }
 
     // ============================================
-    // 8. PAYMENT SUCCESSFUL
+    // 8. PAYMENT SUCCESSFUL -> DISPATCH FORM LINK
     // ============================================
 
     if (status === "SUCCESS") {
-      /*
-       * IMPORTANT:
-       *
-       * This is where the actual contestant registration
-       * should happen.
-       *
-       * Example:
-       *
-       * await contestantService.createContestant(reference);
-       *
-       * We should only do this AFTER payment succeeds.
-       */
-      const contestant = await contestantService.sentContestantFormLink(reference).catch((err) => {
-        console.error("Failed to send contestant email:", err);
-      });
+      const formEmailResult = await contestantService
+        .resendContestantFormLink(reference)
+        .catch((err) => {
+          console.error("Failed to send contestant email:", err);
+          return null;
+        });
 
       return NextResponse.json(
         {
           success: true,
-          message: "Contestant payment verified successfully",
+          message: "Contestant payment verified successfully and form link dispatched",
           reference,
           status,
-          contestant,
+          emailResult: formEmailResult,
           data: update.data,
         },
         { status: 200 },

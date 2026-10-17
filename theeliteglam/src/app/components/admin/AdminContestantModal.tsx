@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { AdminButton } from "./AdminButton";
-import type { Contestant } from "@/app/components/contestants/types";
+import type { Contestant } from "@/app/components/contestant/types";
 
 export default function AdminContestantModal({
   contestant,

@@ -401,6 +401,7 @@ export const ModelName = {
   ContestantTransaction: 'ContestantTransaction',
   Contestant: 'Contestant',
   Event: 'Event',
+  EventItineraryDay: 'EventItineraryDay',
   TicketType: 'TicketType',
   Vote: 'Vote',
   TicketTransaction: 'TicketTransaction',
@@ -424,7 +425,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admin" | "contestantTransaction" | "contestant" | "event" | "ticketType" | "vote" | "ticketTransaction" | "ticket" | "sponsor" | "subscription" | "refreshToken" | "idempotencyKey"
+    modelProps: "admin" | "contestantTransaction" | "contestant" | "event" | "eventItineraryDay" | "ticketType" | "vote" | "ticketTransaction" | "ticket" | "sponsor" | "subscription" | "refreshToken" | "idempotencyKey"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -721,6 +722,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.EventCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.EventCountAggregateOutputType> | number
+        }
+      }
+    }
+    EventItineraryDay: {
+      payload: Prisma.$EventItineraryDayPayload<ExtArgs>
+      fields: Prisma.EventItineraryDayFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EventItineraryDayFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventItineraryDayPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EventItineraryDayFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventItineraryDayPayload>
+        }
+        findFirst: {
+          args: Prisma.EventItineraryDayFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventItineraryDayPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EventItineraryDayFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventItineraryDayPayload>
+        }
+        findMany: {
+          args: Prisma.EventItineraryDayFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventItineraryDayPayload>[]
+        }
+        create: {
+          args: Prisma.EventItineraryDayCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventItineraryDayPayload>
+        }
+        createMany: {
+          args: Prisma.EventItineraryDayCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EventItineraryDayCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventItineraryDayPayload>[]
+        }
+        delete: {
+          args: Prisma.EventItineraryDayDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventItineraryDayPayload>
+        }
+        update: {
+          args: Prisma.EventItineraryDayUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventItineraryDayPayload>
+        }
+        deleteMany: {
+          args: Prisma.EventItineraryDayDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EventItineraryDayUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EventItineraryDayUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventItineraryDayPayload>[]
+        }
+        upsert: {
+          args: Prisma.EventItineraryDayUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventItineraryDayPayload>
+        }
+        aggregate: {
+          args: Prisma.EventItineraryDayAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEventItineraryDay>
+        }
+        groupBy: {
+          args: Prisma.EventItineraryDayGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EventItineraryDayGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EventItineraryDayCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EventItineraryDayCountAggregateOutputType> | number
         }
       }
     }
@@ -1383,7 +1458,7 @@ export const ContestantTransactionScalarFieldEnum = {
   reference: 'reference',
   paymentMethod: 'paymentMethod',
   status: 'status',
-  clamed: 'clamed',
+  claimed: 'claimed',
   formSent: 'formSent',
   eventId: 'eventId',
   createdAt: 'createdAt',
@@ -1437,6 +1512,12 @@ export const EventScalarFieldEnum = {
   contestantFee: 'contestantFee',
   status: 'status',
   categories: 'categories',
+  registrationOpenDate: 'registrationOpenDate',
+  registrationCloseDate: 'registrationCloseDate',
+  auditionsDate: 'auditionsDate',
+  preliminaryDate: 'preliminaryDate',
+  grandFinaleDate: 'grandFinaleDate',
+  itineraryTitle: 'itineraryTitle',
   isRegistrationOpen: 'isRegistrationOpen',
   isTicketsOpen: 'isTicketsOpen',
   isVotingOpen: 'isVotingOpen',
@@ -1446,6 +1527,20 @@ export const EventScalarFieldEnum = {
 } as const
 
 export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+export const EventItineraryDayScalarFieldEnum = {
+  id: 'id',
+  dayNumber: 'dayNumber',
+  title: 'title',
+  date: 'date',
+  schedule: 'schedule',
+  eventId: 'eventId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EventItineraryDayScalarFieldEnum = (typeof EventItineraryDayScalarFieldEnum)[keyof typeof EventItineraryDayScalarFieldEnum]
 
 
 export const TicketTypeScalarFieldEnum = {
@@ -1559,6 +1654,13 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const NullableJsonNullValueInput = {
@@ -1748,6 +1850,20 @@ export type ListEnumEventStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
  * Reference to a field of type 'TicketStatus'
  */
 export type EnumTicketStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TicketStatus'>
@@ -1772,20 +1888,6 @@ export type EnumSponsorTierFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'SponsorTier[]'
  */
 export type ListEnumSponsorTierFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SponsorTier[]'>
-    
-
-
-/**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 /**
@@ -1943,6 +2045,7 @@ export type GlobalOmitConfig = {
   contestantTransaction?: Prisma.ContestantTransactionOmit
   contestant?: Prisma.ContestantOmit
   event?: Prisma.EventOmit
+  eventItineraryDay?: Prisma.EventItineraryDayOmit
   ticketType?: Prisma.TicketTypeOmit
   vote?: Prisma.VoteOmit
   ticketTransaction?: Prisma.TicketTransactionOmit

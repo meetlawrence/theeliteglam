@@ -110,7 +110,7 @@ export async function POST(req: NextRequest) {
           email,
           amount: amounts.paystackAmount,
 
-          callback_url: `${process.env.NEXT_PUBLIC_BASE_URL}/components/verify-payment`,
+          callback_url: `${process.env.NEXT_PUBLIC_BASE_URL}/payment/verify`,
         }),
       }
     );

@@ -1,7 +1,7 @@
 "use client";
 
 import { AdminButton } from "./AdminButton";
-import type { Contestant } from "@/app/components/contestants/types";
+import type { Contestant } from "@/app/components/contestant/types";
 
 interface AdminContestantCategorySectionProps {
   title: string;

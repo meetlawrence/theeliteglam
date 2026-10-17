@@ -43,7 +43,7 @@ export type ContestantTransactionMinAggregateOutputType = {
   reference: string | null
   paymentMethod: string | null
   status: $Enums.TransactionStatus | null
-  clamed: boolean | null
+  claimed: boolean | null
   formSent: boolean | null
   eventId: string | null
   createdAt: Date | null
@@ -59,7 +59,7 @@ export type ContestantTransactionMaxAggregateOutputType = {
   reference: string | null
   paymentMethod: string | null
   status: $Enums.TransactionStatus | null
-  clamed: boolean | null
+  claimed: boolean | null
   formSent: boolean | null
   eventId: string | null
   createdAt: Date | null
@@ -75,7 +75,7 @@ export type ContestantTransactionCountAggregateOutputType = {
   reference: number
   paymentMethod: number
   status: number
-  clamed: number
+  claimed: number
   formSent: number
   eventId: number
   createdAt: number
@@ -101,7 +101,7 @@ export type ContestantTransactionMinAggregateInputType = {
   reference?: true
   paymentMethod?: true
   status?: true
-  clamed?: true
+  claimed?: true
   formSent?: true
   eventId?: true
   createdAt?: true
@@ -117,7 +117,7 @@ export type ContestantTransactionMaxAggregateInputType = {
   reference?: true
   paymentMethod?: true
   status?: true
-  clamed?: true
+  claimed?: true
   formSent?: true
   eventId?: true
   createdAt?: true
@@ -133,7 +133,7 @@ export type ContestantTransactionCountAggregateInputType = {
   reference?: true
   paymentMethod?: true
   status?: true
-  clamed?: true
+  claimed?: true
   formSent?: true
   eventId?: true
   createdAt?: true
@@ -236,7 +236,7 @@ export type ContestantTransactionGroupByOutputType = {
   reference: string
   paymentMethod: string | null
   status: $Enums.TransactionStatus
-  clamed: boolean | null
+  claimed: boolean | null
   formSent: boolean | null
   eventId: string
   createdAt: Date
@@ -275,7 +275,7 @@ export type ContestantTransactionWhereInput = {
   reference?: Prisma.StringFilter<"ContestantTransaction"> | string
   paymentMethod?: Prisma.StringNullableFilter<"ContestantTransaction"> | string | null
   status?: Prisma.EnumTransactionStatusFilter<"ContestantTransaction"> | $Enums.TransactionStatus
-  clamed?: Prisma.BoolNullableFilter<"ContestantTransaction"> | boolean | null
+  claimed?: Prisma.BoolNullableFilter<"ContestantTransaction"> | boolean | null
   formSent?: Prisma.BoolNullableFilter<"ContestantTransaction"> | boolean | null
   eventId?: Prisma.StringFilter<"ContestantTransaction"> | string
   createdAt?: Prisma.DateTimeFilter<"ContestantTransaction"> | Date | string
@@ -293,7 +293,7 @@ export type ContestantTransactionOrderByWithRelationInput = {
   reference?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  clamed?: Prisma.SortOrderInput | Prisma.SortOrder
+  claimed?: Prisma.SortOrderInput | Prisma.SortOrder
   formSent?: Prisma.SortOrderInput | Prisma.SortOrder
   eventId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -314,7 +314,7 @@ export type ContestantTransactionWhereUniqueInput = Prisma.AtLeast<{
   amount?: Prisma.FloatNullableFilter<"ContestantTransaction"> | number | null
   paymentMethod?: Prisma.StringNullableFilter<"ContestantTransaction"> | string | null
   status?: Prisma.EnumTransactionStatusFilter<"ContestantTransaction"> | $Enums.TransactionStatus
-  clamed?: Prisma.BoolNullableFilter<"ContestantTransaction"> | boolean | null
+  claimed?: Prisma.BoolNullableFilter<"ContestantTransaction"> | boolean | null
   formSent?: Prisma.BoolNullableFilter<"ContestantTransaction"> | boolean | null
   eventId?: Prisma.StringFilter<"ContestantTransaction"> | string
   createdAt?: Prisma.DateTimeFilter<"ContestantTransaction"> | Date | string
@@ -332,7 +332,7 @@ export type ContestantTransactionOrderByWithAggregationInput = {
   reference?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  clamed?: Prisma.SortOrderInput | Prisma.SortOrder
+  claimed?: Prisma.SortOrderInput | Prisma.SortOrder
   formSent?: Prisma.SortOrderInput | Prisma.SortOrder
   eventId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -356,7 +356,7 @@ export type ContestantTransactionScalarWhereWithAggregatesInput = {
   reference?: Prisma.StringWithAggregatesFilter<"ContestantTransaction"> | string
   paymentMethod?: Prisma.StringNullableWithAggregatesFilter<"ContestantTransaction"> | string | null
   status?: Prisma.EnumTransactionStatusWithAggregatesFilter<"ContestantTransaction"> | $Enums.TransactionStatus
-  clamed?: Prisma.BoolNullableWithAggregatesFilter<"ContestantTransaction"> | boolean | null
+  claimed?: Prisma.BoolNullableWithAggregatesFilter<"ContestantTransaction"> | boolean | null
   formSent?: Prisma.BoolNullableWithAggregatesFilter<"ContestantTransaction"> | boolean | null
   eventId?: Prisma.StringWithAggregatesFilter<"ContestantTransaction"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ContestantTransaction"> | Date | string
@@ -372,7 +372,7 @@ export type ContestantTransactionCreateInput = {
   reference: string
   paymentMethod?: string | null
   status?: $Enums.TransactionStatus
-  clamed?: boolean | null
+  claimed?: boolean | null
   formSent?: boolean | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -389,7 +389,7 @@ export type ContestantTransactionUncheckedCreateInput = {
   reference: string
   paymentMethod?: string | null
   status?: $Enums.TransactionStatus
-  clamed?: boolean | null
+  claimed?: boolean | null
   formSent?: boolean | null
   eventId: string
   createdAt?: Date | string
@@ -406,7 +406,7 @@ export type ContestantTransactionUpdateInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
-  clamed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  claimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   formSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -423,7 +423,7 @@ export type ContestantTransactionUncheckedUpdateInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
-  clamed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  claimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   formSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -440,7 +440,7 @@ export type ContestantTransactionCreateManyInput = {
   reference: string
   paymentMethod?: string | null
   status?: $Enums.TransactionStatus
-  clamed?: boolean | null
+  claimed?: boolean | null
   formSent?: boolean | null
   eventId: string
   createdAt?: Date | string
@@ -456,7 +456,7 @@ export type ContestantTransactionUpdateManyMutationInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
-  clamed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  claimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   formSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -471,7 +471,7 @@ export type ContestantTransactionUncheckedUpdateManyInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
-  clamed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  claimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   formSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -487,7 +487,7 @@ export type ContestantTransactionCountOrderByAggregateInput = {
   reference?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  clamed?: Prisma.SortOrder
+  claimed?: Prisma.SortOrder
   formSent?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -507,7 +507,7 @@ export type ContestantTransactionMaxOrderByAggregateInput = {
   reference?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  clamed?: Prisma.SortOrder
+  claimed?: Prisma.SortOrder
   formSent?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -523,7 +523,7 @@ export type ContestantTransactionMinOrderByAggregateInput = {
   reference?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  clamed?: Prisma.SortOrder
+  claimed?: Prisma.SortOrder
   formSent?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -630,7 +630,7 @@ export type ContestantTransactionCreateWithoutContestantInput = {
   reference: string
   paymentMethod?: string | null
   status?: $Enums.TransactionStatus
-  clamed?: boolean | null
+  claimed?: boolean | null
   formSent?: boolean | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -646,7 +646,7 @@ export type ContestantTransactionUncheckedCreateWithoutContestantInput = {
   reference: string
   paymentMethod?: string | null
   status?: $Enums.TransactionStatus
-  clamed?: boolean | null
+  claimed?: boolean | null
   formSent?: boolean | null
   eventId: string
   createdAt?: Date | string
@@ -678,7 +678,7 @@ export type ContestantTransactionUpdateWithoutContestantInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
-  clamed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  claimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   formSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -694,7 +694,7 @@ export type ContestantTransactionUncheckedUpdateWithoutContestantInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
-  clamed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  claimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   formSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -710,7 +710,7 @@ export type ContestantTransactionCreateWithoutEventInput = {
   reference: string
   paymentMethod?: string | null
   status?: $Enums.TransactionStatus
-  clamed?: boolean | null
+  claimed?: boolean | null
   formSent?: boolean | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -726,7 +726,7 @@ export type ContestantTransactionUncheckedCreateWithoutEventInput = {
   reference: string
   paymentMethod?: string | null
   status?: $Enums.TransactionStatus
-  clamed?: boolean | null
+  claimed?: boolean | null
   formSent?: boolean | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -771,7 +771,7 @@ export type ContestantTransactionScalarWhereInput = {
   reference?: Prisma.StringFilter<"ContestantTransaction"> | string
   paymentMethod?: Prisma.StringNullableFilter<"ContestantTransaction"> | string | null
   status?: Prisma.EnumTransactionStatusFilter<"ContestantTransaction"> | $Enums.TransactionStatus
-  clamed?: Prisma.BoolNullableFilter<"ContestantTransaction"> | boolean | null
+  claimed?: Prisma.BoolNullableFilter<"ContestantTransaction"> | boolean | null
   formSent?: Prisma.BoolNullableFilter<"ContestantTransaction"> | boolean | null
   eventId?: Prisma.StringFilter<"ContestantTransaction"> | string
   createdAt?: Prisma.DateTimeFilter<"ContestantTransaction"> | Date | string
@@ -787,7 +787,7 @@ export type ContestantTransactionCreateManyEventInput = {
   reference: string
   paymentMethod?: string | null
   status?: $Enums.TransactionStatus
-  clamed?: boolean | null
+  claimed?: boolean | null
   formSent?: boolean | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -802,7 +802,7 @@ export type ContestantTransactionUpdateWithoutEventInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
-  clamed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  claimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   formSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -818,7 +818,7 @@ export type ContestantTransactionUncheckedUpdateWithoutEventInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
-  clamed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  claimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   formSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -834,7 +834,7 @@ export type ContestantTransactionUncheckedUpdateManyWithoutEventInput = {
   reference?: Prisma.StringFieldUpdateOperationsInput | string
   paymentMethod?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumTransactionStatusFieldUpdateOperationsInput | $Enums.TransactionStatus
-  clamed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  claimed?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   formSent?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -851,7 +851,7 @@ export type ContestantTransactionSelect<ExtArgs extends runtime.Types.Extensions
   reference?: boolean
   paymentMethod?: boolean
   status?: boolean
-  clamed?: boolean
+  claimed?: boolean
   formSent?: boolean
   eventId?: boolean
   createdAt?: boolean
@@ -869,7 +869,7 @@ export type ContestantTransactionSelectCreateManyAndReturn<ExtArgs extends runti
   reference?: boolean
   paymentMethod?: boolean
   status?: boolean
-  clamed?: boolean
+  claimed?: boolean
   formSent?: boolean
   eventId?: boolean
   createdAt?: boolean
@@ -886,7 +886,7 @@ export type ContestantTransactionSelectUpdateManyAndReturn<ExtArgs extends runti
   reference?: boolean
   paymentMethod?: boolean
   status?: boolean
-  clamed?: boolean
+  claimed?: boolean
   formSent?: boolean
   eventId?: boolean
   createdAt?: boolean
@@ -903,14 +903,14 @@ export type ContestantTransactionSelectScalar = {
   reference?: boolean
   paymentMethod?: boolean
   status?: boolean
-  clamed?: boolean
+  claimed?: boolean
   formSent?: boolean
   eventId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ContestantTransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "phoneNumber" | "amount" | "reference" | "paymentMethod" | "status" | "clamed" | "formSent" | "eventId" | "createdAt" | "updatedAt", ExtArgs["result"]["contestantTransaction"]>
+export type ContestantTransactionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "phoneNumber" | "amount" | "reference" | "paymentMethod" | "status" | "claimed" | "formSent" | "eventId" | "createdAt" | "updatedAt", ExtArgs["result"]["contestantTransaction"]>
 export type ContestantTransactionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   contestant?: boolean | Prisma.ContestantTransaction$contestantArgs<ExtArgs>
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
@@ -937,7 +937,7 @@ export type $ContestantTransactionPayload<ExtArgs extends runtime.Types.Extensio
     reference: string
     paymentMethod: string | null
     status: $Enums.TransactionStatus
-    clamed: boolean | null
+    claimed: boolean | null
     formSent: boolean | null
     eventId: string
     createdAt: Date
@@ -1375,7 +1375,7 @@ export interface ContestantTransactionFieldRefs {
   readonly reference: Prisma.FieldRef<"ContestantTransaction", 'String'>
   readonly paymentMethod: Prisma.FieldRef<"ContestantTransaction", 'String'>
   readonly status: Prisma.FieldRef<"ContestantTransaction", 'TransactionStatus'>
-  readonly clamed: Prisma.FieldRef<"ContestantTransaction", 'Boolean'>
+  readonly claimed: Prisma.FieldRef<"ContestantTransaction", 'Boolean'>
   readonly formSent: Prisma.FieldRef<"ContestantTransaction", 'Boolean'>
   readonly eventId: Prisma.FieldRef<"ContestantTransaction", 'String'>
   readonly createdAt: Prisma.FieldRef<"ContestantTransaction", 'DateTime'>
