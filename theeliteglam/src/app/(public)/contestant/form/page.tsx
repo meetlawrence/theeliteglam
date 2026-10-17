@@ -22,7 +22,7 @@ export default async function ContestantsPage({ searchParams }: ContestantsPageP
 
     if (!transaction || transaction.status !== "SUCCESS") {
       errorTitle = "Unverified Reference";
-      errorMessage = "We could not verify a successful payment for this transaction reference. Access to the contestant application is restricted.";
+      errorMessage = "We could not verify a successful payment for this transaction reference. Please ensure you have completed the payment process and try again.";
     } else {
       const existingContestant = await contestantModel.findByreference(reference);
 
@@ -66,7 +66,7 @@ export default async function ContestantsPage({ searchParams }: ContestantsPageP
           <div className="pt-6 border-t border-[#C9A84C]/10 flex flex-col gap-3">
             <Link
               href="/register"
-              className="w-full py-3.5 px-6 bg-gradient-to-br from-[#C9A84C] to-[#8B6914] text-[#080808] font-['Cinzel',serif] text-[0.75rem] tracking-[0.2em] uppercase font-bold flex items-center justify-center gap-2 transition-all hover:brightness-110"
+              className="w-full py-3.5 px-6 bg-gradient-to-br from-[#C9A84C] to-[#8B6914] text-[#080808] font-['Cinzel',serif] text-[0.75rem] uppercase font-bold flex items-center justify-center gap-2 transition-all hover:brightness-110"
             >
               <ArrowLeft size={14} />
               Return to Registration

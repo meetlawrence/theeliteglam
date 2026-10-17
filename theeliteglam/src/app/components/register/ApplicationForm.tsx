@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, type ChangeEvent } from "react";
+import React, { useState, useEffect, type ChangeEvent } from "react";
 import { ArrowRight, Check, AlertCircle, Upload } from "lucide-react";
 import { FormField } from "./FormField";
 import { SelectField } from "./SelectField";
@@ -9,16 +9,26 @@ import { STATES, TRIBES } from "./constants";
 
 type ContestantCategory = "MALE" | "FEMALE";
 
+interface CountryOption {
+  name: string;
+  code: string;
+  flag: string;
+  callingCodes: string[];
+}
+
 type ApplicationFormData = {
   name: string;
   email: string;
   gender: string;
   image: string;
   stageName: string;
-  height: string;
+  heightFeet: string;
+  heightInches: string;
   weight: string;
   bio: string;
   portfolio: string;
+  phoneCountry: string;
+  countryCode: string;
   phone: string;
   age: string;
   state: string;
@@ -36,10 +46,13 @@ const initialFormData: ApplicationFormData = {
   gender: "",
   image: "",
   stageName: "",
-  height: "",
+  heightFeet: "",
+  heightInches: "",
   weight: "",
   bio: "",
   portfolio: "",
+  phoneCountry: "NG",
+  countryCode: "+234",
   phone: "",
   age: "",
   state: "",
@@ -74,6 +87,60 @@ export function ApplicationForm({ reference }: { reference: string }) {
   const [submitError, setSubmitError] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  const [countries, setCountries] = useState<CountryOption[]>([]);
+  const [isLoadingCountries, setIsLoadingCountries] = useState(true);
+  const [countryLoadError, setCountryLoadError] = useState("");
+  const [retryCountryLoad, setRetryCountryLoad] = useState(0);
+  const [isCustomTribe, setIsCustomTribe] = useState(false);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    let isActive = true;
+
+    async function fetchCountries() {
+      setIsLoadingCountries(true);
+      setCountryLoadError("");
+      try {
+        const response = await fetch("/api/countries", {
+          signal: controller.signal,
+          cache: "no-store",
+        });
+        if (!response.ok) {
+          const result: { message?: string } = await response.json();
+          throw new Error(result.message || "Country list could not be loaded.");
+        }
+
+        const result: { success?: boolean; data?: CountryOption[] } = await response.json();
+        if (!result.success || !Array.isArray(result.data)) {
+          throw new Error("Country list response was invalid.");
+        }
+        if (result.data.length < 100) {
+          throw new Error("No countries were returned.");
+        }
+
+        if (isActive) setCountries(result.data);
+      } catch (error) {
+        if (controller.signal.aborted) return;
+        console.error("Failed to load country and calling-code list:", error);
+        if (isActive) {
+          setCountryLoadError(
+            error instanceof Error
+              ? error.message
+              : "Country list could not be loaded. You can retry or continue with Nigeria.",
+          );
+        }
+      } finally {
+        if (isActive) setIsLoadingCountries(false);
+      }
+    }
+
+    void fetchCountries();
+    return () => {
+      isActive = false;
+      controller.abort();
+    };
+  }, [retryCountryLoad]);
+
   const set = (key: keyof ApplicationFormData, value: string) => {
     setFormData((current) => ({ ...current, [key]: value }));
     if (errors[key]) {
@@ -84,6 +151,41 @@ export function ApplicationForm({ reference }: { reference: string }) {
       });
     }
   };
+
+  const handleCountryChange = (countryName: string) => {
+    setIsCustomTribe(countryName !== "Nigeria");
+    setFormData((current) => ({
+      ...current,
+      country: countryName,
+      phoneCountry:
+        countries.find((country) => country.name === countryName)?.code ??
+        current.phoneCountry,
+      countryCode:
+        countries.find((country) => country.name === countryName)?.callingCodes[0] ??
+        current.countryCode,
+      state: "",
+      tribe: "",
+    }));
+    setErrors((current) => {
+      const next = { ...current };
+      delete next.country;
+      delete next.state;
+      delete next.tribe;
+      return next;
+    });
+  };
+
+  const countryNames = countries.length > 0
+    ? countries.map((country) => country.name)
+    : ["Nigeria"];
+  const callingCodeOptions = countries.length > 0
+    ? countries.filter((country) => country.callingCodes.length > 0)
+    : [{
+        name: "Nigeria",
+        code: "NG",
+        flag: "🇳🇬",
+        callingCodes: ["+234"],
+      }];
 
   const handleImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     const input = event.currentTarget;
@@ -139,16 +241,13 @@ export function ApplicationForm({ reference }: { reference: string }) {
     } catch (uploadError) {
       setErrors((current) => ({
         ...current,
-        image: uploadError instanceof Error
-          ? uploadError.message
-          : "Unable to upload image.",
+        image: uploadError instanceof Error ? uploadError.message : "Unable to upload image.",
       }));
     } finally {
       setIsUploadingImage(false);
     }
   };
 
-  // --- Per-Section Field Validation ---
   const validateSection = (currentSection: number): boolean => {
     const newErrors: Record<string, string> = {};
 
@@ -172,22 +271,23 @@ export function ApplicationForm({ reference }: { reference: string }) {
     }
 
     if (currentSection === 1) {
-      if (!formData.state) newErrors.state = "Please select your state";
+      if (formData.state.trim().length < 2) {
+        newErrors.state = formData.country === "Nigeria"
+          ? "Please select your state"
+          : "Please enter your district or province";
+      }
       if (formData.country.trim().length < 2) newErrors.country = "Enter a valid country";
-      if (formData.tribe.trim().length < 2) {
-        newErrors.tribe = "Please select your tribe / ethnic group";
+      if (!formData.tribe.trim() || formData.tribe.trim().length < 2) {
+        newErrors.tribe = "Please select or type your tribe / ethnic group";
       }
       if (formData.occupation.trim().length < 2) {
         newErrors.occupation = "Occupation must be at least 2 characters";
       }
-
-      if (formData.stageName.trim() && formData.stageName.trim().length < 2) {
-        newErrors.stageName = "Stage name must be at least 2 characters";
+      
+      if (!formData.heightFeet) {
+        newErrors.height = "Please enter your height in feet";
       }
-      if (formData.height && (!Number.isFinite(Number(formData.height)) || Number(formData.height) <= 0)) {
-        newErrors.height = "Enter a valid height in cm";
-      }
-      if (formData.weight && (!Number.isFinite(Number(formData.weight)) || Number(formData.weight) <= 0)) {
+      if (!formData.weight || !Number.isFinite(Number(formData.weight)) || Number(formData.weight) <= 0) {
         newErrors.weight = "Enter a valid weight in kg";
       }
     }
@@ -234,15 +334,48 @@ export function ApplicationForm({ reference }: { reference: string }) {
             placeholder="amaka@email.com"
             error={errors.email}
           />
-          <FormField
-            label="Phone Number"
-            type="tel"
-            value={formData.phone}
-            onChange={(value) => set("phone", value)}
-            required
-            placeholder="+234 801 234 5678"
-            error={errors.phone}
-          />
+          <div>
+            <label className="block font-['Raleway',sans-serif] text-[0.72rem] tracking-[0.2em] text-[#9A8C6A] uppercase mb-[0.5rem]">
+              Phone Number *
+            </label>
+            <div className="flex gap-2">
+              <select
+                value={formData.phoneCountry}
+                onChange={(event) => {
+                  const country = callingCodeOptions.find((item) => item.code === event.target.value);
+                  if (!country) return;
+                  setFormData((current) => ({
+                    ...current,
+                    phoneCountry: country.code,
+                    countryCode: country.callingCodes[0],
+                  }));
+                }}
+                aria-label="Phone country calling code"
+                className="max-w-[190px] border border-[#C9A84C]/20 bg-[#121212] px-3 py-3.5 font-['Raleway',sans-serif] text-sm text-[#F5EDD6] focus:border-[#C9A84C] focus:outline-none"
+              >
+                {callingCodeOptions.map((country) => (
+                  <option
+                    key={country.code}
+                    value={country.code}
+                    className="bg-[#121212] text-[#F5EDD6]"
+                  >
+                    {country.callingCodes[0]}
+                  </option>
+                ))}
+              </select>
+              <div className="flex-1">
+                <FormField
+                  label=""
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(value) => set("phone", value)}
+                  required
+                  placeholder="801 234 5678"
+                  error={errors.phone}
+                />
+              </div>
+            </div>
+          </div>
           <FormField
             label="Age"
             type="number"
@@ -279,8 +412,8 @@ export function ApplicationForm({ reference }: { reference: string }) {
                     formData.gender === gender
                       ? "bg-[#C9A84C]/12 border border-[#C9A84C] text-[#F0C04A]"
                       : errors.gender
-                        ? "bg-white/[0.02] border border-[#C96B5D] text-[#9A8C6A]"
-                        : "bg-white/[0.02] border border-[#C9A84C]/20 text-[#9A8C6A]"
+                      ? "bg-white/[0.02] border border-[#C96B5D] text-[#9A8C6A]"
+                      : "bg-white/[0.02] border border-[#C9A84C]/20 text-[#9A8C6A]"
                   }`}
                 >
                   {gender}
@@ -301,57 +434,142 @@ export function ApplicationForm({ reference }: { reference: string }) {
       fields: (
         <div className="flex flex-col gap-5">
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <FormField
-              label="Height (cm) *"
-              type="number"
-              value={formData.height}
-              onChange={(value) => set("height", value)}
-              min="0"
-              step="any"
-              placeholder="175"
-              required
-              error={errors.height}
-            />
-            <FormField
-              label="Weight (kg)"
-              type="number"
-              value={formData.weight}
-              onChange={(value) => set("weight", value)}
-              min="0"
-              step="any"
-              placeholder="65"
-              required
-              error={errors.weight}
-            />
+          <div className="flex flex-col gap-1">
+            <label className="block font-['Raleway',sans-serif] text-[0.72rem] tracking-[0.2em] text-[#9A8C6A] uppercase mb-[0.5rem]">
+              Height (Feet & Inches) *
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              <FormField
+                label=""
+                type="number"
+                value={formData.heightFeet}
+                onChange={(value) => set("heightFeet", value)}
+                min="3"
+                max="8"
+                placeholder="Feet (e.g. 5)"
+                error={errors.height}
+              />
+              <FormField
+                label=""
+                type="number"
+                value={formData.heightInches}
+                onChange={(value) => set("heightInches", value)}
+                min="0"
+                max="11"
+                placeholder="Inches (e.g. 8)"
+              />
+            </div>
+            {errors.height && (
+              <p role="alert" className="font-['Raleway',sans-serif] text-[0.7rem] text-[#C96B5D] mt-1.5">
+                {errors.height}
+              </p>
+            )}
           </div>
-          <SelectField
-            label="State *"
-            value={formData.state}
-            onChange={(value) => set("state", value)}
-            options={STATES}
-            placeholder="Select state"
-            required
-            error={errors.state}
-          />
+
           <FormField
-            label="Country"
-            type="text"
-            value={formData.country}
-            onChange={(value) => set("country", value)}
+            label="Weight (kg) *"
+            type="number"
+            value={formData.weight}
+            onChange={(value) => set("weight", value)}
+            min="0"
+            step="any"
+            placeholder="65"
             required
-            placeholder="Nigeria"
-            error={errors.country}
+            error={errors.weight}
           />
-          <SelectField
-            label="Tribe / Ethnic Group *"
-            value={formData.tribe}
-            onChange={(value) => set("tribe", value)}
-            options={TRIBES}
-            placeholder="Select tribe"
-            required
-            error={errors.tribe}
-          />
+          <div>
+            <SelectField
+              label="Country *"
+              value={formData.country}
+              onChange={handleCountryChange}
+              options={countryNames}
+              placeholder={isLoadingCountries ? "Loading countries..." : "Select country"}
+              required
+              disabled={isLoadingCountries}
+              error={errors.country}
+            />
+            {isLoadingCountries && (
+              <p role="status" className="mt-2 font-['Raleway',sans-serif] text-xs text-[#9A8C6A]">
+                Loading countries and calling codes…
+              </p>
+            )}
+            {countryLoadError && (
+              <p role="alert" className="mt-2 font-['Raleway',sans-serif] text-xs text-[#C96B5D]">
+                {countryLoadError}{" "}
+                <button
+                  type="button"
+                  onClick={() => setRetryCountryLoad((current) => current + 1)}
+                  className="underline underline-offset-2"
+                >
+                  Retry
+                </button>
+              </p>
+            )}
+          </div>
+
+          {formData.country === "Nigeria" ? (
+            <SelectField
+              label="State *"
+              value={formData.state}
+              onChange={(value) => set("state", value)}
+              options={STATES}
+              placeholder="Select state"
+              required
+              error={errors.state}
+            />
+          ) : (
+            <FormField
+              label="District / Province *"
+              type="text"
+              value={formData.state}
+              onChange={(value) => set("state", value)}
+              required
+              placeholder="Enter your district, state, or province"
+              error={errors.state}
+            />
+          )}
+
+          {formData.country === "Nigeria" ? (
+            <div>
+              <SelectField
+                label="Tribe / Ethnic Group *"
+                value={isCustomTribe ? "OTHER" : formData.tribe}
+                onChange={(value) => {
+                  const useCustomEntry = value === "OTHER";
+                  setIsCustomTribe(useCustomEntry);
+                  set("tribe", useCustomEntry ? "" : value);
+                }}
+                options={[...TRIBES, "OTHER"]}
+                placeholder="Select tribe"
+                required
+                error={errors.tribe}
+              />
+              {isCustomTribe && (
+                <div className="mt-3">
+                  <FormField
+                    label="Enter your tribe"
+                    type="text"
+                    value={formData.tribe}
+                    onChange={(value) => set("tribe", value)}
+                    required
+                    placeholder="Type your tribe or ethnic group"
+                    error={errors.tribe}
+                  />
+                </div>
+              )}
+            </div>
+          ) : (
+            <FormField
+              label="Tribe / Ethnic Group *"
+              type="text"
+              value={formData.tribe}
+              onChange={(value) => set("tribe", value)}
+              required
+              placeholder="Enter your tribe or ethnic group"
+              error={errors.tribe}
+            />
+          )}
+
           <FormField
             label="Occupation / Profession"
             type="text"
@@ -473,18 +691,25 @@ export function ApplicationForm({ reference }: { reference: string }) {
     setSubmitError("");
 
     try {
+      // Calculate total height in cm from feet and inches
+      const feet = Number(formData.heightFeet) || 0;
+      const inches = Number(formData.heightInches) || 0;
+      const totalHeightCm = Math.round((feet * 30.48) + (inches * 2.54));
+
+      // Format full phone number with country code
+      const fullPhone = `${formData.countryCode}${formData.phone.trim().replace(/^0+/, "")}`;
+
       const payload = {
         reference,
         name: formData.name.trim(),
         email: formData.email.trim(),
         gender: formData.gender,
         ...(formData.image.trim() && { image: formData.image.trim() }),
-        ...(formData.stageName.trim() && { stageName: formData.stageName.trim() }),
-        ...(formData.height && { height: Number(formData.height) }),
+        height: totalHeightCm,
         ...(formData.weight && { weight: Number(formData.weight) }),
         ...(formData.bio.trim() && { bio: formData.bio.trim() }),
         ...(formData.portfolio.trim() && { portfolio: formData.portfolio.trim() }),
-        phone: formData.phone.trim(),
+        phone: fullPhone,
         age: Number(formData.age),
         state: formData.state.trim(),
         country: formData.country.trim(),
@@ -524,7 +749,7 @@ export function ApplicationForm({ reference }: { reference: string }) {
 
   if (submitted) {
     return (
-      <div className="max-w-[760px] mx-auto pt-24 pb-32 px-8">
+      <div className="max-w-[760px] mx-auto pt-24 pb-32 px-8 text-center">
         <div className="w-20 h-20 mx-auto mb-8 rounded-full bg-[radial-gradient(circle,rgba(201,168,76,0.15),rgba(201,168,76,0.04))] border border-[#C9A84C]/40 flex items-center justify-center shadow-[0_0_50px_rgba(201,168,76,0.15)]">
           <Check size={32} className="text-[#F0C04A]" />
         </div>
@@ -614,7 +839,7 @@ export function ApplicationForm({ reference }: { reference: string }) {
             }}
             className="bg-transparent border border-[#C9A84C]/20 text-[#9A8C6A] py-3.5 px-6 font-['Raleway',sans-serif] text-[0.72rem] tracking-[0.18em] uppercase cursor-pointer hover:border-[#C9A84C] transition-all"
           >
-            ← Back
+            Back
           </button>
         )}
         <button

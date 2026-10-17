@@ -10,6 +10,7 @@ export function SelectField({
   placeholder,
   required = false,
   error,
+  disabled = false,
 }: {
   label: string;
   value: string;
@@ -18,6 +19,7 @@ export function SelectField({
   placeholder: string;
   required?: boolean;
   error?: string;
+  disabled?: boolean;
 }) {
   const id = label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
   const errorId = `${id}-error`;
@@ -30,11 +32,12 @@ export function SelectField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         required={required}
+        disabled={disabled}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? errorId : undefined}
         className={`w-full px-4 py-[0.85rem] bg-[#0E0E0E] border font-['Raleway',sans-serif] text-[0.9rem] outline-none cursor-pointer ${
           error ? "border-[#C96B5D]" : "border-[#C9A84C]/20"
-        } ${value ? "text-[#F5EDD6]" : "text-[#5A5040]"}`}
+        } ${value ? "text-[#F5EDD6]" : "text-[#5A5040]"} disabled:cursor-not-allowed disabled:opacity-60`}
       >
         <option value="" disabled>
           {placeholder}
