@@ -62,6 +62,11 @@ export type Contestant = Prisma.ContestantModel
  */
 export type Event = Prisma.EventModel
 /**
+ * Model EventItineraryDay
+ * 
+ */
+export type EventItineraryDay = Prisma.EventItineraryDayModel
+/**
  * Model TicketType
  * 
  */

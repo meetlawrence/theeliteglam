@@ -50,8 +50,14 @@ export function HeroSection({ onNavigate, eventStatus }: HeroSectionProps) {
           <span className="h-px w-10 bg-linear-to-l from-transparent to-primary" />
         </div>        
 
-        <h1 className="mt-6 mb-4 font-cinzel text-[clamp(2rem,4vw,3.4rem)] uppercase tracking-[0.3em] text-[#F5EDD6] opacity-0 animate-[fadeInUp_1s_ease-out_0.3s_forwards] lg:text-[clamp(2.6rem,5vw,4.2rem)] lg:tracking-[0.35em]">
-          The Elite Glam
+        <h1 className="mt-6 mb-4 flex flex-col items-center font-cinzel uppercase tracking-[0.3em] text-[#F5EDD6] opacity-0 animate-[fadeInUp_1s_ease-out_0.3s_forwards] leading-[1.1]">
+          <span className="text-[clamp(1rem,2vw,1.4rem)] tracking-[0.5em] text-[#9A8C6A] font-light">The</span>
+          <span className="text-[clamp(2.2rem,5vw,4rem)] font-bold text-[#F0C04A] drop-shadow-[0_0_25px_rgba(201,168,76,0.2)] my-1">
+            EliteGlam
+          </span>
+          <span className="text-[clamp(1.4rem,3vw,2.2rem)] tracking-[0.4em] text-[#F5EDD6] font-medium">
+            Pageant
+          </span>
         </h1>
 
         <p className="my-6 font-playfair italic text-lg text-muted-foreground leading-relaxed opacity-0 animate-[fadeInUp_1s_ease-out_0.45s_forwards]">
