@@ -58,6 +58,11 @@ export type Vote = Prisma.VoteModel
  */
 export type TicketTransaction = Prisma.TicketTransactionModel
 /**
+ * Model Category
+ * 
+ */
+export type Category = Prisma.CategoryModel
+/**
  * Model Ticket
  * 
  */
