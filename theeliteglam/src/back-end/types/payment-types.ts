@@ -99,3 +99,19 @@ export type GatewayVerifyResult = {
   paidAt?: string;
   rawResponse?: unknown;
 };
+
+export type InitializePaymentInput = {
+  email: string;
+  amount: number;
+  reference: string;
+  purpose: PaymentPurpose;
+  gateway?: PaymentGateway;
+  metadata?: Record<string, unknown>;
+  callbackUrl?: string;
+};
+
+export type PaymentResult = {
+  authorizationUrl: string;
+  reference: string;
+  accessCode?: string;
+};
