@@ -95,11 +95,11 @@ export async function POST(req: NextRequest) {
     // 6. Store the final response
     await completeIdempotentResponse({
       key: idempotencyKey,
-      statusCode: result.status,
+      statusCode: 200,
       response: result,
     });
 
-    return NextResponse.json(result, { status: result.status });
+    return NextResponse.json(result, { status: 200 });
   } catch (error: any) {
     console.error("[POST /api/payments/initialize]", error);
     return NextResponse.json(
