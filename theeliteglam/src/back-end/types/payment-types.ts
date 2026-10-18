@@ -116,8 +116,8 @@ export type InitializePaymentInput = {
 };
 
 export type PaymentResult = {
-  authorizationUrl: string;
-  reference: string;
+  authorizationUrl?: string;
+  reference?: string;
   accessCode?: string;
   success?: boolean;
   message?: string;
