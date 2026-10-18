@@ -81,7 +81,7 @@ export class PaymentService {
           }
         }
 
-        amount = Number(ticketType.price) * body.quantity;
+        amount = Number(ticketType.price) * (body.quantity ?? 1);
       } else {
         // CONTESTANT
         amount = Number(event.contestantFee);
