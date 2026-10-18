@@ -1,4 +1,3 @@
-import { cloneElement, isValidElement } from "react";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { JWT } from "@/back-end/lib/utils/jwt";
@@ -25,13 +24,10 @@ export default async function Layout({ children }: { children: React.ReactNode }
   }
 
   const user = { name: admin.name, role: admin.role };
-  const pageWithUser = isValidElement(children)
-    ? cloneElement(children, { user })
-    : children;
 
   return (
     <DashboardClientLayout user={user}>
-      {pageWithUser}
+      {children}
     </DashboardClientLayout>
   );
 }
