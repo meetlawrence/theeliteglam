@@ -50,6 +50,8 @@ export default function AdminContestantsPanel() {
   const handleCreate = () => {
     const empty: Contestant = {
       id: Date.now(),
+      databaseId: "",
+      stageName: "",
       name: "New Contestant",
       state: "",
       age: 18,
