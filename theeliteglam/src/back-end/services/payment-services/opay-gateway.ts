@@ -7,17 +7,17 @@ import type {
 export class OPayGateway implements PaymentGateway {
   async initialize(): Promise<GatewayInitializeResult> {
     return {
-      success: false,
-      message: "OPay gateway is not implemented yet",
+      authorizationUrl: "",
+      reference: "",
     };
   }
 
   async verify(): Promise<GatewayVerifyResult> {
     return {
-      success: false,
-      status: "FAILED",
+      status: false,
+      reference: "",
       amount: 0,
-      message: "OPay gateway is not implemented yet",
+      gatewayResponse: "OPay gateway is not implemented yet",
     };
   }
 }
