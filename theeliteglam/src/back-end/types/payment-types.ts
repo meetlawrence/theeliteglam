@@ -82,7 +82,7 @@ export interface PaystackVerificationResponse {
   };
 }
 
-export type PaymentPurpose = "REGISTRATION" | "VOTING" | "TICKET";
+export type PaymentPurpose = "REGISTRATION" | "VOTING" | "TICKET" | "CONTESTANT";
 export type PaymentGateway = "PAYSTACK";
 
 export type GatewayInitializeResult = {
