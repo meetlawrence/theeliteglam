@@ -83,32 +83,37 @@ export interface PaystackVerificationResponse {
 }
 
 export type PaymentPurpose = "REGISTRATION" | "VOTING" | "TICKET" | "CONTESTANT";
-export type PaymentGateway = "PAYSTACK";
+export type PaymentGateway = "PAYSTACK" | "OPAY";
 
 export type GatewayInitializeResult = {
-  authorizationUrl: string;
-  reference: string;
+  success: boolean;
+  authorizationUrl?: string;
+  reference?: string;
   accessCode?: string;
+  gatewayReference?: string;
+  message?: string;
+  raw?: unknown;
 };
 
 export type GatewayVerifyResult = {
-  status: boolean;
-  reference: string;
+  success: boolean;
+  status: "SUCCESS" | "FAILED" | "PENDING";
   amount: number;
-  gatewayResponse: string;
-  paidAt?: string;
-  rawResponse?: unknown;
+  gatewayReference?: string;
+  currency?: string;
+  message?: string;
+  raw?: unknown;
 };
 
 export type InitializePaymentInput = {
   email: string;
   amount: number;
   reference: string;
-  purpose: PaymentPurpose;
-  gateway?: PaymentGateway;
-  metadata?: Record<string, unknown>;
+  purpose: Extract<PaymentPurpose, "TICKET" | "CONTESTANT">;
+  method: PaymentGateway;
+  metadata?: Record<string, string>;
   callbackUrl?: string;
-  eventId?: string;
+  eventId: string;
   ticketTypeId?: string;
   quantity?: number;
   name?: string;
@@ -116,10 +121,8 @@ export type InitializePaymentInput = {
 };
 
 export type PaymentResult = {
-  authorizationUrl?: string;
-  reference?: string;
-  accessCode?: string;
-  success?: boolean;
-  message?: string;
-  status?: number;
+  success: boolean;
+  message: string;
+  status: number;
+  data?: unknown;
 };
