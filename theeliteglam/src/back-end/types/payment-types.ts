@@ -81,3 +81,6 @@ export interface PaystackVerificationResponse {
     subaccount: Record<string, unknown>;
   };
 }
+
+export type PaymentPurpose = "REGISTRATION" | "VOTING" | "TICKET";
+export type PaymentGateway = "PAYSTACK";
