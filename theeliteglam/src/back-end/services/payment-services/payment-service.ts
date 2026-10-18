@@ -72,7 +72,7 @@ export class PaymentService {
             },
           });
 
-          if (sold + body.quantity > ticketType.capacity) {
+          if (sold + (body.quantity ?? 1) > ticketType.capacity) {
             return {
               success: false,
               message: "Not enough tickets remaining for this type",
