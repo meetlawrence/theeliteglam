@@ -81,7 +81,16 @@ export async function POST(req: NextRequest) {
     }
 
     // 5. We own the key → process the payment
-    const result = await paymentService.initialize(validation.data);
+    const amount = 2500000; 
+    const reference = `REF-${randomUUID().slice(0, 8).toUpperCase()}`;
+
+    const paymentInput = {
+      ...validation.data,
+      amount,
+      reference,
+    };
+
+    const result = await paymentService.initialize(paymentInput);
 
     // 6. Store the final response
     await completeIdempotentResponse({
