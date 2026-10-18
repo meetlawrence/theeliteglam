@@ -134,7 +134,6 @@ model Event {
   location       String
   contestantFee  Int
   status         EventStatus @default(UPCOMING)
-  categories     String[]
 
   // --- CRITICAL DATES ---
   registrationOpenDate  DateTime?
@@ -153,6 +152,7 @@ model Event {
   isContestantsVisible Boolean   @default(false) 
 
   // --- RELATIONS ---
+  categories             Category[] // <--- Relation array
   itineraryDays          EventItineraryDay[]
   ticketTransaction      TicketTransaction[]
   votes                  Vote[]
@@ -231,7 +231,7 @@ model TicketTransaction {
   reference     String                 @unique
   paymentMethod String?
   status        TransactionStatus @default(PENDING) //Pending Ones User Initiat Payment Then Update Once Payment is Approved from Payment Gateway
-  clamed        Boolean?               @default(false)
+  claimed        Boolean?               @default(false)
 
   tickets Ticket[]
 
@@ -262,6 +262,7 @@ model Category {
   id        String   @id @default(uuid())
   name      String
   eventId   String
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

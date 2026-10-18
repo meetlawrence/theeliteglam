@@ -1586,7 +1586,6 @@ export const EventScalarFieldEnum = {
   location: 'location',
   contestantFee: 'contestantFee',
   status: 'status',
-  categories: 'categories',
   registrationOpenDate: 'registrationOpenDate',
   registrationCloseDate: 'registrationCloseDate',
   auditionsDate: 'auditionsDate',
@@ -1654,7 +1653,7 @@ export const TicketTransactionScalarFieldEnum = {
   reference: 'reference',
   paymentMethod: 'paymentMethod',
   status: 'status',
-  clamed: 'clamed',
+  claimed: 'claimed',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
