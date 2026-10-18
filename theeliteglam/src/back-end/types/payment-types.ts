@@ -121,4 +121,5 @@ export type PaymentResult = {
   accessCode?: string;
   success?: boolean;
   message?: string;
+  status?: number;
 };
