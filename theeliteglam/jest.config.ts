@@ -1,6 +1,5 @@
-import type { Config } from "jest";
-
-const config: Config = {
+/** @type {import('ts-jest').JestConfigWithTsJest} */
+const config = {
   preset: "ts-jest/presets/default-esm", // ESM-aware preset for Prisma
   testEnvironment: "node",
   roots: ["<rootDir>/src/back-end/jest-test"],
