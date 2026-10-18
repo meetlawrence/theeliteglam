@@ -114,7 +114,7 @@ export class TicketService {
       await prisma.ticketTransaction.update({
         where: { reference },
         data: {
-          clamed: true,
+          claimed: true,
           status: "SUCCESS",
         },
       });
