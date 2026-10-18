@@ -29,7 +29,14 @@ async function main() {
       location: "Lagos, Nigeria",
       contestantFee: 25000,
       status: "UPCOMING",
-      categories: ["MALE", "FEMALE"],
+
+      // Nested Category Relation Creation
+      categories: {
+        create: [
+          { name: "MALE" },
+          { name: "FEMALE" },
+        ],
+      },
 
       // Critical Dates
       registrationOpenDate: new Date("2027-01-15"),
