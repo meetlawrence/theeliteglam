@@ -113,7 +113,7 @@ export function ContestantsView() {
         open={selectedContestantId !== null}
         contestantId={selectedContestantId}
         onClose={() => setSelectedContestantId(null)}
-        onContestantUpdated={handleContestantUpdated}
+        onContestantUpdated={(updated) => handleContestantUpdated(updated as any)}
       />
     </>
   );
