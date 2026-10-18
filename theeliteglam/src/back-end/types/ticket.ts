@@ -1,6 +1,7 @@
 
 export type TicketStatus =
   | "PENDING"
+  | "SENT"
   | "SEND"
   | "USED";
 
