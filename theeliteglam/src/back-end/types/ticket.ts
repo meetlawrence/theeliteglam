@@ -1,16 +1,15 @@
-
 export type TicketStatus =
   | "PENDING"
   | "SENT"
   | "SEND"
   | "USED";
 
-  export interface Ticket {
+export interface Ticket {
   reference: string;
   status: TicketStatus;
   ticketTransactionId: string;
 }
 
-  export interface UpdateTicket {
+export interface UpdateTicket {
   status?: TicketStatus;
 }

@@ -6,7 +6,7 @@ export class TicketModel {
     return await prisma.ticket.create({
       data: {
         reference: data.reference,
-        status: data.status,
+        status: data.status as any,
         ticketTransactionId: data.ticketTransactionId,
       },
     });
@@ -21,7 +21,7 @@ export class TicketModel {
   async update(id: string, data: UpdateTicket) {
     return await prisma.ticket.update({
       where: { id },
-      data,
+      data: data as any,
     });
   }
 
@@ -32,7 +32,7 @@ export class TicketModel {
         await tx.ticket.create({
           data: {
             reference: data.reference,
-            status: data.status,
+            status: data.status as any,
             ticketTransactionId: data.ticketTransactionId,
           },
         });
