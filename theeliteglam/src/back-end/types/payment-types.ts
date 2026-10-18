@@ -84,3 +84,18 @@ export interface PaystackVerificationResponse {
 
 export type PaymentPurpose = "REGISTRATION" | "VOTING" | "TICKET";
 export type PaymentGateway = "PAYSTACK";
+
+export type GatewayInitializeResult = {
+  authorizationUrl: string;
+  reference: string;
+  accessCode?: string;
+};
+
+export type GatewayVerifyResult = {
+  status: boolean;
+  reference: string;
+  amount: number;
+  gatewayResponse: string;
+  paidAt?: string;
+  rawResponse?: unknown;
+};
