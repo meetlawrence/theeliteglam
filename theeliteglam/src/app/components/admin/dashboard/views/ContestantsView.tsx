@@ -87,6 +87,7 @@ export function ContestantsView() {
                 statusMap={statusMap}
                 highlightedId={highlightedId}
                 onEdit={handleEdit}
+                onSelect={(contestant) => {}}
               />
             </div>
 
@@ -100,6 +101,7 @@ export function ContestantsView() {
                 statusMap={statusMap}
                 highlightedId={highlightedId}
                 onEdit={handleEdit}
+                onSelect={(contestant) => {}}
               />
             </div>
           </div>
