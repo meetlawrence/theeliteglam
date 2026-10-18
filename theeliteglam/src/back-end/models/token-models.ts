@@ -30,9 +30,9 @@ export class TokenRepo {
     });
   }
 
-  async revokeAllUserTokens(userId: string): Promise<void> {
+    async revokeAllUserTokens(adminId: string): Promise<void> {
     await prisma.refreshToken.updateMany({
-      where: { userId, revoked: false },
+      where: { adminId, revoked: false },
       data: { revoked: true },
     });
   }
