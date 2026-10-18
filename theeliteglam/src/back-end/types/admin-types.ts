@@ -23,6 +23,7 @@ export interface AdminUpdateData {
   passwordHash?: string;
   emailVerified?: boolean;
   lastLoginAt?: Date | null;
+  role?: "SUPER_ADMIN" | "ADMIN";
 }
 
 export interface CreateAdminData {
