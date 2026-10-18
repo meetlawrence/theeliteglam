@@ -108,6 +108,11 @@ export type InitializePaymentInput = {
   gateway?: PaymentGateway;
   metadata?: Record<string, unknown>;
   callbackUrl?: string;
+  eventId?: string;
+  ticketTypeId?: string;
+  quantity?: number;
+  name?: string;
+  phoneNumber?: string;
 };
 
 export type PaymentResult = {
