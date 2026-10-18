@@ -1,6 +1,7 @@
 interface AdminContestantHeaderProps {
   query: string;
   onQueryChange: (value: string) => void;
+  onCreate?: () => void;
 }
 
 export default function AdminContestantHeader({
