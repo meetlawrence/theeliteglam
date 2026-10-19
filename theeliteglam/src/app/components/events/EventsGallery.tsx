@@ -6,7 +6,7 @@ import SectionLabel from "./SectionLabel";
 import CarouselBtn from "./CarouselBtn";
 import { GALLERY } from "./eventsData";
 
-export default function EventsGallery() {
+export function EventsGallery() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [inView, setInView] = useState(false);
   const galleryRef = useRef<HTMLDivElement>(null);

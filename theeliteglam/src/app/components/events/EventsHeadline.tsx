@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import SectionLabel from "./SectionLabel";
 
-export default function EventsHeadline() {
+export function EventsHeadline() {
   const [inView, setInView] = useState(false);
   const headlineRef = useRef<HTMLDivElement>(null);
 

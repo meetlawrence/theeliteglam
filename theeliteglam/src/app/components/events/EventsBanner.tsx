@@ -7,9 +7,14 @@ import { EVENTS_BANNER_MEDIA } from "./eventsData";
 
 interface EventsBannerProps {
   onNavigate: (page: "tickets" | "register" | "contestants") => void;
+  eventStatus?: {
+    isRegistrationOpen: boolean;
+    isTicketsOpen: boolean;
+    isVotingOpen: boolean;
+  };
 }
 
-export default function EventsBanner({ onNavigate }: EventsBannerProps) {
+export function EventsBanner({ onNavigate, eventStatus }: EventsBannerProps) {
   const [inView, setInView] = useState(false);
   const bannerRef = useRef<HTMLDivElement>(null);
 
