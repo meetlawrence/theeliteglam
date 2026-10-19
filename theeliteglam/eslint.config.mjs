@@ -38,7 +38,7 @@ export default defineConfig([
           trailingComma: "es5",
           printWidth: 100,
           tabWidth: 2,
-          endOfLine: "If", // Better for Windows
+          endOfLine: "lf", // Better for Windows
         },
       ],
 

@@ -1,0 +1,333 @@
+[
+  {
+    "file": "admin/delete-admin/route.ts",
+    "path": "/api/admin/delete-admin",
+    "methods": [
+      "DELETE"
+    ]
+  },
+  {
+    "file": "admin/get-admin-by-Id/[id]/route.ts",
+    "path": "/api/admin/get-admin-by-Id/{id}",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "file": "admin/get-admin/route.ts",
+    "path": "/api/admin/get-admin",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "file": "admin/patch-admin/route.ts",
+    "path": "/api/admin/patch-admin",
+    "methods": [
+      "PATCH"
+    ]
+  },
+  {
+    "file": "admin/post-admin/route.ts",
+    "path": "/api/admin/post-admin",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "admin/users/route.ts",
+    "path": "/api/admin/users",
+    "methods": [
+      "GET",
+      "PATCH",
+      "DELETE"
+    ]
+  },
+  {
+    "file": "auth/forgot-password/route.ts",
+    "path": "/api/auth/forgot-password",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "auth/login/route.ts",
+    "path": "/api/auth/login",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "auth/logout/route.ts",
+    "path": "/api/auth/logout",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "auth/me/route.ts",
+    "path": "/api/auth/me",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "file": "auth/reset-password/route.ts",
+    "path": "/api/auth/reset-password",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "auth/signup/route.ts",
+    "path": "/api/auth/signup",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "auth/verify-email/route.ts",
+    "path": "/api/auth/verify-email",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "categories/delete-categories/route.ts",
+    "path": "/api/categories/delete-categories",
+    "methods": [
+      "DELETE"
+    ]
+  },
+  {
+    "file": "categories/get-categories-by-id/route.ts",
+    "path": "/api/categories/get-categories-by-id",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "file": "categories/get-categories/route.ts",
+    "path": "/api/categories/get-categories",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "file": "categories/patch-categories/route.ts",
+    "path": "/api/categories/patch-categories",
+    "methods": [
+      "PATCH"
+    ]
+  },
+  {
+    "file": "categories/post-categories/route.ts",
+    "path": "/api/categories/post-categories",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "contestants/delete-contestant/route.ts",
+    "path": "/api/contestants/delete-contestant",
+    "methods": [
+      "DELETE"
+    ]
+  },
+  {
+    "file": "contestants/get-constestants-by-event-id/route.ts",
+    "path": "/api/contestants/get-constestants-by-event-id",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "file": "contestants/get-contestant-by-id/route.ts",
+    "path": "/api/contestants/get-contestant-by-id",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "file": "contestants/get-contestants/route.ts",
+    "path": "/api/contestants/get-contestants",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "file": "contestants/patch-contestant/route.ts",
+    "path": "/api/contestants/patch-contestant",
+    "methods": [
+      "PATCH"
+    ]
+  },
+  {
+    "file": "contestants/payment/route.ts",
+    "path": "/api/contestants/payment",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "contestants/post-contestant/route.ts",
+    "path": "/api/contestants/post-contestant",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "contestants/verify-payment/route.ts",
+    "path": "/api/contestants/verify-payment",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "file": "event/delete-event/route.ts",
+    "path": "/api/event/delete-event",
+    "methods": [
+      "DELETE"
+    ]
+  },
+  {
+    "file": "event/get-event-by-id/route.ts",
+    "path": "/api/event/get-event-by-id",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "file": "event/get-events/route.ts",
+    "path": "/api/event/get-events",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "file": "event/patch-event/route.ts",
+    "path": "/api/event/patch-event",
+    "methods": [
+      "PATCH"
+    ]
+  },
+  {
+    "file": "event/post-event/route.ts",
+    "path": "/api/event/post-event",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "payment/failed-fulfillments/route.ts",
+    "path": "/api/payment/failed-fulfillments",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "file": "payment/initialize/route.ts",
+    "path": "/api/payment/initialize",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "payment/resend-email/route.ts",
+    "path": "/api/payment/resend-email",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "payment/retry-fulfillment/route.ts",
+    "path": "/api/payment/retry-fulfillment",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "payment/verify/route.ts",
+    "path": "/api/payment/verify",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "payment/webhook/route.ts",
+    "path": "/api/payment/webhook",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "sponsor/delete-sponsor/route.ts",
+    "path": "/api/sponsor/delete-sponsor",
+    "methods": [
+      "DELETE"
+    ]
+  },
+  {
+    "file": "sponsor/get-sponsor-by-id/route.ts",
+    "path": "/api/sponsor/get-sponsor-by-id",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "file": "sponsor/get-sponsors-by-event-id/route.ts",
+    "path": "/api/sponsor/get-sponsors-by-event-id",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "file": "sponsor/patch-sponsor/route.ts",
+    "path": "/api/sponsor/patch-sponsor",
+    "methods": [
+      "PATCH"
+    ]
+  },
+  {
+    "file": "sponsor/post-sponsor/route.ts",
+    "path": "/api/sponsor/post-sponsor",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "ticket/ticket-types/delete-ticket-type/route.ts",
+    "path": "/api/ticket/ticket-types/delete-ticket-type",
+    "methods": [
+      "DELETE"
+    ]
+  },
+  {
+    "file": "ticket/ticket-types/get-ticket-type-by-id/route.ts",
+    "path": "/api/ticket/ticket-types/get-ticket-type-by-id",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "file": "ticket/ticket-types/get-ticket-types-by-event-id/route.ts",
+    "path": "/api/ticket/ticket-types/get-ticket-types-by-event-id",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "file": "ticket/ticket-types/patch-ticket-type/route.ts",
+    "path": "/api/ticket/ticket-types/patch-ticket-type",
+    "methods": [
+      "PATCH"
+    ]
+  },
+  {
+    "file": "ticket/ticket-types/post-ticket-type/route.ts",
+    "path": "/api/ticket/ticket-types/post-ticket-type",
+    "methods": [
+      "POST"
+    ]
+  }
+]
