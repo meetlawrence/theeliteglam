@@ -34,7 +34,7 @@ export default defineConfig([
         "warn",
         {
           singleQuote: false,
-          semi: false,
+          semi: true,
           trailingComma: "es5",
           printWidth: 100,
           tabWidth: 2,

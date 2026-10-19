@@ -1,26 +1,16 @@
-import {
-  describe,
-  expect,
-  test,
-  beforeAll,
-  afterAll,
-  beforeEach,
-  jest,
-} from "@jest/globals";
+import { describe, expect, test, beforeAll, afterAll, beforeEach, jest } from "@jest/globals";
 
 const mockSendEmail = jest.fn(
   (_to: string, _payload: Record<string, unknown>): Promise<{ success: boolean }> =>
-    Promise.resolve({ success: true })
+    Promise.resolve({ success: true }),
 );
 
-const mockUploadQRCode = jest.fn(
-  (_base64: string): Promise<string> =>
-    Promise.resolve("https://cdn.example.com/qr.png")
+const mockUploadQRCode = jest.fn((_base64: string): Promise<string> =>
+  Promise.resolve("https://cdn.example.com/qr.png"),
 );
 
 jest.unstable_mockModule("@/back-end/lib/email/resend", () => ({
-  sendEmail: (to: string, payload: Record<string, unknown>) =>
-    mockSendEmail(to, payload),
+  sendEmail: (to: string, payload: Record<string, unknown>) => mockSendEmail(to, payload),
 }));
 
 jest.unstable_mockModule("@/back-end/database/cloudinary", () => ({
@@ -33,8 +23,7 @@ jest.unstable_mockModule("qrcode", () => ({
   },
 }));
 
-const { prisma, resetPaymentTables, seedMinimalEvent, cleanupSeed } =
-  await import("./helpers/db");
+const { prisma, resetPaymentTables, seedMinimalEvent, cleanupSeed } = await import("./helpers/db");
 const { paymentModel } = await import("@/back-end/models/payment-model");
 const { ticketService } = await import("@/back-end/services/ticket-service");
 
@@ -70,9 +59,7 @@ describe("ticket fulfillment (real DB)", () => {
   beforeEach(async () => {
     await resetPaymentTables(eventId);
     mockSendEmail.mockImplementation(() => Promise.resolve({ success: true }));
-    mockUploadQRCode.mockImplementation(() =>
-      Promise.resolve("https://cdn.example.com/qr.png")
-    );
+    mockUploadQRCode.mockImplementation(() => Promise.resolve("https://cdn.example.com/qr.png"));
   });
 
   afterAll(async () => {
@@ -135,7 +122,7 @@ describe("ticket fulfillment (real DB)", () => {
           eventId,
           ticket: "TIK-DUPCODE",
         },
-      })
+      }),
     ).rejects.toMatchObject({ code: "P2002" });
   });
 
@@ -163,7 +150,7 @@ describe("ticket fulfillment (real DB)", () => {
           eventId,
           ticket: "TIK-BBBB2222",
         },
-      })
+      }),
     ).rejects.toMatchObject({ code: "P2002" });
   });
 

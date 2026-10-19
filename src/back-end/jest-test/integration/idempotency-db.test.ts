@@ -1,18 +1,6 @@
-import {
-  describe,
-  expect,
-  test,
-  beforeAll,
-  afterAll,
-  beforeEach,
-} from "@jest/globals";
+import { describe, expect, test, beforeAll, afterAll, beforeEach } from "@jest/globals";
 import { prisma } from "@/back-end/database/db-connect";
-import {
-  resetPaymentTables,
-  seedMinimalEvent,
-  cleanupSeed,
-  TEST_IDEM_PREFIX,
-} from "./helpers/db";
+import { resetPaymentTables, seedMinimalEvent, cleanupSeed, TEST_IDEM_PREFIX } from "./helpers/db";
 import { claimIdempotencyKey } from "@/back-end/lib/utils/idempotency";
 
 let eventId = "";
@@ -58,7 +46,7 @@ describe("Idempotency DB constraints (Prisma integration)", () => {
           response: {},
           expiresAt: new Date(Date.now() + 60_000),
         },
-      })
+      }),
     ).rejects.toMatchObject({ code: "P2002" });
   });
 

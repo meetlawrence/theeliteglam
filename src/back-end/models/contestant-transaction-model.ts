@@ -1,5 +1,8 @@
 import { prisma } from "../db/db-connect";
-import type { UpdateContestantTransaction, ContestantTransaction } from "../types/contestant-transaction-types";
+import type {
+  UpdateContestantTransaction,
+  ContestantTransaction,
+} from "../types/contestant-transaction-types";
 
 export class ContestantTransactionModel {
   async create(data: ContestantTransaction) {
@@ -10,7 +13,7 @@ export class ContestantTransactionModel {
         amount: data.amount,
         phoneNumber: data.phoneNumber,
         reference: data.reference,
-        eventId: data.eventId
+        eventId: data.eventId,
       },
     });
   }
