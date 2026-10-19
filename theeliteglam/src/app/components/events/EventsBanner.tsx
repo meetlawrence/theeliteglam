@@ -56,7 +56,7 @@ export default function EventsBanner({ onNavigate }: EventsBannerProps) {
           </video>
         </div>
 
-        {/* Overlays / Gradients */}
+        {/* Overlays */}
         <div className="absolute inset-0 bg-[rgba(8,8,8,0.55)]" />
         <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(8,8,8,1)_0%,rgba(8,8,8,0.4)_40%,transparent_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_60%,rgba(201,168,76,0.1)_0%,transparent_70%)]" />
@@ -73,7 +73,7 @@ export default function EventsBanner({ onNavigate }: EventsBannerProps) {
           </div>
 
           <h1 className="font-cinzel text-[clamp(2.2rem,6vw,5rem)] text-[#F5EDD6] tracking-[0.06em] leading-[1.05] mb-6 max-w-[800px]">
-            The Elite Glam
+            The EliteGlam
             <br />
             <span className="bg-[linear-gradient(135deg,#C9A84C,#F0C04A)] bg-clip-text text-transparent block">
               Events

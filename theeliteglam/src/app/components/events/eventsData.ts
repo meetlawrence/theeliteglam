@@ -5,51 +5,48 @@ export const EVENTS_BANNER_MEDIA = {
 
 export const GALLERY = [
   {
-    url: "/events/costume/1.jpg",
+    url: "/events/costume/1.webp",
     caption: "Costume",
   },
   {
-    url: "/events/costume/2.jpg",
+    url: "/events/costume/2.webp",
     caption: "Costume",
   },
   {
-    url: "/events/costume/3.jpg",
+    url: "/events/costume/3.webp",
     caption: "Costume",
   },
+
   {
-    url: "/events/costume/4.jpg",
-    caption: "Costume",
-  },
-  {
-    url: "/events/dinner/1.jpg",
+    url: "/events/dinner/1.webp",
     caption: "Dinner",
   },
   {
-    url: "/events/dinner/2.jpg",
+    url: "/events/dinner/2.webp",
     caption: "Dinner",
   },
   {
-    url: "/events/dinner/3.jpg",
+    url: "/events/dinner/3.webp",
     caption: "Dinner",
   },
   {
-    url: "/events/dinner/4.jpg",
+    url: "/events/dinner/4.webp",
     caption: "Dinner",
   },
   {
-    url: "/events/cultural/1.jpg",
+    url: "/events/cultural/1.webp",
     caption: "Cultural",
   },
   {
-    url: "/events/cultural/2.jpg",
+    url: "/events/cultural/2.webp",
     caption: "Cultural",
   },
   {
-    url: "/events/cultural/3.jpg",
+    url: "/events/cultural/3.webp",
     caption: "Cultural",
   },
   {
-    url: "/events/cultural/4.jpg",
+    url: "/events/cultural/4.webp",
     caption: "Cultural",
   },
 ];
@@ -58,7 +55,7 @@ export const NIGERIA_PILLARS = [
   {
     heading: "Empowering Voices",
     body: "Every contestant carries a story, a community, and a purpose. We provide a platform where those voices can inspire meaningful change.",
-    image: "/images/img1.jpg",
+    image: "/images/img1.webp",
   },
   {
     heading: "Celebrating Diversity",
@@ -68,12 +65,12 @@ export const NIGERIA_PILLARS = [
   {
     heading: "Championing Inclusivity",
     body: "The EliteGlam welcomes individuals from all backgrounds, tribes, and walks of life. Beauty knows no boundaries.",
-    image: "/images/img5.jpg",
+    image: "/images/img5.webp",
   },
   {
     heading: "Redefining Beauty Standards",
     body: "We celebrate confidence, authenticity, intelligence, and character alongside physical beauty.",
-    image: "/images/img6.jpg",
+    image: "/images/img6.webp",
   },
 ];
 

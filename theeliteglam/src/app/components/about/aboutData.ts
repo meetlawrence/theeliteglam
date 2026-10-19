@@ -6,7 +6,7 @@ export const BANNER_IMG = "/banners/img1.jpg";
 export const BANNER_VIDEO = "/banners/logo1.webm";
 
 export const CEO_IMG =
-  "images/img1.jpg";
+  "images/oku.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80";
 
 export const MAIDEN_IMGS = [
   "/maiden/1.jpg",
@@ -84,8 +84,8 @@ export const WINNERS = [
     state: "Lagos · Igbo",
     age: "28",
     occupation: "Medical Scientist",
-    advocacy: "Girls' Education & Digital Literacy",
-    quote: "This crown is not mine alone — it belongs to every girl who dared to dream beyond her circumstances.",
+    advocacy: "Pulse Global",
+    quote: "Caring for people...",
     image: "images/img1.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
   {
@@ -101,30 +101,17 @@ export const WINNERS = [
 ];
 
 export const RUNNERS_UP = [
-  {
-    name: "Adaora Nwachukwu",
-    title: "1st Runner-Up · Female",
-    state: "Enugu · Igbo",
-    occupation: "Medical Researcher",
-    image: "https://images/?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
-  },
-  {
-    name: "Zainab Garba",
-    title: "2nd Runner-Up · Female",
-    state: "Kano · Hausa",
-    occupation: "Media Personality",
-    image: "https://images/?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
-  },
+  
   {
     name: "Emmanuel Oliver",
-    title: "1st Runner-Up · Male",
+    title: "Mr.Universe · Male",
     state: "Cross River",
     occupation: "Civil Engineer",
     image: "https://images/?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
   {
     name: "Bernard Williams",
-    title: "2nd Runner-Up · Male",
+    title: "Mister Grand · Male",
     state: "Cross River",
     occupation: "Fashion Designer",
     image: "https://images/?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
