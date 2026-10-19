@@ -21,7 +21,7 @@ export const paymentModel = {
     return prisma.paymentTransaction.create({
       data: {
         reference: data.reference,
-        purpose: data.purpose,
+        purpose: data.purpose as any,
         gateway: data.gateway,
         amount: data.amount,
         email: data.email,

@@ -1,0 +1,184 @@
+import "dotenv/config";
+import { prisma } from "../src/back-end/db/db-connect"; 
+
+async function main() {
+  const sampleEndDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+
+  // 1. UPSERT EVENT WITH ALL CRITICAL DATES & ITINERARY TITLE
+  await prisma.event.upsert({
+    where: { id: "evt_sample_1" },
+    update: {
+      contestantFee: 25000,
+      isRegistrationOpen: true,
+      isTicketsOpen: false,
+      isVotingOpen: false,
+      isContestantsVisible: false,
+      registrationOpenDate: new Date("2027-01-15"),
+      registrationCloseDate: new Date("2027-03-31"),
+      auditionsDate: new Date("2027-04-10"),
+      preliminaryDate: new Date("2027-05-01"),
+      grandFinaleDate: new Date("2027-05-20"),
+      itineraryTitle: "FOUR DAYS OF EXCELLENCE",
+    },
+    create: {
+      id: "evt_sample_1",
+      name: "Annual National Pageant 2026",
+      description: "A national beauty and advocacy pageant.",
+      startDate: new Date("2027-05-17"),
+      endDate: sampleEndDate,
+      location: "Lagos, Nigeria",
+      contestantFee: 25000,
+      status: "UPCOMING",
+
+      // Nested Category Relation Creation
+      categories: {
+        create: [
+          { name: "MALE" },
+          { name: "FEMALE" },
+        ],
+      },
+
+      // Critical Dates
+      registrationOpenDate: new Date("2027-01-15"),
+      registrationCloseDate: new Date("2027-03-31"),
+      auditionsDate: new Date("2027-04-10"),
+      preliminaryDate: new Date("2027-05-01"),
+      grandFinaleDate: new Date("2027-05-20"),
+
+      // Itinerary Custom Title
+      itineraryTitle: "FOUR DAYS OF EXCELLENCE",
+
+      // Dashboard Controls
+      isRegistrationOpen: true,
+      isTicketsOpen: false,
+      isVotingOpen: false,
+      isContestantsVisible: false,
+    },
+  });
+
+  // 2. SEED ITINERARY DAYS
+  const itineraryDays = [
+    {
+      dayNumber: 1,
+      title: "ARRIVAL & WELCOME RECEPTION",
+      date: new Date("2027-05-17"),
+      schedule: [
+        { time: "10:00 AM", title: "CONTESTANT CHECK-IN & ACCREDITATION" },
+        { time: "2:00 PM", title: "ORIENTATION & BRAND PRESENTATION" },
+        { time: "6:00 PM", title: "WELCOME GALA DINNER (BLACK TIE)" },
+      ],
+    },
+    {
+      dayNumber: 2,
+      title: "REHEARSALS & MEDIA DAY",
+      date: new Date("2027-05-18"),
+      schedule: [
+        { time: "09:00 AM", title: "RUNWAY & CHOREOGRAPHY DRILLS" },
+        { time: "01:00 PM", title: "SPONSOR PHOTO SHOOT" },
+        { time: "04:00 PM", title: "PRESS CONFERENCE & INTERVIEWS" },
+      ],
+    },
+    {
+      dayNumber: 3,
+      title: "PRELIMINARY COMPETITION",
+      date: new Date("2027-05-19"),
+      schedule: [
+        { time: "10:00 AM", title: "JUDGES INTERVIEW ROUND" },
+        { time: "03:00 PM", title: "NATIONAL COSTUME & TALENT DISPLAY" },
+        { time: "07:00 PM", title: "PRELIMINARY EVENING GOWN SHOWCASE" },
+      ],
+    },
+    {
+      dayNumber: 4,
+      title: "GRAND FINALE & CORONATION",
+      date: new Date("2027-05-20"),
+      schedule: [
+        { time: "11:00 AM", title: "FINAL DRESS REHEARSAL" },
+        { time: "05:00 PM", title: "RED CARPET & VIP ARRIVALS" },
+        { time: "07:00 PM", title: "GRAND FINALE & CROWNING CEREMONY" },
+      ],
+    },
+  ];
+
+  for (const day of itineraryDays) {
+    await prisma.eventItineraryDay.upsert({
+      where: {
+        eventId_dayNumber: {
+          eventId: "evt_sample_1",
+          dayNumber: day.dayNumber,
+        },
+      },
+      update: {
+        title: day.title,
+        date: day.date,
+        schedule: day.schedule,
+      },
+      create: {
+        eventId: "evt_sample_1",
+        dayNumber: day.dayNumber,
+        title: day.title,
+        date: day.date,
+        schedule: day.schedule,
+      },
+    });
+  }
+
+  // 3. CONTESTANT TRANSACTIONS (Updated amount to 25000)
+  const transactions = [
+    { id: "tx_01", name: "Amina Bello", email: "amina.bello@example.com", phoneNumber: "+2348011111111", amount: 25000, reference: "REF-CONTESTANT-01", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_02", name: "Chinedu Okafor", email: "chinedu.o@example.com", phoneNumber: "+2348022222222", amount: 25000, reference: "REF-CONTESTANT-02", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_03", name: "Fatima Danladi", email: "fatima.d@example.com", phoneNumber: "+2348033333333", amount: 25000, reference: "REF-CONTESTANT-03", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_04", name: "David Adeleke", email: "david.a@example.com", phoneNumber: "+2348044444444", amount: 25000, reference: "REF-CONTESTANT-04", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_05", name: "Grace Eze", email: "grace.e@example.com", phoneNumber: "+2348055555555", amount: 25000, reference: "REF-CONTESTANT-05", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_06", name: "Ibrahim Musa", email: "ibrahim.m@example.com", phoneNumber: "+2348066666666", amount: 25000, reference: "REF-CONTESTANT-06", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_07", name: "Blessing Johnson", email: "blessing.j@example.com", phoneNumber: "+2348077777777", amount: 25000, reference: "REF-CONTESTANT-07", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_08", name: "Tariq Bello", email: "tariq.b@example.com", phoneNumber: "+2348088888888", amount: 25000, reference: "REF-CONTESTANT-08", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_09", name: "Nneka Okoro", email: "nneka.o@example.com", phoneNumber: "+2348099999999", amount: 25000, reference: "REF-CONTESTANT-09", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_10", name: "Yusuf Ahmed", email: "yusuf.a@example.com", phoneNumber: "+2348100000000", amount: 25000, reference: "REF-CONTESTANT-10", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_11", name: "Oluwaseun Adeyemi", email: "oluwaseun.a@example.com", phoneNumber: "+2348111111111", amount: 25000, reference: "REF-CONTESTANT-11", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+    { id: "tx_12", name: "Zainab Mohammed", email: "zainab.m@example.com", phoneNumber: "+2348122222222", amount: 25000, reference: "REF-CONTESTANT-12", paymentMethod: "PAYSTACK", status: "PENDING" as const, clamed: false, formSent: false, eventId: "evt_sample_1" },
+  ];
+
+  for (const tx of transactions) {
+    await prisma.contestantTransaction.upsert({
+      where: { reference: tx.reference },
+      update: { amount: 25000 },
+      create: tx,
+    });
+  }
+
+  // 4. CONTESTANTS
+  const contestants = [
+    { id: "cnt_01", name: "Amina Bello", email: "amina.bello@example.com", gender: "FEMALE" as const, number: 1, status: "PENDING" as const, image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80", phone: "+2348011111111", age: 22, state: "Lagos", country: "Nigeria", occupation: "Model", advocacy: "Education for all", funFact: "I love painting landscapes.", tribe: "Yoruba", reference: "REF-CONTESTANT-01", isVerified: false, stageName: "Amina B", height: 1.75, weight: 58.5, bio: "Passionate about youth development.", eventId: "evt_sample_1", contestantCategories: "FEMALE" as const },
+    { id: "cnt_02", name: "Chinedu Okafor", email: "chinedu.o@example.com", gender: "MALE" as const, number: 2, status: "PENDING" as const, image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80", phone: "+2348022222222", age: 25, state: "Anambra", country: "Nigeria", occupation: "Software Engineer", advocacy: "Tech literacy in rural areas", funFact: "I play the saxophone.", tribe: "Igbo", reference: "REF-CONTESTANT-02", isVerified: false, stageName: "Chinedu O", height: 1.85, weight: 76.0, bio: "Tech enthusiast and fitness lover.", eventId: "evt_sample_1", contestantCategories: "MALE" as const },
+    { id: "cnt_03", name: "Fatima Danladi", email: "fatima.d@example.com", gender: "FEMALE" as const, number: 3, status: "PENDING" as const, image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80", phone: "+2348033333333", age: 23, state: "Kano", country: "Nigeria", occupation: "Entrepreneur", advocacy: "Women financial inclusion", funFact: "Expert baker.", tribe: "Hausa", reference: "REF-CONTESTANT-03", isVerified: false, stageName: "Fatima D", height: 1.72, weight: 60.0, bio: "Advocate for empowering young women.", eventId: "evt_sample_1", contestantCategories: "FEMALE" as const },
+    { id: "cnt_04", name: "David Adeleke", email: "david.a@example.com", gender: "MALE" as const, number: 4, status: "PENDING" as const, image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80", phone: "+2348044444444", age: 24, state: "Oyo", country: "Nigeria", occupation: "Graphic Designer", advocacy: "Mental health awareness", funFact: "Can juggle 4 balls.", tribe: "Yoruba", reference: "REF-CONTESTANT-04", isVerified: false, stageName: "Dave Art", height: 1.80, weight: 72.0, bio: "Creating art that speaks volumes.", eventId: "evt_sample_1", contestantCategories: "MALE" as const },
+    { id: "cnt_05", name: "Grace Eze", email: "grace.e@example.com", gender: "FEMALE" as const, number: 5, status: "PENDING" as const, image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&q=80", phone: "+2348055555555", age: 21, state: "Enugu", country: "Nigeria", occupation: "Student", advocacy: "Clean water access", funFact: "Avid reader of history books.", tribe: "Igbo", reference: "REF-CONTESTANT-05", isVerified: false, stageName: "Gracie", height: 1.78, weight: 59.0, bio: "Believer in community-driven impact.", eventId: "evt_sample_1", contestantCategories: "FEMALE" as const },
+    { id: "cnt_06", name: "Ibrahim Musa", email: "ibrahim.m@example.com", gender: "MALE" as const, number: 6, status: "PENDING" as const, image: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&q=80", phone: "+2348066666666", age: 26, state: "Kaduna", country: "Nigeria", occupation: "Accountant", advocacy: "Financial literacy", funFact: "Can speak four languages.", tribe: "Hausa", reference: "REF-CONTESTANT-06", isVerified: false, stageName: "Ibro", height: 1.82, weight: 75.0, bio: "Numbers and numbers only.", eventId: "evt_sample_1", contestantCategories: "MALE" as const },
+    { id: "cnt_07", name: "Blessing Johnson", email: "blessing.j@example.com", gender: "FEMALE" as const, number: 7, status: "PENDING" as const, image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80", phone: "+2348077777777", age: 22, state: "Rivers", country: "Nigeria", occupation: "Content Creator", advocacy: "Environmental conservation", funFact: "Certified scuba diver.", tribe: "Ijaw", reference: "REF-CONTESTANT-07", isVerified: false, stageName: "Bee Jay", height: 1.70, weight: 55.0, bio: "Protecting our planet one step at a time.", eventId: "evt_sample_1", contestantCategories: "FEMALE" as const },
+    { id: "cnt_08", name: "Tariq Bello", email: "tariq.b@example.com", gender: "MALE" as const, number: 8, status: "PENDING" as const, image: "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=800&q=80", phone: "+2348088888888", age: 25, state: "Kwara", country: "Nigeria", occupation: "Photographer", advocacy: "Youth empowerment", funFact: "Shot a documentary last year.", tribe: "Yoruba", reference: "REF-CONTESTANT-08", isVerified: false, stageName: "Tariq Lens", height: 1.83, weight: 78.0, bio: "Capturing real moments.", eventId: "evt_sample_1", contestantCategories: "MALE" as const },
+    { id: "cnt_09", name: "Nneka Okoro", email: "nneka.o@example.com", gender: "FEMALE" as const, number: 9, status: "PENDING" as const, image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&q=80", phone: "+2348099999999", age: 24, state: "Imo", country: "Nigeria", occupation: "Lawyer", advocacy: "Child rights advocacy", funFact: "Professional chess player.", tribe: "Igbo", reference: "REF-CONTESTANT-09", isVerified: false, stageName: "Nneka O", height: 1.76, weight: 62.0, bio: "Fighting for justice and equality.", eventId: "evt_sample_1", contestantCategories: "FEMALE" as const },
+    { id: "cnt_10", name: "Yusuf Ahmed", email: "yusuf.a@example.com", gender: "MALE" as const, number: 10, status: "PENDING" as const, image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80", phone: "+2348100000000", age: 23, state: "Borno", country: "Nigeria", occupation: "Farmer", advocacy: "Sustainable agriculture", funFact: "Beekeeper in spare time.", tribe: "Kanuri", reference: "REF-CONTESTANT-10", isVerified: false, stageName: "Yusuf A", height: 1.88, weight: 80.0, bio: "Food security is national security.", eventId: "evt_sample_1", contestantCategories: "MALE" as const },
+    { id: "cnt_11", name: "Oluwaseun Adeyemi", email: "oluwaseun.a@example.com", gender: "FEMALE" as const, number: 11, status: "PENDING" as const, image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80", phone: "+2348111111111", age: 22, state: "Ogun", country: "Nigeria", occupation: "Nurse", advocacy: "Healthcare access for the elderly", funFact: "Marathon runner.", tribe: "Yoruba", reference: "REF-CONTESTANT-11", isVerified: false, stageName: "Seun A", height: 1.74, weight: 57.0, bio: "Care with compassion.", eventId: "evt_sample_1", contestantCategories: "FEMALE" as const },
+    { id: "cnt_12", name: "Zainab Mohammed", email: "zainab.m@example.com", gender: "FEMALE" as const, number: 12, status: "PENDING" as const, image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80", phone: "+2348122222222", age: 25, state: "Plateau", country: "Nigeria", occupation: "Architect", advocacy: "Urban green spaces", funFact: "Loves architecture sketching.", tribe: "Hausa", reference: "REF-CONTESTANT-12", isVerified: false, stageName: "Zainab M", height: 1.77, weight: 61.0, bio: "Building sustainable cities.", eventId: "evt_sample_1", contestantCategories: "FEMALE" as const },
+  ];
+
+  for (const contestant of contestants) {
+    await prisma.contestant.upsert({
+      where: { id: contestant.id },
+      update: {},
+      create: contestant,
+    });
+  }
+
+  console.log("Database seeded successfully with updated event details and itinerary!");
+}
+
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

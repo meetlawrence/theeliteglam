@@ -59,6 +59,7 @@ export const ModelName = {
   TicketType: 'TicketType',
   Vote: 'Vote',
   TicketTransaction: 'TicketTransaction',
+  Category: 'Category',
   Ticket: 'Ticket',
   Sponsor: 'Sponsor',
   Subscription: 'Subscription',
@@ -163,7 +164,6 @@ export const EventScalarFieldEnum = {
   location: 'location',
   contestantFee: 'contestantFee',
   status: 'status',
-  categories: 'categories',
   registrationOpenDate: 'registrationOpenDate',
   registrationCloseDate: 'registrationCloseDate',
   auditionsDate: 'auditionsDate',
@@ -231,12 +231,23 @@ export const TicketTransactionScalarFieldEnum = {
   reference: 'reference',
   paymentMethod: 'paymentMethod',
   status: 'status',
-  clamed: 'clamed',
+  claimed: 'claimed',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type TicketTransactionScalarFieldEnum = (typeof TicketTransactionScalarFieldEnum)[keyof typeof TicketTransactionScalarFieldEnum]
+
+
+export const CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  eventId: 'eventId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
 
 
 export const TicketScalarFieldEnum = {

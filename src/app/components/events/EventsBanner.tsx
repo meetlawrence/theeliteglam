@@ -7,9 +7,14 @@ import { EVENTS_BANNER_MEDIA } from "./eventsData";
 
 interface EventsBannerProps {
   onNavigate: (page: "tickets" | "register" | "contestants") => void;
+  eventStatus?: {
+    isRegistrationOpen: boolean;
+    isTicketsOpen: boolean;
+    isVotingOpen: boolean;
+  };
 }
 
-export default function EventsBanner({ onNavigate }: EventsBannerProps) {
+export function EventsBanner({ onNavigate, eventStatus }: EventsBannerProps) {
   const [inView, setInView] = useState(false);
   const bannerRef = useRef<HTMLDivElement>(null);
 
@@ -56,7 +61,7 @@ export default function EventsBanner({ onNavigate }: EventsBannerProps) {
           </video>
         </div>
 
-        {/* Overlays / Gradients */}
+        {/* Overlays */}
         <div className="absolute inset-0 bg-[rgba(8,8,8,0.55)]" />
         <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(8,8,8,1)_0%,rgba(8,8,8,0.4)_40%,transparent_100%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_60%,rgba(201,168,76,0.1)_0%,transparent_70%)]" />
@@ -73,7 +78,7 @@ export default function EventsBanner({ onNavigate }: EventsBannerProps) {
           </div>
 
           <h1 className="font-cinzel text-[clamp(2.2rem,6vw,5rem)] text-[#F5EDD6] tracking-[0.06em] leading-[1.05] mb-6 max-w-[800px]">
-            The Elite Glam
+            The EliteGlam
             <br />
             <span className="bg-[linear-gradient(135deg,#C9A84C,#F0C04A)] bg-clip-text text-transparent block">
               Events
@@ -86,24 +91,32 @@ export default function EventsBanner({ onNavigate }: EventsBannerProps) {
 
           {/* Action CTAs */}
           <div className="flex flex-wrap gap-4">
-            <CTA 
-              icon={<Ticket size={16} />} 
-              label="Get Tickets" 
-              variant="primary" 
-              onClick={() => handleNavigate("tickets")} 
-            />
-            <CTA 
-              icon={<UserPlus size={16} />} 
-              label="Register Now" 
-              variant="ghost" 
-              onClick={() => handleNavigate("register")} 
-            />
-            <CTA 
-              icon={<Star size={16} />} 
-              label="Vote Now" 
-              variant="accent" 
-              onClick={() => handleNavigate("contestants")} 
-            />
+            {eventStatus?.isTicketsOpen && (
+              <CTA 
+                icon={<Ticket size={16} />} 
+                label="Get Tickets" 
+                variant="primary" 
+                onClick={() => handleNavigate("tickets")} 
+              />
+            )}
+
+            {eventStatus?.isRegistrationOpen && (
+              <CTA 
+                icon={<UserPlus size={16} />} 
+                label="Register Now" 
+                variant="ghost" 
+                onClick={() => handleNavigate("register")} 
+              />
+            )}
+
+            {eventStatus?.isVotingOpen && (
+              <CTA 
+                icon={<Star size={16} />} 
+                label="Vote Now" 
+                variant="accent" 
+                onClick={() => handleNavigate("contestants")} 
+              />
+            )}
           </div>
           
         </div>

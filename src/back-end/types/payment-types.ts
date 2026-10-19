@@ -81,3 +81,48 @@ export interface PaystackVerificationResponse {
     subaccount: Record<string, unknown>;
   };
 }
+
+export type PaymentPurpose = "REGISTRATION" | "VOTING" | "TICKET" | "CONTESTANT";
+export type PaymentGateway = "PAYSTACK" | "OPAY";
+
+export type GatewayInitializeResult = {
+  success: boolean;
+  authorizationUrl?: string;
+  reference?: string;
+  accessCode?: string;
+  gatewayReference?: string;
+  message?: string;
+  raw?: unknown;
+};
+
+export type GatewayVerifyResult = {
+  success: boolean;
+  status: "SUCCESS" | "FAILED" | "PENDING";
+  amount: number;
+  gatewayReference?: string;
+  currency?: string;
+  message?: string;
+  raw?: unknown;
+};
+
+export type InitializePaymentInput = {
+  email: string;
+  amount: number;
+  reference: string;
+  purpose: Extract<PaymentPurpose, "TICKET" | "CONTESTANT">;
+  method: PaymentGateway;
+  metadata?: Record<string, string>;
+  callbackUrl?: string;
+  eventId: string;
+  ticketTypeId?: string;
+  quantity?: number;
+  name?: string;
+  phoneNumber?: string;
+};
+
+export type PaymentResult = {
+  success: boolean;
+  message: string;
+  status: number;
+  data?: unknown;
+};

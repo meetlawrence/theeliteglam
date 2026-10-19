@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import SectionLabel from "./franchise/SectionLabel";
 import BrandLogoCard from "./franchise/BrandLogoCard";
 import SponsorButton from "./franchise/SponsorButton";
-import PartnerModal from "./franchise/PartnerModal";
 import { ENDORSEMENTS, SPONSORS } from "./franchise/franchiseData";
 import { HOME_IMAGES } from "./homeData";
 
@@ -44,13 +43,45 @@ export function OverviewSection() {
           }`}
         >
           <SectionLabel text="Endorsements" />
-          <h2 className="mt-4 mb-3 font-['Cinzel',serif] text-[clamp(1.6rem,3.5vw,2.8rem)] tracking-[0.06em] text-[#F5EDD6]">
+          <h2 className="mt-4 mb-8 font-['Cinzel',serif] text-[clamp(1.6rem,3.5vw,2.8rem)] tracking-[0.06em] text-[#F5EDD6]">
             International Franchise
           </h2>
-          <div className="mt-10 mb-12 grid gap-6 grid-cols-2 lg:grid-cols-5 items-center justify-center">
-            {ENDORSEMENTS.map((e, i) => (
-              <BrandLogoCard key={e.brand} item={e} index={i} inView={inView} />
-            ))}
+
+          {/* Main Grid Wrapper */}
+          <div className="mt-10 mb-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 relative">
+            
+            {/* Female Franchises Column */}
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-3">
+                <span className="font-raleway text-[0.68rem] tracking-[0.25em] text-[#C9A84C] uppercase  bg-[#D4AF37]/10 px-3 py-1 rounded-full border border-[#D4AF37]/20">
+                  Female 
+                </span>
+                <div className="h-[1px] flex-grow bg-gradient-to-r from-[#D4AF37]/30 to-transparent" />
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 items-center justify-center">
+                {ENDORSEMENTS.filter((e) => e.gender === "female").map((e, i) => (
+                  <BrandLogoCard key={e.brand} item={e} index={i} inView={inView} />
+                ))}
+              </div>
+            </div>
+
+            {/* Male Franchises Column */}
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center gap-3">
+                <span className="font-raleway text-[0.68rem] tracking-[0.25em] text-[#C9A84C] uppercase  bg-[#D4AF37]/10 px-3 py-1 rounded-full border border-[#D4AF37]/20">
+                  Male
+                </span>
+                <div className="h-[1px] flex-grow bg-gradient-to-r from-[#D4AF37]/30 to-transparent" />
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 items-center justify-center">
+                {ENDORSEMENTS.filter((e) => e.gender === "male").map((e, i) => (
+                  <BrandLogoCard key={e.brand} item={e} index={i} inView={inView} />
+                ))}
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -86,12 +117,20 @@ export function OverviewSection() {
                 movement that empowers people worldwide.
               </p>
             </div>
-            <SponsorButton onOpen={() => setModalOpen(true)} />
+            <div className="flex justify-center md:justify-end">
+              <p className="font-['Raleway',sans-serif] text-[0.9rem] leading-[1.6] text-[#9A8C6A]">
+                For sponsorship inquiries, please reach out to us at{" "}
+                <a
+                  href="mailto:info@theeliteglam.com"
+                  className="text-[#C9A84C] hover:text-[#D4AF37] underline"
+                >
+                  info@theeliteglam.com
+                </a>
+              </p>
+            </div>
           </div>
         </div>
       </div>
-
-      {modalOpen && <PartnerModal onClose={() => setModalOpen(false)} />}
     </section>
   );
 }

@@ -51,7 +51,7 @@ export function AboutWinnersSection({ winners, runnersUp }: AboutWinnersSectionP
         <div className="mb-7 flex items-center gap-5">
           <span className="inline-block h-px w-6 bg-[rgba(201,168,76,0.3)]" />
           <span className="font-['Raleway',sans-serif] text-[0.6rem] uppercase tracking-[0.4em] text-[#9A8C6A]">
-            1st Runners-Up · Season 1
+            Title Holders · Season 1
           </span>
           <span className="h-px flex-1 bg-[rgba(201,168,76,0.1)]" />
         </div>

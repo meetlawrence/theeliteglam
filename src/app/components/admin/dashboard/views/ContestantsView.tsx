@@ -10,7 +10,7 @@ import { AdminContestantEditorModal } from "../../AdminContestantEditorModal";
 import type { Contestant } from "@/app/components/contestant/types";
 
 export function ContestantsView() {
-  const { contestants, setContestants } = useContestants();
+  const { contestants, reloadContestants } = useContestants();
   
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<"all" | "finalist" | "eliminated">("all");
@@ -43,11 +43,7 @@ export function ContestantsView() {
 
   // Handle successful update inside the modal
   const handleContestantUpdated = (updatedContestant: Contestant) => {
-    setContestants((current) =>
-      current.map((contestant) =>
-        contestant.id === updatedContestant.id ? updatedContestant : contestant
-      )
-    );
+    reloadContestants();
   };
 
   const barChartData = useMemo(() => {
@@ -91,6 +87,7 @@ export function ContestantsView() {
                 statusMap={statusMap}
                 highlightedId={highlightedId}
                 onEdit={handleEdit}
+                onSelect={(contestant) => {}}
               />
             </div>
 
@@ -104,6 +101,7 @@ export function ContestantsView() {
                 statusMap={statusMap}
                 highlightedId={highlightedId}
                 onEdit={handleEdit}
+                onSelect={(contestant) => {}}
               />
             </div>
           </div>
@@ -115,7 +113,7 @@ export function ContestantsView() {
         open={selectedContestantId !== null}
         contestantId={selectedContestantId}
         onClose={() => setSelectedContestantId(null)}
-        onContestantUpdated={handleContestantUpdated}
+        onContestantUpdated={(updated) => handleContestantUpdated(updated as any)}
       />
     </>
   );

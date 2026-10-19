@@ -36,7 +36,7 @@ export class TicketService {
     }
 
     // 3. If already claimed → stop
-    if (ticketTransaction.clamed) {
+    if (ticketTransaction.claimed) {
       return {
         success: false,
         error: "Tickets already sent to your email",
@@ -114,7 +114,7 @@ export class TicketService {
       await prisma.ticketTransaction.update({
         where: { reference },
         data: {
-          clamed: true,
+          claimed: true,
           status: "SUCCESS",
         },
       });
