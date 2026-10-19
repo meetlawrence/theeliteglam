@@ -1,0 +1,182 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+import { Menu, X, Ticket, UserPlus, Star } from "lucide-react";
+import { NavCta } from "@/app/components/ui/NavCta";
+
+const LOGO_PATH = "/logo.svg";
+
+interface HeaderProps {
+  eventStatus?: {
+    isRegistrationOpen: boolean;
+    isTicketsOpen: boolean;
+    isVotingOpen: boolean;
+    isContestantsVisible: boolean;
+  };
+}
+
+export function Header({ eventStatus }: HeaderProps) {
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!menuOpen) {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+      return;
+    }
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+    };
+  }, [menuOpen]);
+
+  // Determine visibility based on eventStatus
+  const isTicketsOpen = eventStatus ? eventStatus.isTicketsOpen : false;
+  const isRegistrationOpen = eventStatus ? eventStatus.isRegistrationOpen : false;
+  const isVotingOpen = eventStatus ? eventStatus.isVotingOpen : false;
+
+  const isContestantsVisible = eventStatus ? eventStatus.isContestantsVisible : false;
+
+  const NAV_LINKS = [
+    { label: "Home", page: "/" },
+    { label: "Events", page: "/events" },
+    { label: "About", page: "/about" },
+    ...(isContestantsVisible ? [{ label: "Contestants", page: "/contestants" }] : []),
+    { label: "Blog", page: "/blog" },
+  ];
+
+
+  // Helper to close menu and navigate
+  const handleNav = (path: string) => {
+    router.push(path);
+    setMenuOpen(false);
+  };
+
+  return (
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b ${
+        menuOpen
+          ? "bg-black border-[#C9A84C]/20"
+          : scrolled
+          ? "bg-black/96 border-[#C9A84C]/20"
+          : "bg-black/35 border-[#C9A84C]/20"
+      } backdrop-blur-md`}
+    >
+      <div className="max-w-350 mx-auto px-8 h-19.5 flex items-center justify-between relative z-50">
+        {/* Logo */}
+        <button onClick={() => handleNav("/")} className="flex items-center shrink-0">
+          <Image
+            src={LOGO_PATH}
+            alt="Elite Glam"
+            width={80}
+            height={34}
+            className="mix-blend-screen"
+          />
+        </button>
+
+        {/* Desktop Nav */}
+        <div className="hidden md:flex items-center gap-8">
+          {NAV_LINKS.map(({ label, page }) => {
+            const isActive = pathname === page;
+            return (
+              <button
+                key={label}
+                onClick={() => router.push(page)}
+                className={`font-raleway text-xs tracking-[0.18em] uppercase transition-colors relative ${
+                  isActive ? "text-accent" : "text-muted-foreground hover:text-[#C9A84C]"
+                }`}
+              >
+                {label}
+                {isActive && (
+                  <div className="absolute -bottom-2 left-0 w-full h-px bg-linear-to-r from-transparent via-accent to-transparent" />
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Desktop CTA Buttons (Conditionally Rendered) */}
+        <div className="hidden md:flex items-center gap-3 shrink-0">
+          {isTicketsOpen && (
+            <NavCta label="Tickets" icon={<Ticket size={13} />} variant="ghost" onClick={() => handleNav("/tickets")} />
+          )}
+          {isRegistrationOpen && (
+            <NavCta label="Register" icon={<UserPlus size={13} />} variant="ghost" onClick={() => handleNav("/register")} />
+          )}
+          {isVotingOpen && (
+            <NavCta label="Vote" icon={<Star size={13} />} variant="filled" onClick={() => handleNav("/contestants")} />
+          )}
+        </div>
+
+        {/* Mobile Toggle */}
+        <button
+          className="md:hidden p-2 border border-[#C9A84C]/30 text-[#C9A84C] relative z-50"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? <X size={22} /> : <Menu size={22} />}
+        </button>
+      </div>
+
+      {/* Mobile Menu - Full Screen Overlay */}
+      {menuOpen && (
+        <div className="md:hidden fixed inset-0 top-[78px] w-full h-[calc(100vh-78px)] bg-black/98 border-b border-[#C9A84C]/20 p-8 flex flex-col justify-between overflow-y-auto z-40 animate-[fadeInUp_600ms_ease-out]">
+          
+          {/* Navigation Links Group */}
+          <div className="flex flex-col gap-1 pt-4 pb-10">
+            {NAV_LINKS.map(({ label, page }, index) => {
+              const isActive = pathname === page;
+              return (
+                <button
+                  key={label}
+                  onClick={() => handleNav(page)}
+                  className={`relative text-center uppercase tracking-widest text-base py-6 border-b border-[#C9A84C]/10 transition-all duration-200 ${
+                    isActive ? "text-accent" : "text-muted-foreground hover:text-[#C9A84C]"
+                  }`}
+                  style={{ animationDelay: `${index * 150}ms` }}
+                >
+                  {label}
+
+                  {isActive && (
+                    <div className="absolute left-0 bottom-0 h-px w-full bg-gradient-to-r from-transparent via-[#C9A84C] to-transparent" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Mobile CTA Buttons Group at the bottom (Conditionally Rendered) */}
+          <div className="flex flex-row flex-wrap gap-10 justify-center pb-28" style={{ animationDelay: `${NAV_LINKS.length * 150}ms` }}>
+            {isTicketsOpen && (
+              <NavCta label="Tickets" icon={<Ticket size={13} />} variant="ghost" onClick={() => handleNav("/tickets")} />
+            )}
+            {isRegistrationOpen && (
+              <NavCta label="Register" icon={<UserPlus size={13} />} variant="ghost" onClick={() => handleNav("/register")} />
+            )}
+            {isVotingOpen && (
+              <NavCta label="Vote" icon={<Star size={13} />} variant="filled" onClick={() => handleNav("/contestants")} />
+            )}
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+}
