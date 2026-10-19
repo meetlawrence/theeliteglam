@@ -35,6 +35,13 @@ export const ENDORSEMENTS: Endorsement[] = [
       "franchise/mister-continental.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80",
   },
 
+  { brand: "Mister Friendship International",
+    desc: "",
+    gender: "male",
+    image:
+      "franchise/mister-friendship.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80",
+  },
+
   {
     brand: "Mister Universe",
     desc: "",
@@ -51,12 +58,6 @@ export const ENDORSEMENTS: Endorsement[] = [
       "franchise/mister-grand.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80",
   },
   
-  { brand: "Mister Friendship International",
-    desc: "",
-    gender: "male",
-    image:
-      "franchise/mister-friendship.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80",
-  },
 ];
 
 export const SPONSORS: Sponsor[] = [
