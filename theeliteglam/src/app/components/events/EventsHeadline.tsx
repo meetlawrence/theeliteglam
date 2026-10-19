@@ -65,7 +65,7 @@ export default function EventsHeadline() {
         <div className="absolute top-5 right-5 bottom-0 left-0 border border-border bg-[#0D0D0D]" />
         <div className="absolute top-0 right-10 bottom-5 left-0">
           <Image
-            src="/events/dinner/x.jpg"
+            src="/events/dinner/x.webp"
             alt="Stage event highlight"
             fill
             className="object-cover "

@@ -1,5 +1,5 @@
 export const EVENTS_BANNER_MEDIA = {
-  image: "/banners/1.jpg",
+  image: "/banners/1.webp",
   video: "/banners/event.webm",
 };
 
