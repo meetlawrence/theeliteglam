@@ -1,17 +1,5 @@
-import {
-  describe,
-  expect,
-  test,
-  beforeAll,
-  afterAll,
-  beforeEach,
-} from "@jest/globals";
-import {
-  prisma,
-  resetPaymentTables,
-  seedMinimalEvent,
-  cleanupSeed,
-} from "./helpers/db";
+import { describe, expect, test, beforeAll, afterAll, beforeEach } from "@jest/globals";
+import { prisma, resetPaymentTables, seedMinimalEvent, cleanupSeed } from "./helpers/db";
 import { paymentModel } from "@/back-end/models/payment-model";
 
 let eventId = "";
@@ -35,7 +23,7 @@ async function createContestantPayment() {
 
 function contestantData(
   payment: { id: string; reference: string },
-  overrides: Record<string, unknown> = {}
+  overrides: Record<string, unknown> = {},
 ) {
   return {
     name: "Itest Contestant",
@@ -93,7 +81,7 @@ describe("contestant uniqueness (real DB)", () => {
           reference: a.reference,
           email: "other@example.com",
         }),
-      })
+      }),
     ).rejects.toMatchObject({ code: "P2002" });
   });
 
@@ -110,7 +98,7 @@ describe("contestant uniqueness (real DB)", () => {
           reference: `${payment.reference}-2`,
           email: "other@example.com",
         }),
-      })
+      }),
     ).rejects.toMatchObject({ code: "P2002" });
   });
 

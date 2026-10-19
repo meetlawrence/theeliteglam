@@ -20,7 +20,12 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@services/*": ["./src/services/*"],
+      "@/back-end/*": ["./src/back-end/*"]
     }
   },
   "include": [
@@ -33,13 +38,7 @@
     "**/*.mts",
     "jest.config.ts",
     "**/*.mjs",
-    "eslint.config.mjs",
+    "eslint.config.mjs"
   ],
-  "exclude": [
-    "node_modules",
-    "jest.config.ts",
-    "jest.setup.ts",
-    "**/*.test.ts",
-    "**/*.spec.ts"
-  ]
+    "exclude": ["node_modules"]
 }

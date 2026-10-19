@@ -7,16 +7,12 @@
     "build": "npm install && prisma generate && NODE_OPTIONS='--max-old-space-size=4096' next build --webpack",    
     "start": "next start",
     "lint": "eslint",
-<<<<<<< HEAD
     "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest",
     "test:unit": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --testPathPatterns=jest-test/unit",
     "test:integration": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --testPathPatterns=jest-test/integration --runInBand",
     "test:watch": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --watch",
     "test:coverage": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --coverage",
     "api:discover": "ts-node scripts/discover-api-routes.ts"
-=======
-    "test": "jest"
->>>>>>> e66d70cbcf3c971f9f1bd6fba68cdab14975ac71
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
@@ -46,12 +42,9 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-<<<<<<< HEAD
     "@asteasolutions/zod-to-openapi": "^9.1.0",
     "@jest/globals": "^30.4.1",
     "@tailwindcss/postcss": "^4",
-=======
->>>>>>> e66d70cbcf3c971f9f1bd6fba68cdab14975ac71
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",

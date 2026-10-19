@@ -9,7 +9,7 @@ import ResetPasswordEmail from "./templates/auth/rest-password-email-template";
 import PasswordChangedEmail from "./templates/auth/password-changed-email-template";
 import LoginAlertEmail from "./templates/auth/login-alert-emaill-template";
 import TicketEmail from "./templates/ticket";
-import{ContestantFormEmail} from "./templates/ContestantFormEmail"
+import { ContestantFormEmail } from "./templates/ContestantFormEmail";
 
 const resend = new Resend(AUTH_CONFIG.RESEND_API_KEY);
 
