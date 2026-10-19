@@ -8,8 +8,178 @@ import type {
 } from "@/back-end/types/payment-types";
 import { randomUUID } from "crypto";
 import { prisma } from "@/back-end/database/db-connect";
-import { ticketService } from "@/back-end/services/ticket-service";
-import { contestantService } from "@/back-end/services/contestant-service";
+import { generateTicketToken } from "@/back-end/lib/utils/jwt";
+import QRCode from "qrcode";
+import { uploadQRCode } from "@/back-end/db/cloudinary";
+import { sendEmail } from "@/back-end/lib/email/resend";
+
+type PaymentTransaction = NonNullable<
+  Awaited<ReturnType<typeof paymentModel.findByReference>>
+>;
+
+async function sendContestantFormLink(
+  transaction: PaymentTransaction,
+): Promise<PaymentResult> {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  if (!baseUrl) {
+    return {
+      success: false,
+      message: "The contestant form URL is not configured",
+      status: 500,
+    };
+  }
+
+  const emailResult = await sendEmail(transaction.email, {
+    type: "contestant-form",
+    props: {
+      firstName: transaction.name?.split(" ")[0] || transaction.name || "Contestant",
+      formLink: `${baseUrl}/register/form?reference=${encodeURIComponent(transaction.reference)}`,
+      reference: transaction.reference,
+      eventName: transaction.event.name || "The Elite Glam Pageant",
+    },
+  });
+
+  if (!emailResult.success) {
+    return {
+      success: false,
+      message: "Contestant form link generated but email failed",
+      status: 500,
+    };
+  }
+
+  return {
+    success: true,
+    message: "Contestant form link has been sent",
+    status: 200,
+  };
+}
+
+async function sendPaymentTickets(
+  transaction: PaymentTransaction,
+  tickets: Array<{ id: string; reference: string; status: string; ticket: string }>,
+  message: string,
+): Promise<PaymentResult> {
+  const qrCodes = await Promise.all(
+    tickets.map(async ({ ticket }) => {
+      const qrCode = await QRCode.toDataURL(ticket, {
+        width: 300,
+        margin: 2,
+        errorCorrectionLevel: "H",
+      });
+      return uploadQRCode(qrCode);
+    }),
+  );
+
+  const emailResult = await sendEmail(transaction.email, {
+    type: "ticket",
+    props: {
+      firstName: transaction.name?.split(" ")[0] || transaction.name || "Guest",
+      ticketReference: transaction.reference,
+      quantity: tickets.length,
+      amount: Number(transaction.amount),
+      eventName: transaction.event.name || "Event",
+      qrCodes,
+    },
+  });
+
+  if (!emailResult.success) {
+    return {
+      success: false,
+      message: "Tickets were created but the email could not be sent",
+      status: 500,
+    };
+  }
+
+  return {
+    success: true,
+    message,
+    status: 200,
+    data: tickets.map(({ id, reference, status }) => ({ id, reference, status })),
+  };
+}
+
+async function fulfillPaymentTickets(
+  transaction: PaymentTransaction,
+): Promise<PaymentResult> {
+  const ticketTypeId = transaction.ticketTypeId;
+  if (!ticketTypeId) {
+    return {
+      success: false,
+      message: "Ticket type is missing from the payment",
+      status: 400,
+    };
+  }
+
+  if (transaction.tickets.length > 0) {
+    return sendPaymentTickets(
+      transaction,
+      transaction.tickets,
+      "Tickets sent successfully",
+    );
+  }
+
+  const quantity = transaction.quantity ?? 1;
+  if (!Number.isInteger(quantity) || quantity < 1) {
+    return {
+      success: false,
+      message: "Ticket quantity is invalid",
+      status: 400,
+    };
+  }
+
+  const tickets = await Promise.all(
+    Array.from({ length: quantity }, async (_, index) => {
+      const id = randomUUID();
+      const ticket = await generateTicketToken({
+        ticketId: id,
+        reference: transaction.reference,
+        email: transaction.email,
+        status: "SENT",
+        name: transaction.name || transaction.email,
+        index: index + 1,
+      });
+
+      return {
+        id,
+        reference: transaction.reference,
+        status: "SENT" as const,
+        paymentTransactionId: transaction.id,
+        ticket,
+        ticketTypeId,
+        eventId: transaction.eventId,
+      };
+    }),
+  );
+
+  await prisma.ticket.createMany({ data: tickets });
+
+  return sendPaymentTickets(
+    transaction,
+    tickets,
+    "Tickets created and sent successfully",
+  );
+}
+
+async function resendPaymentTicketEmail(reference: string): Promise<PaymentResult> {
+  const transaction = await paymentModel.findByReference(reference);
+  if (!transaction) {
+    return { success: false, message: "Payment not found", status: 404 };
+  }
+
+  if (transaction.purpose !== "TICKET" || transaction.tickets.length === 0) {
+    return {
+      success: false,
+      message: "No issued tickets are available to resend",
+      status: 400,
+    };
+  }
+
+  return sendPaymentTickets(
+    transaction,
+    transaction.tickets,
+    "Tickets resent successfully",
+  );
+}
 
 function getGateway(method: GatewayType) {
   if (method === "PAYSTACK") return paystackGateway;
@@ -72,7 +242,7 @@ export class PaymentService {
             },
           });
 
-          if (sold + body.quantity > ticketType.capacity) {
+          if (sold + (body.quantity ?? 1) > ticketType.capacity) {
             return {
               success: false,
               message: "Not enough tickets remaining for this type",
@@ -81,7 +251,7 @@ export class PaymentService {
           }
         }
 
-        amount = Number(ticketType.price) * body.quantity;
+        amount = Number(ticketType.price) * (body.quantity ?? 1);
       } else {
         // CONTESTANT
         amount = Number(event.contestantFee);
@@ -177,7 +347,7 @@ export class PaymentService {
       }
 
       // Verify with gateway
-      const gateway = getGateway(transaction.gateway as GatewayType);
+      const gateway = getGateway(transaction.gateway);
       const verified = await gateway.verify(reference);
 
       if (!verified.success || verified.status !== "SUCCESS") {
@@ -232,7 +402,7 @@ export class PaymentService {
 
       // Fulfillment
       if (transaction.purpose === "TICKET") {
-        const result = await ticketService.fulfill(transaction);
+        const result = await fulfillPaymentTickets(transaction);
 
         if (!result.success) {
           await paymentModel.markFulfillmentFailed(reference);
@@ -258,7 +428,7 @@ export class PaymentService {
       }
 
       if (transaction.purpose === "CONTESTANT") {
-        const result = await contestantService.sendContestantFormLink(transaction.reference);
+        const result = await sendContestantFormLink(transaction);
 
         if (!result.success) {
           await paymentModel.markFulfillmentFailed(reference);
@@ -341,7 +511,7 @@ export class PaymentService {
 
         // Tickets already exist → only resend email (no new tickets)
         if (hasTickets) {
-          const result = await ticketService.resendTicketEmail(reference);
+          const result = await resendPaymentTicketEmail(reference);
 
           if (result.success && transaction.fulfillmentStatus !== "COMPLETED") {
             await paymentModel.markFulfilled(reference);
@@ -371,7 +541,7 @@ export class PaymentService {
           };
         }
 
-        const result = await ticketService.fulfill(transaction);
+        const result = await fulfillPaymentTickets(transaction);
 
         if (!result.success) {
           await paymentModel.markFulfillmentFailed(reference);
@@ -395,7 +565,7 @@ export class PaymentService {
       // ---------- CONTESTANT ----------
       if (transaction.purpose === "CONTESTANT") {
         // Always safe to resend form link (rate-limited inside service)
-        const result = await contestantService.resendContestantFormLink(reference);
+        const result = await sendContestantFormLink(transaction);
 
         if (result.success && transaction.fulfillmentStatus !== "COMPLETED") {
           await paymentModel.markFulfilled(reference);

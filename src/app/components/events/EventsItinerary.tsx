@@ -5,7 +5,7 @@ import SectionLabel from "./SectionLabel";
 import ItineraryRow from "./ItineraryRow";
 import { ITINERARY } from "./eventsData";
 
-export default function EventsItinerary() {
+export function EventsItinerary() {
   const [inView, setInView] = useState(false);
   const [activeDay, setActiveDay] = useState(0);
   const itineraryRef = useRef<HTMLDivElement>(null);

@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
 
     const result = await paymentService.retryFulfillment(validation.data.reference);
 
-    return NextResponse.json(result, { status: result.status });
+    return NextResponse.json(result, { status: 200 });
   } catch (error: any) {
     console.error("[POST /api/admin/payments/retry-fulfillment]", error);
     return NextResponse.json(

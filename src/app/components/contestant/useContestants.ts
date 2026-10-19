@@ -15,6 +15,7 @@ function normalizeContestant(item: Record<string, unknown>, index: number): Cont
     id: index + 1,
     databaseId: String(item.id ?? ""),
     name: String(item.stageName || item.name || "Contestant"),
+    stageName: String(item.stageName ?? item.name ?? ""),
     state: String(item.state ?? ""),
     age: Number(item.age) || 0,
     gender,

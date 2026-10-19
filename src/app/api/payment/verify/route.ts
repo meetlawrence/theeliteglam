@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     }
 
     const result = await paymentService.verify(validation.data.reference);
-    return NextResponse.json(result, { status: result.status });
+    return NextResponse.json(result, { status: 200 });
   } catch (error: any) {
     console.error("[POST /api/payments/verify]", error);
     return NextResponse.json(

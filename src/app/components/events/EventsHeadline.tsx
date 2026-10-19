@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import SectionLabel from "./SectionLabel";
 
-export default function EventsHeadline() {
+export function EventsHeadline() {
   const [inView, setInView] = useState(false);
   const headlineRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +34,7 @@ export default function EventsHeadline() {
           The Return of
           <br />
           <span className="bg-[linear-gradient(135deg,#C9A84C,#F0C04A)] bg-clip-text text-transparent block">
-            The Elite Glam
+            The EliteGlam
           </span>
         </h2>
         <p className="font-raleway text-[0.97rem] text-muted-foreground leading-[1.85] mb-5">
@@ -65,7 +65,7 @@ export default function EventsHeadline() {
         <div className="absolute top-5 right-5 bottom-0 left-0 border border-border bg-[#0D0D0D]" />
         <div className="absolute top-0 right-10 bottom-5 left-0">
           <Image
-            src="/events/dinner/x.jpg"
+            src="/events/dinner/x.webp"
             alt="Stage event highlight"
             fill
             className="object-cover "
