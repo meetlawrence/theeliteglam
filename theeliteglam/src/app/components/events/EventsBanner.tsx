@@ -91,24 +91,32 @@ export function EventsBanner({ onNavigate, eventStatus }: EventsBannerProps) {
 
           {/* Action CTAs */}
           <div className="flex flex-wrap gap-4">
-            <CTA 
-              icon={<Ticket size={16} />} 
-              label="Get Tickets" 
-              variant="primary" 
-              onClick={() => handleNavigate("tickets")} 
-            />
-            <CTA 
-              icon={<UserPlus size={16} />} 
-              label="Register Now" 
-              variant="ghost" 
-              onClick={() => handleNavigate("register")} 
-            />
-            <CTA 
-              icon={<Star size={16} />} 
-              label="Vote Now" 
-              variant="accent" 
-              onClick={() => handleNavigate("contestants")} 
-            />
+            {eventStatus?.isTicketsOpen && (
+              <CTA 
+                icon={<Ticket size={16} />} 
+                label="Get Tickets" 
+                variant="primary" 
+                onClick={() => handleNavigate("tickets")} 
+              />
+            )}
+
+            {eventStatus?.isRegistrationOpen && (
+              <CTA 
+                icon={<UserPlus size={16} />} 
+                label="Register Now" 
+                variant="ghost" 
+                onClick={() => handleNavigate("register")} 
+              />
+            )}
+
+            {eventStatus?.isVotingOpen && (
+              <CTA 
+                icon={<Star size={16} />} 
+                label="Vote Now" 
+                variant="accent" 
+                onClick={() => handleNavigate("contestants")} 
+              />
+            )}
           </div>
           
         </div>
