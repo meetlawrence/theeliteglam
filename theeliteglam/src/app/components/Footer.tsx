@@ -187,7 +187,8 @@ export function Footer() {
             <p className="text-[#8B7D60]">
               Built and maintained by{" "}
               <a
-                
+                href="https://meetlawrence.vercel.app"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#C9A84C] hover:underline tracking-wide transition-colors"
               >
