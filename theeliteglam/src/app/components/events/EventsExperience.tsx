@@ -5,7 +5,7 @@ import SectionLabel from "./SectionLabel";
 import NigeriaPillarCard from "./NigeriaPillarCard";
 import { NIGERIA_PILLARS } from "./eventsData";
 
-export default function EventsExperience() {
+export function EventsExperience() {
   const [inView, setInView] = useState(false);
   const experienceRef = useRef<HTMLDivElement>(null);
 

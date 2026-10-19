@@ -43,7 +43,7 @@ const TIMELINE: TimelineStep[] = [
   },
 ];
 
-const STATS = [{ label: "Prize Pool · 2 Winners", value: "₦2M Each", icon: "★" }];
+const STATS = [{ label: "2 Winners", value: "₦2M Cash Prize (Each)", icon: "★" }];
 
 interface SearchBeginsSectionProps {
   eventStatus: {
@@ -97,11 +97,17 @@ export function SearchBeginsSection({ eventStatus }: SearchBeginsSectionProps) {
               <div className="text-[#C9A84C] mb-2 flex justify-center text-[1.2rem]">
                 {stat.icon}
               </div>
+              <div className="font-raleway text-[0.72rem] text-muted-foreground tracking-[0.2em] uppercase mt-2">
+                {stat.label}
+              </div>
               <div className="font-cinzel text-[2rem] text-accent tracking-wider leading-none">
                 {stat.value}
               </div>
-              <div className="font-raleway text-[0.72rem] text-muted-foreground tracking-[0.2em] uppercase mt-2">
-                {stat.label}
+
+              <div className="mt-8 mb-8 h-px bg-[linear-gradient(to_right,transparent,rgba(201,168,76,0.3),transparent)]" />
+
+              <div className="font-raleway text-[0.7rem] text-muted-foreground tracking-[0.2em] uppercase mt-2">
+                With International Representations (Mister & Miss Continental World - Thailand)
               </div>
             </div>
           ))}
