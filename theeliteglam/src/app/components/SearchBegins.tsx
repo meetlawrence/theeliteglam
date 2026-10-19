@@ -107,7 +107,7 @@ export function SearchBeginsSection({ eventStatus }: SearchBeginsSectionProps) {
               <div className="mt-8 mb-8 h-px bg-[linear-gradient(to_right,transparent,rgba(201,168,76,0.3),transparent)]" />
 
               <div className="font-raleway text-[0.7rem] text-muted-foreground tracking-[0.2em] uppercase mt-2">
-                With International Representations (Mister & Miss Continental World - Thailand)
+                With International Representations
               </div>
             </div>
           ))}
