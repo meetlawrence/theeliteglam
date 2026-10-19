@@ -43,7 +43,7 @@ export function AboutLeadershipSection({ image }: AboutLeadershipSectionProps) {
         </div>
 
         {[
-          "Emmanuel Oku is a Nigerian entrepreneur, creative director, and pageant producer with over a decade of experience in Nigeria's entertainment and fashion industries.",
+          "Emmanuel Oku is a United States–based Nigerian entrepreneur, creative director, and pageant executive with over a decade of experience spanning the creative, fashion, and entertainment industries.",
           "Driven by a vision to redefine African representation in global pageantry, Emmanuel founded The EliteGlam Pageant Nigeria in 2025, establishing a platform dedicated to celebrating diversity, empowering emerging talents, and championing beauty with purpose.",
           "Under his leadership, EliteGlam has forged strategic partnerships with internationally recognised pageant organisations, expanded opportunities for Nigerian talents on the global stage, and achieved remarkable international success, highlighted by Nigeria’s crowning as Miss Continental World 2026/2027.",
           "With a commitment to excellence, innovation, and purposeful leadership, Emmanuel continues to position EliteGlam as an emerging force in international pageantry, building a lasting legacy of empowerment, inclusivity, and African excellence.",
