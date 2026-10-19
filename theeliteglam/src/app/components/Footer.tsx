@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { PiTiktokLogo } from "react-icons/pi";
-import { FiYoutube, FiFacebook, FiInstagram } from "react-icons/fi";
+import { FiYoutube, FiFacebook, FiInstagram, FiTwitter, FiX } from "react-icons/fi";
 import { ArrowRight, Mail, Phone, MapPin } from "lucide-react";
 
 const LINKS = {
@@ -24,22 +24,22 @@ const SOCIALS = [
   {
     icon: <FiInstagram size={18} />,
     label: "Instagram",
-    link: "https://www.instagram.com/theeliteglampageant",
+    link: "https://www.instagram.com/theeliteglampageantnigeria_?rpxt=MTMwb2I3enBiMDc0dw==",
+  },
+  {
+    icon: <FiYoutube size={18} />,
+    label: "Youtube",
+    link: "https://youtube.com/@theeliteglampageant?si=75U_z1XzJ3CxCxh5",
+  },
+  {
+    icon: <FiX size={18} />,
+    label: "X",
+    link: "https://x.com/eliteglampagent?s=11",
   },
   {
     icon: <PiTiktokLogo size={18} />,
     label: "Tiktok",
-    link: "https://www.tiktok.com/@theeliteglampageant",
-  },
-  {
-    icon: <FiYoutube size={18} />,
-    label: "YouTube",
-    link: "https://www.youtube.com/@theeliteglampageant",
-  },
-  {
-    icon: <FiFacebook size={18} />,
-    label: "Facebook",
-    link: "https://www.facebook.com/theeliteglampageant",
+    link: "https://www.tiktok.com/@the.eliteglam.pag?_r=1&_t=ZS-9AfATCStTur",
   },
 ];
 
@@ -114,7 +114,7 @@ export function Footer() {
             />
           </div>
           <p className="font-raleway text-sm text-muted-foreground leading-[1.8] mb-8 max-w-70">
-            Nigeria&apos;s premiere platform celebrating beauty, intelligence, culture, leadership,
+            Nigeria&apos;s premiere platform celebrating beauty, intelligence, inclusivity, diversity, culture, leadership,
             and impact.
           </p>
           <div className="flex gap-3 mb-8">
@@ -171,12 +171,23 @@ export function Footer() {
         <div className="max-w-325 mx-auto flex justify-around items-center flex-wrap gap-4 font-raleway text-xs text-[#5A5040]">
           <div className="flex items-center gap-6 flex-wrap">
             <p>© 2025 The Elite Glam. All rights reserved.</p>
+          
             <span className="text-[#C9A84C]/30 hidden sm:inline">•</span>
             <p className="text-[#8B7D60]">
-              Website by{" "}
+              Powered by{" "} 
               <a
-                href="https://meetlawrence.vercel.app"
+                href="/about#founder"
                 target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#C9A84C] hover:underline tracking-wide transition-colors"
+              >
+                Em'Kay Oku LTD
+              </a>
+            </p>
+            <p className="text-[#8B7D60]">
+              Built and maintained by{" "}
+              <a
+                
                 rel="noopener noreferrer"
                 className="text-[#C9A84C] hover:underline tracking-wide transition-colors"
               >

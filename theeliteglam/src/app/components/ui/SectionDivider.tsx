@@ -1,7 +1,6 @@
 export function SectionLabel({ text }: { text: string }) {
   return (
     <div className="flex items-center gap-4 font-['Raleway',sans-serif] text-[0.68rem] uppercase tracking-[0.45em] text-[#C9A84C]">
-      <span className="inline-block h-px w-8 bg-[#C9A84C]" />
       {text}
     </div>
   );

@@ -34,7 +34,7 @@ export default function EventsExperience() {
         Where Culture Meets the Crown
       </h2>
       <p className="font-playfair text-base text-[#9A8C6A] italic max-w-[560px] leading-[1.75] mb-16">
-        Nigeria is more than our host nation—it is the heartbeat of The EliteGlam Pageant. Every
+        Nigeria is more than our host nation, it is the heartbeat of The EliteGlam Pageant. Every
         stage, every contestant, and every crown reflects the rich culture, diversity, and
         excellence that define our nation.
       </p>

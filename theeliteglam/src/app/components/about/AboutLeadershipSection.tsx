@@ -1,4 +1,4 @@
-import { SectionLabel } from "../ui/SectionDivider";
+
 
 type AboutLeadershipSectionProps = {
   image: string;
@@ -6,7 +6,7 @@ type AboutLeadershipSectionProps = {
 
 export function AboutLeadershipSection({ image }: AboutLeadershipSectionProps) {
   return (
-    <div className="mx-auto grid max-w-[1300px] gap-24 px-8 py-28 lg:grid-cols-[1fr_1.1fr] lg:items-center">
+    <div id="founder" className="mx-auto grid max-w-[1300px] gap-24 px-8 py-28 lg:grid-cols-[1fr_1.1fr] lg:items-center">
       <div className="relative">
         <div className="absolute left-[-18px] right-[18px] bottom-[-18px] top-[18px] border border-[rgba(201,168,76,0.2)]" />
         <div className="relative overflow-hidden pb-[130%]">
@@ -28,7 +28,6 @@ export function AboutLeadershipSection({ image }: AboutLeadershipSectionProps) {
       </div>
 
       <div>
-        <SectionLabel text="Meet the Visionary" />
         <h2 className="mt-6 mb-7 font-['Cinzel',serif] text-[clamp(1.8rem,3.5vw,2.8rem)] leading-[1.1] tracking-[0.05em] text-[#F5EDD6]">
           Built on a Dream,
           <br />
@@ -44,7 +43,7 @@ export function AboutLeadershipSection({ image }: AboutLeadershipSectionProps) {
         </div>
 
         {[
-          "Emmanuel Oku is a Lagos-based entrepreneur, creative director, and pageant producer with over a decade of experience in Nigeria's entertainment and fashion industries.",
+          "Emmanuel Oku is a Nigerian entrepreneur, creative director, and pageant producer with over a decade of experience in Nigeria's entertainment and fashion industries.",
           "Driven by a conviction that Africa's narrative in global pageantry must be rewritten from within, Emmanuel founded The Elite Glam in 2025 as the nation's most ambitious and inclusive pageant platform.",
           "Under his leadership, the brand has secured partnerships with internationally recognised pageant organisations and attracted contestants and sponsors from across Nigeria and the diaspora.",
         ].map((para, index) => (

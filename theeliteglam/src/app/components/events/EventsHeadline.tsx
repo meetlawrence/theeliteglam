@@ -34,7 +34,7 @@ export default function EventsHeadline() {
           The Return of
           <br />
           <span className="bg-[linear-gradient(135deg,#C9A84C,#F0C04A)] bg-clip-text text-transparent block">
-            The Elite Glam
+            The EliteGlam
           </span>
         </h2>
         <p className="font-raleway text-[0.97rem] text-muted-foreground leading-[1.85] mb-5">
