@@ -50,7 +50,7 @@ export function OverviewSection() {
           {/* Main Grid Wrapper */}
           <div className="mt-10 mb-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 relative">
             
-            {/* Female Franchises Column / Top Section */}
+            {/* Female Franchises Column */}
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-3">
                 <span className="font-raleway text-[0.68rem] tracking-[0.25em] text-[#C9A84C] uppercase  bg-[#D4AF37]/10 px-3 py-1 rounded-full border border-[#D4AF37]/20">
@@ -66,7 +66,7 @@ export function OverviewSection() {
               </div>
             </div>
 
-            {/* Male Franchises Column / Bottom Section */}
+            {/* Male Franchises Column */}
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-3">
                 <span className="font-raleway text-[0.68rem] tracking-[0.25em] text-[#C9A84C] uppercase  bg-[#D4AF37]/10 px-3 py-1 rounded-full border border-[#D4AF37]/20">
