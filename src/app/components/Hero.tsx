@@ -64,7 +64,7 @@ export function HeroSection({ onNavigate, eventStatus }: HeroSectionProps) {
           Where Beauty Meets Purpose
         </p>
 
-        {/* CTA Buttons (Conditionally Rendered based on Database Timelines) */}
+        {/* CTA Buttons */}
         <div className="flex flex-wrap justify-center gap-4 opacity-0 animate-[fadeInUp_1s_ease-out_0.6s_forwards]">
           {isTicketsOpen && (
             <CTA icon={<Ticket size={16} />} label="Get Tickets" variant="primary" onClick={() => handleNavigate("tickets")} />
