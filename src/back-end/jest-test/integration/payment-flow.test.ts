@@ -1,15 +1,9 @@
-import {
-  describe,
-  expect,
-  test,
-  beforeAll,
-  afterAll,
-  beforeEach,
-  jest,
-} from "@jest/globals";
+import { describe, expect, test, beforeAll, afterAll, beforeEach, jest } from "@jest/globals";
 
 const mockGatewayInitialize = jest.fn(
-  (_input: Record<string, unknown>): Promise<{
+  (
+    _input: Record<string, unknown>,
+  ): Promise<{
     success: boolean;
     authorizationUrl?: string;
     accessCode?: string;
@@ -21,11 +15,13 @@ const mockGatewayInitialize = jest.fn(
       authorizationUrl: "https://checkout.paystack.com/test",
       accessCode: "access_test",
       gatewayReference: "gw_init",
-    })
+    }),
 );
 
 const mockGatewayVerify = jest.fn(
-  (_reference: string): Promise<{
+  (
+    _reference: string,
+  ): Promise<{
     success: boolean;
     status: "SUCCESS" | "FAILED" | "PENDING";
     amount: number;
@@ -39,12 +35,12 @@ const mockGatewayVerify = jest.fn(
       amount: 3000,
       currency: "NGN",
       gatewayReference: "gw_verify",
-    })
+    }),
 );
 
 const mockSendEmail = jest.fn(
   (_to: string, _payload: Record<string, unknown>): Promise<{ success: boolean }> =>
-    Promise.resolve({ success: true })
+    Promise.resolve({ success: true }),
 );
 
 jest.unstable_mockModule("@/back-end/services/payment-services/paystack-gateway", () => ({
@@ -62,8 +58,7 @@ jest.unstable_mockModule("@/back-end/services/payment-services/opay-gateway", ()
 }));
 
 jest.unstable_mockModule("@/back-end/lib/email/resend", () => ({
-  sendEmail: (to: string, payload: Record<string, unknown>) =>
-    mockSendEmail(to, payload),
+  sendEmail: (to: string, payload: Record<string, unknown>) => mockSendEmail(to, payload),
 }));
 
 jest.unstable_mockModule("@/back-end/database/cloudinary", () => ({
@@ -76,11 +71,8 @@ jest.unstable_mockModule("qrcode", () => ({
   },
 }));
 
-const { prisma, resetPaymentTables, seedMinimalEvent, cleanupSeed } =
-  await import("./helpers/db");
-const { paymentService } = await import(
-  "@/back-end/services/payment-services/payment-service"
-);
+const { prisma, resetPaymentTables, seedMinimalEvent, cleanupSeed } = await import("./helpers/db");
+const { paymentService } = await import("@/back-end/services/payment-services/payment-service");
 const { paymentModel } = await import("@/back-end/models/payment-model");
 
 let eventId = "";
@@ -102,7 +94,7 @@ describe("payment flow (real DB, mocked Paystack)", () => {
         authorizationUrl: "https://checkout.paystack.com/test",
         accessCode: "access_test",
         gatewayReference: "gw_init",
-      })
+      }),
     );
 
     mockGatewayVerify.mockImplementation((_reference: string) =>
@@ -112,7 +104,7 @@ describe("payment flow (real DB, mocked Paystack)", () => {
         amount: 3000,
         currency: "NGN",
         gatewayReference: "gw_verify",
-      })
+      }),
     );
 
     mockSendEmail.mockImplementation(() => Promise.resolve({ success: true }));
@@ -136,9 +128,7 @@ describe("payment flow (real DB, mocked Paystack)", () => {
 
     expect(init.success).toBe(true);
     expect(init.data?.reference).toMatch(/^TIK-/);
-    expect(init.data?.authorizationUrl).toBe(
-      "https://checkout.paystack.com/test"
-    );
+    expect(init.data?.authorizationUrl).toBe("https://checkout.paystack.com/test");
 
     const reference = init.data.reference as string;
 
@@ -195,7 +185,7 @@ describe("payment flow (real DB, mocked Paystack)", () => {
         amount: 5000,
         currency: "NGN",
         gatewayReference: "gw_verify",
-      })
+      }),
     );
 
     const init = await paymentService.initialize({
@@ -242,7 +232,7 @@ describe("payment flow (real DB, mocked Paystack)", () => {
         amount: 1,
         currency: "NGN",
         gatewayReference: "gw_bad",
-      })
+      }),
     );
 
     const verify = await paymentService.verify(reference);
