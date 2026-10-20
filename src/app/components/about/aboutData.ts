@@ -9,9 +9,9 @@ export const CEO_IMG =
   "images/oku.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80";
 
 export const MAIDEN_IMGS = [
-  "/maiden/1.jpg",
-  "/maiden/2.jpg",
-  "/maiden/3.jpg",
+  "/maiden/1.webp",
+  "/maiden/2.webp",
+  "/maiden/3.webp",
 ];
 
 export const VALUES = [
@@ -81,7 +81,7 @@ export const WINNERS = [
   {
     name: "Oma Osele",
     title: "Miss Elite Glam 2025",
-    state: "Lagos · Igbo",
+    state: "",
     age: "28",
     occupation: "Medical Scientist",
     advocacy: "Pulse Global",
@@ -91,12 +91,12 @@ export const WINNERS = [
   {
     name: "Umana Sambo",
     title: "Mister Elite Glam 2025",
-    state: "Uyo · Ibibio",
+    state: "",
     age: "35",
     occupation: "Department of Tourism Officer",
     advocacy: "Youth Tech Empowerment",
     quote: "Beauty is the courage to stand for something greater than yourself. I carry that with every step.",
-    image: "https://images/?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+    image: "images/?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
 ];
 
@@ -104,16 +104,16 @@ export const RUNNERS_UP = [
   
   {
     name: "Emmanuel Oliver",
-    title: "Mr.Universe · Male",
-    state: "Cross River",
-    occupation: "Civil Engineer",
-    image: "https://images/?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+    title: "Mr.Universe",
+    state: "",
+    occupation: "Civil Engineer & Footwear Artisan",
+    image: "maiden/oliver.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
   {
     name: "Bernard Williams",
-    title: "Mister Grand · Male",
-    state: "Cross River",
-    occupation: "Fashion Designer",
-    image: "https://images/?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+    title: "Mister Grand",
+    state: "",
+    occupation: "Medical Laboratory Scientist",
+    image: "maiden/bernard.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
 ];
