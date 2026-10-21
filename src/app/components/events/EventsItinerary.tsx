@@ -3,9 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import SectionLabel from "./SectionLabel";
 import ItineraryRow from "./ItineraryRow";
-import { ITINERARY } from "./eventsData";
+import type { DayItinerary } from "./types";
 
-export function EventsItinerary() {
+export function EventsItinerary({
+  initialData = [],
+  title,
+}: {
+  initialData?: DayItinerary[];
+  title?: string | null;
+}) {
   const [inView, setInView] = useState(false);
   const [activeDay, setActiveDay] = useState(0);
   const itineraryRef = useRef<HTMLDivElement>(null);
@@ -32,14 +38,16 @@ export function EventsItinerary() {
     >
       <div className="max-w-[1300px] mx-auto">
         <SectionLabel text="Event Itinerary" />
-        <h2 className="font-cinzel text-[clamp(1.6rem,3.5vw,2.8rem)] text-[#F5EDD6] tracking-[0.06em] mt-4 mb-12">
-          Four Days of Excellence
-        </h2>
+        {title && (
+          <h2 className="font-cinzel text-[clamp(1.6rem,3.5vw,2.8rem)] text-[#F5EDD6] tracking-[0.06em] mt-4 mb-12">
+            {title}
+          </h2>
+        )}
 
         <div className="flex flex-wrap border-b border-[rgba(201,168,76,0.15)] mb-12">
-          {ITINERARY.map((day, i) => (
+          {initialData.map((day, i) => (
             <button
-              key={day.day}
+              key={day.id}
               onClick={() => setActiveDay(i)}
               className={`font-cinzel text-[0.72rem] tracking-[0.2em] uppercase transition-all duration-300 pb-4 px-8 ${
                 activeDay === i
@@ -52,9 +60,9 @@ export function EventsItinerary() {
           ))}
         </div>
 
-        {ITINERARY.map((day, i) => (
+        {initialData.map((day, i) => (
           <div
-            key={day.day}
+            key={day.id}
             className={`${i === activeDay ? "grid grid-cols-1 gap-12 lg:grid-cols-[280px_1fr] lg:gap-16 items-start" : "hidden"} itinerary-inner`}
           >
             <div>
@@ -72,7 +80,7 @@ export function EventsItinerary() {
             <div className="flex flex-col gap-0">
               {day.events.map((ev, j) => (
                 <ItineraryRow
-                  key={ev.name}
+                  key={ev.id}
                   ev={ev}
                   index={j}
                   isLast={j === day.events.length - 1}
