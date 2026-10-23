@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { uploadContestantImage } from "@/back-end/db/cloudinary";
-import { contestantTransactionService } from "@/back-end/services/contestant-transaction-service";
+import { paymentModel } from "@/back-end/models/payment-model";
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 const ALLOWED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
@@ -27,8 +27,8 @@ export async function POST(req: NextRequest) {
     }
 
     const transaction =
-      await contestantTransactionService.getContestantTransactionByReference(reference.trim());
-    if (!transaction.success || !transaction.data) {
+      await paymentModel.findByReference(reference);
+    if (transaction.status == "SUCCESS" || transaction.data?.status !== "SUCCESS") {
       return NextResponse.json(
         { success: false, error: transaction.error || "Payment transaction not found." },
         { status: transaction.status || 404 },
