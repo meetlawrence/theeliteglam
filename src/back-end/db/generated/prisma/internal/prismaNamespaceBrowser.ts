@@ -59,12 +59,12 @@ export const ModelName = {
   TicketType: 'TicketType',
   Vote: 'Vote',
   TicketTransaction: 'TicketTransaction',
-  Category: 'Category',
   Ticket: 'Ticket',
   Sponsor: 'Sponsor',
   Subscription: 'Subscription',
   RefreshToken: 'RefreshToken',
-  IdempotencyKey: 'IdempotencyKey'
+  IdempotencyKey: 'IdempotencyKey',
+  PaymentTransaction: 'PaymentTransaction'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -149,7 +149,8 @@ export const ContestantScalarFieldEnum = {
   eventId: 'eventId',
   contestantCategories: 'contestantCategories',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  paymentTransactionId: 'paymentTransactionId'
 } as const
 
 export type ContestantScalarFieldEnum = (typeof ContestantScalarFieldEnum)[keyof typeof ContestantScalarFieldEnum]
@@ -174,6 +175,7 @@ export const EventScalarFieldEnum = {
   isTicketsOpen: 'isTicketsOpen',
   isVotingOpen: 'isVotingOpen',
   isContestantsVisible: 'isContestantsVisible',
+  categories: 'categories',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -239,21 +241,16 @@ export const TicketTransactionScalarFieldEnum = {
 export type TicketTransactionScalarFieldEnum = (typeof TicketTransactionScalarFieldEnum)[keyof typeof TicketTransactionScalarFieldEnum]
 
 
-export const CategoryScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  eventId: 'eventId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
-
-
 export const TicketScalarFieldEnum = {
   id: 'id',
   reference: 'reference',
   status: 'status',
+  paymentTransactionId: 'paymentTransactionId',
+  ticket: 'ticket',
+  ticketTypeId: 'ticketTypeId',
+  eventId: 'eventId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   ticketTransactionId: 'ticketTransactionId'
 } as const
 
@@ -309,6 +306,30 @@ export const IdempotencyKeyScalarFieldEnum = {
 } as const
 
 export type IdempotencyKeyScalarFieldEnum = (typeof IdempotencyKeyScalarFieldEnum)[keyof typeof IdempotencyKeyScalarFieldEnum]
+
+
+export const PaymentTransactionScalarFieldEnum = {
+  id: 'id',
+  reference: 'reference',
+  purpose: 'purpose',
+  gateway: 'gateway',
+  gatewayReference: 'gatewayReference',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  fulfillmentStatus: 'fulfillmentStatus',
+  email: 'email',
+  phoneNumber: 'phoneNumber',
+  name: 'name',
+  eventId: 'eventId',
+  ticketTypeId: 'ticketTypeId',
+  quantity: 'quantity',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PaymentTransactionScalarFieldEnum = (typeof PaymentTransactionScalarFieldEnum)[keyof typeof PaymentTransactionScalarFieldEnum]
 
 
 export const SortOrder = {

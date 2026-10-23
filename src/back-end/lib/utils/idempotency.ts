@@ -1,4 +1,4 @@
-import { prisma } from "@/back-end/database/db-connect";
+import { prisma } from "@/back-end/db/db-connect";
 
 const TTL_HOURS = 24;
 const MAX_KEY_LENGTH = 128;

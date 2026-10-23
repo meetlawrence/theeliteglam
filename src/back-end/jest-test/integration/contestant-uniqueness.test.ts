@@ -33,6 +33,14 @@ function contestantData(
     reference: payment.reference,
     eventId,
     paymentTransactionId: payment.id,
+    age: 20,
+    state: "Lagos",
+    country: "Nigeria",
+    occupation: "Student",
+    advocacy: "Education",
+    funFact: "Enjoys reading",
+    tribe: "Yoruba",
+    contestantCategories: "FEMALE" as const,
     ...overrides,
   };
 }

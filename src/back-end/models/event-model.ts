@@ -11,9 +11,7 @@ export class EventModel {
         endDate: new Date(data.endDate),
         location: data.location,
         status: data.status || "UPCOMING",
-        categories: data.categories ? {
-          create: data.categories.map((catName) => ({ name: catName }))
-        } : undefined,
+        categories: data.categories,
         contestantFee: data.contestantFee,
       },
     });
@@ -44,9 +42,8 @@ export class EventModel {
         endDate: data.endDate ? new Date(data.endDate) : undefined,
         location: data.location,
         status: data.status,
-        categories: data.categories ? {
-          create: data.categories.map((catName) => ({ name: catName }))
-        } : undefined,
+        categories: data.categories,
+        contestantFee: data.contestantFee,
       },
     });
   }
