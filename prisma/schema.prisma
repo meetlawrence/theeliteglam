@@ -368,7 +368,7 @@ model IdempotencyKey {
   key        String   @unique
   method     String
   path       String
-  statusCode Int?     @default(0)
+  statusCode Int     @default(0)
   response   Json?
   pending    Boolean  @default(true)
   expiresAt  DateTime
