@@ -101,12 +101,15 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
     setError("");
 
     try {
-      const response = await fetch("/api/contestants/payment", {
+      const response = await fetch("/api/payment/initialize", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Idempotency-Key": crypto.randomUUID(),
         },
         body: JSON.stringify({
+          purpose: "CONTESTANT",
+          method: "PAYSTACK",
           eventId,
           name: name.trim(),
           email: email.trim(),

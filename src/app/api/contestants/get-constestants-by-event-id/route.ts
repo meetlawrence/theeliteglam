@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
 
     const result = await contestantService.getContestantsByEvent(eventId);
     return NextResponse.json(result, { status: result.status || 200 });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 400 });
+  } catch (error: unknown) {
+    return NextResponse.json({ success: false, message: (error as Error).message }, { status: 400 });
   }
 }
