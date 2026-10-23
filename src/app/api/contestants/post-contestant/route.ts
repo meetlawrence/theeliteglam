@@ -4,11 +4,11 @@ import { NextResponse } from "next/server";
 
 import { contestantService } from "../../../../back-end/services/contestant-service";
 import { authMiddleware } from "../../../../back-end/lib/route-middleware/admin";
-import { contestantTransactionService } from "@/back-end/services/contestant-transaction-service";
+import { paymentModel } from "@/back-end/models/payment-model";
 
 export async function POST(req: NextRequest) {
   try {
-    const reference1 = req.nextUrl.searchParams.get("reference");
+    const paymentReference = req.nextUrl.searchParams.get("reference");
 
     const {
       name,
@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
       contestantCategories,
       eventId,
       reference,
+      paymentTransactionId,
     } = await req.json();
 
     // =========================================================
@@ -38,26 +39,20 @@ export async function POST(req: NextRequest) {
     // POST /api/contestant?reference=PAYSTACK_REFERENCE
     // =========================================================
 
-    if (reference1) {
-      // 1. Find the payment transaction
-      const transaction =
-        await contestantTransactionService.getContestantTransactionByReference(
-          reference1,
-        );
+    if (paymentReference) {
+      const transaction = await paymentModel.findByReference(paymentReference);
 
-      // Transaction must exist
-      if (!transaction.success || !transaction.data) {
+      if (!transaction || transaction.purpose !== "CONTESTANT") {
         return NextResponse.json(
           {
             success: false,
-            error: "Contestant transaction not found",
+            error: "Contestant payment transaction not found",
           },
           { status: 404 },
         );
       }
 
-      // 2. Payment must be successful
-      if (transaction.data.status !== "SUCCESS") {
+      if (transaction.status !== "SUCCESS") {
         return NextResponse.json(
           {
             success: false,
@@ -67,13 +62,7 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      // 3. Prevent duplicate contestant registration
-      const contestantExists =
-        await contestantService.getContestantByreference(
-          transaction.data.reference,
-        );
-
-      if (contestantExists.success && contestantExists.data) {
+      if (transaction.contestant) {
         return NextResponse.json(
           {
             success: false,
@@ -103,16 +92,15 @@ export async function POST(req: NextRequest) {
         funFact,
         tribe,
         contestantCategories,
-
-        // These come from the verified transaction,
-        // NOT from the client request.
-        eventId: transaction.data.eventId,
-        reference: transaction.data.reference,
+        eventId: transaction.eventId,
+        reference: transaction.reference,
+        paymentTransactionId: transaction.id,
       };
 
-      // 5. Create contestant
-      const result =
-        await contestantService.createContestant(contestantData);
+      const result = await contestantService.createContestant(
+        contestantData,
+        transaction.reference,
+      );
 
       return NextResponse.json(result, {
         status: result.status || 200,
@@ -130,28 +118,32 @@ export async function POST(req: NextRequest) {
       return authResult.response;
     }
 
-    const result = await contestantService.createContestant({
-      name,
-      email,
-      gender,
-      image,
-      stageName,
-      height,
-      weight,
-      bio,
-      portfolio,
-      phone,
-      age,
-      state,
-      country,
-      occupation,
-      advocacy,
-      funFact,
-      tribe,
-      contestantCategories,
-      eventId,
+    const result = await contestantService.createContestant(
+      {
+        name,
+        email,
+        gender,
+        image,
+        stageName,
+        height,
+        weight,
+        bio,
+        portfolio,
+        phone,
+        age,
+        state,
+        country,
+        occupation,
+        advocacy,
+        funFact,
+        tribe,
+        contestantCategories,
+        eventId,
+        reference,
+        paymentTransactionId,
+      },
       reference,
-    });
+    );
 
     return NextResponse.json(result, {
       status: result.status || 200,
