@@ -38,10 +38,6 @@ function VerifyPaymentContent() {
           setStatus("success");
           setMessage("Payment verified successfully!");
           setTicketInfo(data);
-
-          setTimeout(() => {
-            router.push(`/contestant/form?reference=${encodeURIComponent(reference)}`);
-          }, 2000);
         } else {
           setStatus("failed");
           setMessage(
@@ -109,7 +105,7 @@ function VerifyPaymentContent() {
             </div>
           )}
           <Link
-            href={`/contestant/form?reference=${reference}`}
+            href={`/register/form?reference=${reference}`}
             className="w-full py-3.5 px-6 bg-gradient-to-br from-[#C9A84C] to-[#8B6914] text-[#080808] font-['Cinzel',serif] text-[0.75rem] uppercase font-bold flex items-center justify-center gap-2 transition-all hover:brightness-110"
           >
             Proceed to Application Form
