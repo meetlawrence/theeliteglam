@@ -109,7 +109,7 @@ const initialize = await import("@/app/api/payment/initialize/route");
 const initializePOST = initialize.POST;
 
 const verify = await import("@/app/api/payment/verify/route");
-const verifyPOST = verify.POST;
+const verifyGET = verify.GET;
 const resend = await import("@/app/api/payment/resend-email/route");
 const resendPOST = resend.POST
 
@@ -238,15 +238,15 @@ describe("POST /api/payments/initialize", () => {
   });
 });
 
-describe("POST /api/payments/verify", () => {
+describe("GET /api/payment/verify", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   test("returns 400 when reference missing", async () => {
-    const req = jsonRequest("http://localhost/api/payments/verify", {});
+    const req = new NextRequest("http://localhost/api/payment/verify");
 
-    const res = await verifyPOST(req);
+    const res = await verifyGET(req);
     const json = await res.json();
 
     expect(res.status).toBe(400);
@@ -255,11 +255,11 @@ describe("POST /api/payments/verify", () => {
   });
 
   test("calls paymentService.verify with reference", async () => {
-    const req = jsonRequest("http://localhost/api/payments/verify", {
-      reference: "CON-ABC123456789",
-    });
+    const req = new NextRequest(
+      "http://localhost/api/payment/verify?reference=CON-ABC123456789",
+    );
 
-    const res = await verifyPOST(req);
+    const res = await verifyGET(req);
     const json = await res.json();
 
     expect(res.status).toBe(200);
