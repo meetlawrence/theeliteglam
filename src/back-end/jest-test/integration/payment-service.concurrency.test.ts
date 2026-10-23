@@ -59,7 +59,7 @@ jest.unstable_mockModule("@/back-end/lib/email/resend", () => ({
   sendEmail: (to: string, payload: Record<string, unknown>) => mockSendEmail(to, payload),
 }));
 
-jest.unstable_mockModule("@/back-end/database/cloudinary", () => ({
+jest.unstable_mockModule("@/back-end/db/cloudinary", () => ({
   uploadQRCode: () => Promise.resolve("https://cdn.example.com/qr.png"),
 }));
 

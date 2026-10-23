@@ -82,11 +82,6 @@ export type Vote = Prisma.VoteModel
  */
 export type TicketTransaction = Prisma.TicketTransactionModel
 /**
- * Model Category
- * 
- */
-export type Category = Prisma.CategoryModel
-/**
  * Model Ticket
  * 
  */
@@ -111,3 +106,8 @@ export type RefreshToken = Prisma.RefreshTokenModel
  * 
  */
 export type IdempotencyKey = Prisma.IdempotencyKeyModel
+/**
+ * Model PaymentTransaction
+ * 
+ */
+export type PaymentTransaction = Prisma.PaymentTransactionModel

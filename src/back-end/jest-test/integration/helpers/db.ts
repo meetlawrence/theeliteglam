@@ -1,4 +1,4 @@
-import { prisma } from "@/back-end/database/db-connect";
+import { prisma } from "@/back-end/db/db-connect";
 
 export const TEST_IDEM_PREFIX = "itest-";
 
@@ -25,7 +25,7 @@ export async function seedMinimalEvent() {
       location: "Lagos",
       contestantFee: 5000,
       status: "UPCOMING",
-      categories: ["FEMALE"],
+      categories: "FEMALE",
     },
   });
 

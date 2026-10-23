@@ -71,7 +71,7 @@ jest.unstable_mockModule("@/back-end/models/ticket-model", () => ({
   },
 }));
 
-jest.unstable_mockModule("@/back-end/database/db-connect", () => ({
+jest.unstable_mockModule("@/back-end/db/db-connect", () => ({
   prisma: {
     ticketType: {
       findUnique: (args: { where: { id: string } }) =>
@@ -119,7 +119,7 @@ jest.unstable_mockModule("qrcode", () => ({
   },
 }));
 
-jest.unstable_mockModule("@/back-end/database/cloudinary", () => ({
+jest.unstable_mockModule("@/back-end/db/cloudinary", () => ({
   uploadQRCode: (base64: string) => mockUploadQRCode(base64),
 }));
 

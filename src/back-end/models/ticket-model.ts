@@ -1,46 +1,60 @@
-import { prisma } from "../db/db-connect";
-import type { UpdateTicket, Ticket } from "../types/ticket";
+import { prisma } from "@/back-end/db/db-connect";
+
+type CreateTicketInput = {
+  reference: string;
+  status?: "PENDING" | "SENT" | "USED";
+  paymentTransactionId: string;
+  ticketTypeId: string;
+  eventId: string;
+  ticket: string;
+};
 
 export class TicketModel {
-  async create(data: Ticket) {
-    return await prisma.ticket.create({
-      data: {
-        reference: data.reference,
-        status: data.status as any,
-        ticketTransactionId: data.ticketTransactionId,
+  async findByPaymentTransactionId(paymentTransactionId: string) {
+    return prisma.ticket.findMany({
+      where: { paymentTransactionId },
+    });
+  }
+
+  async findById(id: string) {
+    return prisma.ticket.findUnique({
+      where: { id },
+    });
+  }
+
+  async countSoldByTicketType(ticketTypeId: string) {
+    return prisma.ticket.count({
+      where: {
+        ticketTypeId,
+        paymentTransaction: {
+          status: "SUCCESS",
+        },
       },
     });
   }
 
-  async findByTicketId(id: string) {
-    return await prisma.ticket.findUnique({
-      where: { id },
+  async createMany(tickets: CreateTicketInput[]) {
+    return prisma.ticket.createManyAndReturn({
+      data: tickets,
     });
   }
 
-  async update(id: string, data: UpdateTicket) {
-    return await prisma.ticket.update({
-      where: { id },
-      data: data as any,
+  async updateStatusByPaymentTransactionId(
+    paymentTransactionId: string,
+    status: "PENDING" | "SENT" | "USED"
+  ) {
+    return prisma.ticket.updateMany({
+      where: { paymentTransactionId },
+      data: { status },
     });
   }
 
-  // may use later
-  async createdata (data: Ticket) {
-    try {
-      return await prisma.$transaction(async (tx) => {
-        await tx.ticket.create({
-          data: {
-            reference: data.reference,
-            status: data.status as any,
-            ticketTransactionId: data.ticketTransactionId,
-          },
-        });
-      })
-    } catch (error) {
-      
-    }
+  async markAsUsed(id: string) {
+    return prisma.ticket.update({
+      where: { id },
+      data: { status: "USED" },
+    });
   }
 }
 
-export const ticketRepo = new TicketModel();
+export const ticketModel = new TicketModel();
