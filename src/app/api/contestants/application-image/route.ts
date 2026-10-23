@@ -26,16 +26,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const transaction =
-      await paymentModel.findByReference(reference);
-    if (transaction.status == "SUCCESS" || transaction.data?.status !== "SUCCESS") {
+    const transaction = await paymentModel.findByReference(reference.trim());
+    if (!transaction) {
       return NextResponse.json(
-        { success: false, error: transaction.error || "Payment transaction not found." },
-        { status: transaction.status || 404 },
+        { success: false, error: "Payment transaction not found." },
+        { status: 404 },
       );
     }
 
-    if (transaction.data.status !== "SUCCESS") {
+    if (transaction.purpose !== "CONTESTANT" || transaction.status !== "SUCCESS") {
       return NextResponse.json(
         { success: false, error: "A successful payment is required before uploading an application image." },
         { status: 403 },
