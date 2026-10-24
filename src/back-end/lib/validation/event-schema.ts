@@ -18,7 +18,7 @@ export const updateEventSchema = z.object({
   endDate: z.string().datetime().optional(),
   location: z.string().min(3).optional(),
   status: z.enum(["UPCOMING", "ONGOING", "COMPLETED", "CANCELLED"]).optional(),
-  categories: z.array(z.enum(["MALE", "FEMALE"])).optional(),
+  categories: z.array(z.enum(["MALE", "FEMALE"])).min(1, "At least one category is required").optional(),
 });
 
 export const eventIdParamSchema = z.object({

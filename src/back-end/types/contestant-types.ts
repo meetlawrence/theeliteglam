@@ -1,4 +1,4 @@
-import { boolean, string } from "zod";
+export type ContestantCategory = "MALE" | "FEMALE";
 
 export interface CreateContestantInput {
   name: string;

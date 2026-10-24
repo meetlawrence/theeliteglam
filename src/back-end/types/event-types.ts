@@ -5,7 +5,7 @@ export interface CreateEventInput {
   endDate: string;
   location: string;
   status?: "UPCOMING" | "ONGOING" | "COMPLETED" | "CANCELLED";
-  categories: "MALE" | "FEMALE";
+  categories: ("MALE" | "FEMALE")[];
   contestantFee: number;
   // Array of category names
 }
@@ -17,7 +17,7 @@ export interface UpdateEventInput {
   endDate?: string;
   location?: string;
   status?: "UPCOMING" | "ONGOING" | "COMPLETED" | "CANCELLED";
-  categories?: "MALE" | "FEMALE";
+  categories?: ("MALE" | "FEMALE")[];
   contestantFee?: number;
 }
 
@@ -29,7 +29,7 @@ export interface EventResponse {
   endDate: Date;
   location: string;
   status: "UPCOMING" | "ONGOING" | "COMPLETED" | "CANCELLED";
-  categories: "MALE" | "FEMALE";
+  categories: ("MALE" | "FEMALE")[];
   createdAt: Date;
   updatedAt: Date;
 }

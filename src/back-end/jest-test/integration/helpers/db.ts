@@ -25,7 +25,7 @@ export async function seedMinimalEvent() {
       location: "Lagos",
       contestantFee: 5000,
       status: "UPCOMING",
-      categories: "FEMALE",
+      categories: ["FEMALE"],
     },
   });
 
