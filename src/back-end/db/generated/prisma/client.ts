@@ -47,11 +47,6 @@ export { Prisma }
  */
 export type Admin = Prisma.AdminModel
 /**
- * Model ContestantTransaction
- * 
- */
-export type ContestantTransaction = Prisma.ContestantTransactionModel
-/**
  * Model Contestant
  * 
  */

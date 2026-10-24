@@ -70,6 +70,14 @@ export const Status = {
 export type Status = (typeof Status)[keyof typeof Status]
 
 
+export const ContestantCategory = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE'
+} as const
+
+export type ContestantCategory = (typeof ContestantCategory)[keyof typeof ContestantCategory]
+
+
 export const ContestantCategories = {
   MALE: 'MALE',
   FEMALE: 'FEMALE'

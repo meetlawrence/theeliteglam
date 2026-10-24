@@ -42,6 +42,19 @@ export class EventService {
     }
   }
 
+  async getFirstEventId() {
+    try {
+      const event = await eventModel.findFirstId();
+      if (!event) {
+        return { success: false, error: "No event found", status: 404 };
+      }
+      return { success: true, data: event, status: 200 };
+    } catch (error) {
+      console.error("Get first event error:", error);
+      return { success: false, error: "Failed to fetch event", status: 500 };
+    }
+  }
+
   async getEventById(id: string) {
     try {
       const validation = eventIdParamSchema.safeParse({ id });

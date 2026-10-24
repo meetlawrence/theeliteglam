@@ -56,6 +56,11 @@ enum Status {
   INACTIVE
 }
 
+enum ContestantCategory {
+  MALE
+  FEMALE
+}
+
 enum ContestantCategories {
   MALE
   FEMALE
@@ -104,29 +109,6 @@ model Admin {
 
 // ====================== CONTESTANT ======================
 
-model ContestantTransaction {
-  id            String            @id @default(cuid())
-  name          String
-  email         String
-  phoneNumber   String?
-  amount        Float?
-  reference     String            @unique
-  paymentMethod String?
-  status        TransactionStatus @default(PENDING) //Pending Ones User Initiate Payment Then Update Once Payment is Approved from Payment Gateway
-  claimed       Boolean?          @default(false)
-  formSent      Boolean?          @default(false)
-
-  contestant Contestant?
-  eventId    String
-  event      Event       @relation(fields: [eventId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([email])
-  @@index([reference])
-}
-
 model Contestant {
   id String @id @default(cuid())
 
@@ -159,12 +141,10 @@ model Contestant {
   score Float?
   rank  Int?
 
-  eventId               String
-  event                 Event                 @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  contestantTransaction ContestantTransaction @relation(fields: [reference], references: [reference], onDelete: Cascade)
-  contestantCategories  ContestantCategories
-
-  votes Vote[]
+  eventId              String
+  event                Event              @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  contestantCategories ContestantCategory
+  votes                Vote[]
 
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
@@ -181,35 +161,30 @@ model Event {
   startDate     DateTime
   endDate       DateTime
   location      String
-  contestantFee Int
+  contestantFee Decimal     @db.Decimal(12, 2)
   status        EventStatus @default(UPCOMING)
 
-  // --- CRITICAL DATES ---
   registrationOpenDate  DateTime?
   registrationCloseDate DateTime?
   auditionsDate         DateTime?
   preliminaryDate       DateTime?
   grandFinaleDate       DateTime?
 
-  // --- ITINERARY SECTION CUSTOMIZATION ---
-  itineraryTitle String? @default("FOUR DAYS OF EXCELLENCE") // e.g. "FOUR DAYS OF EXCELLENCE"
+  itineraryTitle String? @default("FOUR DAYS OF EXCELLENCE")
 
-  // --- DASHBOARD CONTROLS ---
   isRegistrationOpen   Boolean @default(false)
   isTicketsOpen        Boolean @default(false)
   isVotingOpen         Boolean @default(false)
   isContestantsVisible Boolean @default(false)
 
-  // --- RELATIONS ---
-  categories             ContestantCategories
-  itineraryDays          EventItineraryDay[]
-  ticketTransaction      TicketTransaction[]
-  votes                  Vote[]
-  sponsors               Sponsor[]
-  ticketTypes            TicketType[]
-  contestants            Contestant[]
-  contestantTransactions ContestantTransaction[]
-  paymentTransactions    PaymentTransaction[]
+  categories          ContestantCategory[]
+  itineraryDays       EventItineraryDay[]
+  ticketTransaction   TicketTransaction[]
+  votes               Vote[]
+  sponsors            Sponsor[]
+  ticketTypes         TicketType[]
+  contestants         Contestant[]
+  paymentTransactions PaymentTransaction[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -368,7 +343,7 @@ model IdempotencyKey {
   key        String   @unique
   method     String
   path       String
-  statusCode Int     @default(0)
+  statusCode Int      @default(0)
   response   Json?
   pending    Boolean  @default(true)
   expiresAt  DateTime

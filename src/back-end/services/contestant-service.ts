@@ -46,7 +46,7 @@ export class ContestantService {
       console.error("[ContestantService.createContestant]", error);
       return {
         success: false,
-        message: error instanceof Error ? error.message : "Failed to create contestant",
+        message: "Failed to create contestant. Please try again or contact support.",
         status: 500,
       };
     }

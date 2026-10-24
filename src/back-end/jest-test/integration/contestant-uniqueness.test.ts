@@ -18,14 +18,6 @@ async function createContestantPayment() {
   });
 
   await paymentModel.markSuccess(tx.reference, "gw_con");
-  await prisma.contestantTransaction.create({
-    data: {
-      name: tx.name ?? "Itest Contestant",
-      email: tx.email,
-      reference: tx.reference,
-      eventId,
-    },
-  });
   return tx;
 }
 
@@ -104,15 +96,6 @@ describe("contestant uniqueness (real DB)", () => {
   test("duplicate paymentTransactionId hits P2002", async () => {
     const payment = await createContestantPayment();
     const duplicatePaymentReference = `${payment.reference}-2`;
-
-    await prisma.contestantTransaction.create({
-      data: {
-        name: payment.name ?? "Itest Contestant",
-        email: payment.email,
-        reference: duplicatePaymentReference,
-        eventId,
-      },
-    });
 
     await prisma.contestant.create({
       data: contestantData(payment),

@@ -9,7 +9,6 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/Admin'
-export type * from './models/ContestantTransaction'
 export type * from './models/Contestant'
 export type * from './models/Event'
 export type * from './models/EventItineraryDay'

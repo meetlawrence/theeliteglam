@@ -23,6 +23,13 @@ export class EventModel {
     });
   }
 
+  async findFirstId() {
+    return await prisma.event.findFirst({
+      orderBy: { createdAt: "desc" },
+      select: { id: true },
+    });
+  }
+
   async findById(id: string) {
     return await prisma.event.findUnique({
       where: { id },

@@ -52,7 +52,6 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Admin: 'Admin',
-  ContestantTransaction: 'ContestantTransaction',
   Contestant: 'Contestant',
   Event: 'Event',
   EventItineraryDay: 'EventItineraryDay',
@@ -100,25 +99,6 @@ export const AdminScalarFieldEnum = {
 } as const
 
 export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
-
-
-export const ContestantTransactionScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  email: 'email',
-  phoneNumber: 'phoneNumber',
-  amount: 'amount',
-  reference: 'reference',
-  paymentMethod: 'paymentMethod',
-  status: 'status',
-  claimed: 'claimed',
-  formSent: 'formSent',
-  eventId: 'eventId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ContestantTransactionScalarFieldEnum = (typeof ContestantTransactionScalarFieldEnum)[keyof typeof ContestantTransactionScalarFieldEnum]
 
 
 export const ContestantScalarFieldEnum = {
