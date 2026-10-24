@@ -15,7 +15,7 @@ const mockTicketCount = jest.fn(
   (_args: Record<string, unknown>): Promise<number> => Promise.resolve(0)
 );
 
-jest.unstable_mockModule("@/back-end/database/db-connect", () => ({
+jest.unstable_mockModule("@/back-end/db/db-connect", () => ({
   prisma: {
     event: {
       findUnique: (args: { where: { id: string } }) => mockEventFindUnique(args),

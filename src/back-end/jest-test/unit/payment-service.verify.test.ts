@@ -118,7 +118,7 @@ jest.unstable_mockModule("@/back-end/services/contestant-service", () => ({
 }));
 
 // prisma is imported in payment-service; provide a minimal mock
-jest.unstable_mockModule("@/back-end/database/db-connect", () => ({
+jest.unstable_mockModule("@/back-end/db/db-connect", () => ({
   prisma: {},
 }));
 

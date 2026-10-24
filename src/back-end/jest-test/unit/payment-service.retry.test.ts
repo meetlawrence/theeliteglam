@@ -84,7 +84,7 @@ jest.unstable_mockModule("@/back-end/services/payment-services/opay-gateway", ()
   opayGateway: { initialize: jest.fn(), verify: jest.fn() },
 }));
 
-jest.unstable_mockModule("@/back-end/database/db-connect", () => ({
+jest.unstable_mockModule("@/back-end/db/db-connect", () => ({
   prisma: {},
 }));
 

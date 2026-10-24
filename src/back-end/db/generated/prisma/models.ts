@@ -9,17 +9,16 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/Admin'
-export type * from './models/ContestantTransaction'
 export type * from './models/Contestant'
 export type * from './models/Event'
 export type * from './models/EventItineraryDay'
 export type * from './models/TicketType'
 export type * from './models/Vote'
 export type * from './models/TicketTransaction'
-export type * from './models/Category'
 export type * from './models/Ticket'
 export type * from './models/Sponsor'
 export type * from './models/Subscription'
 export type * from './models/RefreshToken'
 export type * from './models/IdempotencyKey'
+export type * from './models/PaymentTransaction'
 export type * from './commonInputTypes'

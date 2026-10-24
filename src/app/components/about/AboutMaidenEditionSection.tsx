@@ -19,7 +19,7 @@ export function AboutMaidenEditionSection({ images }: AboutMaidenEditionSectionP
             </h2>
             {[
               "The maiden edition of The Elite Glam was held in Calabar in 2025, marking a watershed moment in Nigerian pageantry. For the first time, a nationally organised pageant placed equal weight on male and female contestants — two crowns, one stage, one standard.",
-              "With over 30 applicants from across Nigeria, the inaugural season drew contestants of extraordinary calibre. The competition spanned four days of talent showcases, cultural presentations, panel interviews, and a dazzling Grand Finale that drew a live audience of over 1,000 guests, and over 100,000 social reach.",
+              "With over 50 applicants from across Nigeria, the inaugural season drew contestants of extraordinary calibre. The competition spanned four days of talent showcases, cultural presentations, panel interviews, and a dazzling Grand Finale that drew a live audience of over 2,000 guests, and over 5,000,000 social reach.",
               "The event generated significant media coverage, made wave both nationally and internationally, and was live streamed to audiences across all our social media platforms setting the tone for what The EliteGlam would become.",
             ].map((para, index) => (
               <p key={index} className="mb-4 font-['Raleway',sans-serif] text-[0.95rem] leading-[1.85] text-[#9A8C6A]">
@@ -29,9 +29,9 @@ export function AboutMaidenEditionSection({ images }: AboutMaidenEditionSectionP
 
             <div className="mt-10 grid gap-6 border-t border-[rgba(201,168,76,0.12)] pt-8 sm:grid-cols-3">
               {[
-                { value: "30+", label: "Applicants" },
-                { value: "1,000+", label: "Live Audience" },
-                { value: "100,000+", label: "Social Media Reach" },
+                { value: "50+", label: "Applicants" },
+                { value: "2,000+", label: "Live Audience" },
+                { value: "5 milion+", label: "Social Media Reach" },
                 { value: "4", label: "Competition Days" },
               ].map(({ value, label }) => (
                 <div key={label}>

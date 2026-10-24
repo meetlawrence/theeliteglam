@@ -2,10 +2,10 @@ import { redirect } from "next/navigation";
 import { HeroSection } from "../components/Hero";
 import { SearchBeginsSection } from "../components/SearchBegins";
 import { OverviewSection } from "../components/FranchiseOverview";
-import { getEventStatus } from "@/back-end/lib/utils/get-event-status";
+import { fetchEventStatus } from "@/app/lib/server-api";
 
 export default async function HomePage() {
-  const eventStatus = await getEventStatus();
+  const eventStatus = await fetchEventStatus();
 
   async function handleNavigate(page: "tickets" | "register" | "contestants") {
     "use server";

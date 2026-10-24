@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (payment.purpose === "TICKET") {
-      const result = await ticketService.createTicket(reference);
+      const result = await ticketService.resendTicketEmail(reference);
       return NextResponse.json(result, { status: result.status });
     }
 

@@ -158,8 +158,7 @@ export function ApplicationForm({ reference }: { reference: string }) {
       ...current,
       country: countryName,
       phoneCountry:
-        countries.find((country) => country.name === countryName)?.code ??
-        current.phoneCountry,
+        countries.find((country) => country.name === countryName)?.code ?? current.phoneCountry,
       countryCode:
         countries.find((country) => country.name === countryName)?.callingCodes[0] ??
         current.countryCode,
@@ -175,17 +174,19 @@ export function ApplicationForm({ reference }: { reference: string }) {
     });
   };
 
-  const countryNames = countries.length > 0
-    ? countries.map((country) => country.name)
-    : ["Nigeria"];
-  const callingCodeOptions = countries.length > 0
-    ? countries.filter((country) => country.callingCodes.length > 0)
-    : [{
-        name: "Nigeria",
-        code: "NG",
-        flag: "🇳🇬",
-        callingCodes: ["+234"],
-      }];
+  const countryNames =
+    countries.length > 0 ? countries.map((country) => country.name) : ["Nigeria"];
+  const callingCodeOptions =
+    countries.length > 0
+      ? countries.filter((country) => country.callingCodes.length > 0)
+      : [
+          {
+            name: "Nigeria",
+            code: "NG",
+            flag: "🇳🇬",
+            callingCodes: ["+234"],
+          },
+        ];
 
   const handleImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
     const input = event.currentTarget;
@@ -272,9 +273,10 @@ export function ApplicationForm({ reference }: { reference: string }) {
 
     if (currentSection === 1) {
       if (formData.state.trim().length < 2) {
-        newErrors.state = formData.country === "Nigeria"
-          ? "Please select your state"
-          : "Please enter your district or province";
+        newErrors.state =
+          formData.country === "Nigeria"
+            ? "Please select your state"
+            : "Please enter your district or province";
       }
       if (formData.country.trim().length < 2) newErrors.country = "Enter a valid country";
       if (!formData.tribe.trim() || formData.tribe.trim().length < 2) {
@@ -283,11 +285,15 @@ export function ApplicationForm({ reference }: { reference: string }) {
       if (formData.occupation.trim().length < 2) {
         newErrors.occupation = "Occupation must be at least 2 characters";
       }
-      
+
       if (!formData.heightFeet) {
         newErrors.height = "Please enter your height in feet";
       }
-      if (!formData.weight || !Number.isFinite(Number(formData.weight)) || Number(formData.weight) <= 0) {
+      if (
+        !formData.weight ||
+        !Number.isFinite(Number(formData.weight)) ||
+        Number(formData.weight) <= 0
+      ) {
         newErrors.weight = "Enter a valid weight in kg";
       }
     }
@@ -303,7 +309,8 @@ export function ApplicationForm({ reference }: { reference: string }) {
         newErrors.image = "Upload a profile image to continue.";
       }
       if (formData.portfolio.trim() && !isValidUrl(formData.portfolio.trim())) {
-        newErrors.portfolio = "Please enter a valid portfolio URL starting with http:// or https://";
+        newErrors.portfolio =
+          "Please enter a valid portfolio URL starting with http:// or https://";
       }
     }
 
@@ -342,7 +349,9 @@ export function ApplicationForm({ reference }: { reference: string }) {
               <select
                 value={formData.phoneCountry}
                 onChange={(event) => {
-                  const country = callingCodeOptions.find((item) => item.code === event.target.value);
+                  const country = callingCodeOptions.find(
+                    (item) => item.code === event.target.value,
+                  );
                   if (!country) return;
                   setFormData((current) => ({
                     ...current,
@@ -389,7 +398,10 @@ export function ApplicationForm({ reference }: { reference: string }) {
             error={errors.age}
           />
           <div>
-            <label id="gender-label" className="block font-['Raleway',sans-serif] text-[0.72rem] tracking-[0.2em] text-[#9A8C6A] uppercase mb-[0.5rem]">
+            <label
+              id="gender-label"
+              className="block font-['Raleway',sans-serif] text-[0.72rem] tracking-[0.2em] text-[#9A8C6A] uppercase mb-[0.5rem]"
+            >
               Category / Gender *
             </label>
             <div
@@ -412,8 +424,8 @@ export function ApplicationForm({ reference }: { reference: string }) {
                     formData.gender === gender
                       ? "bg-[#C9A84C]/12 border border-[#C9A84C] text-[#F0C04A]"
                       : errors.gender
-                      ? "bg-white/[0.02] border border-[#C96B5D] text-[#9A8C6A]"
-                      : "bg-white/[0.02] border border-[#C9A84C]/20 text-[#9A8C6A]"
+                        ? "bg-white/[0.02] border border-[#C96B5D] text-[#9A8C6A]"
+                        : "bg-white/[0.02] border border-[#C9A84C]/20 text-[#9A8C6A]"
                   }`}
                 >
                   {gender}
@@ -421,7 +433,11 @@ export function ApplicationForm({ reference }: { reference: string }) {
               ))}
             </div>
             {errors.gender && (
-              <p id="gender-error" role="alert" className="font-['Raleway',sans-serif] text-[0.7rem] text-[#C96B5D] mt-1.5">
+              <p
+                id="gender-error"
+                role="alert"
+                className="font-['Raleway',sans-serif] text-[0.7rem] text-[#C96B5D] mt-1.5"
+              >
                 {errors.gender}
               </p>
             )}
@@ -433,7 +449,6 @@ export function ApplicationForm({ reference }: { reference: string }) {
       title: "Background & Profile",
       fields: (
         <div className="flex flex-col gap-5">
-          
           <div className="flex flex-col gap-1">
             <label className="block font-['Raleway',sans-serif] text-[0.72rem] tracking-[0.2em] text-[#9A8C6A] uppercase mb-[0.5rem]">
               Height (Feet & Inches) *
@@ -460,7 +475,10 @@ export function ApplicationForm({ reference }: { reference: string }) {
               />
             </div>
             {errors.height && (
-              <p role="alert" className="font-['Raleway',sans-serif] text-[0.7rem] text-[#C96B5D] mt-1.5">
+              <p
+                role="alert"
+                className="font-['Raleway',sans-serif] text-[0.7rem] text-[#C96B5D] mt-1.5"
+              >
                 {errors.height}
               </p>
             )}
@@ -658,7 +676,11 @@ export function ApplicationForm({ reference }: { reference: string }) {
               </div>
             )}
             {errors.image && (
-              <p id="profile-image-error" role="alert" className="font-['Raleway',sans-serif] text-[0.7rem] text-[#C96B5D] mt-1.5">
+              <p
+                id="profile-image-error"
+                role="alert"
+                className="font-['Raleway',sans-serif] text-[0.7rem] text-[#C96B5D] mt-1.5"
+              >
                 {errors.image}
               </p>
             )}
@@ -687,6 +709,11 @@ export function ApplicationForm({ reference }: { reference: string }) {
       return;
     }
 
+    if (!reference.trim()) {
+      setSubmitError("Your payment reference is missing. Please return to registration.");
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitError("");
 
@@ -694,7 +721,7 @@ export function ApplicationForm({ reference }: { reference: string }) {
       // Calculate total height in cm from feet and inches
       const feet = Number(formData.heightFeet) || 0;
       const inches = Number(formData.heightInches) || 0;
-      const totalHeightCm = Math.round((feet * 30.48) + (inches * 2.54));
+      const totalHeightCm = Math.round(feet * 30.48 + inches * 2.54);
 
       // Format full phone number with country code
       const fullPhone = `${formData.countryCode}${formData.phone.trim().replace(/^0+/, "")}`;
@@ -729,18 +756,21 @@ export function ApplicationForm({ reference }: { reference: string }) {
         },
       );
 
-      const result = await response.json();
+      let result: { success?: boolean; error?: string; message?: string };
+      try {
+        result = await response.json();
+      } catch {
+        throw new Error("The application server returned an invalid response. Please try again.");
+      }
 
-      if (!response.ok || !result.success) {
+      if (!response.ok || result.success !== true) {
         throw new Error(result.error || result.message || "Unable to submit your application.");
       }
 
       setSubmitted(true);
     } catch (error) {
       setSubmitError(
-        error instanceof Error
-          ? error.message
-          : "Unable to submit your application right now."
+        error instanceof Error ? error.message : "Unable to submit your application right now.",
       );
     } finally {
       setIsSubmitting(false);
@@ -760,7 +790,8 @@ export function ApplicationForm({ reference }: { reference: string }) {
           You&apos;ve Applied, {formData.name.trim().split(/\s+/)[0]}.
         </h2>
         <p className="font-['Playfair_Display',serif] text-[1rem] text-[#9A8C6A] italic leading-[1.8] max-w-[460px] mx-auto mb-10">
-          Your application for The Elite Glam Pageant Season 2 has been received. We will review every submission with care.
+          Your application for The Elite Glam Pageant Season 2 has been received. We will review
+          every submission with care.
         </p>
         <div className="bg-[#C9A84C]/[0.05] border border-[#C9A84C]/15 py-7 px-8 mb-8 text-left">
           <div className="flex flex-col gap-3.5">
@@ -788,7 +819,15 @@ export function ApplicationForm({ reference }: { reference: string }) {
   const isLast = section === sections.length - 1;
 
   return (
-    <div id="apply" className="max-w-[760px] mx-auto pt-44 pb-32 px-8">
+    <form
+      id="apply"
+      noValidate
+      onSubmit={(event) => {
+        event.preventDefault();
+        void handleNext();
+      }}
+      className="max-w-[760px] mx-auto pt-44 pb-32 px-8"
+    >
       <div className="flex items-center gap-2 mb-3">
         <Check size={16} className="text-[#C9A84C]" />
         <span className="font-['Raleway',sans-serif] text-[0.65rem] tracking-[0.3em] text-[#C9A84C] uppercase">
@@ -843,8 +882,7 @@ export function ApplicationForm({ reference }: { reference: string }) {
           </button>
         )}
         <button
-          type="button"
-          onClick={handleNext}
+          type="submit"
           disabled={isSubmitting || isUploadingImage}
           className={`py-3.5 px-8 font-['Cinzel',serif] text-[0.78rem] tracking-[0.2em] uppercase flex items-center gap-2.5 transition-all ${
             isSubmitting || isUploadingImage
@@ -852,19 +890,28 @@ export function ApplicationForm({ reference }: { reference: string }) {
               : "bg-gradient-to-br from-[#C9A84C] to-[#8B6914] border-none text-[#080808] cursor-pointer hover:brightness-110"
           }`}
         >
-          {isUploadingImage ? "Uploading Image..." : isSubmitting ? "Submitting..." : isLast ? "Submit Application" : "Continue"}
+          {isUploadingImage
+            ? "Uploading Image..."
+            : isSubmitting
+              ? "Submitting..."
+              : isLast
+                ? "Submit Application"
+                : "Continue"}
           <ArrowRight size={14} />
         </button>
       </div>
 
       {/* Submission Errors */}
       {submitError && (
-        <div role="alert" className="flex items-center justify-end gap-2 text-[#C96B5D] mt-4 font-['Raleway',sans-serif] text-[0.72rem]">
+        <div
+          role="alert"
+          className="flex items-center justify-end gap-2 text-[#C96B5D] mt-4 font-['Raleway',sans-serif] text-[0.72rem]"
+        >
           <AlertCircle size={14} />
           <span>{submitError}</span>
         </div>
       )}
-    </div>
+    </form>
   );
 }
 

@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeAll, afterAll, beforeEach } from "@jest/globals";
-import { prisma } from "@/back-end/database/db-connect";
+import { prisma } from "@/back-end/db/db-connect";
 import { resetPaymentTables, seedMinimalEvent, cleanupSeed, TEST_IDEM_PREFIX } from "./helpers/db";
 import { claimIdempotencyKey } from "@/back-end/lib/utils/idempotency";
 

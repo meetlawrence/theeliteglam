@@ -58,7 +58,7 @@ const mockDelete = jest.fn(
     Promise.resolve({} as IdempotencyKeyRecord)
 );
 
-jest.unstable_mockModule("@/back-end/database/db-connect", () => ({
+jest.unstable_mockModule("@/back-end/db/db-connect", () => ({
   prisma: {
     idempotencyKey: {
       create: (args: CreateIdempotencyArgs) => mockCreate(args),

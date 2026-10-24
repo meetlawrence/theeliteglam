@@ -1,94 +1,64 @@
-export interface PaystackVerificationResponse {
-  status: boolean;
-  message: string;
-  data: {
-    id: number;
-    domain: string;
-    status:
-      | "ABANDONED"
-      | "FAILED"
-      | "ONGOING"
-      | "PENDING"
-      | "PROCESSING"
-      | "QUEUED"
-      | "REVERSED"
-      | "SUCCESS"; // Paystack statuses
-    reference: string;
-    receipt_number: string | null;
-    amount: number;
-    message: string | null;
-    gateway_response: string;
-    paid_at: string; // ISO date string
-    created_at: string; // ISO date string
-    channel: string;
-    currency: string;
-    ip_address: string;
-    metadata: string | null;
-    log: {
-      start_time: number;
-      time_spent: number;
-      attempts: number;
-      errors: number;
-      success: boolean;
-      mobile: boolean;
-      input: string[];
-      history: {
-        type: string;
-        message: string;
-        time: number;
-      }[];
-    };
-    fees: number;
-    fees_split: null | Record<string, unknown>;
-    authorization: {
-      authorization_code: string;
-      bin: string;
-      last4: string;
-      exp_month: string;
-      exp_year: string;
-      channel: string;
-      card_type: string;
-      bank: string;
-      country_code: string;
-      brand: string;
-      reusable: boolean;
-      signature: string;
-      account_name: string | null;
-    };
-    customer: {
-      id: number;
-      first_name: string | null;
-      last_name: string | null;
-      email: string;
-      customer_code: string;
-      phone: string | null;
-      metadata: string | null;
-      risk_action: string;
-      international_format_phone: string | null;
-    };
-    plan: string | null;
-    split: Record<string, unknown>;
-    order_id: string | null;
-    paidAt: string; // ISO date string
-    createdAt: string; // ISO date string
-    requested_amount: number;
-    pos_transaction_data: null | Record<string, unknown>;
-    source: null | Record<string, unknown>;
-    fees_breakdown: null | Record<string, unknown>;
-    connect: null | Record<string, unknown>;
-    transaction_date: string; // ISO date string
-    plan_object: Record<string, unknown>;
-    subaccount: Record<string, unknown>;
-  };
-}
+import type {
+  PaymentTransaction,
+  Ticket,
+  Contestant,
+  Event,
+  TicketType,
+  PaymentPurpose,
+  PaymentGateway,
+  PaymentStatus,
+  FulfillmentStatus,
+  TicketStatus,
+} from "@/back-end/db/generated/prisma/client";
 
-export type PaymentPurpose = "REGISTRATION" | "VOTING" | "TICKET" | "CONTESTANT";
-export type PaymentGateway = "PAYSTACK" | "OPAY";
+// ======================
+// Re-export Prisma types (source of truth)
+// ======================
+export type {
+  PaymentTransaction,
+  Ticket,
+  Contestant,
+  Event,
+  TicketType,
+  PaymentPurpose,
+  PaymentGateway,
+  PaymentStatus,
+  FulfillmentStatus,
+  TicketStatus,
+};
 
+// ======================
+// Input types (for API / service)
+// ======================
+export type InitializeTicketPaymentInput = {
+  purpose: "TICKET";
+  method: PaymentGateway;
+  eventId: string;
+  ticketTypeId: string;
+  quantity: number;
+  email: string;
+  phoneNumber?: string;
+  name?: string;
+};
+
+export type InitializeContestantPaymentInput = {
+  purpose: "CONTESTANT";
+  method: PaymentGateway;
+  eventId: string;
+  email: string;
+  phoneNumber?: string;
+  name: string;
+};
+
+export type InitializePaymentInput =
+  InitializeTicketPaymentInput | InitializeContestantPaymentInput;
+
+// ======================
+// Gateway contracts
+// ======================
 export type GatewayInitializeResult = {
   success: boolean;
   authorizationUrl?: string;
-  reference?: string;
   accessCode?: string;
   gatewayReference?: string;
   message?: string;
@@ -97,32 +67,29 @@ export type GatewayInitializeResult = {
 
 export type GatewayVerifyResult = {
   success: boolean;
-  status: "SUCCESS" | "FAILED" | "PENDING";
+  status: PaymentStatus;
   amount: number;
-  gatewayReference?: string;
   currency?: string;
+  gatewayReference?: string;
   message?: string;
   raw?: unknown;
 };
 
-export type InitializePaymentInput = {
-  email: string;
-  amount: number;
-  reference: string;
-  purpose: Extract<PaymentPurpose, "TICKET" | "CONTESTANT">;
-  method: PaymentGateway;
-  metadata?: Record<string, string>;
-  callbackUrl?: string;
-  eventId: string;
-  ticketTypeId?: string;
-  quantity?: number;
-  name?: string;
-  phoneNumber?: string;
-};
-
+// ======================
+// Service response type
+// ======================
 export type PaymentResult = {
   success: boolean;
   message: string;
   status: number;
-  data?: unknown;
+  data?: any;
+};
+
+// ======================
+// Useful derived types
+// ======================
+export type PaymentTransactionWithRelations = PaymentTransaction & {
+  tickets?: Ticket[];
+  contestant?: Contestant | null;
+  event?: Event;
 };

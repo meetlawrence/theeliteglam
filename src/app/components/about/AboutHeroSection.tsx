@@ -11,8 +11,12 @@ export function AboutHeroSection({ bannerImage, inView }: AboutHeroSectionProps)
   return (
     <section className="relative flex h-[88vh] min-h-[560px] items-end overflow-hidden">
       {/* Video Background */}
-        <div className="absolute inset-0">
-        <img src={bannerImage} alt="" className="absolute inset-0 w-full h-full object-cover object-center" />
+      <div className="absolute inset-0">
+        <img
+          src={bannerImage}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover object-center"
+        />
         <video
           autoPlay
           muted
@@ -22,10 +26,10 @@ export function AboutHeroSection({ bannerImage, inView }: AboutHeroSectionProps)
           poster={bannerImage}
           className="absolute inset-0 w-full h-full object-cover object-center"
         >
-            <source src={BANNER_VIDEO} type="video/webm" />
-            Your browser does not support the video tag.
+          <source src={BANNER_VIDEO} type="video/webm" />
+          Your browser does not support the video tag.
         </video>
-        </div>
+      </div>
       <div className="absolute inset-0 bg-[rgba(8,8,8,0.52)]" />
       <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(8,8,8,1)_0%,rgba(8,8,8,0.35)_45%,transparent_100%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_50%_at_50%_65%,rgba(201,168,76,0.09)_0%,transparent_70%)]" />
