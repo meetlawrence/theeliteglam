@@ -289,7 +289,7 @@ export class ContestantService {
         };
       }
 
-      const formLink = `${process.env.NEXT_PUBLIC_BASE_URL}/contestant/form?reference=${payment.reference}`;
+      const formLink = `${process.env.NEXT_PUBLIC_BASE_URL}/register/form?reference=${payment.reference}`;
 
       const emailResult = await sendEmail(payment.email, {
         type: "contestant-form",
@@ -370,7 +370,7 @@ export class ContestantService {
     }
 
     // 2. Send email
-    const formLink = `${process.env.NEXT_PUBLIC_BASE_URL}/contestant/form?reference=${payment.reference}`;
+    const formLink = `${process.env.NEXT_PUBLIC_BASE_URL}/register/form?reference=${payment.reference}`;
 
     const emailResult = await sendEmail(payment.email, {
       type: "contestant-form",
