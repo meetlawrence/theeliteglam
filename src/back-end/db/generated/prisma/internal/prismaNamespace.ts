@@ -398,7 +398,6 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   Admin: 'Admin',
-  ContestantTransaction: 'ContestantTransaction',
   Contestant: 'Contestant',
   Event: 'Event',
   EventItineraryDay: 'EventItineraryDay',
@@ -426,7 +425,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admin" | "contestantTransaction" | "contestant" | "event" | "eventItineraryDay" | "ticketType" | "vote" | "ticketTransaction" | "ticket" | "sponsor" | "subscription" | "refreshToken" | "idempotencyKey" | "paymentTransaction"
+    modelProps: "admin" | "contestant" | "event" | "eventItineraryDay" | "ticketType" | "vote" | "ticketTransaction" | "ticket" | "sponsor" | "subscription" | "refreshToken" | "idempotencyKey" | "paymentTransaction"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -501,80 +500,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AdminCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AdminCountAggregateOutputType> | number
-        }
-      }
-    }
-    ContestantTransaction: {
-      payload: Prisma.$ContestantTransactionPayload<ExtArgs>
-      fields: Prisma.ContestantTransactionFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ContestantTransactionFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantTransactionPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ContestantTransactionFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantTransactionPayload>
-        }
-        findFirst: {
-          args: Prisma.ContestantTransactionFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantTransactionPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ContestantTransactionFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantTransactionPayload>
-        }
-        findMany: {
-          args: Prisma.ContestantTransactionFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantTransactionPayload>[]
-        }
-        create: {
-          args: Prisma.ContestantTransactionCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantTransactionPayload>
-        }
-        createMany: {
-          args: Prisma.ContestantTransactionCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ContestantTransactionCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantTransactionPayload>[]
-        }
-        delete: {
-          args: Prisma.ContestantTransactionDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantTransactionPayload>
-        }
-        update: {
-          args: Prisma.ContestantTransactionUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantTransactionPayload>
-        }
-        deleteMany: {
-          args: Prisma.ContestantTransactionDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ContestantTransactionUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ContestantTransactionUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantTransactionPayload>[]
-        }
-        upsert: {
-          args: Prisma.ContestantTransactionUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ContestantTransactionPayload>
-        }
-        aggregate: {
-          args: Prisma.ContestantTransactionAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateContestantTransaction>
-        }
-        groupBy: {
-          args: Prisma.ContestantTransactionGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ContestantTransactionGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ContestantTransactionCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ContestantTransactionCountAggregateOutputType> | number
         }
       }
     }
@@ -1524,25 +1449,6 @@ export const AdminScalarFieldEnum = {
 export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum]
 
 
-export const ContestantTransactionScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  email: 'email',
-  phoneNumber: 'phoneNumber',
-  amount: 'amount',
-  reference: 'reference',
-  paymentMethod: 'paymentMethod',
-  status: 'status',
-  claimed: 'claimed',
-  formSent: 'formSent',
-  eventId: 'eventId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ContestantTransactionScalarFieldEnum = (typeof ContestantTransactionScalarFieldEnum)[keyof typeof ContestantTransactionScalarFieldEnum]
-
-
 export const ContestantScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -1858,34 +1764,6 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
- * Reference to a field of type 'Float'
- */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
- * Reference to a field of type 'Float[]'
- */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-/**
- * Reference to a field of type 'TransactionStatus'
- */
-export type EnumTransactionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionStatus'>
-    
-
-
-/**
- * Reference to a field of type 'TransactionStatus[]'
- */
-export type ListEnumTransactionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionStatus[]'>
-    
-
-
-/**
  * Reference to a field of type 'Gender'
  */
 export type EnumGenderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Gender'>
@@ -1928,16 +1806,44 @@ export type ListEnumStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
 
 
 /**
- * Reference to a field of type 'ContestantCategories'
+ * Reference to a field of type 'Float'
  */
-export type EnumContestantCategoriesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContestantCategories'>
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
     
 
 
 /**
- * Reference to a field of type 'ContestantCategories[]'
+ * Reference to a field of type 'Float[]'
  */
-export type ListEnumContestantCategoriesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContestantCategories[]'>
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ContestantCategory'
+ */
+export type EnumContestantCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContestantCategory'>
+    
+
+
+/**
+ * Reference to a field of type 'ContestantCategory[]'
+ */
+export type ListEnumContestantCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ContestantCategory[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 
@@ -1966,6 +1872,20 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
  * Reference to a field of type 'QueryMode'
  */
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'TransactionStatus'
+ */
+export type EnumTransactionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'TransactionStatus[]'
+ */
+export type ListEnumTransactionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionStatus[]'>
     
 
 
@@ -2022,20 +1942,6 @@ export type EnumPaymentGatewayFieldRefInput<$PrismaModel> = FieldRefInputType<$P
  * Reference to a field of type 'PaymentGateway[]'
  */
 export type ListEnumPaymentGatewayFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentGateway[]'>
-    
-
-
-/**
- * Reference to a field of type 'Decimal'
- */
-export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
-    
-
-
-/**
- * Reference to a field of type 'Decimal[]'
- */
-export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 
@@ -2218,7 +2124,6 @@ export interface PrismaClientOptionsWithAdapter extends PrismaClientBaseOptions 
 export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaClientOptionsWithAdapter
 export type GlobalOmitConfig = {
   admin?: Prisma.AdminOmit
-  contestantTransaction?: Prisma.ContestantTransactionOmit
   contestant?: Prisma.ContestantOmit
   event?: Prisma.EventOmit
   eventItineraryDay?: Prisma.EventItineraryDayOmit

@@ -7,7 +7,7 @@ export const createEventSchema = z.object({
   endDate: z.string().datetime("Invalid end date"),
   location: z.string().min(3, "Location is required"),
   status: z.enum(["UPCOMING", "ONGOING", "COMPLETED", "CANCELLED"]).optional(),
-  categories: z.enum(["MALE", "FEMALE"]),
+  categories: z.array(z.enum(["MALE", "FEMALE"])).min(1, "At least one category is required"),
   contestantFee: z.number().positive("Total must be positive"),
 });
 
@@ -18,7 +18,7 @@ export const updateEventSchema = z.object({
   endDate: z.string().datetime().optional(),
   location: z.string().min(3).optional(),
   status: z.enum(["UPCOMING", "ONGOING", "COMPLETED", "CANCELLED"]).optional(),
-  categories: z.enum(["MALE", "FEMALE"]).optional(),
+  categories: z.array(z.enum(["MALE", "FEMALE"])).optional(),
 });
 
 export const eventIdParamSchema = z.object({

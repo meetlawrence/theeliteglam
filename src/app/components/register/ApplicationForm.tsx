@@ -709,6 +709,11 @@ export function ApplicationForm({ reference }: { reference: string }) {
       return;
     }
 
+    if (!reference.trim()) {
+      setSubmitError("Your payment reference is missing. Please return to registration.");
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitError("");
 
@@ -751,9 +756,14 @@ export function ApplicationForm({ reference }: { reference: string }) {
         },
       );
 
-      const result = await response.json();
+      let result: { success?: boolean; error?: string; message?: string };
+      try {
+        result = await response.json();
+      } catch {
+        throw new Error("The application server returned an invalid response. Please try again.");
+      }
 
-      if (!response.ok || !result.success) {
+      if (!response.ok || result.success !== true) {
         throw new Error(result.error || result.message || "Unable to submit your application.");
       }
 
@@ -809,7 +819,15 @@ export function ApplicationForm({ reference }: { reference: string }) {
   const isLast = section === sections.length - 1;
 
   return (
-    <div id="apply" className="max-w-[760px] mx-auto pt-44 pb-32 px-8">
+    <form
+      id="apply"
+      noValidate
+      onSubmit={(event) => {
+        event.preventDefault();
+        void handleNext();
+      }}
+      className="max-w-[760px] mx-auto pt-44 pb-32 px-8"
+    >
       <div className="flex items-center gap-2 mb-3">
         <Check size={16} className="text-[#C9A84C]" />
         <span className="font-['Raleway',sans-serif] text-[0.65rem] tracking-[0.3em] text-[#C9A84C] uppercase">
@@ -864,8 +882,7 @@ export function ApplicationForm({ reference }: { reference: string }) {
           </button>
         )}
         <button
-          type="button"
-          onClick={handleNext}
+          type="submit"
           disabled={isSubmitting || isUploadingImage}
           className={`py-3.5 px-8 font-['Cinzel',serif] text-[0.78rem] tracking-[0.2em] uppercase flex items-center gap-2.5 transition-all ${
             isSubmitting || isUploadingImage
@@ -894,7 +911,7 @@ export function ApplicationForm({ reference }: { reference: string }) {
           <span>{submitError}</span>
         </div>
       )}
-    </div>
+    </form>
   );
 }
 

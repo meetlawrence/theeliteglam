@@ -691,6 +691,14 @@ export type TicketTransactionUncheckedUpdateManyWithoutTickettypeNestedInput = {
   deleteMany?: Prisma.TicketTransactionScalarWhereInput | Prisma.TicketTransactionScalarWhereInput[]
 }
 
+export type EnumTransactionStatusFieldUpdateOperationsInput = {
+  set?: $Enums.TransactionStatus
+}
+
+export type NullableBoolFieldUpdateOperationsInput = {
+  set?: boolean | null
+}
+
 export type TicketTransactionCreateNestedOneWithoutTicketsInput = {
   create?: Prisma.XOR<Prisma.TicketTransactionCreateWithoutTicketsInput, Prisma.TicketTransactionUncheckedCreateWithoutTicketsInput>
   connectOrCreate?: Prisma.TicketTransactionCreateOrConnectWithoutTicketsInput

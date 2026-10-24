@@ -23,11 +23,6 @@ export * from './enums';
  */
 export type Admin = Prisma.AdminModel
 /**
- * Model ContestantTransaction
- * 
- */
-export type ContestantTransaction = Prisma.ContestantTransactionModel
-/**
  * Model Contestant
  * 
  */
