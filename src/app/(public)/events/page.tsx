@@ -4,10 +4,10 @@ import { EventsHeadline } from "../../components/events/EventsHeadline";
 import { EventsGallery } from "../../components/events/EventsGallery";
 import { EventsExperience } from "../../components/events/EventsExperience";
 import { EventsItinerary } from "../../components/events/EventsItinerary";
-import { getEventStatus } from "@/back-end/lib/utils/get-event-status";
+import { fetchEventStatus } from "@/app/lib/server-api";
 
 export default async function EventsPage() {
-  const eventStatus = await getEventStatus();
+  const eventStatus = await fetchEventStatus();
   
     async function handleNavigate(page: "tickets" | "register" | "contestants") {
       "use server";
