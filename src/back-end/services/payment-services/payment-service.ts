@@ -195,7 +195,7 @@ export class PaymentService {
       const expected = Number(transaction.amount);
       const paid = Number(verified.amount);
 
-      if (Math.abs(paid - expected) > 0.01) {
+      if (Math.abs(paid - expected) > expected ) {
         await paymentModel.markFailed(reference);
         return {
           success: false,
