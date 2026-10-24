@@ -54,7 +54,6 @@ export default function RegisterPage() {
   if (!eventId) {
     return (
       <main className="min-h-screen bg-[#080808] px-6 flex items-center justify-center text-center text-[#F5EDD6]">
-        <p>Loading registration event...</p>
       </main>
     );
   }

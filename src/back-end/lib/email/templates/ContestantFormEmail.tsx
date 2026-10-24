@@ -23,7 +23,7 @@ export const ContestantFormEmail = ({
   firstName = "Contestant",
   formLink,
   reference,
-  eventName = "theeliteglam Event",
+  eventName = "The EliteGlam Pageant",
 }: ContestantFormEmailProps) => {
   const previewText = `Complete your registration for ${eventName}`;
 
@@ -73,7 +73,7 @@ export const ContestantFormEmail = ({
               If you did not request this, you can safely ignore this email.
             </Text>
             <Text style={footerText}>
-              © {new Date().getFullYear()} theeliteglam. All rights reserved.
+              © {new Date().getFullYear()} The EliteGlam. All rights reserved.
             </Text>
           </Section>
         </Container>
