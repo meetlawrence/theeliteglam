@@ -92,7 +92,7 @@ model Admin {
   passwordHash String // Hashed password
   avatar       String?
   phone        String?
-  role         Role    @default(SUPER_ADMIN)
+  role         Role    @default(ADMIN)
 
   emailVerified   Boolean   @default(false)
   emailVerifiedAt DateTime?

@@ -44,6 +44,13 @@
     ]
   },
   {
+    "file": "api-docs/access/route.ts",
+    "path": "/api/api-docs/access",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
     "file": "auth/forgot-password/route.ts",
     "path": "/api/auth/forgot-password",
     "methods": [
@@ -88,41 +95,6 @@
   {
     "file": "auth/verify-email/route.ts",
     "path": "/api/auth/verify-email",
-    "methods": [
-      "POST"
-    ]
-  },
-  {
-    "file": "categories/delete-categories/route.ts",
-    "path": "/api/categories/delete-categories",
-    "methods": [
-      "DELETE"
-    ]
-  },
-  {
-    "file": "categories/get-categories-by-id/route.ts",
-    "path": "/api/categories/get-categories-by-id",
-    "methods": [
-      "GET"
-    ]
-  },
-  {
-    "file": "categories/get-categories/route.ts",
-    "path": "/api/categories/get-categories",
-    "methods": [
-      "GET"
-    ]
-  },
-  {
-    "file": "categories/patch-categories/route.ts",
-    "path": "/api/categories/patch-categories",
-    "methods": [
-      "PATCH"
-    ]
-  },
-  {
-    "file": "categories/post-categories/route.ts",
-    "path": "/api/categories/post-categories",
     "methods": [
       "POST"
     ]
