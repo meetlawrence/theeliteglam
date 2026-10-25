@@ -19,10 +19,6 @@
       "description": "Account registration, authentication, and recovery."
     },
     {
-      "name": "categories",
-      "description": "Event category management."
-    },
-    {
       "name": "contestants",
       "description": "Contestant registration and management."
     },
@@ -312,6 +308,32 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "avatar": {
+                    "type": "string"
+                  },
+                  "isActive": {
+                    "type": "boolean"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "ADMIN",
+                      "SUPER_ADMIN"
+                    ]
+                  }
+                },
                 "additionalProperties": true
               }
             }
@@ -382,6 +404,32 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 6
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "ADMIN",
+                      "SUPER_ADMIN"
+                    ]
+                  }
+                },
                 "additionalProperties": true
               }
             }
@@ -1077,327 +1125,6 @@
         }
       }
     },
-    "/api/categories/delete-categories": {
-      "delete": {
-        "operationId": "delete-categories-delete-categories",
-        "summary": "Delete categories",
-        "description": "Delete categories. Uses query parameter `id`. Requires an authenticated access-token cookie.",
-        "tags": [
-          "categories"
-        ],
-        "responses": {
-          "200": {
-            "description": "The request completed successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "The request is invalid or missing required input.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication is required or the credentials are invalid.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          }
-        },
-        "x-documentation-status": "generated-from-route-handler",
-        "x-source-file": "categories/delete-categories/route.ts",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "description": "The identifier of the resource.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [
-          {
-            "AccessTokenCookie": []
-          }
-        ]
-      }
-    },
-    "/api/categories/get-categories-by-id": {
-      "get": {
-        "operationId": "get-categories-get-categories-by-id",
-        "summary": "Get categories by id",
-        "description": "Get categories by id. Uses query parameter `id`. Requires an authenticated access-token cookie.",
-        "tags": [
-          "categories"
-        ],
-        "responses": {
-          "200": {
-            "description": "The request completed successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "The request is invalid or missing required input.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication is required or the credentials are invalid.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "The requested resource was not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          }
-        },
-        "x-documentation-status": "generated-from-route-handler",
-        "x-source-file": "categories/get-categories-by-id/route.ts",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "description": "The identifier of the resource.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [
-          {
-            "AccessTokenCookie": []
-          }
-        ]
-      }
-    },
-    "/api/categories/get-categories": {
-      "get": {
-        "operationId": "get-categories-get-categories",
-        "summary": "Get categories",
-        "description": "Get categories. Uses query parameter `eventId`. Requires an authenticated access-token cookie.",
-        "tags": [
-          "categories"
-        ],
-        "responses": {
-          "200": {
-            "description": "The request completed successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "The request is invalid or missing required input.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication is required or the credentials are invalid.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          }
-        },
-        "x-documentation-status": "generated-from-route-handler",
-        "x-source-file": "categories/get-categories/route.ts",
-        "parameters": [
-          {
-            "name": "eventId",
-            "in": "query",
-            "required": true,
-            "description": "The identifier of the event.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [
-          {
-            "AccessTokenCookie": []
-          }
-        ]
-      }
-    },
-    "/api/categories/patch-categories": {
-      "patch": {
-        "operationId": "patch-categories-patch-categories",
-        "summary": "Update categories",
-        "description": "Update categories. Uses query parameter `id`. Accepts a JSON request body. Requires an authenticated access-token cookie.",
-        "tags": [
-          "categories"
-        ],
-        "responses": {
-          "200": {
-            "description": "The request completed successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "The request is invalid or missing required input.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication is required or the credentials are invalid.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          }
-        },
-        "x-documentation-status": "generated-from-route-handler",
-        "x-source-file": "categories/patch-categories/route.ts",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "description": "The identifier of the resource.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "additionalProperties": true
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "AccessTokenCookie": []
-          }
-        ]
-      }
-    },
-    "/api/categories/post-categories": {
-      "post": {
-        "operationId": "post-categories-post-categories",
-        "summary": "Create categories",
-        "description": "Create categories. Accepts a JSON request body. Requires an authenticated access-token cookie.",
-        "tags": [
-          "categories"
-        ],
-        "responses": {
-          "201": {
-            "description": "The resource was created successfully.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "The request is invalid or missing required input.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Authentication is required or the credentials are invalid.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          }
-        },
-        "x-documentation-status": "generated-from-route-handler",
-        "x-source-file": "categories/post-categories/route.ts",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "additionalProperties": true
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "AccessTokenCookie": []
-          }
-        ]
-      }
-    },
     "/api/contestants/application-image": {
       "post": {
         "operationId": "post-contestants-application-image",
@@ -1768,6 +1495,95 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "minLength": 7
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "stageName": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "bio": {
+                    "type": "string"
+                  },
+                  "portfolio": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "number": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "age": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "state": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "country": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "occupation": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "advocacy": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "funFact": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "tribe": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "isVerified": {
+                    "type": "boolean"
+                  },
+                  "score": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "rank": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "contestantCategories": {
+                    "type": "string",
+                    "enum": [
+                      "MALE",
+                      "FEMALE"
+                    ]
+                  },
+                  "eventId": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ACTIVE",
+                      "INACTIVE"
+                    ]
+                  }
+                },
                 "additionalProperties": true
               }
             }
@@ -1795,6 +1611,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
@@ -1869,9 +1695,27 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "gender",
+                  "phone",
+                  "age",
+                  "state",
+                  "country",
+                  "occupation",
+                  "advocacy",
+                  "funFact",
+                  "tribe",
+                  "contestantCategories",
+                  "eventId",
+                  "reference",
+                  "paymentTransactionId"
+                ],
                 "properties": {
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 2
                   },
                   "email": {
                     "type": "string",
@@ -1885,46 +1729,61 @@
                     ]
                   },
                   "image": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uri"
                   },
                   "stageName": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 2
                   },
                   "height": {
-                    "type": "number"
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
                   },
                   "weight": {
-                    "type": "number"
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
                   },
                   "bio": {
                     "type": "string"
                   },
                   "portfolio": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uri"
                   },
                   "phone": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 7
                   },
                   "age": {
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 1
                   },
                   "state": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 2
                   },
                   "country": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 2
                   },
                   "occupation": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 2
                   },
                   "advocacy": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 2
                   },
                   "funFact": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 2
                   },
                   "tribe": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 2
                   },
                   "contestantCategories": {
                     "type": "string",
@@ -2232,6 +2091,16 @@
               }
             }
           },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
           "401": {
             "description": "Authentication is required or the credentials are invalid.",
             "content": {
@@ -2355,6 +2224,16 @@
               }
             }
           },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
           "401": {
             "description": "Authentication is required or the credentials are invalid.",
             "content": {
@@ -2385,6 +2264,48 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "location": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "UPCOMING",
+                      "ONGOING",
+                      "COMPLETED",
+                      "CANCELLED"
+                    ]
+                  },
+                  "categories": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "MALE",
+                        "FEMALE"
+                      ]
+                    }
+                  }
+                },
                 "additionalProperties": true
               }
             }
@@ -2445,6 +2366,62 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "name",
+                  "description",
+                  "startDate",
+                  "endDate",
+                  "location",
+                  "categories",
+                  "contestantFee"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "location": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "UPCOMING",
+                      "ONGOING",
+                      "COMPLETED",
+                      "CANCELLED"
+                    ]
+                  },
+                  "categories": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "MALE",
+                        "FEMALE"
+                      ]
+                    }
+                  },
+                  "contestantFee": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  }
+                },
                 "additionalProperties": true
               }
             }
@@ -3188,6 +3165,16 @@
               }
             }
           },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
           "401": {
             "description": "Authentication is required or the credentials are invalid.",
             "content": {
@@ -3298,6 +3285,31 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "logo": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "website": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "tier": {
+                    "type": "string",
+                    "enum": [
+                      "GOLD",
+                      "SILVER",
+                      "BRONZE"
+                    ]
+                  }
+                },
                 "additionalProperties": true
               }
             }
@@ -3325,6 +3337,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
@@ -3358,6 +3380,39 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "name",
+                  "tier",
+                  "eventId"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "logo": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "website": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "tier": {
+                    "type": "string",
+                    "enum": [
+                      "GOLD",
+                      "SILVER",
+                      "BRONZE"
+                    ]
+                  },
+                  "eventId": {
+                    "type": "string"
+                  }
+                },
                 "additionalProperties": true
               }
             }
@@ -3622,6 +3677,16 @@
               }
             }
           },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
           "401": {
             "description": "Authentication is required or the credentials are invalid.",
             "content": {
@@ -3732,6 +3797,30 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "price": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "capacity": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "benefits": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "minLength": 2
+                    }
+                  }
+                },
                 "additionalProperties": true
               }
             }
@@ -3759,6 +3848,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
                 }
               }
             }
@@ -3792,6 +3891,39 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "name",
+                  "price",
+                  "benefits",
+                  "eventId"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "price": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "capacity": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "benefits": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "minLength": 2
+                    }
+                  },
+                  "eventId": {
+                    "type": "string"
+                  }
+                },
                 "additionalProperties": true
               }
             }

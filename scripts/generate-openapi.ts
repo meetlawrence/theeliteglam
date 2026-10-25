@@ -31,6 +31,33 @@ type OpenApiParameter = {
   description: string;
   schema: JsonSchema;
 };
+type OpenApiRequestBody = {
+  content: Record<string, { schema: JsonSchema }>;
+};
+
+function hasDocumentedRequestFields(schema: JsonSchema): boolean {
+  const properties = schema.properties;
+  if (
+    properties &&
+    typeof properties === "object" &&
+    !Array.isArray(properties) &&
+    Object.keys(properties).length > 0
+  ) {
+    return true;
+  }
+
+  const alternatives = schema.oneOf;
+  return (
+    Array.isArray(alternatives) &&
+    alternatives.some(
+      (alternative) =>
+        alternative !== null &&
+        typeof alternative === "object" &&
+        !Array.isArray(alternative) &&
+        hasDocumentedRequestFields(alternative as JsonSchema),
+    )
+  );
+}
 
 function getMethodSource(source: string, method: string): string {
   const exports = [
@@ -169,6 +196,29 @@ function getKnownRequestSchema(
   const emailField = { type: "string", format: "email" };
 
   const schemas: Record<string, JsonSchema> = {
+    "admin/patch-admin/route.ts": {
+      type: "object",
+      properties: {
+        name: { type: "string", minLength: 2 },
+        email: emailField,
+        phone: stringField,
+        avatar: stringField,
+        isActive: { type: "boolean" },
+        role: { type: "string", enum: ["ADMIN", "SUPER_ADMIN"] },
+      },
+      additionalProperties: true,
+    },
+    "admin/post-admin/route.ts": {
+      type: "object",
+      required: ["name", "email", "password"],
+      properties: {
+        name: { type: "string", minLength: 2 },
+        email: emailField,
+        password: { type: "string", minLength: 6 },
+        role: { type: "string", enum: ["ADMIN", "SUPER_ADMIN"] },
+      },
+      additionalProperties: true,
+    },
     "auth/login/route.ts": {
       type: "object",
       required: ["email", "password"],
@@ -263,28 +313,176 @@ function getKnownRequestSchema(
     },
     "contestants/post-contestant/route.ts": {
       type: "object",
+      required: [
+        "name",
+        "email",
+        "gender",
+        "phone",
+        "age",
+        "state",
+        "country",
+        "occupation",
+        "advocacy",
+        "funFact",
+        "tribe",
+        "contestantCategories",
+        "eventId",
+        "reference",
+        "paymentTransactionId",
+      ],
       properties: {
-        name: stringField,
+        name: { type: "string", minLength: 2 },
         email: emailField,
         gender: { type: "string", enum: ["MALE", "FEMALE"] },
-        image: stringField,
-        stageName: stringField,
-        height: { type: "number" },
-        weight: { type: "number" },
+        image: { type: "string", format: "uri" },
+        stageName: { type: "string", minLength: 2 },
+        height: { type: "number", minimum: 0, exclusiveMinimum: true },
+        weight: { type: "number", minimum: 0, exclusiveMinimum: true },
         bio: stringField,
-        portfolio: stringField,
-        phone: stringField,
-        age: { type: "integer" },
-        state: stringField,
-        country: stringField,
-        occupation: stringField,
-        advocacy: stringField,
-        funFact: stringField,
-        tribe: stringField,
+        portfolio: { type: "string", format: "uri" },
+        phone: { type: "string", minLength: 7 },
+        age: { type: "integer", minimum: 1 },
+        state: { type: "string", minLength: 2 },
+        country: { type: "string", minLength: 2 },
+        occupation: { type: "string", minLength: 2 },
+        advocacy: { type: "string", minLength: 2 },
+        funFact: { type: "string", minLength: 2 },
+        tribe: { type: "string", minLength: 2 },
         contestantCategories: { type: "string", enum: ["MALE", "FEMALE"] },
         eventId: stringField,
         reference: stringField,
         paymentTransactionId: stringField,
+      },
+      additionalProperties: true,
+    },
+    "contestants/patch-contestant/route.ts": {
+      type: "object",
+      properties: {
+        name: { type: "string", minLength: 2 },
+        email: emailField,
+        phone: { type: "string", minLength: 7 },
+        image: { type: "string", format: "uri" },
+        stageName: { type: "string", minLength: 2 },
+        bio: stringField,
+        portfolio: { type: "string", format: "uri" },
+        number: { type: "integer", minimum: 1 },
+        age: { type: "integer", minimum: 1 },
+        state: { type: "string", minLength: 2 },
+        country: { type: "string", minLength: 2 },
+        occupation: { type: "string", minLength: 2 },
+        advocacy: { type: "string", minLength: 2 },
+        funFact: { type: "string", minLength: 2 },
+        tribe: { type: "string", minLength: 2 },
+        isVerified: { type: "boolean" },
+        score: { type: "integer", minimum: 0 },
+        rank: { type: "integer", minimum: 1 },
+        contestantCategories: { type: "string", enum: ["MALE", "FEMALE"] },
+        eventId: stringField,
+        status: { type: "string", enum: ["ACTIVE", "INACTIVE"] },
+      },
+      additionalProperties: true,
+    },
+    "event/post-event/route.ts": {
+      type: "object",
+      required: [
+        "name",
+        "description",
+        "startDate",
+        "endDate",
+        "location",
+        "categories",
+        "contestantFee",
+      ],
+      properties: {
+        name: { type: "string", minLength: 3 },
+        description: { type: "string", minLength: 10 },
+        startDate: { type: "string", format: "date-time" },
+        endDate: { type: "string", format: "date-time" },
+        location: { type: "string", minLength: 3 },
+        status: {
+          type: "string",
+          enum: ["UPCOMING", "ONGOING", "COMPLETED", "CANCELLED"],
+        },
+        categories: {
+          type: "array",
+          minItems: 1,
+          items: { type: "string", enum: ["MALE", "FEMALE"] },
+        },
+        contestantFee: { type: "number", minimum: 0, exclusiveMinimum: true },
+      },
+      additionalProperties: true,
+    },
+    "event/patch-event/route.ts": {
+      type: "object",
+      properties: {
+        name: { type: "string", minLength: 3 },
+        description: { type: "string", minLength: 10 },
+        startDate: { type: "string", format: "date-time" },
+        endDate: { type: "string", format: "date-time" },
+        location: { type: "string", minLength: 3 },
+        status: {
+          type: "string",
+          enum: ["UPCOMING", "ONGOING", "COMPLETED", "CANCELLED"],
+        },
+        categories: {
+          type: "array",
+          minItems: 1,
+          items: { type: "string", enum: ["MALE", "FEMALE"] },
+        },
+      },
+      additionalProperties: true,
+    },
+    "sponsor/post-sponsor/route.ts": {
+      type: "object",
+      required: ["name", "tier", "eventId"],
+      properties: {
+        name: { type: "string", minLength: 2 },
+        logo: { type: "string", format: "uri" },
+        website: { type: "string", format: "uri" },
+        description: stringField,
+        tier: { type: "string", enum: ["GOLD", "SILVER", "BRONZE"] },
+        eventId: stringField,
+      },
+      additionalProperties: true,
+    },
+    "sponsor/patch-sponsor/route.ts": {
+      type: "object",
+      properties: {
+        name: { type: "string", minLength: 2 },
+        logo: { type: "string", format: "uri" },
+        website: { type: "string", format: "uri" },
+        description: stringField,
+        tier: { type: "string", enum: ["GOLD", "SILVER", "BRONZE"] },
+      },
+      additionalProperties: true,
+    },
+    "ticket/ticket-types/post-ticket-type/route.ts": {
+      type: "object",
+      required: ["name", "price", "benefits", "eventId"],
+      properties: {
+        name: { type: "string", minLength: 2 },
+        price: { type: "number", minimum: 0, exclusiveMinimum: true },
+        capacity: { type: "number", minimum: 0, exclusiveMinimum: true },
+        benefits: {
+          type: "array",
+          minItems: 1,
+          items: { type: "string", minLength: 2 },
+        },
+        eventId: stringField,
+      },
+      additionalProperties: true,
+    },
+    "ticket/ticket-types/patch-ticket-type/route.ts": {
+      type: "object",
+      properties: {
+        name: { type: "string", minLength: 2 },
+        price: { type: "number", minimum: 0, exclusiveMinimum: true },
+        capacity: { type: "number", minimum: 0, exclusiveMinimum: true },
+        benefits: {
+          type: "array",
+          minItems: 1,
+          items: { type: "string", minLength: 2 },
+        },
       },
       additionalProperties: true,
     },
@@ -396,13 +594,21 @@ function getParameters(
 function getResponses(
   method: HttpMethod,
   source: string,
+  parameters: OpenApiParameter[],
 ): Record<string, { description: string; content: Record<string, unknown> }> {
   const statusCodes = new Set<string>();
   for (const [, status] of source.matchAll(/status:\s*(\d{3})/g)) {
     statusCodes.add(status);
   }
+  if (
+    parameters.some((parameter) => parameter.in === "query" && parameter.required) ||
+    (/\b(?:req|request)\.(?:json|formData|text)\s*\(\s*\)/.test(source) &&
+      /status:\s*result\.status/.test(source))
+  ) {
+    statusCodes.add("400");
+  }
   const authenticated =
-    /authMiddleware\s*\(\s*req\s*\)|(?:req\.cookies|cookieStore|cookies)\.get\(\s*["']accessToken["']\s*\)/.test(
+    /authMiddleware\s*\(\s*req\s*\)|(?:(?:req|request)\.cookies|cookieStore|cookies)\.get\(\s*["']accessToken["']\s*\)/.test(
       source,
     );
   if (authenticated) {
@@ -469,6 +675,10 @@ function getOperation(
   const knownRequestSchema = getKnownRequestSchema(route.file, source);
   const optionalAuthentication =
     source.includes("paymentReference") && /authMiddleware\s*\(\s*req\s*\)/.test(source);
+  const authenticated =
+    /authMiddleware\s*\(\s*req\s*\)|(?:(?:req|request)\.cookies|cookieStore|cookies)\.get\(\s*["']accessToken["']\s*\)/.test(
+      source,
+    );
   const operation: Record<string, unknown> = {
     operationId: [
       method,
@@ -494,14 +704,14 @@ function getOperation(
           : "",
       optionalAuthentication
         ? "The payment-reference registration flow is public; the administrative flow requires an authenticated access-token cookie."
-        : /authMiddleware\s*\(\s*req\s*\)|(?:req\.cookies|cookieStore|cookies)\.get\(\s*["']accessToken["']\s*\)/.test(source)
+        : authenticated
           ? "Requires an authenticated access-token cookie."
         : "",
     ]
       .filter(Boolean)
       .join(" "),
     tags: [route.path.split("/").filter(Boolean)[1] ?? "API"],
-    responses: getResponses(method, source),
+    responses: getResponses(method, source, parameters),
     "x-documentation-status": "generated-from-route-handler",
     "x-source-file": route.file,
   };
@@ -553,11 +763,21 @@ function getOperation(
     };
   }
 
-  if (
-    /authMiddleware\s*\(\s*req\s*\)|(?:req\.cookies|cookieStore|cookies)\.get\(\s*["']accessToken["']\s*\)/.test(
-      source,
-    )
-  ) {
+  if (/\b(?:req|request)\.(?:json|formData|text)\s*\(\s*\)/.test(source)) {
+    const requestBody = operation.requestBody as OpenApiRequestBody | undefined;
+    if (
+      !requestBody ||
+      !Object.values(requestBody.content).some(({ schema }) =>
+        hasDocumentedRequestFields(schema),
+      )
+    ) {
+      throw new Error(
+        `Missing documented request fields for ${method.toUpperCase()} ${route.path}`,
+      );
+    }
+  }
+
+  if (authenticated) {
     operation.security = optionalAuthentication
       ? [{}, { AccessTokenCookie: [] }]
       : [{ AccessTokenCookie: [] }];
