@@ -11,6 +11,10 @@
       "description": "Administrative account and role management."
     },
     {
+      "name": "api-docs",
+      "description": "api-docs API operations."
+    },
+    {
       "name": "auth",
       "description": "Account registration, authentication, and recovery."
     },
@@ -629,6 +633,45 @@
             }
           }
         ],
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/api-docs/access": {
+      "get": {
+        "operationId": "get-api-docs-access",
+        "summary": "Get access",
+        "description": "Get access. Requires an authenticated access-token cookie.",
+        "tags": [
+          "api-docs"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "api-docs/access/route.ts",
         "security": [
           {
             "AccessTokenCookie": []
