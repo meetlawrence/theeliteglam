@@ -3,7 +3,7 @@ import path from "node:path";
 
 const inventoryPath = path.resolve("api-route-inventory.json");
 const apiRoot = path.resolve("src/app/api");
-const outputPath = path.resolve("public/openapi.json");
+const outputPath = path.resolve("src/back-end/api-docs/openapi.json");
 
 const httpMethods = [
   "get",
