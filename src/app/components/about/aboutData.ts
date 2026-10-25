@@ -1,9 +1,9 @@
 import { createElement } from "react";
 import { Eye, Heart, Sparkles, Star } from "lucide-react";
 
-export const BANNER_IMG = "/banners/img1.jpg";
+export const BANNER_IMG = "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914554/oma1.webp";
 
-export const BANNER_VIDEO = "/banners/logo1.webm";
+export const BANNER_VIDEO = "https://res.cloudinary.com/fnrrqppt/video/upload/v1792911328/logo1.webm";
 
 export const CEO_IMG =
   "images/oku.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80";
@@ -79,24 +79,25 @@ export const MISSION_VISION_CARDS = [
 
 export const WINNERS = [
   {
-    name: "Oma Osele",
-    title: "Miss Elite Glam 2025",
+    name: "Osele Iromachukwu",
+    title: "Miss EliteGlam 2025",
     state: "",
     age: "28",
     occupation: "Medical Scientist",
     advocacy: "Pulse Global",
     quote: "Caring for people...",
-    image: "images/img1.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+    image: "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914556/oma13.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
+  
   {
     name: "Umana Sambo",
-    title: "Mister Elite Glam 2025",
+    title: "Mister EliteGlam 2025",
     state: "",
     age: "35",
     occupation: "Department of Tourism Officer",
     advocacy: "Youth Tech Empowerment",
     quote: "Beauty is the courage to stand for something greater than yourself. I carry that with every step.",
-    image: "images/?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+    image: "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914557/sambo1.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
 ];
 
