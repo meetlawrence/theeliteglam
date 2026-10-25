@@ -1,6 +1,6 @@
 export const EVENTS_BANNER_MEDIA = {
   image: "/banners/1.webp",
-  video: "/banners/event.webm",
+  video: "https://res.cloudinary.com/fnrrqppt/video/upload/v1792912032/event.webm",
 };
 
 export const GALLERY = [

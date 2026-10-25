@@ -1,16 +1,18 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import SectionLabel from "./franchise/SectionLabel";
 import BrandLogoCard from "./franchise/BrandLogoCard";
-import SponsorButton from "./franchise/SponsorButton";
 import { ENDORSEMENTS, SPONSORS } from "./franchise/franchiseData";
 import { HOME_IMAGES } from "./homeData";
+import { BLOG_POSTS } from "./blog/blogData";
 
 export function OverviewSection() {
   const ref = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -24,6 +26,9 @@ export function OverviewSection() {
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
+
+  // Top 3 posts for the overview feed
+  const featuredBlogPosts = BLOG_POSTS.slice(0, 3);
 
   return (
     <section
@@ -82,6 +87,79 @@ export function OverviewSection() {
               </div>
             </div>
 
+          </div>
+        </div>
+
+        <div className="mb-24 h-px bg-[linear-gradient(to_right,transparent,rgba(201,168,76,0.3),transparent)]" />
+
+        {/* --- Post Cards Section --- */}
+        <div
+          className={`mb-28 transition-all duration-1000 delay-150 ${
+            inView ? "translate-y-0 opacity-100" : "translate-y-[30px] opacity-0"
+          }`}
+        >
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8">
+            <div>
+              <h2 className="mt-4 font-['Cinzel',serif] text-[clamp(1.6rem,3.5vw,2.8rem)] tracking-[0.06em] text-[#F5EDD6]">
+                News and Blog
+              </h2>
+            </div>
+            <Link
+              href="/blog"
+              className="mt-4 md:mt-0 inline-flex items-center gap-2 text-xs font-['Cinzel',serif] uppercase tracking-[0.25em] text-[#C9A84C] hover:text-[#F5EDD6] transition-colors"
+            >
+              View All Stories
+              <ArrowUpRight size={14} />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {featuredBlogPosts.map((post) => (
+              <article
+                key={post.id}
+                className="group bg-[#121212] border border-[#C9A84C]/15 overflow-hidden flex flex-col justify-between transition-all duration-300 hover:border-[#C9A84C]/40 hover:-translate-y-1 shadow-lg"
+              >
+                <div>
+                  <div className="relative h-48 w-full overflow-hidden bg-[#0A0A0A]">
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent opacity-80" />
+                    <div className="absolute top-3 left-3 bg-[#0A0A0A]/80 backdrop-blur-md border border-[#C9A84C]/30 px-2.5 py-1 text-[0.65rem] uppercase tracking-wider text-[#C9A84C] font-['Raleway',sans-serif]">
+                      {post.category}
+                    </div>
+                  </div>
+
+                  <div className="p-6 space-y-3">
+                    <div className="flex items-center justify-between text-[0.7rem] text-[#7A6E52] font-['Raleway',sans-serif]">
+                      <span>{post.date}</span>
+                      <span>{post.readTime}</span>
+                    </div>
+
+                    <h3 className="font-['Cinzel',serif] text-lg text-[#F5EDD6] group-hover:text-[#C9A84C] transition-colors line-clamp-2">
+                      <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                    </h3>
+
+                    <p className="font-['Raleway',sans-serif] text-xs text-[#9A8C6A] leading-relaxed line-clamp-3">
+                      {post.excerpt}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="px-6 pb-6 pt-2">
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="inline-flex items-center gap-2 text-[0.75rem] font-['Cinzel',serif] uppercase tracking-wider text-[#C9A84C] hover:text-[#F5EDD6] transition-colors group/link"
+                  >
+                    Read Article
+                    <ArrowUpRight size={12} className="transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+                  </Link>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
 

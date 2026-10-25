@@ -14,8 +14,8 @@ export default async function PublicLayout({ children }: { children: React.React
   const eventStatus = await fetchEventStatus();
 
   return (
-    <html lang="en" className={`${cinzel.variable} ${raleway.variable} ${playfair.variable}`}>
-      <body>
+    <html lang="en" className={`${cinzel.variable} ${raleway.variable} ${playfair.variable}`}suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <Header eventStatus={eventStatus} />
         <main>{children}</main>
         <Footer />
