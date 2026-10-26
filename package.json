@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm install && prisma db push && prisma generate && NODE_OPTIONS='--max-old-space-size=4096' next build --webpack",
     "start": "next start",
     "lint": "eslint",
     "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest",
