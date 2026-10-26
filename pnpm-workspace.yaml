@@ -8,3 +8,6 @@ allowBuilds:
   tree-sitter: true
   tree-sitter-json: true
   unrs-resolver: false
+permissions:
+  dotenv:
+    skills: false
