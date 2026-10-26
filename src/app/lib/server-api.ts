@@ -46,11 +46,11 @@ export async function fetchServerApi(path: string, options: ServerApiOptions = {
 
 export async function fetchEventStatus(): Promise<EventStatus> {
   const response = await fetchServerApi("/api/event/status");
-  const result: { success?: boolean; data?: EventStatus; error?: string } =
+  const result: { success?: boolean; data?: EventStatus; message?: string } =
     await response.json();
 
   if (!response.ok || result.success !== true || !result.data) {
-    throw new Error(result.error || "Unable to load event status.");
+    throw new Error(result.message || "Unable to load event status.");
   }
 
   return result.data;

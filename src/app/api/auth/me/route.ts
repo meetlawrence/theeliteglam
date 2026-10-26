@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
     const accessToken = req.cookies.get("accessToken")?.value;
 
     if (!accessToken) {
-      return NextResponse.json({ success: false, error: "Not authenticated" }, { status: 401 });
+      return NextResponse.json({ success: false, message: "Not authenticated" }, { status: 401 });
     }
 
     // 2. Verify the token
@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
     const admin = await adminRepo.findById(payload.adminId);
 
     if (!admin) {
-      return NextResponse.json({ success: false, error: "User not found" }, { status: 404 });
+      return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
     }
 
     // 4. Return public user data
@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error("Auth /me error:", error);
     return NextResponse.json(
-      { success: false, error: "Invalid or expired token" },
+      { success: false, message: "Invalid or expired token" },
       { status: 401 }
     );
   }

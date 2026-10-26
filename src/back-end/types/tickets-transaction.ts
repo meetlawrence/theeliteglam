@@ -43,7 +43,7 @@ export interface TicketTransaction {
 export interface PriceValidationResult {
   success: boolean;
   status: number;
-  error?: string;
+  message?: string;
   price: number;
 }
 
@@ -51,7 +51,7 @@ export interface PriceValidationResult {
 export interface QuantityValidationResult {
   success: boolean;
   status: number;
-  error?: string;
+  message?: string;
   quantity?: number;
 }
 
@@ -59,6 +59,6 @@ export interface QuantityValidationResult {
 export interface TotalTicketPriceResult {
   success: boolean;
   status: number;
-  error?: string;
+  message?: string;
   total?: number;
 }

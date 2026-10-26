@@ -61,8 +61,7 @@ export function useContestants() {
 
         if (!response.ok || payload?.success === false) {
           throw new Error(
-            payload?.error ||
-              payload?.message ||
+            payload?.message ||
               "Contestants API is unavailable",
           );
         }

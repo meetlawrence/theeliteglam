@@ -235,7 +235,7 @@ export function ApplicationForm({ reference }: { reference: string }) {
       });
       const result = await response.json();
       if (!response.ok || !result.success || !result.data?.imageUrl) {
-        throw new Error(result.error || result.message || "Unable to upload image.");
+        throw new Error(result.message || "Unable to upload image.");
       }
 
       set("image", result.data.imageUrl);
@@ -756,7 +756,7 @@ export function ApplicationForm({ reference }: { reference: string }) {
         },
       );
 
-      let result: { success?: boolean; error?: string; message?: string };
+      let result: { success?: boolean; message?: string };
       try {
         result = await response.json();
       } catch {
@@ -764,7 +764,7 @@ export function ApplicationForm({ reference }: { reference: string }) {
       }
 
       if (!response.ok || result.success !== true) {
-        throw new Error(result.error || result.message || "Unable to submit your application.");
+        throw new Error(result.message || "Unable to submit your application.");
       }
 
       setSubmitted(true);

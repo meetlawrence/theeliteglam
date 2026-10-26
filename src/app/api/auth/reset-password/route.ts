@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     const token = request.nextUrl.searchParams.get("token");
     if (!token) {
       return NextResponse.json(
-        { success: false, error: "Missing token parameter" },
+        { success: false, message: "Missing token parameter" },
         { status: 400 }
       );
     }
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Reset Password API Error:", error);
     return NextResponse.json(
-      { success: false, error: "Failed to reset password." },
+      { success: false, message: "Failed to reset password." },
       { status: 500 }
     );
   }

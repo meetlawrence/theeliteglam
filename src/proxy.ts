@@ -32,12 +32,11 @@ export async function proxy(req: NextRequest) {
         const payload = await JWT.verifyToken(accessToken);
         (req as AuthenticatedRequest).admin = payload;
         return NextResponse.next();
-      } catch (e: any) {
+      } catch {
         return NextResponse.json(
           {
             success: false,
             message: "Invalid or expired token.",
-            error: e.message,
           },
           { status: 401 }
         );
@@ -122,7 +121,7 @@ export async function proxy(req: NextRequest) {
   if (isPublicRoute && accessToken) {
     try {
       if (path === "/" || path === "/login" || path === "/signup") {
-        return NextResponse.redirect(new URL("/dashboard", req.url)); // Fixed: was relative path
+        return NextResponse.redirect(new URL("admin/dashboard", req.url)); // Fixed: was relative path
       }
       return NextResponse.next();
     } catch {

@@ -6,7 +6,7 @@ import { RegisterSection } from "@/app/components/register/RegisterSection";
 type FirstEventResponse = {
   success?: boolean;
   data?: { id: string };
-  error?: string;
+  message?: string;
 };
 
 export default function RegisterPage() {
@@ -25,7 +25,7 @@ export default function RegisterPage() {
         const result: FirstEventResponse = await response.json();
 
         if (!response.ok || result.success !== true || !result.data?.id) {
-          throw new Error(result.error || "Unable to load the registration event.");
+          throw new Error(result.message || "Unable to load the registration event.");
         }
 
         setEventId(result.data.id);

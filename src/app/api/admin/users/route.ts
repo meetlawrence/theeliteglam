@@ -10,14 +10,14 @@ export async function GET() {
     const accessToken = cookieStore.get("accessToken")?.value;
 
     if (!accessToken) {
-      return NextResponse.json({ success: false, error: "Not authenticated" }, { status: 401 });
+      return NextResponse.json({ success: false, message: "Not authenticated" }, { status: 401 });
     }
 
     const payload = await JWT.verifyToken(accessToken);
     const currentAdmin = await adminRepo.findById(payload.adminId);
 
     if (!currentAdmin) {
-      return NextResponse.json({ success: false, error: "User not found" }, { status: 404 });
+      return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
     }
 
     const admins = await prisma.admin.findMany({
@@ -40,7 +40,7 @@ export async function GET() {
       currentUserRole: currentAdmin.role,
     });
   } catch {
-    return NextResponse.json({ success: false, error: "Failed to load admins" }, { status: 500 });
+    return NextResponse.json({ success: false, message: "Failed to load admins" }, { status: 500 });
   }
 }
 
@@ -50,7 +50,7 @@ export async function PATCH(req: NextRequest) {
     const accessToken = cookieStore.get("accessToken")?.value;
 
     if (!accessToken) {
-      return NextResponse.json({ success: false, error: "Not authenticated" }, { status: 401 });
+      return NextResponse.json({ success: false, message: "Not authenticated" }, { status: 401 });
     }
 
     const payload = await JWT.verifyToken(accessToken);
@@ -58,7 +58,7 @@ export async function PATCH(req: NextRequest) {
 
     if (!currentAdmin || currentAdmin.role !== "SUPER_ADMIN") {
       return NextResponse.json(
-        { success: false, error: "Only super admins can manage roles" },
+        { success: false, message: "Only super admins can manage roles" },
         { status: 403 }
       );
     }
@@ -71,14 +71,14 @@ export async function PATCH(req: NextRequest) {
     };
 
     if (!id) {
-      return NextResponse.json({ success: false, error: "Missing user id" }, { status: 400 });
+      return NextResponse.json({ success: false, message: "Missing user id" }, { status: 400 });
     }
 
     if (action === "VERIFY") {
       const targetAdmin = await adminRepo.findById(id);
 
       if (!targetAdmin) {
-        return NextResponse.json({ success: false, error: "User not found" }, { status: 404 });
+        return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
       }
 
       await adminRepo.markEmailVerified(id);
@@ -87,14 +87,14 @@ export async function PATCH(req: NextRequest) {
 
     if (!role) {
       return NextResponse.json(
-        { success: false, error: "Missing required fields" },
+        { success: false, message: "Missing required fields" },
         { status: 400 }
       );
     }
 
     if (id === currentAdmin.id && role !== "SUPER_ADMIN") {
       return NextResponse.json(
-        { success: false, error: "You cannot remove your own super admin role" },
+        { success: false, message: "You cannot remove your own super admin role" },
         { status: 400 }
       );
     }
@@ -103,7 +103,7 @@ export async function PATCH(req: NextRequest) {
 
     return NextResponse.json({ success: true, admin: updatedAdmin });
   } catch {
-    return NextResponse.json({ success: false, error: "Failed to update role" }, { status: 500 });
+    return NextResponse.json({ success: false, message: "Failed to update role" }, { status: 500 });
   }
 }
 
@@ -113,31 +113,31 @@ export async function DELETE(req: NextRequest) {
     const accessToken = cookieStore.get("accessToken")?.value;
 
     if (!accessToken) {
-      return NextResponse.json({ success: false, error: "Not authenticated" }, { status: 401 });
+      return NextResponse.json({ success: false, message: "Not authenticated" }, { status: 401 });
     }
 
     const payload = await JWT.verifyToken(accessToken);
     const currentAdmin = await adminRepo.findById(payload.adminId);
 
     if (!currentAdmin || currentAdmin.role !== "SUPER_ADMIN") {
-      return NextResponse.json({ success: false, error: "Only super admins can delete users" }, { status: 403 });
+      return NextResponse.json({ success: false, message: "Only super admins can delete users" }, { status: 403 });
     }
 
     const { searchParams } = new URL(req.url);
     const id = searchParams.get("id");
 
     if (!id) {
-      return NextResponse.json({ success: false, error: "Missing user id" }, { status: 400 });
+      return NextResponse.json({ success: false, message: "Missing user id" }, { status: 400 });
     }
 
     if (id === currentAdmin.id) {
-      return NextResponse.json({ success: false, error: "You cannot delete your own account" }, { status: 400 });
+      return NextResponse.json({ success: false, message: "You cannot delete your own account" }, { status: 400 });
     }
 
     await prisma.admin.delete({ where: { id } });
 
     return NextResponse.json({ success: true });
   } catch {
-    return NextResponse.json({ success: false, error: "Failed to delete user" }, { status: 500 });
+    return NextResponse.json({ success: false, message: "Failed to delete user" }, { status: 500 });
   }
 }

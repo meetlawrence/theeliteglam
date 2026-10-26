@@ -31,8 +31,7 @@ export interface ContestantTransaction {
 export interface PriceValidationResult {
   success: boolean;
   status: number;
-  error?: string;
+  message?: string;
   price: number;
 }
-
 

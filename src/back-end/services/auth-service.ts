@@ -28,13 +28,13 @@ export class AuthService {
       // Server-side validation
       const validation = registerSchema.safeParse(data);
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { success: false, message: formatZodError(validation.error) };
       }
 
       // Check if user already exists
       const existingUser = await adminRepo.findByEmail(validation.data.email);
       if (existingUser) {
-        return { success: false, error: "User with this email already exists." };
+        return { success: false, message: "User with this email already exists." };
       }
 
       // Hash password
@@ -72,7 +72,7 @@ export class AuthService {
       };
     } catch (error) {
       console.error("Signup error:", error);
-      return { success: false, error: "Failed to create account. Please try again." };
+      return { success: false, message: "Failed to create account. Please try again." };
     }
   }
 
@@ -82,17 +82,17 @@ export class AuthService {
       // Server-side validation
       const validation = loginSchema.safeParse(data);
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { success: false, message: formatZodError(validation.error) };
       }
 
       const admin = await adminRepo.findByEmail(validation.data.email);
       if (!admin) {
-        return { success: false, error: "Invalid email or password." };
+        return { success: false, message: "Invalid email or password." };
       }
 
       const isPasswordValid = await bcrypt.compare(validation.data.password, admin.passwordHash);
       if (!isPasswordValid) {
-        return { success: false, error: "Invalid email or password." };
+        return { success: false, message: "Invalid email or password." };
       }
 
       if (!admin.emailVerified) {
@@ -117,7 +117,7 @@ export class AuthService {
 
         return {
           success: false,
-          error:
+          message:
             "Please verify your email address first. We have sent a new verification link to your inbox.",
         };
       }
@@ -161,7 +161,7 @@ export class AuthService {
       };
     } catch (error) {
       console.error("Login error:", error);
-      return { success: false, error: "Login failed. Please try again." };
+      return { success: false, message: "Login failed. Please try again." };
     }
   }
 
@@ -172,7 +172,7 @@ export class AuthService {
     try {
       const payload = await JWT.verifyToken(token);
       if (payload.type !== "VERIFY") {
-        return { success: false, error: "Invalid verification token." };
+        return { success: false, message: "Invalid verification token." };
       }
 
       await adminRepo.markEmailVerified(payload.adminId);
@@ -183,7 +183,7 @@ export class AuthService {
       };
     } catch (error) {
       console.error("Verify email error:", error);
-      return { success: false, error: "Invalid or expired verification link." };
+      return { success: false, message: "Invalid or expired verification link." };
     }
   }
 
@@ -192,7 +192,7 @@ export class AuthService {
     try {
       const validation = forgotPasswordSchema.safeParse(data);
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { success: false, message: formatZodError(validation.error) };
       }
 
       const admin = await adminRepo.findByEmail(validation.data.email);
@@ -220,7 +220,7 @@ export class AuthService {
       return { success: true, message: "Password reset link sent to your email." };
     } catch (error) {
       console.error("Forgot password error:", error);
-      return { success: false, error: "Failed to send reset link." };
+      return { success: false, message: "Failed to send reset link." };
     }
   }
 
@@ -229,12 +229,12 @@ export class AuthService {
     try {
       const validation = resetPasswordSchema.safeParse(data);
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error) };
+        return { success: false, message: formatZodError(validation.error) };
       }
 
       const payload = await JWT.verifyToken(validation.data.token);
       if (payload.type !== "RESET") {
-        return { success: false, error: "Invalid reset token." };
+        return { success: false, message: "Invalid reset token." };
       }
 
       const passwordHash = await bcrypt.hash(data.newPassword, AUTH_CONFIG.BCRYPT_SALT_ROUNDS);
@@ -253,7 +253,7 @@ export class AuthService {
       return { success: true, message: "Password has been reset successfully." };
     } catch (error) {
       console.error("Reset password error:", error);
-      return { success: false, error: "Invalid or expired reset link." };
+      return { success: false, message: "Invalid or expired reset link." };
     }
   }
 
@@ -262,11 +262,11 @@ export class AuthService {
     try {
       const admin = await adminRepo.findByEmail(email);
       if (!admin) {
-        return { success: false, error: "User not found." };
+        return { success: false, message: "User not found." };
       }
 
       if (admin.emailVerified) {
-        return { success: false, error: "Email is already verified." };
+        return { success: false, message: "Email is already verified." };
       }
 
       // Generate new verification token
@@ -294,7 +294,7 @@ export class AuthService {
       };
     } catch (error) {
       console.error("Resend verification error:", error);
-      return { success: false, error: "Failed to resend verification email." };
+      return { success: false, message: "Failed to resend verification email." };
     }
   }
 }

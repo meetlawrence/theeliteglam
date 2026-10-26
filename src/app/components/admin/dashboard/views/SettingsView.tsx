@@ -20,7 +20,7 @@ type SettingsResponse = {
   admins: AdminUser[];
   currentUserId: string;
   currentUserRole: AdminRole;
-  error?: string;
+  message?: string;
 };
 
 export function SettingsView() {
@@ -41,7 +41,7 @@ export function SettingsView() {
       const data: SettingsResponse = await res.json();
 
       if (!res.ok || !data.success) {
-        setError(data.error || "Unable to load users.");
+        setError(data.message || "Unable to load users.");
         return;
       }
 
@@ -73,7 +73,7 @@ export function SettingsView() {
 
       const data = await res.json();
       if (!res.ok || !data.success) {
-        setError(data.error || "Unable to update role.");
+        setError(data.message || "Unable to update role.");
         return;
       }
 
@@ -100,7 +100,7 @@ export function SettingsView() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        setError(data.error || "Unable to delete user.");
+        setError(data.message || "Unable to delete user.");
         return;
       }
 
@@ -127,7 +127,7 @@ export function SettingsView() {
 
       const data = await res.json();
       if (!res.ok || !data.success) {
-        setError(data.error || "Unable to verify user.");
+        setError(data.message || "Unable to verify user.");
         return;
       }
 

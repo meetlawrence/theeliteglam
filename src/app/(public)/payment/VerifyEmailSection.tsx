@@ -33,7 +33,7 @@ export function VerifyEmailSection() {
           setMessage("✅ Your email has been successfully verified!");
         } else {
           setStatus("error");
-          setMessage(result.error || "Verification failed.");
+          setMessage(result.message || "Verification failed.");
         }
       } catch {
         setStatus("error");
