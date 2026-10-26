@@ -6,6 +6,7 @@ import {
   Heading,
   Hr,
   Html,
+  Img,
   Preview,
   Section,
   Text,
@@ -13,17 +14,19 @@ import {
 import * as React from "react";
 
 interface ContestantFormEmailProps {
-  firstName: string;
+  firstName?: string;
   formLink: string;
   reference: string;
   eventName?: string;
+  baseUrl?: string; // Optional base URL to source logo assets dynamically (e.g. https://theeliteglam.com)
 }
 
 export const ContestantFormEmail = ({
   firstName = "Contestant",
   formLink,
   reference,
-  eventName = "theeliteglam Event",
+  eventName = "The EliteGlam Pageant",
+  baseUrl = "https://theeliteglam.com",
 }: ContestantFormEmailProps) => {
   const previewText = `Complete your registration for ${eventName}`;
 
@@ -33,47 +36,78 @@ export const ContestantFormEmail = ({
       <Preview>{previewText}</Preview>
       <Body style={main}>
         <Container style={container}>
-          {/* Header */}
-          <Section style={header}>
-            <Heading style={h1}>Complete Your Registration</Heading>
+          {/* Top Gold Gradient Accent Line */}
+          <Section style={topAccentLine} />
+
+          {/* Logo Header */}
+          <Section style={logoContainer}>
+            <Img
+              src={`${baseUrl}/logo.svg`}
+              alt="Crown"
+              width="60"
+              height="27"
+              style={logoImage}
+            />
+            <Img
+              src={`${baseUrl}/wordmark.svg`}
+              alt="Elite Glam"
+              width="85"
+              height="19"
+              style={wordmarkImage}
+            />
+          </Section>
+
+          {/* Header Section */}
+          <Section style={headerSection}>
+            <Heading style={h1}>Payment Confirmed</Heading>
             <Text style={subtitle}>
-              Hi {firstName}, thank you for your interest in {eventName}.
+              Hi {firstName}, thank you for registering for {eventName}.
             </Text>
           </Section>
 
           <Hr style={hr} />
 
-          {/* Content */}
+          {/* Main Content */}
           <Section>
             <Text style={text}>
               Your payment was successful. Please click the button below to complete
-              your contestant registration form.
+              your contestant application form.
             </Text>
 
-            <Text style={label}>Reference</Text>
-            <Text style={value}>{reference}</Text>
+            {/* Reference Badge */}
+            <Section style={referenceBox}>
+              <Text style={label}>Transaction Reference</Text>
+              <Text style={value}>{reference}</Text>
+            </Section>
 
+            {/* Action Button */}
             <Section style={buttonContainer}>
               <Button style={button} href={formLink}>
-                Complete Registration Form
+                Proceed to Application Form
               </Button>
             </Section>
 
-            <Text style={text}>
-              Or copy and paste this link into your browser:
+            <Text style={fallbackText}>
+              Or copy and paste this URL into your browser:
             </Text>
             <Text style={linkText}>{formLink}</Text>
           </Section>
 
           <Hr style={hr} />
 
-          {/* Footer */}
+          {/* Footer Section */}
           <Section style={footer}>
             <Text style={footerText}>
               If you did not request this, you can safely ignore this email.
             </Text>
-            <Text style={footerText}>
-              © {new Date().getFullYear()} theeliteglam. All rights reserved.
+            <Text style={supportText}>
+              Need assistance? Contact{" "}
+              <a href="mailto:support@theeliteglam.com" style={supportLink}>
+                support@theeliteglam.com
+              </a>
+            </Text>
+            <Text style={copyrightText}>
+              © {new Date().getFullYear()} The EliteGlam. All rights reserved.
             </Text>
           </Section>
         </Container>
@@ -86,55 +120,95 @@ export default ContestantFormEmail;
 
 // ------------------- Styles -------------------
 const main = {
-  backgroundColor: "#f6f9fc",
+  backgroundColor: "#0A0A0A",
   fontFamily:
-    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
+    'Raleway, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
+  padding: "40px 10px",
 };
 
 const container = {
-  backgroundColor: "#ffffff",
+  backgroundColor: "#121212",
+  border: "1px solid rgba(201, 168, 76, 0.2)",
   margin: "0 auto",
-  padding: "40px 20px",
-  maxWidth: "580px",
-  borderRadius: "8px",
+  padding: "0 32px 40px 32px",
+  maxWidth: "520px",
+  width: "100%",
+  boxShadow: "0 20px 30px rgba(0,0,0,0.5)",
+  position: "relative" as const,
 };
 
-const header = {
+const topAccentLine = {
+  height: "2px",
+  backgroundColor: "#C9A84C",
+  margin: "0 -32px 32px -32px",
+  width: "calc(100% + 64px)",
+};
+
+const logoContainer = {
+  textAlign: "center" as const,
+  marginBottom: "24px",
+};
+
+const logoImage = {
+  display: "inline-block",
+  verticalAlign: "middle",
+  marginRight: "8px",
+};
+
+const wordmarkImage = {
+  display: "inline-block",
+  verticalAlign: "middle",
+};
+
+const headerSection = {
   textAlign: "center" as const,
 };
 
 const h1 = {
-  color: "#1a1a1a",
+  color: "#F5EDD6",
   fontSize: "24px",
-  fontWeight: "bold",
-  margin: "0 0 12px",
+  fontWeight: "normal",
+  fontFamily: 'Cinzel, Georgia, "Times New Roman", serif',
+  letterSpacing: "0.04em",
+  margin: "0 0 12px 0",
 };
 
 const subtitle = {
-  color: "#666666",
-  fontSize: "16px",
+  color: "#9A8C6A",
+  fontSize: "14px",
+  lineHeight: "1.6",
   margin: "0",
 };
 
 const text = {
-  color: "#525f7f",
-  fontSize: "15px",
-  lineHeight: "24px",
+  color: "#9A8C6A",
+  fontSize: "14px",
+  lineHeight: "1.7",
+  textAlign: "center" as const,
   margin: "16px 0",
 };
 
+const referenceBox = {
+  backgroundColor: "#0A0A0A",
+  border: "1px solid rgba(201, 168, 76, 0.15)",
+  padding: "12px 16px",
+  textAlign: "center" as const,
+  margin: "20px 0",
+};
+
 const label = {
-  color: "#8898aa",
-  fontSize: "12px",
-  fontWeight: "600",
+  color: "#5A5040",
+  fontSize: "10px",
+  letterSpacing: "0.15em",
   textTransform: "uppercase" as const,
-  margin: "16px 0 4px",
+  margin: "0 0 4px 0",
 };
 
 const value = {
-  color: "#1a1a1a",
-  fontSize: "16px",
-  margin: "0 0 20px",
+  color: "#9A8C6A",
+  fontSize: "13px",
+  fontFamily: 'monospace, "Courier New", Courier',
+  margin: "0",
 };
 
 const buttonContainer = {
@@ -143,26 +217,38 @@ const buttonContainer = {
 };
 
 const button = {
-  backgroundColor: "#000000",
-  borderRadius: "6px",
-  color: "#ffffff",
-  fontSize: "15px",
-  fontWeight: "600",
+  backgroundColor: "#C9A84C",
+  color: "#080808",
+  fontFamily: 'Cinzel, Georgia, "Times New Roman", serif',
+  fontSize: "12px",
+  fontWeight: "bold",
+  textTransform: "uppercase" as const,
+  letterSpacing: "0.05em",
   textDecoration: "none",
   textAlign: "center" as const,
   display: "inline-block",
-  padding: "12px 24px",
+  padding: "14px 24px",
+  width: "100%",
+  boxSizing: "border-box" as const,
+};
+
+const fallbackText = {
+  color: "#5A5040",
+  fontSize: "12px",
+  textAlign: "center" as const,
+  margin: "16px 0 4px 0",
 };
 
 const linkText = {
-  color: "#556cd6",
-  fontSize: "13px",
+  color: "#9A8C6A",
+  fontSize: "12px",
+  textAlign: "center" as const,
   wordBreak: "break-all" as const,
-  margin: "0 0 20px",
+  margin: "0 0 20px 0",
 };
 
 const hr = {
-  borderColor: "#e6ebf1",
+  borderColor: "rgba(201, 168, 76, 0.15)",
   margin: "28px 0",
 };
 
@@ -171,7 +257,24 @@ const footer = {
 };
 
 const footerText = {
-  color: "#8898aa",
+  color: "#5A5040",
   fontSize: "12px",
-  margin: "4px 0",
+  margin: "0 0 8px 0",
+};
+
+const supportText = {
+  color: "#5A5040",
+  fontSize: "12px",
+  margin: "0 0 8px 0",
+};
+
+const supportLink = {
+  color: "#9A8C6A",
+  textDecoration: "underline",
+};
+
+const copyrightText = {
+  color: "#5A5040",
+  fontSize: "11px",
+  margin: "12px 0 0 0",
 };

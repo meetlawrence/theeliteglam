@@ -15,7 +15,10 @@ export async function GET(req: NextRequest) {
 
     const result = await eventService.getAllEvents();
     return NextResponse.json(result, { status: result.status || 200 });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 401 });
+  } catch {
+    return NextResponse.json(
+      { success: false, message: "Failed to fetch events. Please try again." },
+      { status: 401 },
+    );
   }
 }

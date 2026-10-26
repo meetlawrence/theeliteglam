@@ -15,7 +15,7 @@ const mockTicketCount = jest.fn(
   (_args: Record<string, unknown>): Promise<number> => Promise.resolve(0)
 );
 
-jest.unstable_mockModule("@/back-end/database/db-connect", () => ({
+jest.unstable_mockModule("@/back-end/db/db-connect", () => ({
   prisma: {
     event: {
       findUnique: (args: { where: { id: string } }) => mockEventFindUnique(args),
@@ -330,6 +330,7 @@ describe("PaymentService.initialize", () => {
 
     expect(result.success).toBe(false);
     expect(result.status).toBe(502);
+    expect(result.message).toBe("We couldn't start your payment. Please try again.");
     expect(mockMarkFailed).toHaveBeenCalledTimes(1);
   });
 

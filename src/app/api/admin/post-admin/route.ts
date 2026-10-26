@@ -19,7 +19,10 @@ export async function POST(req: NextRequest) {
     const result = await adminService.createAdmin(body, payload.role);
 
     return NextResponse.json(result, { status: result.status || 201 });
-  } catch (error) {
-    return NextResponse.json({ success: false, message: error }, { status: 400 });
+  } catch {
+    return NextResponse.json(
+      { success: false, message: "Failed to create admin. Please try again." },
+      { status: 400 },
+    );
   }
 }

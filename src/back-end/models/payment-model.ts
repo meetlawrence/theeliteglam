@@ -1,4 +1,4 @@
-import { prisma } from "@/back-end/database/db-connect";
+import { prisma } from "@/back-end/db/db-connect";
 import type { PaymentPurpose, PaymentGateway } from "@/back-end/types/payment-types";
 
 type CreatePaymentInput = {
@@ -21,7 +21,7 @@ export const paymentModel = {
     return prisma.paymentTransaction.create({
       data: {
         reference: data.reference,
-        purpose: data.purpose as any,
+        purpose: data.purpose,
         gateway: data.gateway,
         amount: data.amount,
         email: data.email,

@@ -3,7 +3,7 @@ import type { Config } from "jest";
 const config: Config = {
   preset: "ts-jest/presets/default-esm", // ESM-aware preset for Prisma
   testEnvironment: "node",
-  roots: ["<rootDir>/tests"],
+  roots: ["<rootDir>/src/back-end/jest-test"],
   testMatch: ["**/*.test.ts", "**/*.spec.ts"],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   moduleNameMapper: {

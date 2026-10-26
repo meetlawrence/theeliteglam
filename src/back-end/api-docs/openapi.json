@@ -1,0 +1,4031 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "TheEliteGlam API",
+    "version": "1.0.0",
+    "description": "API reference generated from the implemented Next.js route handlers. It documents route parameters, known request fields, response statuses, and authentication; service-specific JSON response payloads may contain additional properties."
+  },
+  "tags": [
+    {
+      "name": "admin",
+      "description": "Administrative account and role management."
+    },
+    {
+      "name": "api-docs",
+      "description": "api-docs API operations."
+    },
+    {
+      "name": "auth",
+      "description": "Account registration, authentication, and recovery."
+    },
+    {
+      "name": "contestants",
+      "description": "Contestant registration and management."
+    },
+    {
+      "name": "countries",
+      "description": "Country and calling-code lookup."
+    },
+    {
+      "name": "event",
+      "description": "Event management and status."
+    },
+    {
+      "name": "payment",
+      "description": "Payment initialization, verification, and fulfillment."
+    },
+    {
+      "name": "sponsor",
+      "description": "Event sponsor management."
+    },
+    {
+      "name": "ticket",
+      "description": "Ticket sales, types, and payment verification."
+    }
+  ],
+  "servers": [
+    {
+      "url": "/",
+      "description": "The current TheEliteGlam deployment."
+    }
+  ],
+  "paths": {
+    "/api/admin/delete-admin": {
+      "delete": {
+        "operationId": "delete-admin-delete-admin",
+        "summary": "Delete admin",
+        "description": "Delete admin. Uses query parameter `id`. Requires an authenticated access-token cookie.",
+        "tags": [
+          "admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller is not allowed to perform this operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "admin/delete-admin/route.ts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the resource.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/admin/get-admin-by-Id/{id}": {
+      "get": {
+        "operationId": "get-admin-get-admin-by-Id-id",
+        "summary": "Get admin by id",
+        "description": "Get admin by id. Uses path parameter `id`. Requires an authenticated access-token cookie.",
+        "tags": [
+          "admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller is not allowed to perform this operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "admin/get-admin-by-Id/[id]/route.ts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The id path parameter.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/admin/get-admin": {
+      "get": {
+        "operationId": "get-admin-get-admin",
+        "summary": "Get admin",
+        "description": "Get admin. Requires an authenticated access-token cookie.",
+        "tags": [
+          "admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller is not allowed to perform this operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "admin/get-admin/route.ts",
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/admin/patch-admin": {
+      "patch": {
+        "operationId": "patch-admin-patch-admin",
+        "summary": "Update admin",
+        "description": "Update admin. Uses query parameter `id`. Accepts a JSON request body. Requires an authenticated access-token cookie.",
+        "tags": [
+          "admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller is not allowed to perform this operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "admin/patch-admin/route.ts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the resource.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "avatar": {
+                    "type": "string"
+                  },
+                  "isActive": {
+                    "type": "boolean"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "ADMIN",
+                      "SUPER_ADMIN"
+                    ]
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/admin/post-admin": {
+      "post": {
+        "operationId": "post-admin-post-admin",
+        "summary": "Create admin",
+        "description": "Create admin. Accepts a JSON request body. Requires an authenticated access-token cookie.",
+        "tags": [
+          "admin"
+        ],
+        "responses": {
+          "201": {
+            "description": "The resource was created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller is not allowed to perform this operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "admin/post-admin/route.ts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 6
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "ADMIN",
+                      "SUPER_ADMIN"
+                    ]
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/admin/users": {
+      "get": {
+        "operationId": "get-admin-users",
+        "summary": "List admins",
+        "description": "List admins. Requires an authenticated access-token cookie.",
+        "tags": [
+          "admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "admin/users/route.ts",
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      },
+      "patch": {
+        "operationId": "patch-admin-users",
+        "summary": "Manage admin roles or verification",
+        "description": "Manage admin roles or verification. Accepts a JSON request body. Requires an authenticated access-token cookie.",
+        "tags": [
+          "admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller is not allowed to perform this operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "admin/users/route.ts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "id"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "SUPER_ADMIN",
+                      "ADMIN"
+                    ]
+                  },
+                  "action": {
+                    "type": "string",
+                    "enum": [
+                      "VERIFY"
+                    ]
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "delete-admin-users",
+        "summary": "Delete an admin",
+        "description": "Delete an admin. Uses query parameter `id`. Requires an authenticated access-token cookie.",
+        "tags": [
+          "admin"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller is not allowed to perform this operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "admin/users/route.ts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the resource.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/api-docs/access": {
+      "get": {
+        "operationId": "get-api-docs-access",
+        "summary": "Get access",
+        "description": "Get access. Requires an authenticated access-token cookie.",
+        "tags": [
+          "api-docs"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "api-docs/access/route.ts",
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/auth/forgot-password": {
+      "post": {
+        "operationId": "post-auth-forgot-password",
+        "summary": "Request a password reset",
+        "description": "Request a password reset. Accepts a JSON request body.",
+        "tags": [
+          "auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "auth/forgot-password/route.ts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "operationId": "post-auth-login",
+        "summary": "Log in",
+        "description": "Log in. Accepts a JSON request body.",
+        "tags": [
+          "auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "auth/login/route.ts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "operationId": "post-auth-logout",
+        "summary": "Log out",
+        "description": "Log out.",
+        "tags": [
+          "auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "auth/logout/route.ts"
+      }
+    },
+    "/api/auth/me": {
+      "get": {
+        "operationId": "get-auth-me",
+        "summary": "Get current user",
+        "description": "Get current user. Requires an authenticated access-token cookie.",
+        "tags": [
+          "auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "auth/me/route.ts",
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/auth/reset-password": {
+      "post": {
+        "operationId": "post-auth-reset-password",
+        "summary": "Reset password",
+        "description": "Reset password. Uses query parameter `token`. Accepts a JSON request body.",
+        "tags": [
+          "auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "auth/reset-password/route.ts",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "description": "The token value used by this operation.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "password",
+                  "confirmPassword"
+                ],
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  },
+                  "confirmPassword": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/signup": {
+      "post": {
+        "operationId": "post-auth-signup",
+        "summary": "Sign up",
+        "description": "Sign up. Accepts a JSON request body.",
+        "tags": [
+          "auth"
+        ],
+        "responses": {
+          "201": {
+            "description": "The resource was created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "auth/signup/route.ts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/verify-email": {
+      "post": {
+        "operationId": "post-auth-verify-email",
+        "summary": "Verify email",
+        "description": "Verify email. Accepts a JSON request body.",
+        "tags": [
+          "auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "auth/verify-email/route.ts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "token"
+                ],
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/contestants/application-image": {
+      "post": {
+        "operationId": "post-contestants-application-image",
+        "summary": "Upload application image",
+        "description": "Upload application image. Accepts multipart form data.",
+        "tags": [
+          "contestants"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller is not allowed to perform this operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "contestants/application-image/route.ts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "image",
+                  "reference"
+                ],
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "reference": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/contestants/delete-contestant": {
+      "delete": {
+        "operationId": "delete-contestants-delete-contestant",
+        "summary": "Delete contestant",
+        "description": "Delete contestant. Uses query parameter `id`. Requires an authenticated access-token cookie.",
+        "tags": [
+          "contestants"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "contestants/delete-contestant/route.ts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the resource.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/contestants/get-constestants-by-event-id": {
+      "get": {
+        "operationId": "get-contestants-get-constestants-by-event-id",
+        "summary": "Get contestants by event id",
+        "description": "Get contestants by event id. Uses query parameter `eventId`. Requires an authenticated access-token cookie.",
+        "tags": [
+          "contestants"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "contestants/get-constestants-by-event-id/route.ts",
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the event.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/contestants/get-contestant-by-id": {
+      "get": {
+        "operationId": "get-contestants-get-contestant-by-id",
+        "summary": "Get contestant by id",
+        "description": "Get contestant by id. Uses query parameter `id`. Requires an authenticated access-token cookie.",
+        "tags": [
+          "contestants"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "contestants/get-contestant-by-id/route.ts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the resource.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/contestants/get-contestants": {
+      "get": {
+        "operationId": "get-contestants-get-contestants",
+        "summary": "Get contestants",
+        "description": "Get contestants.",
+        "tags": [
+          "contestants"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "contestants/get-contestants/route.ts"
+      }
+    },
+    "/api/contestants/patch-contestant": {
+      "patch": {
+        "operationId": "patch-contestants-patch-contestant",
+        "summary": "Update contestant",
+        "description": "Update contestant. Uses query parameter `id`. Accepts a JSON request body. Requires an authenticated access-token cookie.",
+        "tags": [
+          "contestants"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "contestants/patch-contestant/route.ts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the resource.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "minLength": 7
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "stageName": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "bio": {
+                    "type": "string"
+                  },
+                  "portfolio": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "number": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "age": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "state": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "country": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "occupation": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "advocacy": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "funFact": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "tribe": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "isVerified": {
+                    "type": "boolean"
+                  },
+                  "score": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "rank": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "contestantCategories": {
+                    "type": "string",
+                    "enum": [
+                      "MALE",
+                      "FEMALE"
+                    ]
+                  },
+                  "eventId": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ACTIVE",
+                      "INACTIVE"
+                    ]
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/contestants/post-contestant": {
+      "post": {
+        "operationId": "post-contestants-post-contestant",
+        "summary": "Create contestant",
+        "description": "Create contestant. Uses query parameter `reference`. Accepts a JSON request body. The payment-reference registration flow is public; the administrative flow requires an authenticated access-token cookie.",
+        "tags": [
+          "contestants"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Payment is required or has not completed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current resource or processing state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "contestants/post-contestant/route.ts",
+        "parameters": [
+          {
+            "name": "reference",
+            "in": "query",
+            "required": false,
+            "description": "The payment reference.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email",
+                  "gender",
+                  "phone",
+                  "age",
+                  "state",
+                  "country",
+                  "occupation",
+                  "advocacy",
+                  "funFact",
+                  "tribe",
+                  "contestantCategories",
+                  "eventId",
+                  "reference",
+                  "paymentTransactionId"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "enum": [
+                      "MALE",
+                      "FEMALE"
+                    ]
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "stageName": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "height": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "weight": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "bio": {
+                    "type": "string"
+                  },
+                  "portfolio": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "minLength": 7
+                  },
+                  "age": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "state": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "country": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "occupation": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "advocacy": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "funFact": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "tribe": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "contestantCategories": {
+                    "type": "string",
+                    "enum": [
+                      "MALE",
+                      "FEMALE"
+                    ]
+                  },
+                  "eventId": {
+                    "type": "string"
+                  },
+                  "reference": {
+                    "type": "string"
+                  },
+                  "paymentTransactionId": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "security": [
+          {},
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/contestants/registration-status": {
+      "get": {
+        "operationId": "get-contestants-registration-status",
+        "summary": "Check registration status",
+        "description": "Check registration status. Uses query parameter `reference`.",
+        "tags": [
+          "contestants"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller is not allowed to perform this operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current resource or processing state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "contestants/registration-status/route.ts",
+        "parameters": [
+          {
+            "name": "reference",
+            "in": "query",
+            "required": true,
+            "description": "The payment reference.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/contestants/upload-image": {
+      "post": {
+        "operationId": "post-contestants-upload-image",
+        "summary": "Upload image",
+        "description": "Upload image. Accepts multipart form data. Requires an authenticated access-token cookie.",
+        "tags": [
+          "contestants"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "contestants/upload-image/route.ts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "image"
+                ],
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/countries": {
+      "get": {
+        "operationId": "get-countries",
+        "summary": "Get countries",
+        "description": "Get countries.",
+        "tags": [
+          "countries"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "An upstream service is unavailable or returned an invalid response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "countries/route.ts"
+      }
+    },
+    "/api/event/delete-event": {
+      "delete": {
+        "operationId": "delete-event-delete-event",
+        "summary": "Delete event",
+        "description": "Delete event. Uses query parameter `id`. Requires an authenticated access-token cookie.",
+        "tags": [
+          "event"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "event/delete-event/route.ts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the resource.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/event/get-event-by-id": {
+      "get": {
+        "operationId": "get-event-get-event-by-id",
+        "summary": "Get event by id",
+        "description": "Get event by id. Uses query parameter `id`. Requires an authenticated access-token cookie.",
+        "tags": [
+          "event"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "event/get-event-by-id/route.ts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the resource.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/event/get-events": {
+      "get": {
+        "operationId": "get-event-get-events",
+        "summary": "Get events",
+        "description": "Get events. Requires an authenticated access-token cookie.",
+        "tags": [
+          "event"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "event/get-events/route.ts",
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/event/get-first-event": {
+      "get": {
+        "operationId": "get-event-get-first-event",
+        "summary": "Get first event",
+        "description": "Get first event.",
+        "tags": [
+          "event"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "event/get-first-event/route.ts"
+      }
+    },
+    "/api/event/patch-event": {
+      "patch": {
+        "operationId": "patch-event-patch-event",
+        "summary": "Update event",
+        "description": "Update event. Uses query parameter `id`. Accepts a JSON request body. Requires an authenticated access-token cookie.",
+        "tags": [
+          "event"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "event/patch-event/route.ts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the resource.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "location": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "UPCOMING",
+                      "ONGOING",
+                      "COMPLETED",
+                      "CANCELLED"
+                    ]
+                  },
+                  "categories": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "MALE",
+                        "FEMALE"
+                      ]
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/event/post-event": {
+      "post": {
+        "operationId": "post-event-post-event",
+        "summary": "Create event",
+        "description": "Create event. Accepts a JSON request body. Requires an authenticated access-token cookie.",
+        "tags": [
+          "event"
+        ],
+        "responses": {
+          "201": {
+            "description": "The resource was created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "event/post-event/route.ts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "description",
+                  "startDate",
+                  "endDate",
+                  "location",
+                  "categories",
+                  "contestantFee"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "location": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "UPCOMING",
+                      "ONGOING",
+                      "COMPLETED",
+                      "CANCELLED"
+                    ]
+                  },
+                  "categories": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "MALE",
+                        "FEMALE"
+                      ]
+                    }
+                  },
+                  "contestantFee": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/event/status": {
+      "get": {
+        "operationId": "get-event-status",
+        "summary": "Get event status",
+        "description": "Get event status.",
+        "tags": [
+          "event"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "event/status/route.ts"
+      }
+    },
+    "/api/payment/failed-fulfillments": {
+      "get": {
+        "operationId": "get-payment-failed-fulfillments",
+        "summary": "Get failed fulfillments",
+        "description": "Get failed fulfillments. Requires an authenticated access-token cookie.",
+        "tags": [
+          "payment"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller is not allowed to perform this operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "payment/failed-fulfillments/route.ts",
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/payment/initialize": {
+      "post": {
+        "operationId": "post-payment-initialize",
+        "summary": "Initialize payment",
+        "description": "Initialize payment. Uses header parameter `Idempotency-Key`. Accepts a JSON request body.",
+        "tags": [
+          "payment"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The request conflicts with the current resource or processing state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "payment/initialize/route.ts",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "description": "Unique key for safely retrying this payment initialization request (8–128 characters).",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "required": [
+                      "purpose",
+                      "method",
+                      "eventId",
+                      "email",
+                      "ticketTypeId",
+                      "quantity"
+                    ],
+                    "properties": {
+                      "purpose": {
+                        "type": "string",
+                        "enum": [
+                          "TICKET"
+                        ]
+                      },
+                      "method": {
+                        "type": "string",
+                        "enum": [
+                          "PAYSTACK",
+                          "OPAY"
+                        ]
+                      },
+                      "eventId": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email"
+                      },
+                      "phoneNumber": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "ticketTypeId": {
+                        "type": "string"
+                      },
+                      "quantity": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 10
+                      }
+                    },
+                    "additionalProperties": true
+                  },
+                  {
+                    "type": "object",
+                    "required": [
+                      "purpose",
+                      "method",
+                      "eventId",
+                      "email",
+                      "name"
+                    ],
+                    "properties": {
+                      "purpose": {
+                        "type": "string",
+                        "enum": [
+                          "CONTESTANT"
+                        ]
+                      },
+                      "method": {
+                        "type": "string",
+                        "enum": [
+                          "PAYSTACK",
+                          "OPAY"
+                        ]
+                      },
+                      "eventId": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string",
+                        "format": "email"
+                      },
+                      "phoneNumber": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 100
+                      }
+                    },
+                    "additionalProperties": true
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/payment/resend-email": {
+      "post": {
+        "operationId": "post-payment-resend-email",
+        "summary": "Resend email",
+        "description": "Resend email. Accepts a JSON request body.",
+        "tags": [
+          "payment"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "payment/resend-email/route.ts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "reference"
+                ],
+                "properties": {
+                  "reference": {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 100
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/payment/retry-fulfillment": {
+      "post": {
+        "operationId": "post-payment-retry-fulfillment",
+        "summary": "Retry fulfillment",
+        "description": "Retry fulfillment. Accepts a JSON request body. Requires an authenticated access-token cookie.",
+        "tags": [
+          "payment"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The caller is not allowed to perform this operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "payment/retry-fulfillment/route.ts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "reference"
+                ],
+                "properties": {
+                  "reference": {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 100
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/payment/verify": {
+      "get": {
+        "operationId": "get-payment-verify",
+        "summary": "Verify payment",
+        "description": "Verify payment. Uses query parameter `reference`.",
+        "tags": [
+          "payment"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "payment/verify/route.ts",
+        "parameters": [
+          {
+            "name": "reference",
+            "in": "query",
+            "required": true,
+            "description": "The payment reference.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/payment/webhook": {
+      "post": {
+        "operationId": "post-payment-webhook",
+        "summary": "Process payment webhook",
+        "description": "Process payment webhook. Uses header parameter `x-paystack-signature`. Accepts a JSON request body.",
+        "tags": [
+          "payment"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "payment/webhook/route.ts",
+        "parameters": [
+          {
+            "name": "x-paystack-signature",
+            "in": "header",
+            "required": true,
+            "description": "HMAC SHA-512 signature supplied by Paystack for webhook verification.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "event",
+                  "data"
+                ],
+                "properties": {
+                  "event": {
+                    "type": "string"
+                  },
+                  "data": {
+                    "type": "object",
+                    "properties": {
+                      "reference": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": true
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sponsor/delete-sponsor": {
+      "delete": {
+        "operationId": "delete-sponsor-delete-sponsor",
+        "summary": "Delete sponsor",
+        "description": "Delete sponsor. Uses query parameter `id`. Requires an authenticated access-token cookie.",
+        "tags": [
+          "sponsor"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "sponsor/delete-sponsor/route.ts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the resource.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/sponsor/get-sponsor-by-id": {
+      "get": {
+        "operationId": "get-sponsor-get-sponsor-by-id",
+        "summary": "Get sponsor by id",
+        "description": "Get sponsor by id. Uses query parameter `id`. Requires an authenticated access-token cookie.",
+        "tags": [
+          "sponsor"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "sponsor/get-sponsor-by-id/route.ts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the resource.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/sponsor/get-sponsors-by-event-id": {
+      "get": {
+        "operationId": "get-sponsor-get-sponsors-by-event-id",
+        "summary": "Get sponsors by event id",
+        "description": "Get sponsors by event id. Uses query parameter `eventId`. Requires an authenticated access-token cookie.",
+        "tags": [
+          "sponsor"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "sponsor/get-sponsors-by-event-id/route.ts",
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the event.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/sponsor/patch-sponsor": {
+      "patch": {
+        "operationId": "patch-sponsor-patch-sponsor",
+        "summary": "Update sponsor",
+        "description": "Update sponsor. Uses query parameter `id`. Accepts a JSON request body. Requires an authenticated access-token cookie.",
+        "tags": [
+          "sponsor"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "sponsor/patch-sponsor/route.ts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the resource.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "logo": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "website": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "tier": {
+                    "type": "string",
+                    "enum": [
+                      "GOLD",
+                      "SILVER",
+                      "BRONZE"
+                    ]
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/sponsor/post-sponsor": {
+      "post": {
+        "operationId": "post-sponsor-post-sponsor",
+        "summary": "Create sponsor",
+        "description": "Create sponsor. Accepts a JSON request body. Requires an authenticated access-token cookie.",
+        "tags": [
+          "sponsor"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "sponsor/post-sponsor/route.ts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "tier",
+                  "eventId"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "logo": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "website": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "tier": {
+                    "type": "string",
+                    "enum": [
+                      "GOLD",
+                      "SILVER",
+                      "BRONZE"
+                    ]
+                  },
+                  "eventId": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/ticket/payment": {
+      "post": {
+        "operationId": "post-ticket-payment",
+        "summary": "Create ticket payment",
+        "description": "Create ticket payment. Accepts a JSON request body.",
+        "tags": [
+          "ticket"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "ticket/payment/route.ts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "name",
+                  "ticketTypeId",
+                  "quantity"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "ticketTypeId": {
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "eventId": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ticket/ticket-types/delete-ticket-type": {
+      "delete": {
+        "operationId": "delete-ticket-ticket-types-delete-ticket-type",
+        "summary": "Delete ticket type",
+        "description": "Delete ticket type. Uses query parameter `id`. Requires an authenticated access-token cookie.",
+        "tags": [
+          "ticket"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "ticket/ticket-types/delete-ticket-type/route.ts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the resource.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/ticket/ticket-types/get-ticket-type-by-id": {
+      "get": {
+        "operationId": "get-ticket-ticket-types-get-ticket-type-by-id",
+        "summary": "Get ticket type by id",
+        "description": "Get ticket type by id. Uses query parameter `id`. Requires an authenticated access-token cookie.",
+        "tags": [
+          "ticket"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "ticket/ticket-types/get-ticket-type-by-id/route.ts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the resource.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/ticket/ticket-types/get-ticket-types-by-event-id": {
+      "get": {
+        "operationId": "get-ticket-ticket-types-get-ticket-types-by-event-id",
+        "summary": "Get ticket types by event id",
+        "description": "Get ticket types by event id. Uses query parameter `eventId`. Requires an authenticated access-token cookie.",
+        "tags": [
+          "ticket"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "ticket/ticket-types/get-ticket-types-by-event-id/route.ts",
+        "parameters": [
+          {
+            "name": "eventId",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the event.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/ticket/ticket-types/patch-ticket-type": {
+      "patch": {
+        "operationId": "patch-ticket-ticket-types-patch-ticket-type",
+        "summary": "Update ticket type",
+        "description": "Update ticket type. Uses query parameter `id`. Accepts a JSON request body. Requires an authenticated access-token cookie.",
+        "tags": [
+          "ticket"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "ticket/ticket-types/patch-ticket-type/route.ts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "description": "The identifier of the resource.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "price": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "capacity": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "benefits": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "minLength": 2
+                    }
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/ticket/ticket-types/post-ticket-type": {
+      "post": {
+        "operationId": "post-ticket-ticket-types-post-ticket-type",
+        "summary": "Create ticket type",
+        "description": "Create ticket type. Accepts a JSON request body. Requires an authenticated access-token cookie.",
+        "tags": [
+          "ticket"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication is required or the credentials are invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The requested resource was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "ticket/ticket-types/post-ticket-type/route.ts",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "price",
+                  "benefits",
+                  "eventId"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2
+                  },
+                  "price": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "capacity": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "benefits": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "minLength": 2
+                    }
+                  },
+                  "eventId": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": true
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AccessTokenCookie": []
+          }
+        ]
+      }
+    },
+    "/api/ticket/verify-payment": {
+      "get": {
+        "operationId": "get-ticket-verify-payment",
+        "summary": "Verify payment",
+        "description": "Verify payment. Uses query parameter `reference`.",
+        "tags": [
+          "ticket"
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The request is invalid or missing required input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "An unexpected server error occurred.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-documentation-status": "generated-from-route-handler",
+        "x-source-file": "ticket/verify-payment/route.ts",
+        "parameters": [
+          {
+            "name": "reference",
+            "in": "query",
+            "required": true,
+            "description": "The payment reference.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "AccessTokenCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "accessToken",
+        "description": "Access token cookie set by the login endpoint."
+      }
+    },
+    "schemas": {
+      "ApiResponse": {
+        "type": "object",
+        "description": "Successful JSON response. The exact data properties depend on the endpoint.",
+        "additionalProperties": true
+      },
+      "ApiError": {
+        "type": "object",
+        "description": "Error response returned by an API route.",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "enum": [
+              false
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "error": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  }
+}

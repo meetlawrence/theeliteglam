@@ -75,7 +75,7 @@ export function AdminContestantEditorModal({
         const result = await response.json();
         if (!response.ok || !result.success || !result.data) {
           throw new Error(
-            result.error || result.message || "Contestant record not found.",
+            result.message || "Contestant record not found.",
           );
         }
 
@@ -126,7 +126,7 @@ export function AdminContestantEditorModal({
       const result = await response.json();
       if (!response.ok || !result.success || !result.data) {
         throw new Error(
-          result.error || result.message || "Unable to save contestant changes.",
+          result.message || "Unable to save contestant changes.",
         );
       }
 
@@ -171,7 +171,7 @@ export function AdminContestantEditorModal({
       });
       const result = await response.json();
       if (!response.ok || !result.success || !result.data?.imageUrl) {
-        throw new Error(result.error || result.message || "Unable to upload image.");
+        throw new Error(result.message || "Unable to upload image.");
       }
       await updateContestant({ image: result.data.imageUrl });
     } catch (uploadError) {

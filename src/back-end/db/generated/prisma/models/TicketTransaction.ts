@@ -602,9 +602,9 @@ export type TicketTransactionSumOrderByAggregateInput = {
   total?: Prisma.SortOrder
 }
 
-export type TicketTransactionScalarRelationFilter = {
-  is?: Prisma.TicketTransactionWhereInput
-  isNot?: Prisma.TicketTransactionWhereInput
+export type TicketTransactionNullableScalarRelationFilter = {
+  is?: Prisma.TicketTransactionWhereInput | null
+  isNot?: Prisma.TicketTransactionWhereInput | null
 }
 
 export type TicketTransactionCreateNestedManyWithoutEventInput = {
@@ -691,16 +691,26 @@ export type TicketTransactionUncheckedUpdateManyWithoutTickettypeNestedInput = {
   deleteMany?: Prisma.TicketTransactionScalarWhereInput | Prisma.TicketTransactionScalarWhereInput[]
 }
 
+export type EnumTransactionStatusFieldUpdateOperationsInput = {
+  set?: $Enums.TransactionStatus
+}
+
+export type NullableBoolFieldUpdateOperationsInput = {
+  set?: boolean | null
+}
+
 export type TicketTransactionCreateNestedOneWithoutTicketsInput = {
   create?: Prisma.XOR<Prisma.TicketTransactionCreateWithoutTicketsInput, Prisma.TicketTransactionUncheckedCreateWithoutTicketsInput>
   connectOrCreate?: Prisma.TicketTransactionCreateOrConnectWithoutTicketsInput
   connect?: Prisma.TicketTransactionWhereUniqueInput
 }
 
-export type TicketTransactionUpdateOneRequiredWithoutTicketsNestedInput = {
+export type TicketTransactionUpdateOneWithoutTicketsNestedInput = {
   create?: Prisma.XOR<Prisma.TicketTransactionCreateWithoutTicketsInput, Prisma.TicketTransactionUncheckedCreateWithoutTicketsInput>
   connectOrCreate?: Prisma.TicketTransactionCreateOrConnectWithoutTicketsInput
   upsert?: Prisma.TicketTransactionUpsertWithoutTicketsInput
+  disconnect?: Prisma.TicketTransactionWhereInput | boolean
+  delete?: Prisma.TicketTransactionWhereInput | boolean
   connect?: Prisma.TicketTransactionWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.TicketTransactionUpdateToOneWithWhereWithoutTicketsInput, Prisma.TicketTransactionUpdateWithoutTicketsInput>, Prisma.TicketTransactionUncheckedUpdateWithoutTicketsInput>
 }

@@ -49,7 +49,7 @@ describe("PaystackGateway.initialize", () => {
     });
 
     expect(result.success).toBe(false);
-    expect(result.message).toMatch(/secret/i);
+    expect(result.message).toBe("Payments are temporarily unavailable. Please try again later.");
   });
 
   test("fails on invalid response shape", async () => {
@@ -84,7 +84,7 @@ describe("PaystackGateway.initialize", () => {
     });
 
     expect(result.success).toBe(false);
-    expect(result.message).toBe("Invalid key");
+    expect(result.message).toBe("We couldn't start your payment. Please try again.");
   });
 
   test("returns authorization data on success", async () => {
@@ -141,6 +141,7 @@ describe("PaystackGateway.verify", () => {
 
     expect(result.success).toBe(false);
     expect(result.status).toBe("FAILED");
+    expect(result.message).toBe("Payments are temporarily unavailable. Please try again later.");
   });
 
   test("fails on invalid response shape", async () => {

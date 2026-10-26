@@ -4,10 +4,22 @@ import { paymentService } from "@/back-end/services/payment-services/payment-ser
 import { verifyPaymentSchema } from "@/back-end/lib/validation/payment-validation";
 import { formatZodError } from "@/back-end/lib/utils/helper";
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
   try {
-    const body = await req.json();
-    const validation = verifyPaymentSchema.safeParse(body);
+    const reference = req.nextUrl.searchParams.get("reference");
+
+    if (!reference) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Reference parameter is required",
+          status: 400,
+        },
+        { status: 400 },
+      );
+    }
+
+    const validation = verifyPaymentSchema.safeParse({ reference });
 
     if (!validation.success) {
       return NextResponse.json(
@@ -16,21 +28,21 @@ export async function POST(req: NextRequest) {
           message: formatZodError(validation.error),
           status: 400,
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const result = await paymentService.verify(validation.data.reference);
     return NextResponse.json(result, { status: 200 });
-  } catch (error: any) {
-    console.error("[POST /api/payments/verify]", error);
+  } catch (error: unknown) {
+    console.error("[GET /api/payment/verify]", error);
     return NextResponse.json(
       {
         success: false,
-        message: error?.message || "Internal server error",
+        message: "We couldn't verify your payment. Please try again.",
         status: 500,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

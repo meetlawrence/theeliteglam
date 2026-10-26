@@ -17,7 +17,10 @@ export async function GET(req: NextRequest) {
 
     const result = await eventService.getEventById(id);
     return NextResponse.json(result, { status: result.status || 200 });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 404 });
+  } catch {
+    return NextResponse.json(
+      { success: false, message: "Failed to fetch event. Please try again." },
+      { status: 404 },
+    );
   }
 }

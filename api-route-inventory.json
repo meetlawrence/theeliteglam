@@ -44,6 +44,13 @@
     ]
   },
   {
+    "file": "api-docs/access/route.ts",
+    "path": "/api/api-docs/access",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
     "file": "auth/forgot-password/route.ts",
     "path": "/api/auth/forgot-password",
     "methods": [
@@ -93,36 +100,8 @@
     ]
   },
   {
-    "file": "categories/delete-categories/route.ts",
-    "path": "/api/categories/delete-categories",
-    "methods": [
-      "DELETE"
-    ]
-  },
-  {
-    "file": "categories/get-categories-by-id/route.ts",
-    "path": "/api/categories/get-categories-by-id",
-    "methods": [
-      "GET"
-    ]
-  },
-  {
-    "file": "categories/get-categories/route.ts",
-    "path": "/api/categories/get-categories",
-    "methods": [
-      "GET"
-    ]
-  },
-  {
-    "file": "categories/patch-categories/route.ts",
-    "path": "/api/categories/patch-categories",
-    "methods": [
-      "PATCH"
-    ]
-  },
-  {
-    "file": "categories/post-categories/route.ts",
-    "path": "/api/categories/post-categories",
+    "file": "contestants/application-image/route.ts",
+    "path": "/api/contestants/application-image",
     "methods": [
       "POST"
     ]
@@ -163,13 +142,6 @@
     ]
   },
   {
-    "file": "contestants/payment/route.ts",
-    "path": "/api/contestants/payment",
-    "methods": [
-      "POST"
-    ]
-  },
-  {
     "file": "contestants/post-contestant/route.ts",
     "path": "/api/contestants/post-contestant",
     "methods": [
@@ -177,8 +149,22 @@
     ]
   },
   {
-    "file": "contestants/verify-payment/route.ts",
-    "path": "/api/contestants/verify-payment",
+    "file": "contestants/registration-status/route.ts",
+    "path": "/api/contestants/registration-status",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
+    "file": "contestants/upload-image/route.ts",
+    "path": "/api/contestants/upload-image",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
+    "file": "countries/route.ts",
+    "path": "/api/countries",
     "methods": [
       "GET"
     ]
@@ -205,6 +191,13 @@
     ]
   },
   {
+    "file": "event/get-first-event/route.ts",
+    "path": "/api/event/get-first-event",
+    "methods": [
+      "GET"
+    ]
+  },
+  {
     "file": "event/patch-event/route.ts",
     "path": "/api/event/patch-event",
     "methods": [
@@ -216,6 +209,13 @@
     "path": "/api/event/post-event",
     "methods": [
       "POST"
+    ]
+  },
+  {
+    "file": "event/status/route.ts",
+    "path": "/api/event/status",
+    "methods": [
+      "GET"
     ]
   },
   {
@@ -250,7 +250,7 @@
     "file": "payment/verify/route.ts",
     "path": "/api/payment/verify",
     "methods": [
-      "POST"
+      "GET"
     ]
   },
   {
@@ -296,6 +296,13 @@
     ]
   },
   {
+    "file": "ticket/payment/route.ts",
+    "path": "/api/ticket/payment",
+    "methods": [
+      "POST"
+    ]
+  },
+  {
     "file": "ticket/ticket-types/delete-ticket-type/route.ts",
     "path": "/api/ticket/ticket-types/delete-ticket-type",
     "methods": [
@@ -328,6 +335,13 @@
     "path": "/api/ticket/ticket-types/post-ticket-type",
     "methods": [
       "POST"
+    ]
+  },
+  {
+    "file": "ticket/verify-payment/route.ts",
+    "path": "/api/ticket/verify-payment",
+    "methods": [
+      "GET"
     ]
   }
 ]

@@ -210,7 +210,7 @@ export type IdempotencyKeyGroupByOutputType = {
   key: string
   method: string
   path: string
-  statusCode: number | null
+  statusCode: number
   response: runtime.JsonValue | null
   pending: boolean
   expiresAt: Date
@@ -246,7 +246,7 @@ export type IdempotencyKeyWhereInput = {
   key?: Prisma.StringFilter<"IdempotencyKey"> | string
   method?: Prisma.StringFilter<"IdempotencyKey"> | string
   path?: Prisma.StringFilter<"IdempotencyKey"> | string
-  statusCode?: Prisma.IntNullableFilter<"IdempotencyKey"> | number | null
+  statusCode?: Prisma.IntFilter<"IdempotencyKey"> | number
   response?: Prisma.JsonNullableFilter<"IdempotencyKey">
   pending?: Prisma.BoolFilter<"IdempotencyKey"> | boolean
   expiresAt?: Prisma.DateTimeFilter<"IdempotencyKey"> | Date | string
@@ -259,7 +259,7 @@ export type IdempotencyKeyOrderByWithRelationInput = {
   key?: Prisma.SortOrder
   method?: Prisma.SortOrder
   path?: Prisma.SortOrder
-  statusCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  statusCode?: Prisma.SortOrder
   response?: Prisma.SortOrderInput | Prisma.SortOrder
   pending?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
@@ -275,7 +275,7 @@ export type IdempotencyKeyWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.IdempotencyKeyWhereInput | Prisma.IdempotencyKeyWhereInput[]
   method?: Prisma.StringFilter<"IdempotencyKey"> | string
   path?: Prisma.StringFilter<"IdempotencyKey"> | string
-  statusCode?: Prisma.IntNullableFilter<"IdempotencyKey"> | number | null
+  statusCode?: Prisma.IntFilter<"IdempotencyKey"> | number
   response?: Prisma.JsonNullableFilter<"IdempotencyKey">
   pending?: Prisma.BoolFilter<"IdempotencyKey"> | boolean
   expiresAt?: Prisma.DateTimeFilter<"IdempotencyKey"> | Date | string
@@ -288,7 +288,7 @@ export type IdempotencyKeyOrderByWithAggregationInput = {
   key?: Prisma.SortOrder
   method?: Prisma.SortOrder
   path?: Prisma.SortOrder
-  statusCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  statusCode?: Prisma.SortOrder
   response?: Prisma.SortOrderInput | Prisma.SortOrder
   pending?: Prisma.SortOrder
   expiresAt?: Prisma.SortOrder
@@ -309,7 +309,7 @@ export type IdempotencyKeyScalarWhereWithAggregatesInput = {
   key?: Prisma.StringWithAggregatesFilter<"IdempotencyKey"> | string
   method?: Prisma.StringWithAggregatesFilter<"IdempotencyKey"> | string
   path?: Prisma.StringWithAggregatesFilter<"IdempotencyKey"> | string
-  statusCode?: Prisma.IntNullableWithAggregatesFilter<"IdempotencyKey"> | number | null
+  statusCode?: Prisma.IntWithAggregatesFilter<"IdempotencyKey"> | number
   response?: Prisma.JsonNullableWithAggregatesFilter<"IdempotencyKey">
   pending?: Prisma.BoolWithAggregatesFilter<"IdempotencyKey"> | boolean
   expiresAt?: Prisma.DateTimeWithAggregatesFilter<"IdempotencyKey"> | Date | string
@@ -322,7 +322,7 @@ export type IdempotencyKeyCreateInput = {
   key: string
   method: string
   path: string
-  statusCode?: number | null
+  statusCode?: number
   response?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pending?: boolean
   expiresAt: Date | string
@@ -335,7 +335,7 @@ export type IdempotencyKeyUncheckedCreateInput = {
   key: string
   method: string
   path: string
-  statusCode?: number | null
+  statusCode?: number
   response?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pending?: boolean
   expiresAt: Date | string
@@ -348,7 +348,7 @@ export type IdempotencyKeyUpdateInput = {
   key?: Prisma.StringFieldUpdateOperationsInput | string
   method?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
-  statusCode?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  statusCode?: Prisma.IntFieldUpdateOperationsInput | number
   response?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pending?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -361,7 +361,7 @@ export type IdempotencyKeyUncheckedUpdateInput = {
   key?: Prisma.StringFieldUpdateOperationsInput | string
   method?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
-  statusCode?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  statusCode?: Prisma.IntFieldUpdateOperationsInput | number
   response?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pending?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -374,7 +374,7 @@ export type IdempotencyKeyCreateManyInput = {
   key: string
   method: string
   path: string
-  statusCode?: number | null
+  statusCode?: number
   response?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pending?: boolean
   expiresAt: Date | string
@@ -387,7 +387,7 @@ export type IdempotencyKeyUpdateManyMutationInput = {
   key?: Prisma.StringFieldUpdateOperationsInput | string
   method?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
-  statusCode?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  statusCode?: Prisma.IntFieldUpdateOperationsInput | number
   response?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pending?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -400,7 +400,7 @@ export type IdempotencyKeyUncheckedUpdateManyInput = {
   key?: Prisma.StringFieldUpdateOperationsInput | string
   method?: Prisma.StringFieldUpdateOperationsInput | string
   path?: Prisma.StringFieldUpdateOperationsInput | string
-  statusCode?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  statusCode?: Prisma.IntFieldUpdateOperationsInput | number
   response?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pending?: Prisma.BoolFieldUpdateOperationsInput | boolean
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -517,7 +517,7 @@ export type $IdempotencyKeyPayload<ExtArgs extends runtime.Types.Extensions.Inte
     key: string
     method: string
     path: string
-    statusCode: number | null
+    statusCode: number
     response: runtime.JsonValue | null
     pending: boolean
     expiresAt: Date

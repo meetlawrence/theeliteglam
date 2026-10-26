@@ -44,7 +44,7 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
       ([entry]) => {
         if (entry.isIntersecting) setInView(true);
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -63,13 +63,20 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
     const verifyPayment = async () => {
       try {
         const response = await fetch(
-          `/api/contestants/verify-payment?reference=${encodeURIComponent(reference)}`,
-          { cache: "no-store" },
+          `/api/payment/verify-payment?reference=${encodeURIComponent(reference)}`,
+          {
+            method: "GET",
+            cache: "no-store",
+            headers: {
+              "Content-Type": "application/json",
+              "Idempotency-Key": crypto.randomUUID(),
+            },
+          },
         );
-        const result: { success?: boolean; error?: string } = await response.json();
+        const result: { success?: boolean; message?: string } = await response.json();
 
         if (!response.ok || !result.success) {
-          throw new Error(result.error || "Payment verification failed.");
+          throw new Error(result.message || "Payment verification failed.");
         }
 
         if (isActive) {
@@ -79,9 +86,7 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
       } catch (err) {
         if (isActive) {
           setPaymentError(
-            err instanceof Error
-              ? err.message
-              : "Unable to verify your payment. Please try again.",
+            err instanceof Error ? err.message : "Unable to verify your payment. Please try again.",
           );
         }
       } finally {
@@ -101,12 +106,15 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
     setError("");
 
     try {
-      const response = await fetch("/api/contestants/payment", {
+      const response = await fetch("/api/payment/initialize", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Idempotency-Key": crypto.randomUUID(),
         },
         body: JSON.stringify({
+          purpose: "CONTESTANT",
+          method: "PAYSTACK",
           eventId,
           name: name.trim(),
           email: email.trim(),
@@ -117,14 +125,13 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
       const result: {
         success?: boolean;
         message?: string;
-        error?: string;
         data?: { authorizationUrl?: string; authorization_url?: string };
       } = await response.json();
 
       const authUrl = result.data?.authorizationUrl || result.data?.authorization_url;
 
       if (!response.ok || !result.success || !authUrl) {
-        throw new Error(result.error || result.message || "Unable to initialize payment.");
+        throw new Error(result.message || "Unable to initialize payment.");
       }
 
       window.location.assign(authUrl);
@@ -143,13 +150,16 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
       {paid ? (
         <ApplicationForm reference={paymentReference} />
       ) : (
-        <div className={`transition-all duration-1000 ease-out ${inView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
+        <div
+          className={`transition-all duration-1000 ease-out ${inView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
+        >
           <SectionLabel text="Registration" />
           <h2 className="font-['Cinzel',serif] text-[clamp(1.8rem,3.5vw,2.6rem)] text-[#F5EDD6] tracking-[0.05em] leading-[1.1] mt-4 mb-3">
             Begin Your Application
           </h2>
           <p className="font-['Playfair_Display',serif] text-[0.98rem] text-[#9A8C6A] italic leading-[1.75] mb-12">
-            A non-refundable registration fee of ₦25,000 is required to access the application form. This helps us maintain the quality and integrity of the selection process.
+            A non-refundable registration fee of ₦25,000 is required to access the application form.
+            This helps us maintain the quality and integrity of the selection process.
           </p>
 
           {!showPayment ? (
@@ -187,7 +197,10 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
               </div>
 
               {paymentError && (
-                <p role="alert" className="font-['Raleway',sans-serif] text-[0.78rem] text-[#C96B5D] mb-4">
+                <p
+                  role="alert"
+                  className="font-['Raleway',sans-serif] text-[0.78rem] text-[#C96B5D] mb-4"
+                >
                   {paymentError}
                 </p>
               )}
@@ -249,7 +262,10 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
                   />
 
                   {error && (
-                    <p role="alert" className="font-['Raleway',sans-serif] text-[0.78rem] text-[#C96B5D]">
+                    <p
+                      role="alert"
+                      className="font-['Raleway',sans-serif] text-[0.78rem] text-[#C96B5D]"
+                    >
                       {error}
                     </p>
                   )}

@@ -11,9 +11,7 @@ export class EventModel {
         endDate: new Date(data.endDate),
         location: data.location,
         status: data.status || "UPCOMING",
-        categories: data.categories ? {
-          create: data.categories.map((catName) => ({ name: catName }))
-        } : undefined,
+        categories: data.categories,
         contestantFee: data.contestantFee,
       },
     });
@@ -22,6 +20,13 @@ export class EventModel {
   async findAll() {
     return await prisma.event.findMany({
       orderBy: { startDate: "desc" },
+    });
+  }
+
+  async findFirstId() {
+    return await prisma.event.findFirst({
+      orderBy: { createdAt: "desc" },
+      select: { id: true },
     });
   }
 
@@ -44,9 +49,8 @@ export class EventModel {
         endDate: data.endDate ? new Date(data.endDate) : undefined,
         location: data.location,
         status: data.status,
-        categories: data.categories ? {
-          create: data.categories.map((catName) => ({ name: catName }))
-        } : undefined,
+        categories: data.categories,
+        contestantFee: data.contestantFee,
       },
     });
   }

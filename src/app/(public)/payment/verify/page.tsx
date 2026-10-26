@@ -20,27 +20,30 @@ function VerifyPaymentContent() {
   useEffect(() => {
     if (!reference) {
       setStatus("error");
-      setMessage("No payment reference was provided in your request. Please return to registration.");
+      setMessage(
+        "No payment reference was provided in your request. Please return to registration.",
+      );
       return;
     }
 
     const verifyPayment = async () => {
       try {
-        const res = await fetch(`/api/contestants/verify-payment?reference=${reference}`);
+        const res = await fetch(`/api/payment/verify?reference=${encodeURIComponent(reference)}`, {
+          method: "GET",
+        });
+
         const data = await res.json();
 
         if (res.ok && data.success) {
           setStatus("success");
           setMessage("Payment verified successfully!");
           setTicketInfo(data);
-          
-          
-          setTimeout(() => {
-            router.push(`/register/form?reference=${reference}`);
-          }, 2000);
         } else {
           setStatus("failed");
-          setMessage(data.error || "We could not verify a successful payment for this transaction reference.");
+          setMessage(
+            data.message ||
+              "We could not verify a successful payment for this transaction reference.",
+          );
         }
       } catch (error) {
         console.error("Verification error:", error);
@@ -92,7 +95,8 @@ function VerifyPaymentContent() {
             Access Unlocked
           </h1>
           <p className="font-['Raleway',sans-serif] text-[0.85rem] text-[#9A8C6A] leading-[1.7] mb-8">
-            Your payment has been successfully verified. Redirecting you to your contestant application form...
+            Your payment has been successfully verified. Redirecting you to your contestant
+            application form...
           </p>
           {reference && (
             <div className="font-['Raleway',sans-serif] text-[0.7rem] text-[#5A5040] tracking-wider uppercase mb-6">
@@ -100,7 +104,7 @@ function VerifyPaymentContent() {
             </div>
           )}
           <Link
-            href={`/contestant/form?reference=${reference}`}
+            href={`/register/form?reference=${reference}`}
             className="w-full py-3.5 px-6 bg-gradient-to-br from-[#C9A84C] to-[#8B6914] text-[#080808] font-['Cinzel',serif] text-[0.75rem] uppercase font-bold flex items-center justify-center gap-2 transition-all hover:brightness-110"
           >
             Proceed to Application Form
@@ -132,7 +136,7 @@ function VerifyPaymentContent() {
               <ArrowLeft size={14} />
               Return to Registration
             </Link>
-            
+
             <a
               href="mailto:support@theeliteglam.com"
               className="font-['Raleway',sans-serif] text-[0.72rem] text-[#5A5040] hover:text-[#9A8C6A] transition-colors"
@@ -149,11 +153,13 @@ function VerifyPaymentContent() {
 export default function VerifyPaymentPage() {
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-[#F5EDD6] flex items-center justify-center p-6">
-      <Suspense fallback={
-        <div className="max-w-[520px] w-full bg-[#121212] border border-[#C9A84C]/20 p-10 text-center font-['Raleway',sans-serif] text-sm text-[#9A8C6A]">
-          Loading verification details...
-        </div>
-      }>
+      <Suspense
+        fallback={
+          <div className="max-w-[520px] w-full bg-[#121212] border border-[#C9A84C]/20 p-10 text-center font-['Raleway',sans-serif] text-sm text-[#9A8C6A]">
+            Loading verification details...
+          </div>
+        }
+      >
         <VerifyPaymentContent />
       </Suspense>
     </main>

@@ -21,19 +21,17 @@ export const createContestantSchema = z.object({
   contestantCategories: z.enum(["MALE", "FEMALE"]),
   eventId: z.string().cuid("Invalid event ID"),
   reference: z.string().min(2),
+  paymentTransactionId: z.string().min(2),
 });
 
 export const updateContestantSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").optional(),
   email: z.string().email("Invalid email address").optional(),
   phone: z.string().min(7, "Phone number must be valid").optional(),
-  gender: z.enum(["MALE", "FEMALE"]).optional(),
-  image: z.string().url("Image must be a valid URL").nullable().optional(),
-  stageName: z.string().nullable().optional(),
-  height: z.number().positive("Height must be positive").nullable().optional(),
-  weight: z.number().positive("Weight must be positive").nullable().optional(),
-  bio: z.string().nullable().optional(),
-  portfolio: z.string().url("Portfolio must be a valid URL").nullable().optional(),
+  image: z.string().url("Image must be a valid URL").optional(),
+  stageName: z.string().min(2).optional(),
+  bio: z.string().optional(),
+  portfolio: z.string().url("Portfolio must be a valid URL").optional(),
   number: z.number().int().positive("Contestant number must be positive").optional(),
   age: z.number().int().positive("Age must be positive").optional(),
   state: z.string().min(2).optional(),
@@ -47,40 +45,11 @@ export const updateContestantSchema = z.object({
   rank: z.number().int().positive("Rank must be positive").optional(),
   contestantCategories: z.enum(["MALE", "FEMALE"]).optional(),
   eventId: z.string().cuid("Invalid event ID").optional(),
-  status: z.enum(["PENDING", "ACTIVE", "INACTIVE"]).optional(),
-});
-
-export const contestantTransactionSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  email: z.string().email("Invalid email address"),
-  amount: z.number().positive("Amount must be positive").optional(),
-  phoneNumber: z.string().min(7).optional(),
-  reference: z.string().min(2, "Reference is required"),
-  eventId: z.string().cuid().min(1, "Event ID is required"),
-});
-
-export const updateContestantTransactionSchema = z.object({
-  name: z.string().min(2, "Name is required").optional(),
-  email: z.string().email("Invalid email address").optional(),
-  phoneNumber: z.string().min(7).optional(),
-  status: z
-    .enum([
-      "ABANDONED",
-      "FAILED",
-      "ONGOING",
-      "PENDING",
-      "PROCESSING",
-      "QUEUED",
-      "REVERSED",
-      "SUCCESS",
-      "USED",
-    ])
-    .optional(),
-    clamed: z.boolean().optional(),
+  status: z.enum(["ACTIVE", "INACTIVE"]).optional(),
 });
 
 export const contestantIdParamSchema = z.object({
-  id: z.string().trim().min(1, "Contestant ID is required"),
+  id: z.string().cuid().min(1, "Contestant ID is required"),
 });
 
 export const eventIdSchema = z.object({
@@ -88,5 +57,12 @@ export const eventIdSchema = z.object({
 });
 
 export const referenceSchema = z.object({
-  id: z.string().min(1, "Ticket ID is required"),
+  id: z.string().min(1, "Reference ID is required"),
+});
+
+export const contestantInitSchema = z.object({
+  eventId: z.string().min(1),
+  email: z.string().email(),
+  phoneNumber: z.string().optional(),
+  name: z.string().optional(),
 });

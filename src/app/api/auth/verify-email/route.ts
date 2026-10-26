@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
 
     if (!token) {
       return NextResponse.json(
-        { success: false, error: "Verification token is required." },
+        { success: false, message: "Verification token is required." },
         { status: 400 }
       );
     }
@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Verify Email API Error:", error);
     return NextResponse.json(
-      { success: false, error: "Invalid or expired verification link." },
+      { success: false, message: "Invalid or expired verification link." },
       { status: 400 }
     );
   }
