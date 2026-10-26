@@ -2,9 +2,9 @@
   "name": "theeliteglam",
   "version": "0.1.0",
   "private": true,
- "scripts": {
+  "scripts": {
     "dev": "next dev",
-    "build": "npm install && prisma db push && prisma generate && NODE_OPTIONS='--max-old-space-size=4096' next build --webpack",    
+    "build": "npm install && prisma db push && prisma generate && NODE_OPTIONS='--max-old-space-size=4096' next build --webpack",
     "start": "next start",
     "lint": "eslint",
     "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest",
@@ -12,7 +12,8 @@
     "test:integration": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --testPathPatterns=jest-test/integration --runInBand",
     "test:watch": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --watch",
     "test:coverage": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --coverage",
-    "api:discover": "ts-node scripts/discover-api-routes.ts"
+    "api:discover": "ts-node scripts/discover-api-routes.ts",
+    "api:openapi": "pnpm api:discover && ts-node scripts/generate-openapi.ts"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
@@ -60,6 +61,7 @@
     "@typescript-eslint/eslint-plugin": "^8.61.1",
     "@typescript-eslint/parser": "^8.61.1",
     "babel-plugin-react-compiler": "1.0.0",
+    "cross-env": "^10.1.0",
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.9",
     "eslint-config-prettier": "^10.1.8",

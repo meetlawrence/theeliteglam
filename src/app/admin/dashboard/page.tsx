@@ -1,29 +1,23 @@
 import { DashboardContainer } from "@/app/components/admin/dashboard/DashboardContainer";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { JWT } from "@/back-end/lib/utils/jwt";
-import { adminRepo } from "@/back-end/models/admin-models";
+import { fetchServerApi } from "@/app/lib/server-api";
 
 export default async function DashboardPage() {
-  const accessToken = (await cookies()).get("accessToken")?.value;
-  if (!accessToken) {
+  const response = await fetchServerApi("/api/auth/me", { forwardCookies: true });
+  if (response.status === 401 || response.status === 404) {
     redirect("/admin");
   }
 
-  let adminId: string;
-  try {
-    const payload = await JWT.verifyAccessToken(accessToken);
-    adminId = payload.adminId;
-  } catch {
-    redirect("/admin");
+  const result: {
+    success?: boolean;
+    admin?: { name: string; role: string };
+    message?: string;
+  } = await response.json();
+  if (!response.ok || result.success !== true || !result.admin) {
+    throw new Error(result.message || "Unable to load the current admin.");
   }
 
-  const admin = await adminRepo.findById(adminId);
-  if (!admin) {
-    redirect("/admin");
-  }
-
-  const user = { name: admin.name, role: admin.role };
+  const user = { name: result.admin.name, role: result.admin.role };
 
   return (
     <main>

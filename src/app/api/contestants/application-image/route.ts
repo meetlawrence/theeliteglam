@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { uploadContestantImage } from "@/back-end/db/cloudinary";
-import { contestantTransactionService } from "@/back-end/services/contestant-transaction-service";
+import { paymentModel } from "@/back-end/models/payment-model";
 
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
 const ALLOWED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
@@ -14,44 +14,43 @@ export async function POST(req: NextRequest) {
 
     if (!(file instanceof File)) {
       return NextResponse.json(
-        { success: false, error: "An image file is required." },
+        { success: false, message: "An image file is required." },
         { status: 400 },
       );
     }
 
     if (typeof reference !== "string" || !reference.trim()) {
       return NextResponse.json(
-        { success: false, error: "A payment reference is required." },
+        { success: false, message: "A payment reference is required." },
         { status: 400 },
       );
     }
 
-    const transaction =
-      await contestantTransactionService.getContestantTransactionByReference(reference.trim());
-    if (!transaction.success || !transaction.data) {
+    const transaction = await paymentModel.findByReference(reference.trim());
+    if (!transaction) {
       return NextResponse.json(
-        { success: false, error: transaction.error || "Payment transaction not found." },
-        { status: transaction.status || 404 },
+        { success: false, message: "Payment transaction not found." },
+        { status: 404 },
       );
     }
 
-    if (transaction.data.status !== "SUCCESS") {
+    if (transaction.purpose !== "CONTESTANT" || transaction.status !== "SUCCESS") {
       return NextResponse.json(
-        { success: false, error: "A successful payment is required before uploading an application image." },
+        { success: false, message: "A successful payment is required before uploading an application image." },
         { status: 403 },
       );
     }
 
     if (!ALLOWED_IMAGE_TYPES.has(file.type)) {
       return NextResponse.json(
-        { success: false, error: "Upload a JPG, PNG, or WebP image." },
+        { success: false, message: "Upload a JPG, PNG, or WebP image." },
         { status: 400 },
       );
     }
 
     if (file.size === 0 || file.size > MAX_IMAGE_SIZE) {
       return NextResponse.json(
-        { success: false, error: "Image must be no larger than 5 MB." },
+        { success: false, message: "Image must be no larger than 5 MB." },
         { status: 400 },
       );
     }
@@ -64,7 +63,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("Contestant application image upload failed:", error);
     return NextResponse.json(
-      { success: false, error: "Unable to upload contestant image." },
+      { success: false, message: "Unable to upload contestant image." },
       { status: 500 },
     );
   }

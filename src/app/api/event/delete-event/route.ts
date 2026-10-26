@@ -23,7 +23,10 @@ export async function DELETE(req: NextRequest) {
 
     const result = await eventService.deleteEvent(id, payload.role);
     return NextResponse.json(result, { status: result.status || 200 });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 401 });
+  } catch {
+    return NextResponse.json(
+      { success: false, message: "Failed to delete event. Please try again." },
+      { status: 401 },
+    );
   }
 }

@@ -15,11 +15,11 @@ export async function POST(req: NextRequest) {
     const priceValidation = async function (id: string) {
       const validation = ticketTypeIdSchema.safeParse({ id });
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error), status: 400, price: 0 };
+        return { success: false, message: formatZodError(validation.error), status: 400, price: 0 };
       }
       const ticketType = await ticketTypeRepo.findById(validation.data.id);
       if (!ticketType) {
-        return { success: false, error: "Ticket type not found", status: 404, price: 0 };
+        return { success: false, message: "Ticket type not found", status: 404, price: 0 };
       }
       return { success: true, status: 200, price: ticketType.price };
     };
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     const quantityValidation = async function (quantity: number) {
       const validation = quantitySchema.safeParse({ quantity });
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error), status: 400 };
+        return { success: false, message: formatZodError(validation.error), status: 400 };
       }
       return { success: true, status: 200 };
     };
@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
     if (!result.ok) {
       const errorResponse = await result;
       console.error("Paystack API Error:", errorResponse);
-      return NextResponse.json({ error: "Failed to initialize payment" }, { status: 500 });
+      return NextResponse.json({ success: false, message: "Failed to initialize payment" }, { status: 500 });
     }
     const data = await result.json();
     await ticketTransactionService.createTicketTransaction({
@@ -90,6 +90,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(data);
   } catch (error) {
     console.error("payment API Error:", error);
-    return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
+    return NextResponse.json({ success: false, message: "Invalid request body" }, { status: 400 });
   }
 }

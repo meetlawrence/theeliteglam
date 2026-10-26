@@ -38,7 +38,7 @@ export default function AdminAuthPage() {
       const data = await res.json();
 
       if (!res.ok) {
-        setServerError(data.error || "Authentication failed.");
+        setServerError(data.message || "Authentication failed.");
         return;
       }
 

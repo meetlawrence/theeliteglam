@@ -1,19 +1,52 @@
-export function BlogSection() {
-  return (
-    <section className="py-26 px-6 bg-[#0E0E0E]">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-12">
-          <h1 className="font-cinzel text-4xl text-cream tracking-widest mb-4">Blog Posts</h1>
-          <div className="h-px bg-gold/25 mb-6" />
-        </div>
+"use client";
 
-        <div className="bg-gold/5 border border-gold/15 p-8">
-          <h2 className="font-cinzel text-xl text-gold tracking-wider mb-4">
-            I go build am later biko😓😓
-          </h2>
-          <p className="font-raleway text-sm text-muted leading-relaxed">Mek I rest small</p>
-        </div>
+import { useState } from "react";
+import { BLOG_CATEGORIES, FEATURED_POST, BLOG_POSTS } from "./blogData";
+import { BlogHeader } from "./BlogHeader";
+import { FeaturedPost } from "./FeaturedPost";
+import { BlogFilter } from "./BlogFilter";
+import { BlogCard, BlogEmptyState } from "./BlogCard";
+
+export default function BlogSection() {
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredPosts = BLOG_POSTS.filter((post) => {
+    const matchesCategory =
+      selectedCategory === "All" || post.category === selectedCategory;
+    const matchesSearch =
+      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  return (
+    <main className="min-h-screen bg-[#0A0A0A] text-[#F5EDD6] pt-28 pb-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto space-y-16">
+        <BlogHeader />
+
+        <FeaturedPost post={FEATURED_POST} />
+
+        <BlogFilter
+          categories={BLOG_CATEGORIES}
+          selectedCategory={selectedCategory}
+          onSelectCategory={setSelectedCategory}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+        />
+
+        <section>
+          {filteredPosts.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredPosts.map((post) => (
+                <BlogCard key={post.id} post={post} />
+              ))}
+            </div>
+          ) : (
+            <BlogEmptyState />
+          )}
+        </section>
       </div>
-    </section>
+    </main>
   );
 }

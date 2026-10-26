@@ -1,17 +1,17 @@
 import { createElement } from "react";
 import { Eye, Heart, Sparkles, Star } from "lucide-react";
 
-export const BANNER_IMG = "/banners/img1.jpg";
+export const BANNER_IMG = "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914554/oma1.webp";
 
-export const BANNER_VIDEO = "/banners/logo1.webm";
+export const BANNER_VIDEO = "https://res.cloudinary.com/fnrrqppt/video/upload/v1792911328/logo1.webm";
 
 export const CEO_IMG =
   "images/oku.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800&q=80";
 
 export const MAIDEN_IMGS = [
-  "/maiden/1.jpg",
-  "/maiden/2.jpg",
-  "/maiden/3.jpg",
+  "/maiden/1.webp",
+  "/maiden/2.webp",
+  "/maiden/3.webp",
 ];
 
 export const VALUES = [
@@ -79,24 +79,25 @@ export const MISSION_VISION_CARDS = [
 
 export const WINNERS = [
   {
-    name: "Oma Osele",
-    title: "Miss Elite Glam 2025",
-    state: "Lagos · Igbo",
+    name: "Osele Iromachukwu",
+    title: "Miss EliteGlam 2025",
+    state: "",
     age: "28",
     occupation: "Medical Scientist",
     advocacy: "Pulse Global",
     quote: "Caring for people...",
-    image: "images/img1.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+    image: "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914556/oma13.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
+  
   {
     name: "Umana Sambo",
-    title: "Mister Elite Glam 2025",
-    state: "Uyo · Ibibio",
+    title: "Mister EliteGlam 2025",
+    state: "",
     age: "35",
     occupation: "Department of Tourism Officer",
     advocacy: "Youth Tech Empowerment",
     quote: "Beauty is the courage to stand for something greater than yourself. I carry that with every step.",
-    image: "https://images/?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+    image: "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914557/sambo1.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
 ];
 
@@ -104,16 +105,16 @@ export const RUNNERS_UP = [
   
   {
     name: "Emmanuel Oliver",
-    title: "Mr.Universe · Male",
-    state: "Cross River",
-    occupation: "Civil Engineer",
-    image: "https://images/?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+    title: "Mr.Universe",
+    state: "",
+    occupation: "Civil Engineer & Footwear Artisan",
+    image: "maiden/oliver.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
   {
     name: "Bernard Williams",
-    title: "Mister Grand · Male",
-    state: "Cross River",
-    occupation: "Fashion Designer",
-    image: "https://images/?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+    title: "Mister Grand",
+    state: "",
+    occupation: "Medical Laboratory Scientist",
+    image: "maiden/bernard.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
 ];

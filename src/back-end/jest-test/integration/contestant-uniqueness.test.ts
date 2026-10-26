@@ -33,6 +33,14 @@ function contestantData(
     reference: payment.reference,
     eventId,
     paymentTransactionId: payment.id,
+    age: 20,
+    state: "Lagos",
+    country: "Nigeria",
+    occupation: "Student",
+    advocacy: "Education",
+    funFact: "Enjoys reading",
+    tribe: "Yoruba",
+    contestantCategories: "FEMALE" as const,
     ...overrides,
   };
 }
@@ -87,6 +95,7 @@ describe("contestant uniqueness (real DB)", () => {
 
   test("duplicate paymentTransactionId hits P2002", async () => {
     const payment = await createContestantPayment();
+    const duplicatePaymentReference = `${payment.reference}-2`;
 
     await prisma.contestant.create({
       data: contestantData(payment),
@@ -95,7 +104,7 @@ describe("contestant uniqueness (real DB)", () => {
     await expect(
       prisma.contestant.create({
         data: contestantData(payment, {
-          reference: `${payment.reference}-2`,
+          reference: duplicatePaymentReference,
           email: "other@example.com",
         }),
       }),

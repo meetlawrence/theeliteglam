@@ -12,7 +12,7 @@ export function AboutLeadershipSection({ image }: AboutLeadershipSectionProps) {
         <div className="relative overflow-hidden pb-[130%]">
           <img
             src={image}
-            alt="Emmanuel Oku — Founder & CEO, The Elite Glam"
+            alt="Founder & CEO | The EliteGlam Pageant Nigeria"
             className="absolute inset-0 h-full w-full object-cover object-top"
           />
           <div className="absolute bottom-0 left-0 right-0 h-[35%] bg-[linear-gradient(to_top,rgba(8,8,8,0.55),transparent)]" />
@@ -38,14 +38,15 @@ export function AboutLeadershipSection({ image }: AboutLeadershipSectionProps) {
 
         <div className="mb-7 border-l-2 border-[rgba(201,168,76,0.35)] pl-6">
           <p className="font-['Playfair_Display',serif] text-[1rem] italic leading-[1.8] text-[#C4B896]">
-            "I created The Elite Glam because I believed Nigeria deserved a pageant that took itself seriously — one that held beauty and brains in the same hand."
+            “I believe beauty is most powerful when it is guided by purpose. My vision has always been to create a platform where individuality is celebrated, potential is nurtured, and every voice has the opportunity to inspire meaningful change.”
           </p>
         </div>
 
         {[
-          "Emmanuel Oku is a Nigerian entrepreneur, creative director, and pageant producer with over a decade of experience in Nigeria's entertainment and fashion industries.",
-          "Driven by a conviction that Africa's narrative in global pageantry must be rewritten from within, Emmanuel founded The Elite Glam in 2025 as the nation's most ambitious and inclusive pageant platform.",
-          "Under his leadership, the brand has secured partnerships with internationally recognised pageant organisations and attracted contestants and sponsors from across Nigeria and the diaspora.",
+          "Emmanuel Oku is a United States–based Nigerian entrepreneur, creative director, and pageant executive with over a decade of experience spanning the creative, fashion, and entertainment industries.",
+          "Driven by a vision to redefine African representation in global pageantry, Emmanuel founded The EliteGlam Pageant Nigeria in 2025, establishing a platform dedicated to celebrating diversity, empowering emerging talents, and championing beauty with purpose.",
+          "Under his leadership, EliteGlam has forged strategic partnerships with internationally recognised pageant organisations, expanded opportunities for Nigerian talents on the global stage, and achieved remarkable international success, highlighted by Nigeria’s crowning as Miss Continental World 2026/2027.",
+          "With a commitment to excellence, innovation, and purposeful leadership, Emmanuel continues to position EliteGlam as an emerging force in international pageantry, building a lasting legacy of empowerment, inclusivity, and African excellence.",
         ].map((para, index) => (
           <p key={index} className="mb-4 font-['Raleway',sans-serif] text-[0.95rem] leading-[1.85] text-[#9A8C6A]">
             {para}

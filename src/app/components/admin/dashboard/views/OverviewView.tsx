@@ -9,7 +9,7 @@ import { stats } from "@/app/components/admin/dashboard/dashboardData";
 
 type ContestantsResponse = {
   success?: boolean;
-  error?: string;
+  message?: string;
   data?: unknown;
 };
 
@@ -46,7 +46,7 @@ export function OverviewView({ user }: { user?: { name?: string; role?: string }
         const result: ContestantsResponse = await response.json();
 
         if (!response.ok || result.success === false) {
-          throw new Error(result.error || "Unable to load contestants.");
+          throw new Error(result.message || "Unable to load contestants.");
         }
         if (!Array.isArray(result.data) || !result.data.every(isContestant)) {
           throw new Error("The contestants API returned an invalid response.");

@@ -89,7 +89,7 @@ export async function POST(req: NextRequest) {
       success: true,
       message: "Payment processed successfully",
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[Webhook] Unexpected error:", error);
     // Return 500 so Paystack will retry
     return NextResponse.json(

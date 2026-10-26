@@ -10,15 +10,13 @@ import {
   getIdempotentResponse,
   completeIdempotentResponse,
 } from "@/back-end/lib/utils/idempotency";
-import { randomUUID } from "crypto";
 
 export async function POST(req: NextRequest) {
   try {
     // 1. Require & validate Idempotency-Key
 
-    const rawKey =
-      req.headers.get("Idempotency-Key")
-      //*||`test-key-${randomUUID().replace(/-/g, "").slice(0, 12).toUpperCase()}`*/;
+    const rawKey = req.headers.get("Idempotency-Key");
+    //*||`test-key-${randomUUID().replace(/-/g, "").slice(0, 12).toUpperCase()}`*/;
 
     const idempotencyKey = validateIdempotencyKey(rawKey);
 
@@ -81,31 +79,22 @@ export async function POST(req: NextRequest) {
     }
 
     // 5. We own the key → process the payment
-    const amount = 2500000; 
-    const reference = `REF-${randomUUID().slice(0, 8).toUpperCase()}`;
-
-    const paymentInput = {
-      ...validation.data,
-      amount,
-      reference,
-    };
-
-    const result = await paymentService.initialize(paymentInput);
+    const result = await paymentService.initialize(validation.data);
 
     // 6. Store the final response
     await completeIdempotentResponse({
       key: idempotencyKey,
-      statusCode: 200,
+      statusCode: result.status,
       response: result,
     });
 
-    return NextResponse.json(result, { status: 200 });
-  } catch (error: any) {
+    return NextResponse.json(result, { status: result.status });
+  } catch (error: unknown) {
     console.error("[POST /api/payments/initialize]", error);
     return NextResponse.json(
       {
         success: false,
-        message: error?.message || "Internal server error",
+        message: "We couldn't start your payment. Please try again.",
         status: 500,
       },
       { status: 500 },

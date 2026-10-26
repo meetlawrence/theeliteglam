@@ -9,20 +9,48 @@
 * 🟢 You can import this file directly.
 */
 
-export const Role = {
-  ADMIN: 'ADMIN',
-  SUPER_ADMIN: 'SUPER_ADMIN'
+export const PaymentPurpose = {
+  TICKET: 'TICKET',
+  CONTESTANT: 'CONTESTANT'
 } as const
 
-export type Role = (typeof Role)[keyof typeof Role]
+export type PaymentPurpose = (typeof PaymentPurpose)[keyof typeof PaymentPurpose]
 
 
-export const ContestantCategories = {
-  MALE: 'MALE',
-  FEMALE: 'FEMALE'
+export const PaymentGateway = {
+  PAYSTACK: 'PAYSTACK',
+  OPAY: 'OPAY'
 } as const
 
-export type ContestantCategories = (typeof ContestantCategories)[keyof typeof ContestantCategories]
+export type PaymentGateway = (typeof PaymentGateway)[keyof typeof PaymentGateway]
+
+
+export const PaymentStatus = {
+  PENDING: 'PENDING',
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED'
+} as const
+
+export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
+export const FulfillmentStatus = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
+} as const
+
+export type FulfillmentStatus = (typeof FulfillmentStatus)[keyof typeof FulfillmentStatus]
+
+
+export const TicketStatus = {
+  PENDING: 'PENDING',
+  SENT: 'SENT',
+  USED: 'USED'
+} as const
+
+export type TicketStatus = (typeof TicketStatus)[keyof typeof TicketStatus]
 
 
 export const Gender = {
@@ -42,6 +70,22 @@ export const Status = {
 export type Status = (typeof Status)[keyof typeof Status]
 
 
+export const ContestantCategory = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE'
+} as const
+
+export type ContestantCategory = (typeof ContestantCategory)[keyof typeof ContestantCategory]
+
+
+export const ContestantCategories = {
+  MALE: 'MALE',
+  FEMALE: 'FEMALE'
+} as const
+
+export type ContestantCategories = (typeof ContestantCategories)[keyof typeof ContestantCategories]
+
+
 export const EventStatus = {
   UPCOMING: 'UPCOMING',
   ONGOING: 'ONGOING',
@@ -50,6 +94,23 @@ export const EventStatus = {
 } as const
 
 export type EventStatus = (typeof EventStatus)[keyof typeof EventStatus]
+
+
+export const SponsorTier = {
+  GOLD: 'GOLD',
+  SILVER: 'SILVER',
+  BRONZE: 'BRONZE'
+} as const
+
+export type SponsorTier = (typeof SponsorTier)[keyof typeof SponsorTier]
+
+
+export const Role = {
+  ADMIN: 'ADMIN',
+  SUPER_ADMIN: 'SUPER_ADMIN'
+} as const
+
+export type Role = (typeof Role)[keyof typeof Role]
 
 
 export const TransactionStatus = {
@@ -65,21 +126,3 @@ export const TransactionStatus = {
 } as const
 
 export type TransactionStatus = (typeof TransactionStatus)[keyof typeof TransactionStatus]
-
-
-export const TicketStatus = {
-  PENDING: 'PENDING',
-  SEND: 'SEND',
-  USED: 'USED'
-} as const
-
-export type TicketStatus = (typeof TicketStatus)[keyof typeof TicketStatus]
-
-
-export const SponsorTier = {
-  GOLD: 'GOLD',
-  SILVER: 'SILVER',
-  BRONZE: 'BRONZE'
-} as const
-
-export type SponsorTier = (typeof SponsorTier)[keyof typeof SponsorTier]

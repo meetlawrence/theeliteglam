@@ -41,6 +41,11 @@ const SOCIALS = [
     label: "Tiktok",
     link: "https://www.tiktok.com/@the.eliteglam.pag?_r=1&_t=ZS-9AfATCStTur",
   },
+  {
+    icon: <FiFacebook size={18} />,
+    label: "Facebook",
+    link: "https://www.facebook.com/share/1HUEUjs62Q/",
+  }
 ];
 
 export function Footer() {
@@ -69,7 +74,7 @@ export function Footer() {
           >
             {submitted ? (
               <div className="font-cinzel text-sm text-[#C9A84C] tracking-widest p-4 border border-[#C9A84C]/30 text-center">
-                ✦ You&apos;re on the list. Welcome to the Elite.
+               You&apos;re on the list. Welcome to The EliteGlam!
               </div>
             ) : (
               <div className="flex">
@@ -170,7 +175,7 @@ export function Footer() {
       <div className="border-t border-[#C9A84C]/10 py-6 px-8">
         <div className="max-w-325 mx-auto flex justify-around items-center flex-wrap gap-4 font-raleway text-xs text-[#5A5040]">
           <div className="flex items-center gap-6 flex-wrap">
-            <p>© 2025 The Elite Glam. All rights reserved.</p>
+            <p>© 2025 The EliteGlam. All rights reserved.</p>
           
             <span className="text-[#C9A84C]/30 hidden sm:inline">•</span>
             <p className="text-[#8B7D60]">
@@ -181,13 +186,14 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="text-[#C9A84C] hover:underline tracking-wide transition-colors"
               >
-                Em'Kay Oku LTD
+                Em&apos;Kay Oku LTD
               </a>
             </p>
             <p className="text-[#8B7D60]">
               Built and maintained by{" "}
               <a
-                
+                href="https://github.com/meetlawrence"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#C9A84C] hover:underline tracking-wide transition-colors"
               >

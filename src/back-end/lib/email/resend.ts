@@ -9,7 +9,7 @@ import ResetPasswordEmail from "./templates/auth/rest-password-email-template";
 import PasswordChangedEmail from "./templates/auth/password-changed-email-template";
 import LoginAlertEmail from "./templates/auth/login-alert-emaill-template";
 import TicketEmail from "./templates/ticket";
-import { ContestantFormEmail } from "./templates/ContestantFormEmail";
+import{ContestantFormEmail} from "./templates/ContestantFormEmail"
 
 const resend = new Resend(AUTH_CONFIG.RESEND_API_KEY);
 
@@ -40,6 +40,7 @@ type EmailPayload =
         eventDate?: string;
         qrCode?: string; // single QR (base64)
         qrCodes: string[]; // multiple QRs
+        tickets: string[]
       };
     }
   | {
@@ -104,12 +105,12 @@ export async function sendEmail(to: string, payload: EmailPayload) {
 
     if (error) {
       console.error("Resend Error:", error);
-      return { success: false, error: error.message };
+      return { success: false, message: "We couldn't send the email. Please try again later." };
     }
 
     return { success: true, data };
-  } catch (err: any) {
+  } catch (err: undefined | unknown) {
     console.error("Send Email Error:", err);
-    return { success: false, error: err.message || "Failed to send email" };
+    return { success: false, message: "We couldn't send the email. Please try again later." };
   }
 }

@@ -16,7 +16,10 @@ export async function POST(req: NextRequest) {
     const result = await ticketTypeService.createTicketType(body, payload.role);
 
     return NextResponse.json(result, { status: result.status || 200 });
-  } catch (error) {
-    return NextResponse.json({ success: false, message: error }, { status: 404 });
+  } catch {
+    return NextResponse.json(
+      { success: false, message: "Failed to create ticket type. Please try again." },
+      { status: 404 },
+    );
   }
 }

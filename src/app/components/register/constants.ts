@@ -1,6 +1,6 @@
-export const BANNER_IMG = "/banners/1.jpg";
+export const BANNER_IMG = "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914561/sambo10.webp";
 
-export const BANNER_VIDEO = "/banners/loop.webm";
+export const BANNER_VIDEO = "https://res.cloudinary.com/fnrrqppt/video/upload/v1792911321/loop.webm";
 
 export const ELIGIBILITY = [
   {

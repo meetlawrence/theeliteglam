@@ -15,7 +15,7 @@ const mockIdempotencyUpsert = jest.fn(
     Promise.resolve({})
 );
 
-jest.unstable_mockModule("@/back-end/database/db-connect", () => ({
+jest.unstable_mockModule("@/back-end/db/db-connect", () => ({
   prisma: {
     paymentTransaction: {
       findUnique: (args: { where: { reference: string } }) =>
