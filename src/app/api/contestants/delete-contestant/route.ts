@@ -22,7 +22,10 @@ export async function DELETE(req: NextRequest) {
 
     const result = await contestantService.deleteContestant(id, payload.role);
     return NextResponse.json(result, { status: result.status || 200 });
-  } catch (error) {
-    return NextResponse.json({ success: false, message: error }, { status: 400 });
+  } catch {
+    return NextResponse.json(
+      { success: false, message: "Failed to delete contestant. Please try again." },
+      { status: 400 },
+    );
   }
 }

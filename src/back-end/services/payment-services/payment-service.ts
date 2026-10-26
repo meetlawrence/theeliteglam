@@ -121,7 +121,7 @@ export class PaymentService {
         await paymentModel.markFailed(reference);
         return {
           success: false,
-          message: init.message || "Payment gateway initialization failed",
+          message: "We couldn't start your payment. Please try again.",
           status: 502,
         };
       }
@@ -147,7 +147,7 @@ export class PaymentService {
       console.error("[PaymentService.initialize]", error);
       return {
         success: false,
-        message: error instanceof Error ? error.message : "Failed to initialize payment",
+        message: "We couldn't start your payment. Please try again.",
         status: 500,
       };
     }
@@ -186,7 +186,7 @@ export class PaymentService {
         }
         return {
           success: false,
-          message: verified.message || "Payment was not successful",
+          message: "We couldn't verify your payment. Please try again.",
           status: 400,
         };
       }
@@ -290,7 +290,7 @@ export class PaymentService {
       console.error("[PaymentService.verify]", error);
       return {
         success: false,
-        message: error instanceof Error ? error.message : "Failed to verify payment",
+        message: "We couldn't verify your payment. Please try again.",
         status: 500,
       };
     }
@@ -309,7 +309,7 @@ export class PaymentService {
       console.error("[PaymentService.listFailedFulfillments]", error);
       return {
         success: false,
-        message: error instanceof Error ? error.message : "Failed to fetch failed fulfillments",
+        message: "Failed to fetch payment fulfillments. Please try again.",
         status: 500,
       };
     }
@@ -412,7 +412,7 @@ export class PaymentService {
       console.error("[PaymentService.retryFulfillment]", error);
       return {
         success: false,
-        message: error instanceof Error ? error.message : "Failed to retry fulfillment",
+        message: "Failed to retry payment fulfillment. Please try again.",
         status: 500,
       };
     }

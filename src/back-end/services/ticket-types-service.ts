@@ -29,7 +29,7 @@ export class TicketTypeService {
       };
     } catch (error) {
       console.error("Create ticket type error:", error);
-      return { success: false, error: error || "Failed to create ticket type", status: 500 };
+      return { success: false, error: "Failed to create ticket type. Please try again.", status: 500 };
     }
   }
 
@@ -43,7 +43,7 @@ export class TicketTypeService {
       return { success: true, data: ticketTypes, status: 200 };
     } catch (error) {
       console.error("Get ticket types error:", error);
-      return { success: false, error: error || "Failed to fetch events", status: 500 };
+      return { success: false, error: "Failed to fetch ticket types. Please try again.", status: 500 };
     }
   }
 
@@ -61,7 +61,7 @@ export class TicketTypeService {
       return { success: true, data: ticketType, status: 200 };
     } catch (error) {
       console.error("Get event error:", error);
-      return { success: false, error: error || "Failed to fetch event", status: 500 };
+      return { success: false, error: "Failed to fetch ticket type. Please try again.", status: 500 };
     }
   }
 
@@ -89,7 +89,7 @@ export class TicketTypeService {
       };
     } catch (error) {
       console.error("Update Ticket Type error:", error);
-      return { success: false, error: error || "Failed to update Ticket Type", status: 500 };
+      return { success: false, error: "Failed to update ticket type. Please try again.", status: 500 };
     }
   }
 
@@ -108,7 +108,7 @@ export class TicketTypeService {
       return { success: true, message: "Ticket Type deleted successfully", status: 200 };
     } catch (error) {
       console.error("Delete Ticket Type error:", error);
-      return { success: false, error: error || "Failed to delete Ticket Type", status: 500 };
+      return { success: false, error: "Failed to delete ticket type. Please try again.", status: 500 };
     }
   }
 }

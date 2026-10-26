@@ -21,12 +21,12 @@ export async function GET(req: NextRequest) {
 
     const result = await paymentService.listFailedFulfillments();
     return NextResponse.json(result, { status: result.status });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[GET /api/admin/payments/failed-fulfillments]", error);
     return NextResponse.json(
       {
         success: false,
-        message: error?.message || "Internal server error",
+        message: "Failed to fetch payment fulfillments. Please try again.",
         status: 500,
       },
       { status: 500 },

@@ -40,7 +40,7 @@ export class AdminService {
       };
     } catch (error) {
       console.error("Create admin error:", error);
-      return { success: false, error: error || "Failed to create admin", status: 500 };
+      return { success: false, error: "Failed to create admin. Please try again.", status: 500 };
     }
   }
 
@@ -54,7 +54,7 @@ export class AdminService {
       return { success: true, data: admins, status: 200 };
     } catch (error) {
       console.error("Get all admins error:", error);
-      return { success: false, error: error || "Failed to fetch admins", status: 500 };
+      return { success: false, error: "Failed to fetch admins. Please try again.", status: 500 };
     }
   }
 
@@ -73,7 +73,7 @@ export class AdminService {
       return { success: true, data: admin, status: 200 };
     } catch (error) {
       console.error("Get admin error:", error);
-      return { success: false, error: error || "Failed to fetch admin", status: 500 };
+      return { success: false, error: "Failed to fetch admin. Please try again.", status: 500 };
     }
   }
 
@@ -96,7 +96,7 @@ export class AdminService {
       return { success: true, message: "Admin updated successfully", data: admin, status: 200 };
     } catch (error) {
       console.error("Update admin error:", error);
-      return { success: false, error: error || "Failed to update admin", status: 500 };
+      return { success: false, error: "Failed to update admin. Please try again.", status: 500 };
     }
   }
 
@@ -114,7 +114,7 @@ export class AdminService {
       return { success: true, message: "Admin deleted successfully", status: 200 };
     } catch (error) {
       console.error("Delete admin error:", error);
-      return { success: false, error: error || "Failed to delete admin", status: 500 };
+      return { success: false, error: "Failed to delete admin. Please try again.", status: 500 };
     }
   }
 }

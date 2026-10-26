@@ -133,10 +133,13 @@ export class TicketService {
         data: tickets,
         status: 200,
       };
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("[TicketService.fulfill]", error);
 
-      if (error.code === "P2002") {
+      const errorCode =
+        typeof error === "object" && error !== null && "code" in error ? error.code : undefined;
+
+      if (errorCode === "P2002") {
         const existing = await ticketModel.findByPaymentTransactionId(transaction.id);
         return {
           success: true,
@@ -146,25 +149,27 @@ export class TicketService {
         };
       }
 
-      if (error.message?.includes("Not enough tickets remaining")) {
+      const errorMessage = error instanceof Error ? error.message : "";
+
+      if (errorMessage.includes("Not enough tickets remaining")) {
         return {
           success: false,
-          message: error.message,
+          message: "Not enough tickets remaining. Please choose a smaller quantity.",
           status: 409,
         };
       }
 
-      if (error.message?.includes("does not belong to this event")) {
+      if (errorMessage.includes("does not belong to this event")) {
         return {
           success: false,
-          message: error.message,
+          message: "This ticket type does not belong to the selected event.",
           status: 400,
         };
       }
 
       return {
         success: false,
-        message: error?.message || "Failed to issue tickets",
+        message: "We couldn't issue your tickets. Please try again or contact support.",
         status: 500,
       };
     }
@@ -293,7 +298,7 @@ export class TicketService {
       console.error("[TicketService.resendTicketEmail]", error);
       return {
         success: false,
-        message: (error as Error)?.message || "Failed to resend ticket email",
+        message: "We couldn't resend your ticket email. Please try again later.",
         status: 500,
       };
     }
@@ -350,7 +355,7 @@ export class TicketService {
       console.error("[TicketService.confirmTicket]", error);
       return {
         success: false,
-        message: (error as Error)?.message || "Failed to confirm ticket",
+        message: "We couldn't confirm this ticket. Please try again.",
         status: 500,
       };
     }

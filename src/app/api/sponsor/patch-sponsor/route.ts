@@ -24,7 +24,10 @@ export async function PATCH(req: NextRequest) {
     const result = await sponsorService.updateSponsor(id, body, payload.role);
 
     return NextResponse.json(result, { status: result.status || 200 });
-  } catch (error) {
-    return NextResponse.json({ success: false, message: error }, { status: 404 });
+  } catch {
+    return NextResponse.json(
+      { success: false, message: "Failed to update sponsor. Please try again." },
+      { status: 404 },
+    );
   }
 }
