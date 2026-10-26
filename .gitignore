@@ -46,6 +46,5 @@ next-env.d.ts
 
 .pnpm
 
-api-route-inventory.json
-
-scripts
+.next/
+node_modules/
