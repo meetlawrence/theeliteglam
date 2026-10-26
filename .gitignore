@@ -45,3 +45,7 @@ next-env.d.ts
 .pnpm-debug.log*
 
 .pnpm
+
+api-route-inventory.json
+
+scripts
