@@ -28,7 +28,7 @@ export class EventService {
       };
     } catch (error) {
       console.error("Create event error:", error);
-      return { success: false, error: error || "Failed to create event", status: 500 };
+      return { success: false, error: "Failed to create event. Please try again.", status: 500 };
     }
   }
 
@@ -38,7 +38,7 @@ export class EventService {
       return { success: true, data: events, status: 200 };
     } catch (error) {
       console.error("Get events error:", error);
-      return { success: false, error: error || "Failed to fetch events", status: 500 };
+      return { success: false, error: "Failed to fetch events. Please try again.", status: 500 };
     }
   }
 
@@ -69,7 +69,7 @@ export class EventService {
       return { success: true, data: event, status: 200 };
     } catch (error) {
       console.error("Get event error:", error);
-      return { success: false, error: error || "Failed to fetch event", status: 500 };
+      return { success: false, error: "Failed to fetch event. Please try again.", status: 500 };
     }
   }
 
@@ -92,7 +92,7 @@ export class EventService {
       return { success: true, message: "Event updated successfully", data: event, status: 200 };
     } catch (error) {
       console.error("Update event error:", error);
-      return { success: false, error: error || "Failed to update event", status: 500 };
+      return { success: false, error: "Failed to update event. Please try again.", status: 500 };
     }
   }
 
@@ -111,7 +111,7 @@ export class EventService {
       return { success: true, message: "Event deleted successfully", status: 200 };
     } catch (error) {
       console.error("Delete event error:", error);
-      return { success: false, error: error || "Failed to delete event", status: 500 };
+      return { success: false, error: "Failed to delete event. Please try again.", status: 500 };
     }
   }
 }

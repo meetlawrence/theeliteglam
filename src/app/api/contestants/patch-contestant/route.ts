@@ -24,7 +24,10 @@ export async function PATCH(req: NextRequest) {
     const result = await contestantService.updateContestant(id, body, payload.role);
 
     return NextResponse.json(result, { status: result.status || 200 });
-  } catch (error) {
-    return NextResponse.json({ success: false, message: error }, { status: 400 });
+  } catch {
+    return NextResponse.json(
+      { success: false, message: "Failed to update contestant. Please try again." },
+      { status: 400 },
+    );
   }
 }

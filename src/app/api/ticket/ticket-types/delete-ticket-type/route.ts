@@ -22,7 +22,10 @@ export async function DELETE(req: NextRequest) {
 
     const result = await ticketTypeService.deleteTicketTypet(id, payload.role);
     return NextResponse.json(result, { status: result.status || 200 });
-  } catch (error) {
-    return NextResponse.json({ success: false, message: error }, { status: 404 });
+  } catch {
+    return NextResponse.json(
+      { success: false, message: "Failed to delete ticket type. Please try again." },
+      { status: 404 },
+    );
   }
 }

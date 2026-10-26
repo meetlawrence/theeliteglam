@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(
       {
         success: false,
-        message: error instanceof Error ? error.message : "Internal server error",
+        message: "We couldn't verify your payment. Please try again.",
         status: 500,
       },
       { status: 500 },

@@ -19,7 +19,10 @@ export async function PATCH(req: NextRequest) {
     const result = await eventService.updateEvent(id, body, payload.role);
 
     return NextResponse.json(result, { status: result.status || 200 });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 401 });
+  } catch {
+    return NextResponse.json(
+      { success: false, message: "Failed to update event. Please try again." },
+      { status: 401 },
+    );
   }
 }

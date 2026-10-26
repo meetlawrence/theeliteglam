@@ -330,6 +330,7 @@ describe("PaymentService.initialize", () => {
 
     expect(result.success).toBe(false);
     expect(result.status).toBe(502);
+    expect(result.message).toBe("We couldn't start your payment. Please try again.");
     expect(mockMarkFailed).toHaveBeenCalledTimes(1);
   });
 

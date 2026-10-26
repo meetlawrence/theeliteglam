@@ -21,7 +21,10 @@ export async function GET(req: NextRequest) {
 
     const result = await ticketTypeService.getTicketTypeById(id);
     return NextResponse.json(result, { status: result.status || 200 });
-  } catch (error) {
-    return NextResponse.json({ success: false, message: error }, { status: 404 });
+  } catch {
+    return NextResponse.json(
+      { success: false, message: "Failed to fetch ticket type. Please try again." },
+      { status: 404 },
+    );
   }
 }

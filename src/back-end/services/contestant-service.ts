@@ -64,7 +64,7 @@ export class ContestantService {
       console.error("[ContestantService.getAllContestants]", error);
       return {
         success: false,
-        message: error instanceof Error ? error.message : "Failed to fetch contestants",
+        message: "Failed to fetch contestants. Please try again.",
         status: 500,
       };
     }
@@ -99,7 +99,7 @@ export class ContestantService {
       console.error("[ContestantService.getContestantById]", error);
       return {
         success: false,
-        message: error instanceof Error ? error.message : "Failed to fetch contestant",
+        message: "Failed to fetch contestant. Please try again.",
         status: 500,
       };
     }
@@ -134,7 +134,7 @@ export class ContestantService {
       console.error("[ContestantService.getContestantByReference]", error);
       return {
         success: false,
-        message: error instanceof Error ? error.message : "Failed to fetch contestant",
+        message: "Failed to fetch contestant. Please try again.",
         status: 500,
       };
     }
@@ -162,7 +162,7 @@ export class ContestantService {
       console.error("[ContestantService.getContestantsByEvent]", error);
       return {
         success: false,
-        message: error instanceof Error ? error.message : "Failed to fetch contestants",
+        message: "Failed to fetch contestants. Please try again.",
         status: 500,
       };
     }
@@ -208,7 +208,7 @@ export class ContestantService {
       console.error("[ContestantService.updateContestant]", error);
       return {
         success: false,
-        message: error instanceof Error ? error.message : "Failed to update contestant",
+        message: "Failed to update contestant. Please try again.",
         status: 500,
       };
     }
@@ -244,7 +244,7 @@ export class ContestantService {
       console.error("[ContestantService.deleteContestant]", error);
       return {
         success: false,
-        message: error instanceof Error ? error.message : "Failed to delete contestant",
+        message: "Failed to delete contestant. Please try again.",
         status: 500,
       };
     }
@@ -318,7 +318,7 @@ export class ContestantService {
       console.error("[ContestantService.sendContestantFormLink]", error);
       return {
         success: false,
-        message: error instanceof Error ? error.message : "Failed to send contestant form link",
+        message: "Failed to send the contestant form link. Please try again.",
         status: 500,
       };
     }
@@ -418,7 +418,7 @@ export class ContestantService {
     console.error("[ContestantService.resendContestantFormLink]", error);
     return {
       success: false,
-      message: error instanceof Error ? error.message : "Failed to resend contestant form link",
+      message: "Failed to resend the contestant form link. Please try again.",
       status: 500,
     };
   }

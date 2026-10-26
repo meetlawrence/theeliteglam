@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         success: false,
-        message: (error as Error)?.message || "Internal server error",
+        message: "We couldn't start your payment. Please try again.",
         status: 500,
       },
       { status: 500 },

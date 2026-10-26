@@ -70,12 +70,12 @@ export async function POST(req: NextRequest) {
       },
       { status: 400 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[POST /api/payments/resend-email]", error);
     return NextResponse.json(
       {
         success: false,
-        message: error?.message || "Internal server error",
+        message: "We couldn't resend your ticket email. Please try again later.",
         status: 500,
       },
       { status: 500 }

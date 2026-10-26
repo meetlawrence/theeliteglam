@@ -105,12 +105,12 @@ export async function sendEmail(to: string, payload: EmailPayload) {
 
     if (error) {
       console.error("Resend Error:", error);
-      return { success: false, error: error.message };
+      return { success: false, error: "We couldn't send the email. Please try again later." };
     }
 
     return { success: true, data };
   } catch (err: undefined | unknown) {
     console.error("Send Email Error:", err);
-    return { success: false, error: (err as Error).message || "Failed to send email" };
+    return { success: false, error: "We couldn't send the email. Please try again later." };
   }
 }

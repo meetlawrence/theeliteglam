@@ -24,7 +24,7 @@ export class PaystackGateway implements PaymentGateway {
       if (!PAYSTACK_SECRET) {
         return {
           success: false,
-          message: "Paystack secret key is not configured",
+          message: "Payments are temporarily unavailable. Please try again later.",
         };
       }
 
@@ -60,7 +60,7 @@ export class PaystackGateway implements PaymentGateway {
       if (!res.ok || !data.status || !data.data) {
         return {
           success: false,
-          message: data.message || "Paystack initialization failed",
+          message: "We couldn't start your payment. Please try again.",
           raw: json,
         };
       }
@@ -89,7 +89,7 @@ export class PaystackGateway implements PaymentGateway {
           success: false,
           status: "FAILED",
           amount: 0,
-          message: "Paystack secret key is not configured",
+          message: "Payments are temporarily unavailable. Please try again later.",
         };
       }
 
@@ -120,7 +120,7 @@ export class PaystackGateway implements PaymentGateway {
           success: false,
           status: "FAILED",
           amount: 0,
-          message: data.message || "Verification failed",
+          message: "We couldn't verify your payment. Please try again.",
           raw: json,
         };
       }

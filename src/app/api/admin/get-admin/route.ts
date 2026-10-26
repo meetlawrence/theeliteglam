@@ -19,9 +19,9 @@ export async function GET(req: NextRequest) {
 
     const result = await adminService.getAllAdmins(payload.role);
     return NextResponse.json(result, { status: result.status || 200 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
-      { success: false, message: error || "Invalid token" },
+      { success: false, message: "We couldn't load admin accounts. Please try again." },
       { status: 401 },
     );
   }

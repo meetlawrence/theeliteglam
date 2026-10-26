@@ -30,11 +30,11 @@ export async function authMiddleware(req: NextRequest) {
       success: true as const,
       payload,
     };
-  } catch (error) {
+  } catch {
     return {
       success: false as const,
       response: NextResponse.json(
-        { success: false, message: error || "Invalid or expired token" },
+        { success: false, message: "Your session is invalid or has expired. Please sign in again." },
         { status: 401 },
       ),
     };

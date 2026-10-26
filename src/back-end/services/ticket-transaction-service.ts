@@ -38,7 +38,7 @@ export class TicketTransactionService {
       };
     } catch (error) {
       console.error("Create ticket error:", error);
-      return { success: false, error: error || "Failed to create ticket", status: 500 };
+      return { success: false, error: "Failed to create ticket. Please try again.", status: 500 };
     }
   }
 
@@ -53,7 +53,7 @@ export class TicketTransactionService {
       return { success: true, data: tickets, status: 200 };
     } catch (error) {
       console.error("Get tickets error:", error);
-      return { success: false, error: error || "Failed to fetch tickets", status: 500 };
+      return { success: false, error: "Failed to fetch tickets. Please try again.", status: 500 };
     }
   }
 
@@ -72,7 +72,7 @@ export class TicketTransactionService {
       return { success: true, data: ticket, status: 200 };
     } catch (error) {
       console.error("Get ticket error:", error);
-      return { success: false, error: error || "Failed to fetch ticket", status: 500 };
+      return { success: false, error: "Failed to fetch ticket. Please try again.", status: 500 };
     }
   }
 
@@ -101,7 +101,7 @@ export class TicketTransactionService {
       };
     } catch (error) {
       console.error("Update ticket error:", error);
-      return { success: false, error: error || "Failed to update ticket", status: 500 };
+      return { success: false, error: "Failed to update ticket. Please try again.", status: 500 };
     }
   }
 }

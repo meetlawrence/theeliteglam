@@ -30,7 +30,7 @@ export class SponsorService {
       };
     } catch (error) {
       console.error("Create sponsor error:", error);
-      return { success: false, error: error || "Failed to create sponsor", status: 500 };
+      return { success: false, error: "Failed to create sponsor. Please try again.", status: 500 };
     }
   }
 
@@ -44,7 +44,7 @@ export class SponsorService {
       return { success: true, data: sponsors, status: 200 };
     } catch (error) {
       console.error("Get sponsors error:", error);
-      return { success: false, error: error || "Failed to fetch sponsors", status: 500 };
+      return { success: false, error: "Failed to fetch sponsors. Please try again.", status: 500 };
     }
   }
 
@@ -62,7 +62,7 @@ export class SponsorService {
       return { success: true, data: sponsor, status: 200 };
     } catch (error) {
       console.error("Get sponsor error:", error);
-      return { success: false, error: error || "Failed to fetch sponsor", status: 500 };
+      return { success: false, error: "Failed to fetch sponsor. Please try again.", status: 500 };
     }
   }
 
@@ -84,7 +84,7 @@ export class SponsorService {
       return { success: true, message: "Sponsor updated successfully", data: sponsor, status: 200 };
     } catch (error) {
       console.error("Update sponsor error:", error);
-      return { success: false, error: error || "Failed to update sponsor", status: 500 };
+      return { success: false, error: "Failed to update sponsor. Please try again.", status: 500 };
     }
   }
 
@@ -102,7 +102,7 @@ export class SponsorService {
       return { success: true, message: "Sponsor deleted successfully", status: 200 };
     } catch (error) {
       console.error("Delete sponsor error:", error);
-      return { success: false, error: error || "Failed to delete sponsor", status: 500 };
+      return { success: false, error: "Failed to delete sponsor. Please try again.", status: 500 };
     }
   }
 }
