@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
 
     if (!reference) {
       return NextResponse.json(
-        { success: false, error: "Reference is required" },
+        { success: false, message: "Reference is required" },
         { status: 400 }
       );
     }
@@ -32,7 +32,7 @@ export async function GET(req: NextRequest) {
     console.log("respons", response)
     if (!result.status || !result.data) {
       return NextResponse.json(
-        { success: false, error: "Failed to verify payment" },
+        { success: false, message: "Failed to verify payment" },
         { status: 400 }
       );
     }
@@ -56,7 +56,7 @@ export async function GET(req: NextRequest) {
   } catch (error) {
     console.error("Payment verification error:", error);
     return NextResponse.json(
-      { success: false, error: "Internal server error" },
+      { success: false, message: "Internal server error" },
       { status: 500 }
     );
   }

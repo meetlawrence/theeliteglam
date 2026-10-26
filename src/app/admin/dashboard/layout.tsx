@@ -11,10 +11,10 @@ export default async function Layout({ children }: { children: React.ReactNode }
   const result: {
     success?: boolean;
     admin?: { name: string; role: string };
-    error?: string;
+    message?: string;
   } = await response.json();
   if (!response.ok || result.success !== true || !result.admin) {
-    throw new Error(result.error || "Unable to load the current admin.");
+    throw new Error(result.message || "Unable to load the current admin.");
   }
 
   const user = { name: result.admin.name, role: result.admin.role };

@@ -18,21 +18,21 @@ export async function POST(req: NextRequest) {
 
     if (!(file instanceof File)) {
       return NextResponse.json(
-        { success: false, error: "An image file is required." },
+        { success: false, message: "An image file is required." },
         { status: 400 },
       );
     }
 
     if (!ALLOWED_IMAGE_TYPES.has(file.type)) {
       return NextResponse.json(
-        { success: false, error: "Upload a JPG, PNG, or WebP image." },
+        { success: false, message: "Upload a JPG, PNG, or WebP image." },
         { status: 400 },
       );
     }
 
     if (file.size === 0 || file.size > MAX_IMAGE_SIZE) {
       return NextResponse.json(
-        { success: false, error: "Image must be no larger than 5 MB." },
+        { success: false, message: "Image must be no larger than 5 MB." },
         { status: 400 },
       );
     }
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("Contestant image upload failed:", error);
     return NextResponse.json(
-      { success: false, error: "Unable to upload contestant image." },
+      { success: false, message: "Unable to upload contestant image." },
       { status: 500 },
     );
   }

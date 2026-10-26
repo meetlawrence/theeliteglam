@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(
           {
             success: false,
-            error: "Contestant payment transaction not found",
+            message: "Contestant payment transaction not found",
           },
           { status: 404 },
         );
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(
           {
             success: false,
-            error: "Payment has not been completed",
+            message: "Payment has not been completed",
           },
           { status: 402 },
         );
@@ -67,7 +67,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(
           {
             success: false,
-            error: "Contestant already exists",
+            message: "Contestant already exists",
           },
           { status: 409 },
         );
@@ -155,7 +155,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         success: false,
-        error: "Internal server error",
+        message: "Internal server error",
       },
       { status: 500 },
     );

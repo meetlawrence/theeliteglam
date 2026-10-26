@@ -73,10 +73,10 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
             },
           },
         );
-        const result: { success?: boolean; error?: string } = await response.json();
+        const result: { success?: boolean; message?: string } = await response.json();
 
         if (!response.ok || !result.success) {
-          throw new Error(result.error || "Payment verification failed.");
+          throw new Error(result.message || "Payment verification failed.");
         }
 
         if (isActive) {
@@ -125,14 +125,13 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
       const result: {
         success?: boolean;
         message?: string;
-        error?: string;
         data?: { authorizationUrl?: string; authorization_url?: string };
       } = await response.json();
 
       const authUrl = result.data?.authorizationUrl || result.data?.authorization_url;
 
       if (!response.ok || !result.success || !authUrl) {
-        throw new Error(result.error || result.message || "Unable to initialize payment.");
+        throw new Error(result.message || "Unable to initialize payment.");
       }
 
       window.location.assign(authUrl);

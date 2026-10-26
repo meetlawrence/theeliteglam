@@ -25,7 +25,7 @@ export class TicketTransactionService {
     try {
       const validation = ticketTransactionSchema.safeParse(data);
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error), status: 400 };
+        return { success: false, message: formatZodError(validation.error), status: 400 };
       }
 
       const ticket = await ticketTransactionRepo.create(validation.data);
@@ -38,7 +38,7 @@ export class TicketTransactionService {
       };
     } catch (error) {
       console.error("Create ticket error:", error);
-      return { success: false, error: "Failed to create ticket. Please try again.", status: 500 };
+      return { success: false, message: "Failed to create ticket. Please try again.", status: 500 };
     }
   }
 
@@ -46,14 +46,14 @@ export class TicketTransactionService {
     try {
       const validation = ticketTypEventSchema.safeParse({ eventId });
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error), status: 400 };
+        return { success: false, message: formatZodError(validation.error), status: 400 };
       }
 
       const tickets = await ticketTransactionRepo.findByEventId(validation.data.eventId);
       return { success: true, data: tickets, status: 200 };
     } catch (error) {
       console.error("Get tickets error:", error);
-      return { success: false, error: "Failed to fetch tickets. Please try again.", status: 500 };
+      return { success: false, message: "Failed to fetch tickets. Please try again.", status: 500 };
     }
   }
 
@@ -61,18 +61,18 @@ export class TicketTransactionService {
     try {
       const validation = referenceSchema.safeParse({ id: reference });
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error), status: 400 };
+        return { success: false, message: formatZodError(validation.error), status: 400 };
       }
 
       const ticket = await ticketTransactionRepo.findByreference(validation.data.id);
       if (!ticket) {
-        return { success: false, error: "Ticket not found", status: 404 };
+        return { success: false, message: "Ticket not found", status: 404 };
       }
 
       return { success: true, data: ticket, status: 200 };
     } catch (error) {
       console.error("Get ticket error:", error);
-      return { success: false, error: "Failed to fetch ticket. Please try again.", status: 500 };
+      return { success: false, message: "Failed to fetch ticket. Please try again.", status: 500 };
     }
   }
 
@@ -84,12 +84,12 @@ export class TicketTransactionService {
 
       const validation = referenceSchema.safeParse({ id: reference });
       if (!validation.success) {
-        return { success: false, error: formatZodError(validation.error), status: 400 };
+        return { success: false, message: formatZodError(validation.error), status: 400 };
       }
 
       const validation2 = UpdateticketTransactionSchema.safeParse(data);
       if (!validation2.success) {
-        return { success: false, error: formatZodError(validation2.error), status: 400 };
+        return { success: false, message: formatZodError(validation2.error), status: 400 };
       }
 
       const updatedTicket = await ticketTransactionRepo.update(validation.data.id, validation2.data);
@@ -101,7 +101,7 @@ export class TicketTransactionService {
       };
     } catch (error) {
       console.error("Update ticket error:", error);
-      return { success: false, error: "Failed to update ticket. Please try again.", status: 500 };
+      return { success: false, message: "Failed to update ticket. Please try again.", status: 500 };
     }
   }
 }

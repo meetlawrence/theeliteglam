@@ -40,6 +40,5 @@ export interface AuthResponse {
   };
   accessToken?: string;
   refreshToken?: string;
-  message?: string; // ← Added
-  error?: string;
+  message?: string;
 }

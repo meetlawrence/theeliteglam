@@ -42,7 +42,6 @@ function VerifyPaymentContent() {
           setStatus("failed");
           setMessage(
             data.message ||
-              data.error ||
               "We could not verify a successful payment for this transaction reference.",
           );
         }

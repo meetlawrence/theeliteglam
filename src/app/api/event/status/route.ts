@@ -8,7 +8,7 @@ export async function GET() {
   } catch (error) {
     console.error("[GET /api/event/status]", error);
     return NextResponse.json(
-      { success: false, error: "Unable to fetch event status." },
+      { success: false, message: "Unable to fetch event status." },
       { status: 500 },
     );
   }
