@@ -36,9 +36,8 @@ export function EventsGallery() {
       className={`bg-[#060606] py-24 overflow-hidden transition-all duration-1000 ${inView ? "opacity-100" : "opacity-0"}`}
     >
       <div className="max-w-[1300px] mx-auto px-8">
-        <SectionLabel text="Gallery" />
         <h2 className="font-cinzel text-[clamp(1.6rem,3.5vw,2.6rem)] text-[#F5EDD6] tracking-[0.06em] mt-4 mb-12">
-          Moments from the Event
+          Moments from Season I
         </h2>
       </div>
 

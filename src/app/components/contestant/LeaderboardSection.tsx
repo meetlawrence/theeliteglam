@@ -15,7 +15,6 @@ export default function LeaderboardSection({
         <div className="flex items-center gap-3 mb-2">
           <Trophy size={18} className="text-[#C9A84C]" />
           <div className="flex items-center gap-3 font-raleway text-[0.68rem] tracking-[0.3em] uppercase text-[#C9A84C]">
-            <span className="inline-block h-px w-8 bg-[#C9A84C]" />
             Live Leaderboard
           </div>
         </div>

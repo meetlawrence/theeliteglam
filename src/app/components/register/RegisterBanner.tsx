@@ -37,13 +37,12 @@ export function RegisterBanner() {
             Your browser does not support the video tag.
           </video>
         </div>
-      {/* <div className="absolute inset-0 bg-[#080808]/60" /> */}
+      <div className="absolute inset-0 bg-[#080808]/60" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/25 to-transparent" />
 
       <div className={`relative w-full max-w-325 mx-auto px-8 pb-22 transition-all duration-1000 ease-out ${inView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}>
         <div className="font-['Raleway',sans-serif] text-[0.68rem] tracking-[0.5em] text-[#C9A84C] uppercase mb-4 flex items-center gap-3">
-          <span className="w-8 h-[1px] bg-[#C9A84C] inline-block" />
-          Season 2 · Applications Open
+          Season 2 Applications Open
         </div>
         <h1 className="font-['Cinzel',serif] text-[clamp(2.4rem,6vw,5rem)] text-[#F5EDD6] tracking-[0.06em] leading-[1.05] mb-5 max-w-[700px]">
           Apply for{" "}
