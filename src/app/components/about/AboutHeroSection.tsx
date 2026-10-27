@@ -43,14 +43,14 @@ export function AboutHeroSection({ bannerImage, inView }: AboutHeroSectionProps)
           <span className="inline-block h-px w-8 bg-[#C9A84C]" />
           Our Story
         </div>
-        <h1 className="mb-5 max-w-[720px] font-['Cinzel',serif] text-[clamp(2.4rem,6vw,5.2rem)] leading-[1.05] tracking-[0.06em] text-[#F5EDD6]">
+        <h1 className="mb-5 max-w-180 font-['Cinzel',serif] text-[clamp(2.4rem,6vw,5.2rem)] leading-[1.05] tracking-[0.06em] text-[#F5EDD6]">
           About{" "}
           <span className="bg-[linear-gradient(135deg,#C9A84C,#F0C04A)] bg-clip-text text-transparent">
             The Elite Glam
           </span>
         </h1>
         <p className="max-w-[500px] font-['Playfair_Display',serif] text-[1.1rem] italic leading-[1.7] text-[#9A8C6A]">
-          A movement born in Lagos. A vision forged in gold. A legacy that is only just beginning.
+          A movement born in Calabar. A vision forged in gold. A legacy that is only just beginning.
         </p>
       </div>
     </section>
