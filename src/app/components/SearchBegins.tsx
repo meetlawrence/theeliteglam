@@ -25,7 +25,7 @@ const TIMELINE: TimelineStep[] = [
     title: "Auditions",
     desc: "Auditions open to contestants across the globe. Showcase your talent, poise, and personality from anywhere.",
     icon: "02",
-    tag: "Held Virtually",
+    tag: null,
   },
   {
     date: "May 28, 2027",
@@ -39,7 +39,7 @@ const TIMELINE: TimelineStep[] = [
     title: "Grand Finale",
     desc: "One stage. Two crowns. A lifetime of opportunities.",
     icon: "04",
-    tag: "Main Event",
+    tag: null,
   },
 ];
 
@@ -84,7 +84,7 @@ export function SearchBeginsSection({ eventStatus }: SearchBeginsSectionProps) {
             The Search Begins
           </h2>
           <p className="font-playfair text-[1.15rem] italic text-muted-foreground max-w-145 mx-auto leading-[1.7]">
-            Open to all — male and female. We are seeking the next icons of grace, intelligence, and
+            Open to all, male and female. We are seeking the next icons of grace, intelligence, and
             beauty. Your moment to shine starts here.
           </p>
         </div>

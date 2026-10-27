@@ -47,7 +47,6 @@ export function OverviewSection() {
             inView ? "translate-y-0 opacity-100" : "translate-y-[30px] opacity-0"
           }`}
         >
-          <SectionLabel text="Endorsements" />
           <h2 className="mt-4 mb-8 font-['Cinzel',serif] text-[clamp(1.6rem,3.5vw,2.8rem)] tracking-[0.06em] text-[#F5EDD6]">
             International Franchise
           </h2>
@@ -127,10 +126,8 @@ export function OverviewSection() {
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent opacity-80" />
-                    <div className="absolute top-3 left-3 bg-[#0A0A0A]/80 backdrop-blur-md border border-[#C9A84C]/30 px-2.5 py-1 text-[0.65rem] uppercase tracking-wider text-[#C9A84C] font-['Raleway',sans-serif]">
-                      {post.category}
-                    </div>
+                    <div className="absolute inset-0 bg-linear-to-t from-[#121212] via-transparent to-transparent opacity-80" />
+                    
                   </div>
 
                   <div className="p-6 space-y-3">
@@ -171,7 +168,6 @@ export function OverviewSection() {
             inView ? "translate-y-0 opacity-100" : "translate-y-[30px] opacity-0"
           }`}
         >
-          <SectionLabel text="Our Sponsors" />
           <h2 className="mt-4 mb-3 font-['Cinzel',serif] text-[clamp(1.6rem,3.5vw,2.8rem)] tracking-[0.06em] text-[#F5EDD6]">
             Sponsors & Partners
           </h2>

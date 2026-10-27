@@ -1,7 +1,6 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { RegisterSection } from "@/app/components/register/RegisterSection";
+import { fetchEventStatus, fetchServerApi } from "@/app/lib/server-api";
+import { notFound } from "next/navigation";
 
 type FirstEventResponse = {
   success?: boolean;
@@ -9,51 +8,31 @@ type FirstEventResponse = {
   message?: string;
 };
 
-export default function RegisterPage() {
-  const [eventId, setEventId] = useState("");
-  const [error, setError] = useState("");
+export default async function RegisterPage() {
+  const eventStatus = await fetchEventStatus();
 
-  useEffect(() => {
-    const controller = new AbortController();
-
-    async function loadFirstEvent() {
-      try {
-        const response = await fetch("/api/event/get-first-event", {
-          signal: controller.signal,
-          cache: "no-store",
-        });
-        const result: FirstEventResponse = await response.json();
-
-        if (!response.ok || result.success !== true || !result.data?.id) {
-          throw new Error(result.message || "Unable to load the registration event.");
-        }
-
-        setEventId(result.data.id);
-      } catch (error) {
-        if (controller.signal.aborted) return;
-        setError(
-          error instanceof Error
-            ? error.message
-            : "Unable to load the registration event. Please try again later.",
-        );
-      }
-    }
-
-    void loadFirstEvent();
-    return () => controller.abort();
-  }, []);
-
-  if (error) {
-    return (
-      <main className="min-h-screen bg-[#080808] px-6 flex items-center justify-center text-center text-[#F5EDD6]">
-        <p>{error}</p>
-      </main>
-    );
+  if (!eventStatus.isRegistrationOpen) {
+    notFound();
   }
 
-  if (!eventId) {
+  let eventId: string;
+  try {
+    const response = await fetchServerApi("/api/event/get-first-event");
+    const result: FirstEventResponse = await response.json();
+
+    if (!response.ok || result.success !== true || !result.data?.id) {
+      throw new Error(result.message || "Unable to load the registration event.");
+    }
+
+    eventId = result.data.id;
+  } catch (error) {
     return (
       <main className="min-h-screen bg-[#080808] px-6 flex items-center justify-center text-center text-[#F5EDD6]">
+        <p>
+          {error instanceof Error
+            ? error.message
+            : "Unable to load the registration event. Please try again later."}
+        </p>
       </main>
     );
   }
