@@ -85,7 +85,7 @@ export const WINNERS = [
     age: "28",
     occupation: "Medical Scientist",
     advocacy: "Pulse Global",
-    quote: "Caring for people...",
+    quote: "Caring for people, especially the vulnerable, is a responsibility I carry with pride. My advocacy is my voice for those who cannot speak for themselves.",
     image: "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914556/oma13.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
   

@@ -26,10 +26,9 @@ export function EventsHeadline() {
   return (
     <section
       ref={headlineRef}
-      className={`mx-auto px-8 py-28 grid lg:grid-cols-[1fr_1fr] gap-20 items-center transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"}`}
+      className={`mx-auto px-8 py-10 grid lg:grid-cols-[1fr_1fr] gap-20 items-center transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-7"}`}
     >
       <div className="">
-        <SectionLabel text="Headline Event" />
         <h2 className="font-cinzel text-[clamp(1.8rem,4vw,3.2rem)] text-[#F5EDD6] tracking-[0.06em] leading-[1.1] mt-6 mb-6">
           The Return of
           <br />

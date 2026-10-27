@@ -73,7 +73,6 @@ export function EventsBanner({ onNavigate, eventStatus }: EventsBannerProps) {
           }`}
         >
           <div className="flex items-center gap-3 text-[0.68rem] tracking-[0.5em] uppercase text-primary mb-4">
-            <span className="inline-block w-8 h-px bg-primary" />
             Season 2
           </div>
 
