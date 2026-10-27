@@ -71,13 +71,9 @@ export function HeroCarousel({
           POPULAR VOTE
         </span>
       </div>
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_70%_60%_at_50%_50%,rgba(201,168,76,0.07)_0%,transparent_70%)]" />
-
       <div className="text-center relative mb-12">
         <div className="mx-auto flex items-center justify-center gap-3 text-[0.68rem] tracking-[0.5em] uppercase text-[#C9A84C] mb-3">
-          <span className="inline-block w-7 h-px bg-[#C9A84C]" />
-          Cast Your Vote · Season 2
-          <span className="inline-block w-7 h-px bg-[#C9A84C]" />
+          Cast Your Vote 
         </div>
         <h1 className="font-cinzel text-[clamp(1.8rem,4.5vw,3.6rem)] text-[#F5EDD6] tracking-[0.07em] leading-[1.1] mb-2">
           Who Deserves the{" "}
@@ -114,7 +110,7 @@ export function HeroCarousel({
         <div className="mx-auto flex h-120 max-w-xl items-center justify-center px-6 text-center font-raleway text-sm text-[#C4B896]">
           {hasContestants
             ? `No approved ${carouselGender} contestants are available yet.`
-            : "No approved contestants are available yet."}
+            : "No contestants are available yet."}
         </div>
       ) : (
       <div
