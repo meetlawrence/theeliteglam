@@ -20,10 +20,6 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Contestant registration
-
-Configure `CONTESTANT_APPLICATION_EVENT_ID` as a server-side environment variable with the CUID of the event used for contestant applications. The selected event's contestant fee should match the fee advertised on the registration page. Set `NEXT_PUBLIC_BASE_URL` to the application's public origin so Paystack can return applicants to the payment-verification flow.
-
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
