@@ -44,7 +44,7 @@ export const FAQS = [
   },
   {
     q: "How do I apply for the pageant?",
-    a: "Applications open on October 1, 2026 via our official website. You will be required to submit a profile, portfolio, and a personal statement. Virtual auditions follow in December 2026.",
+    a: "Applications open on November 1, 2026 via our official website. You will be required to submit a profile, portfolio, and a personal statement. Virtual auditions follow in January 2027.",
   },
   {
     q: "What are the prizes for winners?",
@@ -111,7 +111,7 @@ export const RUNNERS_UP = [
     image: "maiden/oliver.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
   {
-    name: "Bernard Williams",
+    name: "Benard Williams",
     title: "Mister Grand",
     state: "",
     occupation: "Medical Laboratory Scientist",
