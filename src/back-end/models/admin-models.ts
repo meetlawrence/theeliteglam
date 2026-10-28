@@ -23,6 +23,7 @@ export class AdminRepo {
         email: true,
         role: true,
         isActive: true,
+        permitted: true,
         lastLoginAt: true,
         createdAt: true,
       },
@@ -59,7 +60,7 @@ export class AdminRepo {
         email: true,
         role: true,
         isActive: true,
-        emailVerified: true,
+        permitted: true,
         lastLoginAt: true,
         createdAt: true,
       },
@@ -76,6 +77,7 @@ export class AdminRepo {
         email: true,
         role: true,
         isActive: true,
+        permitted: true,
       },
     });
   }
@@ -84,15 +86,6 @@ export class AdminRepo {
     return await prisma.admin.delete({ where: { id } });
   }
 
-  async markEmailVerified(adminId: string): Promise<void> {
-    await prisma.admin.update({
-      where: { id: adminId },
-      data: {
-        emailVerified: true,
-        emailVerifiedAt: new Date(),
-      },
-    });
-  }
 }
 
 export const adminRepo = new AdminRepo();

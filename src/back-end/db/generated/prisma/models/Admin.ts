@@ -32,8 +32,7 @@ export type AdminMinAggregateOutputType = {
   avatar: string | null
   phone: string | null
   role: $Enums.Role | null
-  emailVerified: boolean | null
-  emailVerifiedAt: Date | null
+  permitted: boolean | null
   lastLoginAt: Date | null
   isActive: boolean | null
   createdAt: Date | null
@@ -48,8 +47,7 @@ export type AdminMaxAggregateOutputType = {
   avatar: string | null
   phone: string | null
   role: $Enums.Role | null
-  emailVerified: boolean | null
-  emailVerifiedAt: Date | null
+  permitted: boolean | null
   lastLoginAt: Date | null
   isActive: boolean | null
   createdAt: Date | null
@@ -64,8 +62,7 @@ export type AdminCountAggregateOutputType = {
   avatar: number
   phone: number
   role: number
-  emailVerified: number
-  emailVerifiedAt: number
+  permitted: number
   lastLoginAt: number
   isActive: number
   createdAt: number
@@ -82,8 +79,7 @@ export type AdminMinAggregateInputType = {
   avatar?: true
   phone?: true
   role?: true
-  emailVerified?: true
-  emailVerifiedAt?: true
+  permitted?: true
   lastLoginAt?: true
   isActive?: true
   createdAt?: true
@@ -98,8 +94,7 @@ export type AdminMaxAggregateInputType = {
   avatar?: true
   phone?: true
   role?: true
-  emailVerified?: true
-  emailVerifiedAt?: true
+  permitted?: true
   lastLoginAt?: true
   isActive?: true
   createdAt?: true
@@ -114,8 +109,7 @@ export type AdminCountAggregateInputType = {
   avatar?: true
   phone?: true
   role?: true
-  emailVerified?: true
-  emailVerifiedAt?: true
+  permitted?: true
   lastLoginAt?: true
   isActive?: true
   createdAt?: true
@@ -203,8 +197,7 @@ export type AdminGroupByOutputType = {
   avatar: string | null
   phone: string | null
   role: $Enums.Role
-  emailVerified: boolean
-  emailVerifiedAt: Date | null
+  permitted: boolean
   lastLoginAt: Date | null
   isActive: boolean
   createdAt: Date
@@ -240,8 +233,7 @@ export type AdminWhereInput = {
   avatar?: Prisma.StringNullableFilter<"Admin"> | string | null
   phone?: Prisma.StringNullableFilter<"Admin"> | string | null
   role?: Prisma.EnumRoleFilter<"Admin"> | $Enums.Role
-  emailVerified?: Prisma.BoolFilter<"Admin"> | boolean
-  emailVerifiedAt?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
+  permitted?: Prisma.BoolFilter<"Admin"> | boolean
   lastLoginAt?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
   isActive?: Prisma.BoolFilter<"Admin"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
@@ -257,8 +249,7 @@ export type AdminOrderByWithRelationInput = {
   avatar?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
-  emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  permitted?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -277,8 +268,7 @@ export type AdminWhereUniqueInput = Prisma.AtLeast<{
   avatar?: Prisma.StringNullableFilter<"Admin"> | string | null
   phone?: Prisma.StringNullableFilter<"Admin"> | string | null
   role?: Prisma.EnumRoleFilter<"Admin"> | $Enums.Role
-  emailVerified?: Prisma.BoolFilter<"Admin"> | boolean
-  emailVerifiedAt?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
+  permitted?: Prisma.BoolFilter<"Admin"> | boolean
   lastLoginAt?: Prisma.DateTimeNullableFilter<"Admin"> | Date | string | null
   isActive?: Prisma.BoolFilter<"Admin"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Admin"> | Date | string
@@ -294,8 +284,7 @@ export type AdminOrderByWithAggregationInput = {
   avatar?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
-  emailVerifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  permitted?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -316,8 +305,7 @@ export type AdminScalarWhereWithAggregatesInput = {
   avatar?: Prisma.StringNullableWithAggregatesFilter<"Admin"> | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"Admin"> | string | null
   role?: Prisma.EnumRoleWithAggregatesFilter<"Admin"> | $Enums.Role
-  emailVerified?: Prisma.BoolWithAggregatesFilter<"Admin"> | boolean
-  emailVerifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Admin"> | Date | string | null
+  permitted?: Prisma.BoolWithAggregatesFilter<"Admin"> | boolean
   lastLoginAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Admin"> | Date | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"Admin"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Admin"> | Date | string
@@ -332,8 +320,7 @@ export type AdminCreateInput = {
   avatar?: string | null
   phone?: string | null
   role?: $Enums.Role
-  emailVerified?: boolean
-  emailVerifiedAt?: Date | string | null
+  permitted?: boolean
   lastLoginAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
@@ -349,8 +336,7 @@ export type AdminUncheckedCreateInput = {
   avatar?: string | null
   phone?: string | null
   role?: $Enums.Role
-  emailVerified?: boolean
-  emailVerifiedAt?: Date | string | null
+  permitted?: boolean
   lastLoginAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
@@ -366,8 +352,7 @@ export type AdminUpdateInput = {
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  permitted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -383,8 +368,7 @@ export type AdminUncheckedUpdateInput = {
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  permitted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -400,8 +384,7 @@ export type AdminCreateManyInput = {
   avatar?: string | null
   phone?: string | null
   role?: $Enums.Role
-  emailVerified?: boolean
-  emailVerifiedAt?: Date | string | null
+  permitted?: boolean
   lastLoginAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
@@ -416,8 +399,7 @@ export type AdminUpdateManyMutationInput = {
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  permitted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -432,8 +414,7 @@ export type AdminUncheckedUpdateManyInput = {
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  permitted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -448,8 +429,7 @@ export type AdminCountOrderByAggregateInput = {
   avatar?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
-  emailVerifiedAt?: Prisma.SortOrder
+  permitted?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -464,8 +444,7 @@ export type AdminMaxOrderByAggregateInput = {
   avatar?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
-  emailVerifiedAt?: Prisma.SortOrder
+  permitted?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -480,8 +459,7 @@ export type AdminMinOrderByAggregateInput = {
   avatar?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
-  emailVerifiedAt?: Prisma.SortOrder
+  permitted?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -539,8 +517,7 @@ export type AdminCreateWithoutRefreshTokensInput = {
   avatar?: string | null
   phone?: string | null
   role?: $Enums.Role
-  emailVerified?: boolean
-  emailVerifiedAt?: Date | string | null
+  permitted?: boolean
   lastLoginAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
@@ -555,8 +532,7 @@ export type AdminUncheckedCreateWithoutRefreshTokensInput = {
   avatar?: string | null
   phone?: string | null
   role?: $Enums.Role
-  emailVerified?: boolean
-  emailVerifiedAt?: Date | string | null
+  permitted?: boolean
   lastLoginAt?: Date | string | null
   isActive?: boolean
   createdAt?: Date | string
@@ -587,8 +563,7 @@ export type AdminUpdateWithoutRefreshTokensInput = {
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  permitted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -603,8 +578,7 @@ export type AdminUncheckedUpdateWithoutRefreshTokensInput = {
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  permitted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -650,8 +624,7 @@ export type AdminSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   avatar?: boolean
   phone?: boolean
   role?: boolean
-  emailVerified?: boolean
-  emailVerifiedAt?: boolean
+  permitted?: boolean
   lastLoginAt?: boolean
   isActive?: boolean
   createdAt?: boolean
@@ -668,8 +641,7 @@ export type AdminSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   avatar?: boolean
   phone?: boolean
   role?: boolean
-  emailVerified?: boolean
-  emailVerifiedAt?: boolean
+  permitted?: boolean
   lastLoginAt?: boolean
   isActive?: boolean
   createdAt?: boolean
@@ -684,8 +656,7 @@ export type AdminSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   avatar?: boolean
   phone?: boolean
   role?: boolean
-  emailVerified?: boolean
-  emailVerifiedAt?: boolean
+  permitted?: boolean
   lastLoginAt?: boolean
   isActive?: boolean
   createdAt?: boolean
@@ -700,15 +671,14 @@ export type AdminSelectScalar = {
   avatar?: boolean
   phone?: boolean
   role?: boolean
-  emailVerified?: boolean
-  emailVerifiedAt?: boolean
+  permitted?: boolean
   lastLoginAt?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type AdminOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "avatar" | "phone" | "role" | "emailVerified" | "emailVerifiedAt" | "lastLoginAt" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["admin"]>
+export type AdminOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "avatar" | "phone" | "role" | "permitted" | "lastLoginAt" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["admin"]>
 export type AdminInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   refreshTokens?: boolean | Prisma.Admin$refreshTokensArgs<ExtArgs>
   _count?: boolean | Prisma.AdminCountOutputTypeDefaultArgs<ExtArgs>
@@ -729,8 +699,7 @@ export type $AdminPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     avatar: string | null
     phone: string | null
     role: $Enums.Role
-    emailVerified: boolean
-    emailVerifiedAt: Date | null
+    permitted: boolean
     lastLoginAt: Date | null
     isActive: boolean
     createdAt: Date
@@ -1166,8 +1135,7 @@ export interface AdminFieldRefs {
   readonly avatar: Prisma.FieldRef<"Admin", 'String'>
   readonly phone: Prisma.FieldRef<"Admin", 'String'>
   readonly role: Prisma.FieldRef<"Admin", 'Role'>
-  readonly emailVerified: Prisma.FieldRef<"Admin", 'Boolean'>
-  readonly emailVerifiedAt: Prisma.FieldRef<"Admin", 'DateTime'>
+  readonly permitted: Prisma.FieldRef<"Admin", 'Boolean'>
   readonly lastLoginAt: Prisma.FieldRef<"Admin", 'DateTime'>
   readonly isActive: Prisma.FieldRef<"Admin", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Admin", 'DateTime'>

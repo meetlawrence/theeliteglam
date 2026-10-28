@@ -6,8 +6,7 @@ export interface Admin {
   name: string;
   email: string;
   passwordHash: string;
-  emailVerified: boolean;
-  emailVerifiedAt: Date | null;
+  permitted: boolean;
   createdAt: Date;
   updatedAt: Date;
   lastLoginAt: Date | null;
@@ -21,7 +20,7 @@ export interface AdminUpdateData {
   name?: string;
   email?: string;
   passwordHash?: string;
-  emailVerified?: boolean;
+  permitted?: boolean;
   lastLoginAt?: Date | null;
   role?: "SUPER_ADMIN" | "ADMIN";
 }
@@ -55,6 +54,7 @@ export interface AdminResponse {
   email: string;
   role: "ADMIN" | "SUPER_ADMIN";
   isActive: boolean;
+  permitted: boolean;
   lastLogin?: Date;
   createdAt?: Date;
 }
