@@ -1,3 +1,5 @@
+import type { AdminRole } from "./token-types";
+
 export interface LoginInput {
   email: string;
   password: string;
@@ -32,7 +34,7 @@ export interface AuthResponse {
     email: string;
     permitted: boolean;
     createdAt: Date;
-    role: "SUPER_ADMIN" | "ADMIN";
+    role: AdminRole;
   };
   accessToken?: string;
   refreshToken?: string;

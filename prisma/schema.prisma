@@ -82,6 +82,7 @@ enum SponsorTier {
 enum Role {
   ADMIN
   SUPER_ADMIN
+  TICKETS_VALIDATOR
 }
 
 // ====================== ADMIN ======================
