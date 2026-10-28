@@ -94,8 +94,7 @@ model Admin {
   phone        String?
   role         Role    @default(ADMIN)
 
-  emailVerified   Boolean   @default(false)
-  emailVerifiedAt DateTime?
+  permitted Boolean @default(false)
 
   lastLoginAt DateTime?
   isActive    Boolean   @default(false)

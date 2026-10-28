@@ -27,7 +27,7 @@ export async function GET() {
         name: true,
         email: true,
         role: true,
-        emailVerified: true,
+        permitted: true,
         createdAt: true,
         lastLoginAt: true,
       },
@@ -67,22 +67,22 @@ export async function PATCH(req: NextRequest) {
     const { id, role, action } = body as {
       id?: string;
       role?: "SUPER_ADMIN" | "ADMIN";
-      action?: "VERIFY";
+      action?: "PERMIT";
     };
 
     if (!id) {
       return NextResponse.json({ success: false, message: "Missing user id" }, { status: 400 });
     }
 
-    if (action === "VERIFY") {
+    if (action === "PERMIT") {
       const targetAdmin = await adminRepo.findById(id);
 
       if (!targetAdmin) {
         return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
       }
 
-      await adminRepo.markEmailVerified(id);
-      return NextResponse.json({ success: true, admin: { ...targetAdmin, emailVerified: true } });
+      const updatedAdmin = await adminRepo.update(id, { permitted: true });
+      return NextResponse.json({ success: true, admin: updatedAdmin });
     }
 
     if (!role) {

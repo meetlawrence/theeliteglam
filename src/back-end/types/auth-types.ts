@@ -19,10 +19,6 @@ export interface ResetPasswordRequest {
   confirmPassword: string;
 }
 
-export interface VerifyEmailRequest {
-  token: string;
-}
-
 export interface ResetPassword {
   newPassword: string;
   confirmPassword: string;
@@ -34,7 +30,7 @@ export interface AuthResponse {
     id: string;
     name: string;
     email: string;
-    emailVerified: boolean;
+    permitted: boolean;
     createdAt: Date;
     role: "SUPER_ADMIN" | "ADMIN";
   };

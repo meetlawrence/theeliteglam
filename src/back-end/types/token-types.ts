@@ -1,7 +1,7 @@
 import type { JWTPayload } from "jose";
 import type { NextRequest } from "next/server";
 
-export type TokenType = "ACCESS" | "REFRESH" | "RESET" | "VERIFY";
+export type TokenType = "ACCESS" | "REFRESH" | "RESET";
 
 export interface TokenPayload extends JWTPayload {
   adminId: string;
