@@ -10,7 +10,6 @@ export const metadata = {
 export default async function ContestantsPage() {
   const eventStatus = await fetchEventStatus();
   
-    // If the event status is not available, you can choose to render a fallback UI or handle it as needed. For example, you might want to show a "Coming Soon" page or a message indicating that the event status is currently unavailable.
     if (!eventStatus || !eventStatus.isVotingOpen) {
       notFound(); 
     }
