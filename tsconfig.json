@@ -13,7 +13,6 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "types": ["node"],
     "plugins": [
       {
         "name": "next"
@@ -32,13 +31,9 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "**/*.d.ts",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts",
-    "jest.config.ts",
-    "**/*.mjs",
-    "eslint.config.mjs"
+    "**/*.mts"
   ],
-    "exclude": ["node_modules"]
+  "exclude": ["node_modules"]
 }

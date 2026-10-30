@@ -1,17 +1,18 @@
 import type { JWTPayload } from "jose";
 import type { NextRequest } from "next/server";
 
-export type TokenType = "ACCESS" | "REFRESH" | "RESET" | "VERIFY";
+export type AdminRole = "SUPER_ADMIN" | "ADMIN" | "TICKETS_VALIDATOR";
+export type TokenType = "ACCESS" | "REFRESH" | "RESET";
 
 export interface TokenPayload extends JWTPayload {
   adminId: string;
   email: string;
-  role: "SUPER_ADMIN" | "ADMIN";
+  role: AdminRole;
   type: TokenType;
 }
 
 export interface AuthenticatedRequest extends NextRequest {
-  admin?: { adminId: string; email: string; role: "SUPER_ADMIN" | "ADMIN" };
+  admin?: { adminId: string; email: string; role: AdminRole };
 }
 
 export interface RefreshToken {

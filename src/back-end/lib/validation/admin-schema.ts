@@ -10,7 +10,7 @@ export const createAdminSchema2 = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  role: z.enum(["ADMIN", "SUPER_ADMIN"]).optional().default("ADMIN"),
+  role: z.enum(["ADMIN", "SUPER_ADMIN", "TICKETS_VALIDATOR"]).optional().default("ADMIN"),
 });
 
 export const updateAdminSchema = z.object({
@@ -19,7 +19,7 @@ export const updateAdminSchema = z.object({
   phone: z.string().optional(),
   avatar: z.string().optional(),
   isActive: z.boolean().optional(),
-  role: z.enum(["ADMIN", "SUPER_ADMIN"]).optional().default("ADMIN"),
+  role: z.enum(["ADMIN", "SUPER_ADMIN", "TICKETS_VALIDATOR"]).optional().default("ADMIN"),
 });
 
 export const adminIdParamSchema = z.object({

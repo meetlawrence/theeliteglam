@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { JWT } from "../../../../back-end/lib/utils/jwt";
 import { adminRepo } from "../../../../back-end/models/admin-models";
 import { prisma } from "../../../../back-end/db/db-connect";
+import type { AdminRole } from "../../../../back-end/types/token-types";
 
 export async function GET() {
   try {
@@ -20,6 +21,13 @@ export async function GET() {
       return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
     }
 
+    if (currentAdmin.role !== "SUPER_ADMIN") {
+      return NextResponse.json(
+        { success: false, message: "Only super admins can view admin users" },
+        { status: 403 }
+      );
+    }
+
     const admins = await prisma.admin.findMany({
       orderBy: { createdAt: "asc" },
       select: {
@@ -27,7 +35,7 @@ export async function GET() {
         name: true,
         email: true,
         role: true,
-        emailVerified: true,
+        permitted: true,
         createdAt: true,
         lastLoginAt: true,
       },
@@ -66,23 +74,23 @@ export async function PATCH(req: NextRequest) {
     const body = await req.json();
     const { id, role, action } = body as {
       id?: string;
-      role?: "SUPER_ADMIN" | "ADMIN";
-      action?: "VERIFY";
+      role?: AdminRole;
+      action?: "PERMIT";
     };
 
     if (!id) {
       return NextResponse.json({ success: false, message: "Missing user id" }, { status: 400 });
     }
 
-    if (action === "VERIFY") {
+    if (action === "PERMIT") {
       const targetAdmin = await adminRepo.findById(id);
 
       if (!targetAdmin) {
         return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
       }
 
-      await adminRepo.markEmailVerified(id);
-      return NextResponse.json({ success: true, admin: { ...targetAdmin, emailVerified: true } });
+      const updatedAdmin = await adminRepo.update(id, { permitted: true });
+      return NextResponse.json({ success: true, admin: updatedAdmin });
     }
 
     if (!role) {
