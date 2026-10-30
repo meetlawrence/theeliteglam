@@ -47,28 +47,9 @@ export class AuthService {
         passwordHash,
       });
 
-      // Generate verification token
-      const verifyToken = await JWT.signAccessToken({
-        adminId: admin.id,
-        email: admin.email,
-        role: admin.role,
-        type: "VERIFY",
-      });
-
-      const verifyUrl = `${AUTH_CONFIG.BASE_URL}/auth/verify-email?token=${verifyToken}`;
-
-      // Send verification email
-      await sendEmail(admin.email, {
-        type: "verification",
-        props: {
-          firstName: admin.name.split(" ")[0] || admin.name,
-          verifyUrl,
-        },
-      });
-
       return {
         success: true,
-        message: "Account created successfully. Please check your email to verify.",
+        message: "Account created successfully. Awaiting admin permission before login.",
       };
     } catch (error) {
       console.error("Signup error:", error);
@@ -95,44 +76,9 @@ export class AuthService {
         return { success: false, message: "Invalid email or password." };
       }
 
-      if (!admin.emailVerified) {
-        // Generate fresh verification token
-        const verifyToken = await JWT.signAccessToken({
-          adminId: admin.id,
-          email: admin.email,
-          role: admin.role,
-          type: "VERIFY",
-        });
-
-        const verifyUrl = `${AUTH_CONFIG.BASE_URL}/auth/verify-email?token=${verifyToken}`;
-
-        // Resend verification email
-        await sendEmail(admin.email, {
-          type: "verification",
-          props: {
-            firstName: admin.name.split(" ")[0] || admin.name,
-            verifyUrl,
-          },
-        });
-
-        return {
-          success: false,
-          message:
-            "Please verify your email address first. We have sent a new verification link to your inbox.",
-        };
-      }
-
-      // ====================== SEND LOGIN ALERT EMAIL ======================
-      await sendEmail(admin.email, {
-        type: "login-alert",
-        props: {
-          firstName: admin.name.split(" ")[0] || admin.name,
-          time: new Date().toLocaleString(),
-          device: "New Device", // You can enhance this later with real device detection
-          location: "Unknown Location", // You can enhance with IP geolocation later
-          ipAddress: "Unknown IP", // You can enhance with real IP detection later
-        },
-      });
+      if (!admin.permitted) {
+        return { success: false, message: "Your account is not permitted to log in." };
+      };
 
       const accessToken = await JWT.signAccessToken({
         adminId: admin.id,
@@ -166,26 +112,6 @@ export class AuthService {
   }
 
   // ====================== LOGOUT ======================
-
-  // ====================== VERIFY EMAIL ======================
-  async verifyEmail(token: string): Promise<AuthResponse> {
-    try {
-      const payload = await JWT.verifyToken(token);
-      if (payload.type !== "VERIFY") {
-        return { success: false, message: "Invalid verification token." };
-      }
-
-      await adminRepo.markEmailVerified(payload.adminId);
-
-      return {
-        success: true,
-        message: "Email verified successfully. You can now login.",
-      };
-    } catch (error) {
-      console.error("Verify email error:", error);
-      return { success: false, message: "Invalid or expired verification link." };
-    }
-  }
 
   // ====================== FORGOT PASSWORD ======================
   async forgotPassword(data: ForgotPasswordRequest): Promise<AuthResponse> {
@@ -257,46 +183,6 @@ export class AuthService {
     }
   }
 
-  // ====================== RESEND VERIFICATION ======================
-  async resendVerification(email: string): Promise<AuthResponse> {
-    try {
-      const admin = await adminRepo.findByEmail(email);
-      if (!admin) {
-        return { success: false, message: "User not found." };
-      }
-
-      if (admin.emailVerified) {
-        return { success: false, message: "Email is already verified." };
-      }
-
-      // Generate new verification token
-      const verifyToken = await JWT.signAccessToken({
-        adminId: admin.id,
-        email: admin.email,
-        role: admin.role,
-        type: "VERIFY",
-      });
-
-      const verifyUrl = `${AUTH_CONFIG.BASE_URL}/auth/verify-email?token=${verifyToken}`;
-
-      // Send email
-      await sendEmail(admin.email, {
-        type: "verification",
-        props: {
-          firstName: admin.name.split(" ")[0] || admin.name,
-          verifyUrl,
-        },
-      });
-
-      return {
-        success: true,
-        message: "Verification email has been sent successfully.",
-      };
-    } catch (error) {
-      console.error("Resend verification error:", error);
-      return { success: false, message: "Failed to resend verification email." };
-    }
-  }
 }
 
 export const authService = new AuthService();

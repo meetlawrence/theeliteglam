@@ -107,7 +107,8 @@ export type SponsorTier = (typeof SponsorTier)[keyof typeof SponsorTier]
 
 export const Role = {
   ADMIN: 'ADMIN',
-  SUPER_ADMIN: 'SUPER_ADMIN'
+  SUPER_ADMIN: 'SUPER_ADMIN',
+  TICKETS_VALIDATOR: 'TICKETS_VALIDATOR'
 } as const
 
 export type Role = (typeof Role)[keyof typeof Role]

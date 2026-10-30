@@ -7,7 +7,7 @@ import { adminRepo } from "./back-end/models/admin-models";
 import type { AuthenticatedRequest } from "./back-end/types/token-types";
 import { AUTH_CONFIG } from "./back-end/config/auth";
 
-const publicRoutes = ["/", "/login", "/signup", "/forgot-password", "/auth/verify-email"];
+const publicRoutes = ["/", "/login", "/signup", "/forgot-password"];
 const protectedRoute = ["/dashboard"];
 
 export async function proxy(req: NextRequest) {
@@ -141,6 +141,5 @@ export const matcherConfig = {
     "/login",
     "/signup",
     "/forgot-password",
-    "/auth/verify-email",
   ],
 };
