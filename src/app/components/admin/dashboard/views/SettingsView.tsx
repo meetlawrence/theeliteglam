@@ -10,7 +10,7 @@ type AdminUser = {
   name: string;
   email: string;
   role: AdminRole;
-  emailVerified: boolean;
+  permitted: boolean;
   createdAt: string;
   lastLoginAt: string | null;
 };
@@ -113,7 +113,7 @@ export function SettingsView() {
     }
   };
 
-  const handleVerify = async (userId: string) => {
+  const handlePermit = async (userId: string) => {
     setSavingId(userId);
     setError("");
     setSuccess("");
@@ -122,21 +122,21 @@ export function SettingsView() {
       const res = await fetch("/api/admin/users", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: userId, action: "VERIFY" }),
+        body: JSON.stringify({ id: userId, action: "PERMIT" }),
       });
 
       const data = await res.json();
       if (!res.ok || !data.success) {
-        setError(data.message || "Unable to verify user.");
+        setError(data.message || "Unable to permit user.");
         return;
       }
 
       setUsers((prev) =>
-        prev.map((user) => (user.id === userId ? { ...user, emailVerified: true } : user))
+        prev.map((user) => (user.id === userId ? { ...user, permitted: true } : user))
       );
-      setSuccess("User verified successfully.");
+      setSuccess("User permitted successfully.");
     } catch {
-      setError("Unable to verify user right now.");
+      setError("Unable to permit user right now.");
     } finally {
       setSavingId(null);
     }
@@ -217,7 +217,7 @@ export function SettingsView() {
                     </div>
                     <p className="text-sm text-muted-foreground">{user.email}</p>
                     <p className="text-xs uppercase tracking-[0.2em] text-[#666]">
-                      Verified: {user.emailVerified ? "Yes" : "No"}
+                      Permitted: {user.permitted ? "Yes" : "No"}
                     </p>
                   </div>
 
@@ -232,15 +232,15 @@ export function SettingsView() {
                       <option value="SUPER_ADMIN">Super Admin</option>
                     </select>
 
-                    {!user.emailVerified ? (
+                    {!user.permitted ? (
                       <button
                         type="button"
-                        onClick={() => handleVerify(user.id)}
+                        onClick={() => handlePermit(user.id)}
                         disabled={currentUserRole !== "SUPER_ADMIN" || isBusy}
                         className="border border-[#C9A84C]/30 bg-[#1a170e] px-3 py-2 text-sm text-[#F5EDD6] transition hover:bg-[#221b0f] disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         {isBusy ? <Loader2 className="mr-2 inline h-4 w-4 animate-spin" /> : null}
-                        Verify
+                        Permit
                       </button>
                     ) : null}
 

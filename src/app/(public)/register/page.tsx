@@ -1,62 +1,27 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { RegisterSection } from "@/app/components/register/RegisterSection";
+import type { EventStatus } from "@/back-end/types/event-types";
+import { notFound } from "next/navigation";
 
-type FirstEventResponse = {
-  success?: boolean;
-  data?: { id: string };
-  message?: string;
-};
+export default async function RegisterPage() {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/event/status`,
+    {
+      method: "GET",
+    },
+  );
+  const data: {
+    success: boolean;
+    data?: EventStatus;
+    message?: string;
+  } = await res.json();
 
-export default function RegisterPage() {
-  const [eventId, setEventId] = useState("");
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    async function loadFirstEvent() {
-      try {
-        const response = await fetch("/api/event/get-first-event", {
-          signal: controller.signal,
-          cache: "no-store",
-        });
-        const result: FirstEventResponse = await response.json();
-
-        if (!response.ok || result.success !== true || !result.data?.id) {
-          throw new Error(result.message || "Unable to load the registration event.");
-        }
-
-        setEventId(result.data.id);
-      } catch (error) {
-        if (controller.signal.aborted) return;
-        setError(
-          error instanceof Error
-            ? error.message
-            : "Unable to load the registration event. Please try again later.",
-        );
-      }
-    }
-
-    void loadFirstEvent();
-    return () => controller.abort();
-  }, []);
-
-  if (error) {
-    return (
-      <main className="min-h-screen bg-[#080808] px-6 flex items-center justify-center text-center text-[#F5EDD6]">
-        <p>{error}</p>
-      </main>
-    );
+  if (!res.ok || !data.success || !data.data) {
+    throw new Error(data.message ?? "Unable to fetch /api/event/status.");
   }
 
-  if (!eventId) {
-    return (
-      <main className="min-h-screen bg-[#080808] px-6 flex items-center justify-center text-center text-[#F5EDD6]">
-      </main>
-    );
+  if (!data.data.isRegistrationOpen) {
+    notFound();
   }
 
-  return <RegisterSection eventId={eventId} />;
+  return <RegisterSection />;
 }

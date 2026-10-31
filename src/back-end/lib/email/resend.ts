@@ -4,7 +4,6 @@ import { Resend } from "resend";
 import { AUTH_CONFIG } from "../../config/auth";
 
 import WelcomeEmail from "./templates/auth/welcome-email-template";
-import VerifyEmail from "./templates/auth/verification-email-template";
 import ResetPasswordEmail from "./templates/auth/rest-password-email-template";
 import PasswordChangedEmail from "./templates/auth/password-changed-email-template";
 import LoginAlertEmail from "./templates/auth/login-alert-emaill-template";
@@ -16,7 +15,6 @@ const resend = new Resend(AUTH_CONFIG.RESEND_API_KEY);
 // Strict union type for all possible emails
 type EmailPayload =
   | { type: "welcome"; props: { firstName: string; dashboardUrl?: string } }
-  | { type: "verification"; props: { firstName: string; verifyUrl: string; code?: string } }
   | { type: "password-reset"; props: { firstName: string; resetUrl: string } }
   | { type: "password-changed"; props: { firstName: string } }
   | {
@@ -62,11 +60,6 @@ export async function sendEmail(to: string, payload: EmailPayload) {
       case "welcome":
         subject = `Welcome to theeliteglam, ${payload.props.firstName}!`;
         reactComponent = WelcomeEmail(payload.props);
-        break;
-
-      case "verification":
-        subject = "Verify your theeliteglam account";
-        reactComponent = VerifyEmail(payload.props);
         break;
 
       case "password-reset":

@@ -1,10 +1,11 @@
 allowBuilds:
+  '@parcel/watcher': false
   '@prisma/engines': false
   '@scarf/scarf': false
-  '@tree-sitter-grammars/tree-sitter-yaml': true
-  core-js-pure: true
+  '@tree-sitter-grammars/tree-sitter-yaml': false
+  core-js-pure: false
   prisma: false
   sharp: false
-  tree-sitter: true
-  tree-sitter-json: true
+  tree-sitter: false
+  tree-sitter-json: false
   unrs-resolver: false

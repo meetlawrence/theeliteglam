@@ -38,12 +38,9 @@ export function HeroSection({ onNavigate, eventStatus }: HeroSectionProps) {
           <source src={HOME_IMAGES.heroBackgroundVideo} type="video/webm" />
         </video>
       </div>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_40%,rgba(201,168,76,0.08),transparent_70%)]" />
       <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/20 to-black/95" />
 
-      {/* Main Content */}
       <div className="relative z-10 w-full max-w-225 px-6 text-center">
-        {/* Eyebrow */}
         <div className="mb-8 flex items-center justify-center gap-4 text-[0.7rem] uppercase tracking-[0.5em] text-primary font-raleway opacity-0 animate-[fadeInUp_1s_ease-out_forwards] lg:text-[0.8rem] lg:tracking-[0.55em]">
           <span className="h-px w-10 bg-linear-to-r from-transparent to-primary" />
           Season 2
@@ -75,15 +72,6 @@ export function HeroSection({ onNavigate, eventStatus }: HeroSectionProps) {
           {isVotingOpen && (
             <CTA icon={<Star size={16} />} label="Vote Now" variant="accent" onClick={() => handleNavigate("contestants")} />
           )}
-        </div>
-
-        <div className="mx-auto mt-12 flex flex-col items-center opacity-0 animate-[fadeInUp_1s_ease-out_0.75s_forwards]">
-          <span className="mb-2 text-[0.7rem] uppercase tracking-[0.35em] text-[#F5EDD6]/70">
-            Scroll
-          </span>
-          <div className="flex h-10 w-6 items-start justify-center rounded-full border border-[#F5EDD6]/40">
-            <span className="mt-2 h-3 w-1.5 rounded-full bg-[#F5EDD6] animate-[pulse_2.2s_ease-in-out_infinite]" />
-          </div>
         </div>
       </div>
     </section>
