@@ -19,12 +19,12 @@ export async function GET(req: NextRequest) {
     }
 
     // 2. Verify the token
-    const payload = await JWT.verifyToken(accessToken);
+    const payload = await JWT.verifyAccessToken(accessToken);
 
     // 3. Fetch user from database
     const admin = await adminRepo.findById(payload.adminId);
 
-    if (!admin) {
+    if (!admin || !admin.permitted) {
       return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
     }
 

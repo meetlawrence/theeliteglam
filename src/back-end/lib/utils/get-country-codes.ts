@@ -1,4 +1,3 @@
-// src/lib/getCountryCodes.ts
 export interface CountryCodeItem {
   code: string;
   country: string;
@@ -6,32 +5,50 @@ export interface CountryCodeItem {
   label: string;
 }
 
+interface CountryApiResponse {
+  cca2: string;
+  flag?: string;
+  idd?: {
+    root?: string;
+    suffixes?: string[];
+  };
+  name: {
+    common: string;
+  };
+}
+
 export async function fetchCountryCodes(): Promise<CountryCodeItem[]> {
-  try {
-    const res = await fetch("https://restcountries.com/v3.1/all?fields=name,cca2,idd,flag");
-    const data = await res.json();
+  const response = await fetch(
+    "https://restcountries.com/v3.1/all?fields=name,cca2,idd,flag",
+  );
 
-    const formatted: CountryCodeItem[] = data
-      .map((country: any) => {
-        const root = country.idd?.root || "";
-        const suffix = country.idd?.suffixes?.[0] || "";
-        const code = `${root}${suffix}`.trim();
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch country codes: ${response.status} ${response.statusText}`,
+    );
+  }
 
-        if (!code) return null;
+  const countries = (await response.json()) as CountryApiResponse[];
 
-        return {
+  return countries
+    .flatMap((country): CountryCodeItem[] => {
+      const root = country.idd?.root ?? "";
+      const suffix = country.idd?.suffixes?.[0] ?? "";
+      const code = `${root}${suffix}`.trim();
+
+      if (!code) {
+        return [];
+      }
+
+      const flag = country.flag ?? "";
+      return [
+        {
           code,
           country: country.cca2,
-          flag: country.flag || "",
-          label: `${country.flag || ""} ${country.name.common} (${code})`,
-        };
-      })
-      .filter((item: CountryCodeItem | null): item is CountryCodeItem => item !== null)
-      .sort((a: CountryCodeItem, b: CountryCodeItem) => a.label.localeCompare(b.label));
-
-    return formatted;
-  } catch (error) {
-    console.error("Failed to fetch country codes:", error);
-    return [];
-  }
+          flag,
+          label: `${flag} ${country.name.common} (${code})`,
+        },
+      ];
+    })
+    .sort((a, b) => a.label.localeCompare(b.label));
 }

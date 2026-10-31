@@ -1,35 +1,21 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { JWT } from "../utils/jwt";
+import { adminRepo } from "../../models/admin-models";
 
 export async function authMiddleware(req: NextRequest) {
-  try {
-    const accessToken = req.cookies.get("accessToken")?.value;
+  const accessToken = req.cookies.get("accessToken")?.value;
 
-    if (!accessToken) {
-      return {
-        success: false as const,
-        response: NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 }),
-      };
-    }
-
-    const payload = await JWT.verifyToken(accessToken);
-
-    if (
-      !payload ||
-      (payload.role !== "SUPER_ADMIN" && payload.role !== "ADMIN") ||
-      payload.type !== "ACCESS"
-    ) {
-      return {
-        success: false as const,
-        response: NextResponse.json({ success: false, message: "Access denied" }, { status: 403 }),
-      };
-    }
-
+  if (!accessToken) {
     return {
-      success: true as const,
-      payload,
+      success: false as const,
+      response: NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 }),
     };
+  }
+
+  let payload: Awaited<ReturnType<typeof JWT.verifyAccessToken>>;
+  try {
+    payload = await JWT.verifyAccessToken(accessToken);
   } catch {
     return {
       success: false as const,
@@ -39,4 +25,34 @@ export async function authMiddleware(req: NextRequest) {
       ),
     };
   }
+
+  let admin: Awaited<ReturnType<typeof adminRepo.findById>>;
+  try {
+    admin = await adminRepo.findById(payload.adminId);
+  } catch (error) {
+    console.error("Admin authorization failed while loading the admin account:", error);
+    return {
+      success: false as const,
+      response: NextResponse.json(
+        { success: false, message: "Unable to verify admin access." },
+        { status: 503 },
+      ),
+    };
+  }
+
+  if (
+    !admin ||
+    !admin.permitted ||
+    (admin.role !== "ADMIN" && admin.role !== "SUPER_ADMIN")
+  ) {
+    return {
+      success: false as const,
+      response: NextResponse.json({ success: false, message: "Access denied" }, { status: 403 }),
+    };
+  }
+
+  return {
+    success: true as const,
+    payload: { ...payload, role: admin.role },
+  };
 }

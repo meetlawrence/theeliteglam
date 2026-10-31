@@ -14,10 +14,10 @@ export async function GET() {
       return NextResponse.json({ success: false, message: "Not authenticated" }, { status: 401 });
     }
 
-    const payload = await JWT.verifyToken(accessToken);
+    const payload = await JWT.verifyAccessToken(accessToken);
     const currentAdmin = await adminRepo.findById(payload.adminId);
 
-    if (!currentAdmin) {
+    if (!currentAdmin || !currentAdmin.permitted) {
       return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
     }
 
@@ -61,10 +61,14 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ success: false, message: "Not authenticated" }, { status: 401 });
     }
 
-    const payload = await JWT.verifyToken(accessToken);
+    const payload = await JWT.verifyAccessToken(accessToken);
     const currentAdmin = await adminRepo.findById(payload.adminId);
 
-    if (!currentAdmin || currentAdmin.role !== "SUPER_ADMIN") {
+    if (
+      !currentAdmin ||
+      !currentAdmin.permitted ||
+      currentAdmin.role !== "SUPER_ADMIN"
+    ) {
       return NextResponse.json(
         { success: false, message: "Only super admins can manage roles" },
         { status: 403 }
@@ -124,10 +128,14 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ success: false, message: "Not authenticated" }, { status: 401 });
     }
 
-    const payload = await JWT.verifyToken(accessToken);
+    const payload = await JWT.verifyAccessToken(accessToken);
     const currentAdmin = await adminRepo.findById(payload.adminId);
 
-    if (!currentAdmin || currentAdmin.role !== "SUPER_ADMIN") {
+    if (
+      !currentAdmin ||
+      !currentAdmin.permitted ||
+      currentAdmin.role !== "SUPER_ADMIN"
+    ) {
       return NextResponse.json({ success: false, message: "Only super admins can delete users" }, { status: 403 });
     }
 
