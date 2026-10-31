@@ -1,5 +1,16 @@
 import { prisma } from "../db/db-connect";
-import type { CreateEventInput, UpdateEventInput } from "../types/event-types";
+import type {
+  CreateEventInput,
+  EventStatus,
+  UpdateEventInput,
+} from "../types/event-types";
+
+const DEFAULT_EVENT_STATUS: EventStatus = {
+  isRegistrationOpen: false,
+  isTicketsOpen: false,
+  isVotingOpen: false,
+  isContestantsVisible: false,
+};
 
 export class EventModel {
   async create(data: CreateEventInput) {
@@ -28,6 +39,19 @@ export class EventModel {
       orderBy: { createdAt: "desc" },
       select: { id: true },
     });
+  }
+
+  async findStatus(): Promise<EventStatus> {
+    const event = await prisma.event.findFirst({
+      select: {
+        isRegistrationOpen: true,
+        isTicketsOpen: true,
+        isVotingOpen: true,
+        isContestantsVisible: true,
+      },
+    });
+
+    return event ?? DEFAULT_EVENT_STATUS;
   }
 
   async findById(id: string) {
