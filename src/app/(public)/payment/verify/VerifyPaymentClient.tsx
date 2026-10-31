@@ -49,6 +49,11 @@ function VerifyPaymentContent() {
           method: "GET",
         });
 
+        const contentType = res.headers.get("content-type")?.toLowerCase() ?? "";
+        if (!contentType.includes("application/json")) {
+          throw new Error("Payment verification returned a non-JSON response.");
+        }
+
         const data = await res.json();
 
         if (res.ok && data.success) {
