@@ -37,7 +37,7 @@ export function AboutWinnersSection({ winners, runnersUp }: AboutWinnersSectionP
           Winners
         </span>
       </h2>
-      <p className="mb-14 max-w-[520px] font-['Playfair_Display',serif] text-[1rem] italic leading-[1.7] text-[#9A8C6A]">
+      <p className="mb-14 max-w-130 font-['Playfair_Display',serif] text-[1rem] italic leading-[1.7] text-muted-foreground">
         The inaugural crowns of The Elite Glam — awarded at the 2025 Grand Finale in Calabar.
       </p>
 
@@ -48,13 +48,7 @@ export function AboutWinnersSection({ winners, runnersUp }: AboutWinnersSectionP
       </div>
 
       <div className="mt-12">
-        <div className="mb-7 flex items-center gap-5">
-          <span className="inline-block h-px w-6 bg-[rgba(201,168,76,0.3)]" />
-          <span className="font-['Raleway',sans-serif] text-[0.6rem] uppercase tracking-[0.4em] text-[#9A8C6A]">
-            Title Holders · Season 1
-          </span>
-          <span className="h-px flex-1 bg-[rgba(201,168,76,0.1)]" />
-        </div>
+        
 
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {runnersUp.map((runner) => (

@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import { getEventStatus } from "../../../../back-end/lib/utils/get-event-status";
+import { eventModel } from "@/back-end/models/event-model";
 
 export async function GET() {
   try {
-    const eventStatus = await getEventStatus();
+    const eventStatus = await eventModel.findStatus();
     return NextResponse.json({ success: true, data: eventStatus });
   } catch (error) {
     console.error("[GET /api/event/status]", error);

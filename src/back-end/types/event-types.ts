@@ -1,3 +1,10 @@
+export interface EventStatus {
+  isRegistrationOpen: boolean;
+  isTicketsOpen: boolean;
+  isVotingOpen: boolean;
+  isContestantsVisible: boolean;
+}
+
 export interface CreateEventInput {
   name: string;
   description: string;

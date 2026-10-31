@@ -6,9 +6,13 @@ import SwaggerDocs from "./swagger-docs";
 
 type AccessState =
   | { status: "checking" }
-  | { status: "allowed"; spec: object }
+  | { status: "allowed"; spec: Record<string, unknown> }
   | { status: "forbidden" }
   | { status: "error" };
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
 
 export default function ApiDocsPage() {
   const router = useRouter();
@@ -45,12 +49,8 @@ export default function ApiDocsPage() {
 
         const spec: unknown = await response.json();
         if (
-          !spec ||
-          typeof spec !== "object" ||
-          Array.isArray(spec) ||
-          !("openapi" in spec) ||
+          !isRecord(spec) ||
           typeof spec.openapi !== "string" ||
-          !("paths" in spec) ||
           !spec.paths ||
           typeof spec.paths !== "object"
         ) {

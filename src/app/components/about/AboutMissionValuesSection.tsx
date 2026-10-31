@@ -92,9 +92,6 @@ function ValueCard({
       style={{ transitionDelay: inView ? `${0.2 + index * 0.08}s` : "0s" }}
     >
       <div className={`absolute inset-x-0 top-0 h-[2px] transition-all duration-400 ${hovered ? "bg-[linear-gradient(to_right,transparent,#C9A84C,transparent)]" : "bg-transparent"}`} />
-      <div className={`mb-5 transition-colors duration-400 ${hovered ? "text-[#F0C04A]" : "text-[#C9A84C]"}`}>
-        {item.icon}
-      </div>
       <div className="mb-3 font-['Cinzel',serif] text-[0.95rem] tracking-[0.06em] text-[#F5EDD6]">
         {item.title}
       </div>

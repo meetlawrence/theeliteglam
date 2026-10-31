@@ -82,6 +82,7 @@ enum SponsorTier {
 enum Role {
   ADMIN
   SUPER_ADMIN
+  TICKETS_VALIDATOR
 }
 
 // ====================== ADMIN ======================
@@ -94,8 +95,7 @@ model Admin {
   phone        String?
   role         Role    @default(ADMIN)
 
-  emailVerified   Boolean   @default(false)
-  emailVerifiedAt DateTime?
+  permitted Boolean @default(false)
 
   lastLoginAt DateTime?
   isActive    Boolean   @default(false)
