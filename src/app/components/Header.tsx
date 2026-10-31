@@ -135,7 +135,7 @@ export function Header({ eventStatus }: HeaderProps) {
       {/* Mobile Menu - Full Screen Overlay */}
       {menuOpen && (
         <div className="md:hidden fixed inset-0 top-[78px] w-full h-[calc(100vh-78px)] bg-black/98 border-b border-[#C9A84C]/20 p-8 flex flex-col justify-between overflow-y-auto z-40 animate-[fadeInUp_600ms_ease-out]">
-          
+
           {/* Navigation Links Group */}
           <div className="flex flex-col gap-1 pt-4 pb-10">
             {NAV_LINKS.map(({ label, page }, index) => {
