@@ -1,17 +1,12 @@
 import "server-only";
 
 import { headers } from "next/headers";
-import { getEventStatus } from "@/back-end/lib/utils/get-event-status";
+import type { EventStatus } from "@/back-end/types/event-types";
+
+export type { EventStatus };
 
 interface ServerApiOptions extends RequestInit {
   forwardCookies?: boolean;
-}
-
-export interface EventStatus {
-  isRegistrationOpen: boolean;
-  isTicketsOpen: boolean;
-  isVotingOpen: boolean;
-  isContestantsVisible: boolean;
 }
 
 export async function fetchServerApi(path: string, options: ServerApiOptions = {}) {
@@ -46,5 +41,16 @@ export async function fetchServerApi(path: string, options: ServerApiOptions = {
 }
 
 export async function fetchEventStatus(): Promise<EventStatus> {
-  return getEventStatus();
+  const response = await fetchServerApi("/api/event/status");
+  const result = (await response.json()) as {
+    success: boolean;
+    data?: EventStatus;
+    message?: string;
+  };
+
+  if (!response.ok || !result.success || !result.data) {
+    throw new Error(result.message ?? "Unable to fetch event status.");
+  }
+
+  return result.data;
 }

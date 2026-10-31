@@ -5,16 +5,12 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, X, Ticket, UserPlus, Star } from "lucide-react";
 import { NavCta } from "@/app/components/ui/NavCta";
+import type { EventStatus } from "@/back-end/types/event-types";
 
 const LOGO_PATH = "/logo.svg";
 
 interface HeaderProps {
-  eventStatus?: {
-    isRegistrationOpen: boolean;
-    isTicketsOpen: boolean;
-    isVotingOpen: boolean;
-    isContestantsVisible: boolean;
-  };
+  eventStatus?: EventStatus;
 }
 
 export function Header({ eventStatus }: HeaderProps) {
