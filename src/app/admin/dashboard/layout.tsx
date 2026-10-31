@@ -1,23 +1,14 @@
 import { redirect } from "next/navigation";
-import { fetchServerApi } from "@/app/lib/server-api";
+import { getDashboardAdmin } from "@/app/lib/server-admin";
 import DashboardClientLayout from "./DashboardClientLayout";
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
-  const response = await fetchServerApi("/api/auth/me", { forwardCookies: true });
-  if (response.status === 401 || response.status === 404) {
+  const admin = await getDashboardAdmin();
+  if (!admin) {
     redirect("/admin");
   }
 
-  const result: {
-    success?: boolean;
-    admin?: { name: string; role: string };
-    message?: string;
-  } = await response.json();
-  if (!response.ok || result.success !== true || !result.admin) {
-    throw new Error(result.message || "Unable to load the current admin.");
-  }
-
-  const user = { name: result.admin.name, role: result.admin.role };
+  const user = { name: admin.name, role: admin.role };
 
   return (
     <DashboardClientLayout user={user}>
