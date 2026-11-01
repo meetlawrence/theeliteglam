@@ -13,12 +13,50 @@ interface HeaderProps {
   eventStatus?: EventStatus;
 }
 
-export function Header({ eventStatus }: HeaderProps) {
+type EventStatusResponse = {
+  success?: boolean;
+  data?: EventStatus;
+  message?: string;
+};
+
+export function Header({ eventStatus: initialEventStatus }: HeaderProps = {}) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [eventStatus, setEventStatus] = useState(initialEventStatus);
 
   const pathname = usePathname();
   const router = useRouter();
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadEventStatus() {
+      try {
+        const response = await fetch("/api/event/status");
+        const contentType = response.headers.get("content-type")?.toLowerCase() ?? "";
+
+        if (!contentType.includes("application/json")) {
+          throw new Error("Event status endpoint returned a non-JSON response.");
+        }
+
+        const result: EventStatusResponse = await response.json();
+        if (!response.ok || !result.success || !result.data) {
+          throw new Error(result.message ?? "Unable to fetch event status.");
+        }
+
+        if (active) {
+          setEventStatus(result.data);
+        }
+      } catch (error) {
+        console.error("Failed to load event status for navigation:", error);
+      }
+    }
+
+    void loadEventStatus();
+    return () => {
+      active = false;
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
