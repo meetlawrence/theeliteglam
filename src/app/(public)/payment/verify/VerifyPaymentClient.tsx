@@ -11,6 +11,14 @@ type VerificationResult = {
   reference: string | null;
   status: VerificationState;
   message: string;
+  ticketReference?: string | null;
+};
+type VerificationResponse = {
+  success?: boolean;
+  message?: string;
+  ticket?: {
+    reference?: string | null;
+  };
 };
 
 const noReferenceMessage =
@@ -54,13 +62,14 @@ function VerifyPaymentContent() {
           throw new Error("Payment verification returned a non-JSON response.");
         }
 
-        const data = await res.json();
+        const data: VerificationResponse = await res.json();
 
         if (res.ok && data.success) {
           setVerification({
             reference,
             status: "success",
             message: "Payment verified successfully!",
+            ticketReference: data.ticket?.reference,
           });
         } else {
           setVerification({
@@ -130,6 +139,14 @@ function VerifyPaymentContent() {
           {reference && (
             <div className="font-['Raleway',sans-serif] text-[0.7rem] text-[#5A5040] tracking-wider uppercase mb-6">
               Ref: <span className="text-[#9A8C6A] font-mono">{reference}</span>
+            </div>
+          )}
+          {isCurrentReference && verification.ticketReference && (
+            <div className="mb-6 text-left rounded border border-[#C9A84C]/20 bg-[#0D0D0D] p-3 text-[0.72rem] text-[#9A8C6A]">
+              <p>
+                Ticket reference:{" "}
+                <span className="text-[#F5EDD6]">{verification.ticketReference}</span>
+              </p>
             </div>
           )}
           <Link
