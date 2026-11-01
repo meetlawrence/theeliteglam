@@ -1,30 +1,36 @@
-// src/app/payment/verify/page.tsx
 "use client";
 
 import { useEffect, useState, Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Check, ShieldAlert, ArrowLeft, Loader2 } from "lucide-react";
+
+export const dynamic = 'force-dynamic';
 
 type VerificationState = "loading" | "success" | "failed" | "error";
 
 function VerifyPaymentContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const reference = searchParams.get("reference") || searchParams.get("trxref");
 
-  const [status, setStatus] = useState<VerificationState>("loading");
-  const [message, setMessage] = useState("Verifying your payment transaction...");
-  const [ticketInfo, setTicketInfo] = useState<any>(null);
+  const [status, setStatus] = useState<VerificationState>(reference ? "loading" : "error");
+  const [message, setMessage] = useState(
+    reference
+      ? "Verifying your payment transaction..."
+      : "No payment reference was provided in your request. Please return to registration."
+  );
+  const [verificationData, setVerificationData] = useState<{
+    success?: boolean;
+    message?: string;
+    ticket?: {
+      reference?: string | null;
+      [key: string]: unknown;
+    };
+    [key: string]: unknown;
+  } | null>(null);
 
   useEffect(() => {
-    if (!reference) {
-      setStatus("error");
-      setMessage(
-        "No payment reference was provided in your request. Please return to registration.",
-      );
-      return;
-    }
+    if (!reference) return;
 
     const verifyPayment = async () => {
       try {
@@ -37,12 +43,12 @@ function VerifyPaymentContent() {
         if (res.ok && data.success) {
           setStatus("success");
           setMessage("Payment verified successfully!");
-          setTicketInfo(data);
+          setVerificationData(data);
         } else {
           setStatus("failed");
           setMessage(
             data.message ||
-              "We could not verify a successful payment for this transaction reference.",
+              "We could not verify a successful payment for this transaction reference."
           );
         }
       } catch (error) {
@@ -53,7 +59,8 @@ function VerifyPaymentContent() {
     };
 
     verifyPayment();
-  }, [reference, router]);
+  }, [reference]);
+
 
   return (
     <div className="max-w-[520px] w-full bg-[#121212] border border-[#C9A84C]/20 p-8 sm:p-10 text-center relative overflow-hidden shadow-2xl">
@@ -101,6 +108,15 @@ function VerifyPaymentContent() {
           {reference && (
             <div className="font-['Raleway',sans-serif] text-[0.7rem] text-[#5A5040] tracking-wider uppercase mb-6">
               Ref: <span className="text-[#9A8C6A] font-mono">{reference}</span>
+            </div>
+          )}
+          {verificationData && (
+            <div className="mb-6 text-left rounded border border-[#C9A84C]/20 bg-[#0D0D0D] p-3 text-[0.72rem] text-[#9A8C6A]">
+              {verificationData.ticket?.reference ? (
+                <p>
+                  Ticket reference: <span className="text-[#F5EDD6]">{verificationData.ticket.reference}</span>
+                </p>
+              ) : null}
             </div>
           )}
           <Link
