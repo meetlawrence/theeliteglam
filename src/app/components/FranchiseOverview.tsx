@@ -100,7 +100,7 @@ export function OverviewSection() {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8">
             <div>
               <h2 className="mt-4 font-['Cinzel',serif] text-[clamp(1.6rem,3.5vw,2.8rem)] tracking-[0.06em] text-[#F5EDD6]">
-                News and Blog
+                News & Blog
               </h2>
             </div>
             <Link

@@ -11,28 +11,28 @@ export function ArticleGallery({ images, title }: ArticleGalleryProps) {
   if (validImages.length === 0) return null;
 
   return (
-    <section className="my-10 space-y-6">
-
+    <section className="my-10">
       <div
-        className={`grid gap-4 sm:gap-6 ${
-          validImages.length === 1
-            ? "grid-cols-1"
-            : validImages.length === 2
-            ? "grid-cols-1 sm:grid-cols-2"
-            : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-        }`}
+        className={`columns-1 ${
+          validImages.length === 2
+            ? "sm:columns-2"
+            : validImages.length >= 3
+            ? "sm:columns-2 lg:columns-3"
+            : ""
+        } gap-4 sm:gap-6 space-y-4 sm:space-y-6`}
       >
         {validImages.map((imgUrl, idx) => (
           <div
             key={idx}
-            className="relative h-[260px] sm:h-[320px] w-full bg-[#121212] overflow-hidden group border border-[#C9A84C]/15"
+            className="break-inside-avoid relative w-full bg-[#121212] overflow-hidden group border border-[#C9A84C]/15"
           >
             <Image
               src={imgUrl}
-              alt={`${title} - Photo ${idx + 1}`}
-              fill
+              alt={`${title} Photo ${idx + 1}`}
+              width={0}
+              height={0}
               sizes="(max-width: 768px) 100vw, 33vw"
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              className="w-full h-auto object-contain transition-transform duration-700 ease-out group-hover:scale-105"
             />
           </div>
         ))}
