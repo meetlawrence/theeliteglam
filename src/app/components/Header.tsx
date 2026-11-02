@@ -119,10 +119,10 @@ export function Header({ eventStatus: initialEventStatus }: HeaderProps = {}) {
         <button onClick={() => handleNav("/")} className="flex items-center shrink-0">
           <Image
             src={LOGO_PATH}
-            alt="Elite Glam"
+            alt="The EliteGlam"
             width={80}
             height={34}
-            className="mix-blend-screen w-auto h-auto"
+            className="mix-blend-screen"
             preload
           />
         </button>
