@@ -23,7 +23,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:17
+        image: postgres:18
         env:
           POSTGRES_USER: backup_test
           POSTGRES_PASSWORD: local_test_password
@@ -45,41 +45,43 @@ jobs:
       S3_ENDPOINT: ${{ secrets.BACKBLAZE_ENDPOINT }}
 
     steps:
-      - name: Install PostgreSQL client and AWS CLI
+      - name: Install PostgreSQL 18 client and AWS CLI
         shell: bash
         run: |
           set -euo pipefail
 
           echo "Updating Ubuntu package lists..."
-
           sudo apt-get update
 
-          echo "Installing PostgreSQL client and required utilities..."
+          echo "Installing required utilities..."
+          sudo apt-get install -y curl unzip jq ca-certificates
 
-          sudo apt-get install -y \
-            postgresql-client \
-            curl \
-            unzip \
-            jq
+          echo "Adding the official PostgreSQL repository..."
+          sudo install -d /usr/share/postgresql-common/pgdg
+
+          curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc \
+            | sudo gpg --dearmor \
+            -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.gpg
+
+          echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.gpg] https://apt.postgresql.org/pub/repos/apt noble-pgdg main" \
+            | sudo tee /etc/apt/sources.list.d/pgdg.list
+
+          echo "Installing PostgreSQL 18 client..."
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client-18
 
           echo "Downloading AWS CLI v2..."
-
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" \
             -o "$RUNNER_TEMP/awscliv2.zip"
 
-          echo "Extracting AWS CLI installer..."
+          unzip -q "$RUNNER_TEMP/awscliv2.zip" -d "$RUNNER_TEMP"
 
-          unzip -q "$RUNNER_TEMP/awscliv2.zip" \
-            -d "$RUNNER_TEMP"
-
-          echo "Installing AWS CLI..."
-
+          echo "Installing or updating AWS CLI..."
           sudo "$RUNNER_TEMP/aws/install" --update
 
           echo "Verifying installations..."
-
-          pg_dump --version
-          pg_restore --version
+          /usr/lib/postgresql/18/bin/pg_dump --version
+          /usr/lib/postgresql/18/bin/pg_restore --version
           aws --version
           jq --version
 
@@ -118,7 +120,7 @@ jobs:
 
           echo "Creating PostgreSQL backup..."
 
-          pg_dump \
+          /usr/lib/postgresql/18/bin/pg_dump \
             --dbname="$DATABASE_URL" \
             --format=custom \
             --compress=6 \
@@ -145,7 +147,7 @@ jobs:
 
           echo "Checking PostgreSQL backup archive..."
 
-          pg_restore --list "$BACKUP_FILE" > /dev/null
+          /usr/lib/postgresql/18/bin/pg_restore --list "$BACKUP_FILE" > /dev/null
 
           echo "Backup archive is readable."
 
@@ -159,7 +161,7 @@ jobs:
 
           echo "Testing backup restoration..."
 
-          pg_restore \
+          /usr/lib/postgresql/18/bin/pg_restore \
             --dbname="$RESTORE_TEST_URL" \
             --exit-on-error \
             --no-owner \
@@ -225,40 +227,57 @@ jobs:
 
           echo "Applying 30-day backup retention policy..."
 
-          CUTOFF=$(date -u -d '30 days ago' +"%Y-%m-%dT%H:%M:%SZ")
-
-          OBJECTS=$(
-            aws \
-              --endpoint-url "$S3_ENDPOINT" \
-              s3api list-objects-v2 \
-              --bucket "$S3_BUCKET" \
-              --prefix "postgresql/the-elite-glam/" \
-              --output json
-          )
-
+          CUTOFF_EPOCH=$(date -u -d '30 days ago' +%s)
           DELETED=0
+          CONTINUATION_TOKEN=""
 
-          while IFS= read -r OBJECT; do
-            KEY=$(echo "$OBJECT" | jq -r '.Key')
-            LAST_MODIFIED=$(echo "$OBJECT" | jq -r '.LastModified')
-
-            if [[ "$LAST_MODIFIED" < "$CUTOFF" ]]; then
-              echo "Deleting expired backup: $KEY"
-
-              aws \
+          while true; do
+            if [[ -z "$CONTINUATION_TOKEN" ]]; then
+              RESPONSE=$(aws \
                 --endpoint-url "$S3_ENDPOINT" \
-                s3api delete-object \
+                s3api list-objects-v2 \
                 --bucket "$S3_BUCKET" \
-                --key "$KEY"
-
-              DELETED=$((DELETED + 1))
+                --prefix "postgresql/the-elite-glam/" \
+                --output json)
+            else
+              RESPONSE=$(aws \
+                --endpoint-url "$S3_ENDPOINT" \
+                s3api list-objects-v2 \
+                --bucket "$S3_BUCKET" \
+                --prefix "postgresql/the-elite-glam/" \
+                --continuation-token "$CONTINUATION_TOKEN" \
+                --output json)
             fi
-          done < <(echo "$OBJECTS" | jq -c '.Contents[]?')
+
+            while IFS= read -r OBJECT; do
+              KEY=$(echo "$OBJECT" | jq -r '.Key')
+              LAST_MODIFIED=$(echo "$OBJECT" | jq -r '.LastModified')
+              LAST_MODIFIED_EPOCH=$(date -u -d "$LAST_MODIFIED" +%s)
+
+              if (( LAST_MODIFIED_EPOCH < CUTOFF_EPOCH )); then
+                echo "Deleting expired backup: $KEY"
+
+                aws \
+                  --endpoint-url "$S3_ENDPOINT" \
+                  s3api delete-object \
+                  --bucket "$S3_BUCKET" \
+                  --key "$KEY"
+
+                DELETED=$((DELETED + 1))
+              fi
+            done < <(echo "$RESPONSE" | jq -c '.Contents[]?')
+
+            IS_TRUNCATED=$(echo "$RESPONSE" | jq -r '.IsTruncated')
+
+            if [[ "$IS_TRUNCATED" != "true" ]]; then
+              break
+            fi
+
+            CONTINUATION_TOKEN=$(echo "$RESPONSE" | jq -r '.NextContinuationToken')
+          done
 
           echo "Expired backups deleted: $DELETED"
-
           echo "DELETED_BACKUPS=$DELETED" >> "$GITHUB_ENV"
-
       - name: Backup summary
         if: success()
         run: |
