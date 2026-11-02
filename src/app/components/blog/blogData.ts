@@ -29,14 +29,14 @@ export const FEATURED_POST: BlogPost = {
   date: "October 24, 2026",
   readTime: "4 min read",
   author: "Editorial Team",
-  image: "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914553/oma.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+  image: "https://res.cloudinary.com/fnrrqppt/image/upload/c_thumb,g_faces,z_0.4,w_800,h_400,q_auto,f_auto/v1792914553/oma.webp",
   gallery: [
-    "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914559/oma10.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80", 
-    "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914557/oma2.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80", 
-    "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914551/grand.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
-    "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914551/oma8.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
-    "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914554/oma1.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
-    "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914551/grand1.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+    "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914559/oma10.webp", 
+    "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914557/oma2.webp", 
+    "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914551/grand.webp",
+    "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914551/oma8.webp",
+    "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914554/oma1.webp",
+    "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914551/grand1.webp",
   ],
   content: [
     "A proud moment for Nigeria. A defining milestone for EliteGlam.",
@@ -61,10 +61,10 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "November 1, 2026",
     readTime: "3 min read",
     author: "Pageant Secretariat",
-    image: "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914551/grand.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80", 
+    image: "https://res.cloudinary.com/fnrrqppt/image/upload/c_thumb,g_faces,z_0.4,w_800,h_400,q_auto,f_auto/v1792914551/grand.webp",
     gallery: [
-      "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914553/oma3.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80", 
-      "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914551/grand1.webp"
+      "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914553/oma3.webp",
+      "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914551/grand1.webp"
     ],
     content: [
       "The search for Nigeria's next iconic ambassadors has officially begun. The EliteGlam Pageant Nigeria is now accepting registrations for the 2027 edition.",
@@ -82,12 +82,12 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "October 23, 2026",
     readTime: "3 min read",
     author: "Editorial Team",
-    image: "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914559/sambo8.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+    image: "https://res.cloudinary.com/fnrrqppt/image/upload/c_thumb,g_faces,z_0.4,w_800,h_400,q_auto,f_auto/v1792914559/sambo8.webp",
     gallery: [
-      "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914557/sambo2.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
-      "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914558/sambo1.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
-      "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914560/sambo4.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
-      "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914545/arrival4.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+      "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914557/sambo2.webp",
+      "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914558/sambo1.webp",
+      "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914560/sambo4.webp",
+      "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914545/arrival4.webp"
     ],
     content: [
       "Nigeria’s presence on the international stage received another reason to celebrate as Unwana Sambo, Mister EliteGlam Nigeria 2025/2026, secured 3rd Runner-Up at Mister Continental World 2026 in Thailand.",
@@ -108,12 +108,12 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "October 22, 2026",
     readTime: "3 min read",
     author: "Pageant Secretariat",
-    image: "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914560/sambo6.jpg?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80", 
+    image: "https://res.cloudinary.com/fnrrqppt/image/upload/c_thumb,g_faces,z_0.4,w_800,h_400,q_auto,f_auto/v1792914560/sambo6.jpg",
     gallery: [
-      "https://res.cloudinary.com/fnrrqppt/image/upload/v1792918434/oma14.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80", 
-      "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914558/sambo5.jpg?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80", 
-      "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914560/oma15.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
-      "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914559/sambo6.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+      "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792918434/oma14.webp",
+      "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914558/sambo5.jpg",
+      "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914560/oma15.webp",
+      "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914559/sambo6.webp"
     ],
     content: [
       "Nigerian culture took its place in the international spotlight as The EliteGlam Pageant Nigeria’s representatives won Best National Costume honours at Mister and Miss Continental World 2026 in Thailand.",
@@ -134,15 +134,15 @@ export const BLOG_POSTS: BlogPost[] = [
     date: "October 21, 2026",
     readTime: "3 min read",
     author: "Editorial Team",
-    image: "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914555/oma9.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+    image: "https://res.cloudinary.com/fnrrqppt/image/upload/c_thumb,g_faces,z_0.4,w_800,h_400,q_auto,f_auto/v1792914555/oma9.webp",
     gallery: [
-      "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914558/sambo3.jpg?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
-      "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914545/oma5.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
-      "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914556/oma11.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
-      "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914558/sambo.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
-      "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914561/sambo10.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
-      "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914549/oma7.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
-      "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914560/sambo7.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+      "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914558/sambo3.jpg",
+      "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914545/oma5.webp",
+      "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914556/oma11.webp",
+      "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914558/sambo.webp",
+      "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914561/sambo10.webp",
+      "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914549/oma7.webp",
+      "https://res.cloudinary.com/fnrrqppt/image/upload/q_auto,f_auto/v1792914560/sambo7.webp"
     ],
     content: [
       "The celebrations continued for Team Nigeria as The EliteGlam Pageant Nigeria’s duo earned Best Physique honours at Mister and Miss Continental World 2026 in Thailand.",

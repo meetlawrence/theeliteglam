@@ -21,7 +21,7 @@ const TIMELINE: TimelineStep[] = [
     tag: null,
   },
   {
-    date: "January 1, 2027",
+    date: "February 1, 2027",
     title: "Auditions",
     desc: "Auditions open to contestants across the globe. Showcase your talent, poise, and personality from anywhere.",
     icon: "02",

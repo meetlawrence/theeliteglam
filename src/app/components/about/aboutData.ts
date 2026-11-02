@@ -97,7 +97,7 @@ export const WINNERS = [
     occupation: "Department of Tourism Officer",
     advocacy: "Youth Tech Empowerment",
     quote: "Beauty is the courage to stand for something greater than yourself. I carry that with every step.",
-    image: "https://res.cloudinary.com/fnrrqppt/image/upload/v1792914557/sambo1.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
+    image: "https://res.cloudinary.com/fnrrqppt/image/upload/v1793599370/WhatsApp_Image_2026-11-02_at_2.13.14_AM.jpg?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
 ];
 
