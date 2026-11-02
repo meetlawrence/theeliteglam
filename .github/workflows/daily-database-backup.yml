@@ -74,7 +74,7 @@ jobs:
 
           echo "Installing AWS CLI..."
 
-          sudo "$RUNNER_TEMP/aws/install"
+          sudo "$RUNNER_TEMP/aws/install" --update
 
           echo "Verifying installations..."
 
