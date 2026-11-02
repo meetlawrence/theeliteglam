@@ -1,0 +1,275 @@
+
+name: Daily Neon Database Backup
+
+on:
+  schedule:
+    # Every day at 01:00 UTC (02:00 Nigeria time)
+    - cron: "0 1 * * *"
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-neon-database-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    name: Backup Neon PostgreSQL to Backblaze B2
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: backup_test
+          POSTGRES_PASSWORD: local_test_password
+          POSTGRES_DB: restore_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U backup_test -d restore_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.BACKBLAZE_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.BACKBLAZE_APPLICATION_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.BACKBLAZE_REGION }}
+      S3_BUCKET: ${{ secrets.BACKBLAZE_BUCKET_NAME }}
+      S3_ENDPOINT: ${{ secrets.BACKBLAZE_ENDPOINT }}
+
+    steps:
+      - name: Install PostgreSQL client and AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client awscli
+
+      - name: Verify required secrets
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          for variable in \
+            DATABASE_URL \
+            AWS_ACCESS_KEY_ID \
+            AWS_SECRET_ACCESS_KEY \
+            AWS_DEFAULT_REGION \
+            S3_BUCKET \
+            S3_ENDPOINT
+          do
+            if [[ -z "${!variable:-}" ]]; then
+              echo "::error::Missing required secret: $variable"
+              exit 1
+            fi
+          done
+
+      - name: Create PostgreSQL backup
+        id: create_backup
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p "$RUNNER_TEMP/database-backup"
+
+          TIMESTAMP=$(date -u +"%Y-%m-%d_%H-%M-%S")
+
+          BACKUP_FILE="$RUNNER_TEMP/database-backup/the-elite-glam-${TIMESTAMP}.dump"
+
+          echo "Creating PostgreSQL backup..."
+
+          pg_dump \
+            --dbname="$DATABASE_URL" \
+            --format=custom \
+            --compress=6 \
+            --no-owner \
+            --no-acl \
+            --file="$BACKUP_FILE"
+
+          if [[ ! -s "$BACKUP_FILE" ]]; then
+            echo "::error::Backup file is empty."
+            exit 1
+          fi
+
+          echo "BACKUP_FILE=$BACKUP_FILE" >> "$GITHUB_ENV"
+          echo "BACKUP_FILENAME=$(basename "$BACKUP_FILE")" >> "$GITHUB_ENV"
+
+          echo "Backup created successfully."
+          ls -lh "$BACKUP_FILE"
+
+      - name: Verify backup archive
+        id: verify_archive
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "Checking PostgreSQL backup archive..."
+
+          pg_restore --list "$BACKUP_FILE" > /dev/null
+
+          echo "Backup archive is readable."
+
+      - name: Test database restoration
+        id: restore_test
+        shell: bash
+        env:
+          RESTORE_TEST_URL: postgresql://backup_test:local_test_password@localhost:5432/restore_test
+        run: |
+          set -euo pipefail
+
+          echo "Testing backup restoration..."
+
+          pg_restore \
+            --dbname="$RESTORE_TEST_URL" \
+            --exit-on-error \
+            --no-owner \
+            --no-acl \
+            "$BACKUP_FILE"
+
+          echo "Backup restored successfully into temporary PostgreSQL."
+
+      - name: Upload backup to Backblaze B2
+        id: upload_backup
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          BACKUP_PATH="postgresql/the-elite-glam/${BACKUP_FILENAME}"
+
+          echo "Uploading backup to Backblaze B2..."
+
+          aws \
+            --endpoint-url "$S3_ENDPOINT" \
+            s3 cp \
+            "$BACKUP_FILE" \
+            "s3://${S3_BUCKET}/${BACKUP_PATH}" \
+            --only-show-errors
+
+          echo "BACKUP_PATH=$BACKUP_PATH" >> "$GITHUB_ENV"
+
+          echo "Backup uploaded successfully."
+
+      - name: Verify uploaded backup
+        id: verify_upload
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "Verifying uploaded backup..."
+
+          REMOTE_SIZE=$(
+            aws \
+              --endpoint-url "$S3_ENDPOINT" \
+              s3api head-object \
+              --bucket "$S3_BUCKET" \
+              --key "$BACKUP_PATH" \
+              --query 'ContentLength' \
+              --output text
+          )
+
+          LOCAL_SIZE=$(stat -c%s "$BACKUP_FILE")
+
+          if [[ "$REMOTE_SIZE" != "$LOCAL_SIZE" ]]; then
+            echo "::error::Local and remote backup sizes do not match."
+            exit 1
+          fi
+
+          echo "Uploaded backup verified successfully."
+          echo "Size: $REMOTE_SIZE bytes"
+
+      - name: Delete backups older than 30 days
+        id: retention
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "Applying 30-day backup retention policy..."
+
+          CUTOFF=$(date -u -d '30 days ago' +"%Y-%m-%dT%H:%M:%SZ")
+
+          OBJECTS=$(
+            aws \
+              --endpoint-url "$S3_ENDPOINT" \
+              s3api list-objects-v2 \
+              --bucket "$S3_BUCKET" \
+              --prefix "postgresql/the-elite-glam/" \
+              --output json
+          )
+
+          DELETED=0
+
+          while IFS= read -r OBJECT; do
+            KEY=$(echo "$OBJECT" | jq -r '.Key')
+            LAST_MODIFIED=$(echo "$OBJECT" | jq -r '.LastModified')
+
+            if [[ "$LAST_MODIFIED" < "$CUTOFF" ]]; then
+              echo "Deleting expired backup: $KEY"
+
+              aws \
+                --endpoint-url "$S3_ENDPOINT" \
+                s3api delete-object \
+                --bucket "$S3_BUCKET" \
+                --key "$KEY"
+
+              DELETED=$((DELETED + 1))
+            fi
+          done < <(echo "$OBJECTS" | jq -c '.Contents[]?')
+
+          echo "Expired backups deleted: $DELETED"
+
+          echo "DELETED_BACKUPS=$DELETED" >> "$GITHUB_ENV"
+
+      - name: Backup summary
+        if: success()
+        run: |
+          {
+            echo "## Database Backup Successful"
+            echo ""
+            echo "- Database: Neon PostgreSQL"
+            echo "- Storage: Backblaze B2"
+            echo "- File: $BACKUP_FILENAME"
+            echo "- Location: $BACKUP_PATH"
+            echo "- Archive verification: Passed"
+            echo "- Restore test: Passed"
+            echo "- Upload verification: Passed"
+            echo "- Expired backups deleted: ${DELETED_BACKUPS:-0}"
+            echo "- Time: $(date -u)"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Notify failure by email
+        if: failure()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.BACKUP_NOTIFICATION_EMAIL }}
+          password: ${{ secrets.BACKUP_SMTP_APP_PASSWORD }}
+          subject: "FAILED: The Elite Glam Database Backup"
+          to: ${{ secrets.BACKUP_NOTIFICATION_EMAIL }}
+          from: "The Elite Glam Backup Monitor"
+          body: |
+            The Elite Glam daily Neon database backup has failed.
+
+            Repository: ${{ github.repository }}
+            Workflow: ${{ github.workflow }}
+            Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+            Please open the workflow run to identify the failed step
+            and investigate the error.
+
+      - name: Failure summary
+        if: failure()
+        run: |
+          {
+            echo "## Database Backup Failed"
+            echo ""
+            echo "The backup workflow failed."
+            echo ""
+            echo "Check the workflow logs for details."
+          } >> "$GITHUB_STEP_SUMMARY"
