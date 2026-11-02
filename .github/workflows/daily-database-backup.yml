@@ -46,9 +46,44 @@ jobs:
 
     steps:
       - name: Install PostgreSQL client and AWS CLI
+        shell: bash
         run: |
+          set -euo pipefail
+
+          echo "Updating Ubuntu package lists..."
+
           sudo apt-get update
-          sudo apt-get install -y postgresql-client awscli
+
+          echo "Installing PostgreSQL client and required utilities..."
+
+          sudo apt-get install -y \
+            postgresql-client \
+            curl \
+            unzip \
+            jq
+
+          echo "Downloading AWS CLI v2..."
+
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" \
+            -o "$RUNNER_TEMP/awscliv2.zip"
+
+          echo "Extracting AWS CLI installer..."
+
+          unzip -q "$RUNNER_TEMP/awscliv2.zip" \
+            -d "$RUNNER_TEMP"
+
+          echo "Installing AWS CLI..."
+
+          sudo "$RUNNER_TEMP/aws/install"
+
+          echo "Verifying installations..."
+
+          pg_dump --version
+          pg_restore --version
+          aws --version
+          jq --version
+
+          echo "All required tools installed successfully."
 
       - name: Verify required secrets
         shell: bash
