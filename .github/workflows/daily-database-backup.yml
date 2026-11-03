@@ -1,4 +1,3 @@
-
 name: Daily Neon Database Backup
 
 on:
@@ -45,7 +44,7 @@ jobs:
       S3_ENDPOINT: ${{ secrets.BACKBLAZE_ENDPOINT }}
 
     steps:
-      - name: Install PostgreSQL 18 client and AWS CLI
+      - name: Install AWS CLI and required utilities
         shell: bash
         run: |
           set -euo pipefail
@@ -56,34 +55,20 @@ jobs:
           echo "Installing required utilities..."
           sudo apt-get install -y curl unzip jq ca-certificates
 
-          echo "Adding the official PostgreSQL repository..."
-          sudo install -d /usr/share/postgresql-common/pgdg
-
-          curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc \
-            | sudo gpg --dearmor \
-            -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.gpg
-
-          echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.gpg] https://apt.postgresql.org/pub/repos/apt noble-pgdg main" \
-            | sudo tee /etc/apt/sources.list.d/pgdg.list
-
-          echo "Installing PostgreSQL 18 client..."
-          sudo apt-get update
-          sudo apt-get install -y postgresql-client-18
-
           echo "Downloading AWS CLI v2..."
-          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" \
+          curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" \
             -o "$RUNNER_TEMP/awscliv2.zip"
 
+          echo "Extracting AWS CLI installer..."
           unzip -q "$RUNNER_TEMP/awscliv2.zip" -d "$RUNNER_TEMP"
 
           echo "Installing or updating AWS CLI..."
           sudo "$RUNNER_TEMP/aws/install" --update
 
           echo "Verifying installations..."
-          /usr/lib/postgresql/18/bin/pg_dump --version
-          /usr/lib/postgresql/18/bin/pg_restore --version
           aws --version
           jq --version
+          docker --version
 
           echo "All required tools installed successfully."
 
@@ -106,6 +91,16 @@ jobs:
             fi
           done
 
+      - name: Normalize database connection string
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          DATABASE_URL="$(printf '%s' "$DATABASE_URL" | tr -d '\r\n')"
+
+          echo "::add-mask::$DATABASE_URL"
+          echo "DATABASE_URL=$DATABASE_URL" >> "$GITHUB_ENV"
+
       - name: Create PostgreSQL backup
         id: create_backup
         shell: bash
@@ -115,18 +110,24 @@ jobs:
           mkdir -p "$RUNNER_TEMP/database-backup"
 
           TIMESTAMP=$(date -u +"%Y-%m-%d_%H-%M-%S")
+          BACKUP_FILENAME="the-elite-glam-${TIMESTAMP}.dump"
+          BACKUP_FILE="$RUNNER_TEMP/database-backup/$BACKUP_FILENAME"
 
-          BACKUP_FILE="$RUNNER_TEMP/database-backup/the-elite-glam-${TIMESTAMP}.dump"
+          echo "Creating PostgreSQL 18 backup..."
 
-          echo "Creating PostgreSQL backup..."
-
-          /usr/lib/postgresql/18/bin/pg_dump \
-            --dbname="$DATABASE_URL" \
-            --format=custom \
-            --compress=6 \
-            --no-owner \
-            --no-acl \
-            --file="$BACKUP_FILE"
+          docker run --rm \
+            --network host \
+            -e DATABASE_URL \
+            -e BACKUP_FILENAME \
+            -v "$RUNNER_TEMP/database-backup:/backup" \
+            postgres:18 \
+            sh -c 'pg_dump \
+              --dbname="$DATABASE_URL" \
+              --format=custom \
+              --compress=6 \
+              --no-owner \
+              --no-acl \
+              --file="/backup/$BACKUP_FILENAME"'
 
           if [[ ! -s "$BACKUP_FILE" ]]; then
             echo "::error::Backup file is empty."
@@ -134,7 +135,7 @@ jobs:
           fi
 
           echo "BACKUP_FILE=$BACKUP_FILE" >> "$GITHUB_ENV"
-          echo "BACKUP_FILENAME=$(basename "$BACKUP_FILE")" >> "$GITHUB_ENV"
+          echo "BACKUP_FILENAME=$BACKUP_FILENAME" >> "$GITHUB_ENV"
 
           echo "Backup created successfully."
           ls -lh "$BACKUP_FILE"
@@ -147,7 +148,10 @@ jobs:
 
           echo "Checking PostgreSQL backup archive..."
 
-          /usr/lib/postgresql/18/bin/pg_restore --list "$BACKUP_FILE" > /dev/null
+          docker run --rm \
+            -v "$RUNNER_TEMP/database-backup:/backup" \
+            postgres:18 \
+            pg_restore --list "/backup/$BACKUP_FILENAME" > /dev/null
 
           echo "Backup archive is readable."
 
@@ -161,12 +165,18 @@ jobs:
 
           echo "Testing backup restoration..."
 
-          /usr/lib/postgresql/18/bin/pg_restore \
-            --dbname="$RESTORE_TEST_URL" \
-            --exit-on-error \
-            --no-owner \
-            --no-acl \
-            "$BACKUP_FILE"
+          docker run --rm \
+            --network host \
+            -e RESTORE_TEST_URL \
+            -e BACKUP_FILENAME \
+            -v "$RUNNER_TEMP/database-backup:/backup" \
+            postgres:18 \
+            sh -c 'pg_restore \
+              --dbname="$RESTORE_TEST_URL" \
+              --exit-on-error \
+              --no-owner \
+              --no-acl \
+              "/backup/$BACKUP_FILENAME"'
 
           echo "Backup restored successfully into temporary PostgreSQL."
 
@@ -278,8 +288,10 @@ jobs:
 
           echo "Expired backups deleted: $DELETED"
           echo "DELETED_BACKUPS=$DELETED" >> "$GITHUB_ENV"
+
       - name: Backup summary
         if: success()
+        shell: bash
         run: |
           {
             echo "## Database Backup Successful"
@@ -319,6 +331,7 @@ jobs:
 
       - name: Failure summary
         if: failure()
+        shell: bash
         run: |
           {
             echo "## Database Backup Failed"
