@@ -114,11 +114,12 @@ jobs:
           BACKUP_FILE="$RUNNER_TEMP/database-backup/$BACKUP_FILENAME"
 
           echo "Creating PostgreSQL 18 backup..."
+          echo "Backup filename: $BACKUP_FILENAME"
 
           docker run --rm \
             --network host \
-            -e DATABASE_URL \
-            -e BACKUP_FILENAME \
+            -e DATABASE_URL="$DATABASE_URL" \
+            -e BACKUP_FILENAME="$BACKUP_FILENAME" \
             -v "$RUNNER_TEMP/database-backup:/backup" \
             postgres:18 \
             sh -c 'pg_dump \
@@ -130,7 +131,7 @@ jobs:
               --file="/backup/$BACKUP_FILENAME"'
 
           if [[ ! -s "$BACKUP_FILE" ]]; then
-            echo "::error::Backup file is empty."
+            echo "::error::Backup file is empty or was not created."
             exit 1
           fi
 
