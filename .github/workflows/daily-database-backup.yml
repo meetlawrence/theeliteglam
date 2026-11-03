@@ -181,6 +181,15 @@ jobs:
 
           echo "Backup restored successfully into temporary PostgreSQL."
 
+      - name: Validate Backblaze endpoint
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ "$S3_ENDPOINT" != https://* && "$S3_ENDPOINT" != http://* ]]; then
+            echo "::error::BACKBLAZE_ENDPOINT must start with https:// or http://"
+            exit 1
+          fi
       - name: Upload backup to Backblaze B2
         id: upload_backup
         shell: bash
