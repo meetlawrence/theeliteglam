@@ -35,45 +35,30 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-    env:
-      DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.BACKBLAZE_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.BACKBLAZE_APPLICATION_KEY }}
-      AWS_DEFAULT_REGION: ${{ secrets.BACKBLAZE_REGION }}
-      S3_BUCKET: ${{ secrets.BACKBLAZE_BUCKET_NAME }}
-      S3_ENDPOINT: ${{ secrets.BACKBLAZE_ENDPOINT }}
-
     steps:
-      - name: Install AWS CLI and required utilities
+      - name: Verify required tools
         shell: bash
         run: |
           set -euo pipefail
 
-          echo "Updating Ubuntu package lists..."
-          sudo apt-get update
-
-          echo "Installing required utilities..."
-          sudo apt-get install -y curl unzip jq ca-certificates
-
-          echo "Downloading AWS CLI v2..."
-          curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" \
-            -o "$RUNNER_TEMP/awscliv2.zip"
-
-          echo "Extracting AWS CLI installer..."
-          unzip -q "$RUNNER_TEMP/awscliv2.zip" -d "$RUNNER_TEMP"
-
-          echo "Installing or updating AWS CLI..."
-          sudo "$RUNNER_TEMP/aws/install" --update
-
-          echo "Verifying installations..."
+          command -v aws
+          command -v jq
+          command -v docker
           aws --version
           jq --version
           docker --version
 
-          echo "All required tools installed successfully."
+          echo "All required tools are available."
 
       - name: Verify required secrets
         shell: bash
+        env:
+          DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.BACKBLAZE_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.BACKBLAZE_APPLICATION_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.BACKBLAZE_REGION }}
+          S3_BUCKET: ${{ secrets.BACKBLAZE_BUCKET_NAME }}
+          S3_ENDPOINT: ${{ secrets.BACKBLAZE_ENDPOINT }}
         run: |
           set -euo pipefail
 
@@ -91,21 +76,16 @@ jobs:
             fi
           done
 
-      - name: Normalize database connection string
+      - name: Create PostgreSQL backup
+        id: create_backup
         shell: bash
+        env:
+          DATABASE_URL: ${{ secrets.NEON_DATABASE_URL }}
         run: |
           set -euo pipefail
 
           DATABASE_URL="$(printf '%s' "$DATABASE_URL" | tr -d '\r\n')"
-
           echo "::add-mask::$DATABASE_URL"
-          echo "DATABASE_URL=$DATABASE_URL" >> "$GITHUB_ENV"
-
-      - name: Create PostgreSQL backup
-        id: create_backup
-        shell: bash
-        run: |
-          set -euo pipefail
 
           mkdir -p "$RUNNER_TEMP/database-backup"
 
@@ -181,9 +161,26 @@ jobs:
 
           echo "Backup restored successfully into temporary PostgreSQL."
 
+      - name: Validate Backblaze endpoint
+        shell: bash
+        env:
+          S3_ENDPOINT: ${{ secrets.BACKBLAZE_ENDPOINT }}
+        run: |
+          set -euo pipefail
+
+          if [[ "$S3_ENDPOINT" != https://* ]]; then
+            echo "::error::BACKBLAZE_ENDPOINT must start with https://"
+            exit 1
+          fi
       - name: Upload backup to Backblaze B2
         id: upload_backup
         shell: bash
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.BACKBLAZE_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.BACKBLAZE_APPLICATION_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.BACKBLAZE_REGION }}
+          S3_BUCKET: ${{ secrets.BACKBLAZE_BUCKET_NAME }}
+          S3_ENDPOINT: ${{ secrets.BACKBLAZE_ENDPOINT }}
         run: |
           set -euo pipefail
 
@@ -205,6 +202,12 @@ jobs:
       - name: Verify uploaded backup
         id: verify_upload
         shell: bash
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.BACKBLAZE_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.BACKBLAZE_APPLICATION_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.BACKBLAZE_REGION }}
+          S3_BUCKET: ${{ secrets.BACKBLAZE_BUCKET_NAME }}
+          S3_ENDPOINT: ${{ secrets.BACKBLAZE_ENDPOINT }}
         run: |
           set -euo pipefail
 
@@ -233,6 +236,12 @@ jobs:
       - name: Delete backups older than 30 days
         id: retention
         shell: bash
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.BACKBLAZE_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.BACKBLAZE_APPLICATION_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.BACKBLAZE_REGION }}
+          S3_BUCKET: ${{ secrets.BACKBLAZE_BUCKET_NAME }}
+          S3_ENDPOINT: ${{ secrets.BACKBLAZE_ENDPOINT }}
         run: |
           set -euo pipefail
 
@@ -310,7 +319,7 @@ jobs:
 
       - name: Notify failure by email
         if: failure()
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@4226df7daafa6fc901a43789c49bf7ab309066e7
         with:
           server_address: smtp.gmail.com
           server_port: 465
