@@ -38,7 +38,7 @@ export function AboutWinnersSection({ winners, runnersUp }: AboutWinnersSectionP
         </span>
       </h2>
       <p className="mb-14 max-w-130 font-['Playfair_Display',serif] text-[1rem] italic leading-[1.7] text-muted-foreground">
-        The inaugural crowns of The Elite Glam — awarded at the 2025 Grand Finale in Calabar.
+        The inaugural crowns of The EliteGlam — awarded at the 2025 Grand Finale in Calabar.
       </p>
 
       <div className="grid gap-8 lg:grid-cols-2">
@@ -82,7 +82,7 @@ function WinnerCard({ winner }: { winner: WinnerData }) {
       </div>
 
       <div className="p-7">
-        <div className="mb-1 font-['Raleway',sans-serif] text-[0.62rem] uppercase tracking-[0.35em] text-[#9A8C6A]">
+        <div className="mb-1 font-['Raleway',sans-serif] text-[0.62rem] text-[#9A8C6A]">
           {winner.state} · Age {winner.age}
         </div>
         <h3 className="mb-1 font-['Cinzel',serif] text-[1.2rem] leading-[1.15] tracking-[0.04em] text-[#F5EDD6]">

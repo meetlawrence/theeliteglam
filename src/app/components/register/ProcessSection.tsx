@@ -75,7 +75,7 @@ export function ProcessSection() {
           How It Works
         </h2>
         <p className="font-['Raleway',sans-serif] text-[0.88rem] text-[#9A8C6A] leading-[1.75] max-w-[700px] mb-20">
-          The application process is designed to be simple and straightforward. Follow the steps below to complete your application and join the elite community of The Elite Glam.
+          The application process is designed to be simple and straightforward. Follow the steps below to complete your application and join the elite community of The EliteGlam.
         </p>
     
         <div 

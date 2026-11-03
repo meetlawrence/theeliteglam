@@ -33,7 +33,7 @@ export function EventsHeadline() {
           The Return of
           <br />
           <span className="bg-[linear-gradient(135deg,#C9A84C,#F0C04A)] bg-clip-text text-transparent block">
-            The EliteGlam
+            The EliteGlam Pageant 2.0
           </span>
         </h2>
         <p className="font-raleway text-[0.97rem] text-muted-foreground leading-[1.85] mb-5">
@@ -46,9 +46,9 @@ export function EventsHeadline() {
         </p>
         <div className="flex flex-wrap gap-12">
           {[
-            { value: "Lagos", label: "Location" },
+            { value: "To be announced", label: "Host City" },
             { value: "May 2027", label: "Grand Finale" },
-            { value: "₦2M Each", label: "Worth of Prizes" },
+            { value: "₦12M Prize Pool", label: "Worth of Prizes" },
           ].map(({ value, label }) => (
             <div key={label}>
               <div className="font-cinzel text-[1.3rem] text-accent tracking-wider">{value}</div>

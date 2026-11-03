@@ -158,7 +158,7 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
             Begin Your Application
           </h2>
           <p className="font-['Playfair_Display',serif] text-[0.98rem] text-[#9A8C6A] italic leading-[1.75] mb-12">
-            A non-refundable registration fee of ₦25,000 is required to access the application form.
+            A non-refundable registration fee of ₦15,000 is required to access the application form.
             This helps us maintain the quality and integrity of the selection process.
           </p>
 
@@ -170,7 +170,7 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
                     Registration Fee
                   </div>
                   <div className="font-['Cinzel',serif] text-[2.4rem] text-[#F0C04A] tracking-[0.04em] leading-none">
-                    ₦25,000
+                    ₦15,000
                   </div>
                   <div className="font-['Raleway',sans-serif] text-[0.65rem] text-[#5A5040] tracking-[0.15em] uppercase mt-1.2">
                     one-time · non-refundable

@@ -39,28 +39,28 @@ export const VALUES = [
 
 export const FAQS = [
   {
-    q: "Who is eligible to participate in The Elite Glam?",
-    a: "The Elite Glam is open to male and female contestants aged 18–35 from any part of Nigeria or the Nigerian diaspora. We welcome all tribes, backgrounds, and body types.",
+    q: "Who is eligible to participate in The EliteGlam Pageant?",
+    a: "The EliteGlam Pageant is open to male and female contestants aged 18-40 from any part of Nigeria or the Nigerian diaspora. We welcome all tribes, backgrounds, and body types.",
   },
   {
     q: "How do I apply for the pageant?",
-    a: "Applications open on November 1, 2026 via our official website. You will be required to submit a profile, portfolio, and a personal statement. Virtual auditions follow in January 2027.",
+    a: "Applications open on November, 2026 via our official website. You will be required to submit a profile, portfolio, and a personal statement. Virtual auditions follow in Februrary 2027.",
   },
   {
     q: "What are the prizes for winners?",
-    a: "Each of the two winners (male and female) receives a cash prize of ₦2,000,000, a brand endorsement package, a modelling contract, and an ambassador role with The Elite Glam for one year.",
+    a: "Prize pool worth ₦12million. Winners will receive an exciting prize pool, valued at ₦12,000,000, featuring brand endorsements packages, modelling contract, and two years ambassadorship with The EliteGlam, alongside other prizes and opportunities to elevate their careers.",
   },
   {
     q: "Where will the Grand Finale be held?",
-    a: "The Grand Finale of Season 2 will be held in Lagos, Nigeria in May 2027. The exact venue and date will be announced to registered contestants and the public closer to the event.",
+    a: "The host city, venue and date will be announced to the registered contestants and the public subsequently.",
   },
   {
     q: "How can my brand become a sponsor?",
     a: "We offer a range of partnership tiers from Title Sponsor to Gift Partners. Please use the 'Partner With Us' button on the homepage or email us directly at info@theeliteglam.com.",
   },
   {
-    q: "Is The Elite Glam affiliated with international pageant organisations?",
-    a: "Yes. The Elite Glam is endorsed by and maintains partnerships with leading international pageant bodies including Miss Universe, Miss World, Mister Universe, and Mister World organisations.",
+    q: "Is The EliteGlam affiliated with international pageant organisations?",
+    a: "Yes. The EliteGlam is endorsed by and maintains partnerships with leading international pageant bodies including; Miss Continental World, Miss Friendship International, Mister Continental World, Mister Friendship International, Mister Grand International, and Mr. Universe.",
   },
 ];
 
@@ -80,8 +80,8 @@ export const MISSION_VISION_CARDS = [
 export const WINNERS = [
   {
     name: "Osele Iromachukwu",
-    title: "Miss EliteGlam 2025",
-    state: "",
+    title: "Miss EliteGlam 2025 (Winner)",
+    state: "Miss Continental World Nigeria",
     age: "28",
     occupation: "Medical Scientist",
     advocacy: "Pulse Global",
@@ -91,8 +91,8 @@ export const WINNERS = [
   
   {
     name: "Umana Sambo",
-    title: "Mister EliteGlam 2025",
-    state: "",
+    title: "Mister EliteGlam 2025 (Winner)",
+    state: "Mister Continental World Nigeria",
     age: "35",
     occupation: "Department of Tourism Officer",
     advocacy: "Youth Tech Empowerment",
@@ -105,14 +105,14 @@ export const RUNNERS_UP = [
   
   {
     name: "Emmanuel Oliver",
-    title: "Mr.Universe",
+    title: "Mr.Universe 2026",
     state: "",
     occupation: "Civil Engineer & Footwear Artisan",
     image: "maiden/oliver.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",
   },
   {
     name: "Benard Williams",
-    title: "Mister Grand",
+    title: "Mister Grand International 2026",
     state: "",
     occupation: "Medical Laboratory Scientist",
     image: "maiden/bernard.webp?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=900&q=80",

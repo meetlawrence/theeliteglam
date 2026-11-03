@@ -6,7 +6,7 @@ export const ELIGIBILITY = [
   {
     n: "01",
     title: "Age",
-    body: "You must be between 18 and 35 years old at the time of the Grand Finale (30 May 2027).",
+    body: "You must be between 18 to 40 years old at the time of the Grand Finale (30 May 2027).",
   },
   {
     n: "02",
@@ -16,7 +16,7 @@ export const ELIGIBILITY = [
   {
     n: "03",
     title: "Gender",
-    body: "Both male and female contestants are welcome. Two crowns are awarded — one for each category.",
+    body: "Both male and female contestants are welcome. ",
   },
   {
     n: "04",
@@ -34,17 +34,17 @@ export const PROCESS = [
   {
     step: "02",
     label: "Profile Review",
-    desc: "Our panel reviews every submission. Shortlisted applicants are notified by email within 4 weeks.",
+    desc: "Our panel reviews every submission. Shortlisted applicants are notified by email.",
   },
   {
     step: "03",
     label: "Virtual Audition",
-    desc: "Shortlisted contestants attend a virtual audition in December 2026 via video call.",
+    desc: "Shortlisted contestants attend a virtual audition.",
   },
   {
     step: "04",
     label: "Grand Finale",
-    desc: "Selected finalists compete live at Eko Hotel & Suites, Lagos on 30 May 2027.",
+    desc: "Selected finalists will compete live at the Grand Finale, 2027.",
   },
 ];
 
