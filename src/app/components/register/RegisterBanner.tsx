@@ -47,7 +47,7 @@ export function RegisterBanner() {
         <h1 className="font-['Cinzel',serif] text-[clamp(2.4rem,6vw,5rem)] text-[#F5EDD6] tracking-[0.06em] leading-[1.05] mb-5 max-w-[700px]">
           Apply for{" "}
           <span className="bg-gradient-to-br from-[#C9A84C] to-[#F0C04A] bg-clip-text text-transparent">
-            The Elite Glam
+            The EliteGlam Pageant
           </span>
         </h1>
         <p className="font-['Playfair_Display',serif] text-[1.1rem] text-[#9A8C6A] italic max-w-[500px] leading-[1.7]">

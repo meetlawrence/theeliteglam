@@ -14,28 +14,28 @@ type TimelineStep = {
 
 const TIMELINE: TimelineStep[] = [
   {
-    date: "November 1, 2026",
-    title: "Registration Opens",
-    desc: "Contestants submit their profiles, portfolios, and personal statements.",
+    date: "November, 2026",
+    title: "Registrations",
+    desc: "Contestants submit their profiles, portfolios, and personal statements. Registration closes on January, 2027.",
     icon: "01",
     tag: null,
   },
   {
-    date: "February 1, 2027",
+    date: "February, 2027",
     title: "Auditions",
     desc: "Auditions open to contestants across the globe. Showcase your talent, poise, and personality from anywhere.",
     icon: "02",
     tag: null,
   },
   {
-    date: "May 28, 2027",
+    date: "May, 2027",
     title: "Preliminary",
     desc: "Qualified contestants compete in talent, evening wear, and interview rounds.",
     icon: "03",
     tag: null,
   },
   {
-    date: "May 30, 2027",
+    date: "May, 2027",
     title: "Grand Finale",
     desc: "One stage. Two crowns. A lifetime of opportunities.",
     icon: "04",
@@ -43,7 +43,7 @@ const TIMELINE: TimelineStep[] = [
   },
 ];
 
-const STATS = [{ label: "2 Winners", value: "₦2M Cash Prize (Each)", icon: "★" }];
+const STATS = [{ label: "Prize Pool Worth", value: "₦12M ", icon: "★" }];
 
 interface SearchBeginsSectionProps {
   eventStatus: {
@@ -97,10 +97,10 @@ export function SearchBeginsSection({ eventStatus }: SearchBeginsSectionProps) {
               <div className="text-[#C9A84C] mb-2 flex justify-center text-[1.2rem]">
                 {stat.icon}
               </div>
-              <div className="font-raleway text-[0.72rem] text-muted-foreground tracking-[0.2em] uppercase mt-2">
+              <div className="font-raleway text-[0.72rem] text-muted-foreground tracking-[0.2em] uppercase mt-2 mb-4">
                 {stat.label}
               </div>
-              <div className="font-cinzel text-[2rem] text-accent tracking-wider leading-none">
+              <div className="font-cinzel text-[5rem] text-accent tracking-wider leading-none">
                 {stat.value}
               </div>
 

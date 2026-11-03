@@ -33,7 +33,7 @@ export function EventsItinerary() {
       <div className="max-w-[1300px] mx-auto">
         <SectionLabel text="Event Itinerary" />
         <h2 className="font-cinzel text-[clamp(1.6rem,3.5vw,2.8rem)] text-[#F5EDD6] tracking-[0.06em] mt-4 mb-12">
-          Four Days of Excellence
+          Five Days of Excellence
         </h2>
 
         <div className="flex flex-wrap border-b border-[rgba(201,168,76,0.15)] mb-12">

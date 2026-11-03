@@ -60,7 +60,7 @@ export const NIGERIA_PILLARS = [
   {
     heading: "Celebrating Diversity",
     body: "From the Yoruba south-west to the Hausa north, Nigeria's mosaic of cultures is our greatest strength.",
-    image: "/images/img2.webp",
+    image: "https://res.cloudinary.com/fnrrqppt/image/upload/v1793724180/ben-iwara-D2ss6utOdPU-unsplash.webp",
   },
   {
     heading: "Championing Inclusivity",
@@ -77,7 +77,7 @@ export const NIGERIA_PILLARS = [
 export const ITINERARY = [
   {
     day: "Day 01",
-    date: "May 17, 2027",
+    date: "",
     title: "Arrival & Welcome Reception",
     events: [
       { time: "10:00 AM", name: "Contestant Check-In & Accreditation" },
@@ -87,7 +87,7 @@ export const ITINERARY = [
   },
   {
     day: "Day 02",
-    date: "May 18, 2027",
+    date: "",
     title: "Training & Media Activities",
     events: [
       { time: "6:00 AM", name: "Morning Fitness" },
@@ -98,22 +98,34 @@ export const ITINERARY = [
   },
   {
     day: "Day 03",
-    date: "May 19, 2027",
-    title: "Preliminary Competition",
+    date: "",
+    title: "Head-to-Head Challenge",
     events: [
       { time: "6:00 AM", name: "Morning Fitness" },
-      { time: "10:00 AM", name: "Advocacy Presentations" },
+      { time: "10:00 AM", name: "Advocacy / head-to-head challenge" },
       { time: "4:00 PM", name: "Talent Showcase" },
-      { time: "7:00 PM", name: "Q&A with Judges (Live Stream)" },
+      { time: "7:00 PM", name: "Q&A with Judges (closed door interview)" },
     ],
   },
   {
-    day: "Day 04",
-    date: "May 20, 2027",
+    day : "Day 04",
+    date: "",
+    title: "Preliminary Competition",
+    events: [
+      { time: "", name: "National Costume & Cultural Presentations" },
+      { time: "", name: "Swim wear / Body confidence Round" },
+      { time: "", name: "Runway Challenge" },
+      { time: "", name: "Evening Wear Presentations" },
+
+    ],
+  },
+  {
+    day: "Day 05",
+    date: "",
     title: "Grand Finale & Coronation Night",
     events: [
-      { time: "4:00 PM", name: "Red Carpet Arrival" },
-      { time: "6:30 PM", name: "Grand Finale Show (Main Stage)" },
+      { time: "4:00 PM", name: "Red Carpet Arrival Interview" },
+      { time: "6:30 PM", name: "Grand Finale Competition" },
       { time: "9:00 PM", name: "Coronation & Prize Presentation" },
     ],
   },
