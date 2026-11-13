@@ -242,7 +242,7 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
                     value={name}
                     onChange={setName}
                     required
-                    placeholder="Amaka Adeyinka"
+                    placeholder="Firstname Lastname"
                   />
                   <FormField
                     label="Email "
@@ -250,7 +250,7 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
                     value={email}
                     onChange={setEmail}
                     required
-                    placeholder="you@email.com"
+                    placeholder="@email.com"
                   />
                   <FormField
                     label="Phone Number"
@@ -258,7 +258,7 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
                     value={phoneNumber}
                     onChange={setPhoneNumber}
                     required
-                    placeholder="+234 801 234 5678"
+                    placeholder="+234 000 0000 000"
                   />
 
                   {error && (
@@ -275,7 +275,7 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
                     disabled={isSubmitting}
                     className="mt-4 w-full py-4.5 bg-gradient-to-br from-[#C9A84C] to-[#8B6914] border-none text-[#080808] font-['Cinzel',serif] text-[0.82rem] tracking-[0.22em] uppercase cursor-pointer flex items-center justify-center gap-2 disabled:cursor-wait disabled:opacity-60"
                   >
-                    {isSubmitting ? "Connecting to Paystack..." : "Proceed to Pay ₦25,000"}
+                    {isSubmitting ? "Connecting to Paystack..." : "Proceed to Pay ₦15,000"}
                   </button>
                 </div>
 
