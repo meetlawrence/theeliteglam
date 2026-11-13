@@ -28,24 +28,25 @@ export const ELIGIBILITY = [
 export const PROCESS = [
   {
     step: "01",
-    label: "Pay & Register",
-    desc: "Complete your registration fee payment and fill out the official application form.",
+    label: "Registration Fee",
+    desc: "Complete your registration fee payment, and remain on the page.",
   },
   {
     step: "02",
-    label: "Profile Review",
-    desc: "Our panel reviews every submission. Shortlisted applicants are notified by email.",
+    label: "Application Form",
+    desc: "You will be automatically redirected to the official application form. Please enter all required fields and submit.",
   },
   {
     step: "03",
-    label: "Virtual Audition",
-    desc: "Shortlisted contestants attend a virtual audition.",
+    label: "Audition",
+    desc: "Shortlisted contestants will be contacted for auditions",
   },
   {
     step: "04",
     label: "Grand Finale",
     desc: "Selected finalists will compete live at the Grand Finale, 2027.",
   },
+  
 ];
 
 export const STATES = [
