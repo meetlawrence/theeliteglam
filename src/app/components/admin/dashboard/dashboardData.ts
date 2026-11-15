@@ -1,17 +1,8 @@
 import type {
   ActivityItem,
   RevenuePoint,
-  StatSummary,
   TaskItem,
 } from "@/app/components/admin/AdminDashboardTypes";
-
-export const stats: StatSummary[] = [
-  { label: "Ticket Sales", value: "84.2K", change: "+12.4%", trend: "up" },
-  { label: "Total Applicants", value: "328", change: "+8.1%", trend: "up" },
-  { label: "Pending Reviews", value: "18", change: "-6.3%", trend: "down" },
-  { label: "Total Votes", value: "200k", change: "+3.2%", trend: "up" },
-  { label: "Revenue", value: "$192.4K", change: "+4.9%", trend: "up" },
-];
 
 export const revenueData: RevenuePoint[] = [
   { label: "Week 1", value: 22750 },

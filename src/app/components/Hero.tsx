@@ -48,7 +48,9 @@ export function HeroSection({ onNavigate, eventStatus }: HeroSectionProps) {
         </div>        
 
         <h1 className="mt-6 mb-4 flex flex-col items-center font-cinzel uppercase tracking-[0.3em] text-[#F5EDD6] opacity-0 animate-[fadeInUp_1s_ease-out_0.3s_forwards] leading-[1.1]">
-          <span className="text-[clamp(1rem,2vw,1.4rem)] tracking-[0.5em] text-[#9A8C6A] font-light">The</span>
+          <span className="text-[clamp(1rem,2vw,1.4rem)] tracking-[0.5em] text-[#9A8C6A] font-light">
+            The
+          </span>
           <span className="text-[clamp(2.2rem,5vw,4rem)] font-bold text-[#F0C04A] drop-shadow-[0_0_25px_rgba(201,168,76,0.2)] my-1">
             EliteGlam
           </span>
@@ -57,20 +59,36 @@ export function HeroSection({ onNavigate, eventStatus }: HeroSectionProps) {
           </span>
         </h1>
 
-        <p className="my-6 font-playfair italic text-lg text-muted-foreground leading-relaxed opacity-0 animate-[fadeInUp_1s_ease-out_0.45s_forwards]">
-          Where Beauty Meets Purpose
-        </p>
+        <div className="mt-6 mb-6 space-y-1 font-playfair italic text-lg text-muted-foreground leading-relaxed opacity-0 animate-[fadeInUp_1s_ease-out_0.45s_forwards]">
+          <p>Celebrating Excellence</p>
+          <p>Redefining Beauty Standards</p>
+        </div>
 
         {/* CTA Buttons */}
         <div className="flex flex-wrap justify-center gap-4 opacity-0 animate-[fadeInUp_1s_ease-out_0.6s_forwards]">
           {isTicketsOpen && (
-            <CTA icon={<Ticket size={16} />} label="Get Tickets" variant="primary" onClick={() => handleNavigate("tickets")} />
+            <CTA
+              icon={<Ticket size={16} />}
+              label="Get Tickets"
+              variant="primary"
+              onClick={() => handleNavigate("tickets")}
+            />
           )}
           {isRegistrationOpen && (
-            <CTA icon={<UserPlus size={16} />} label="Register Now" variant="ghost" onClick={() => handleNavigate("register")} />
+            <CTA
+              icon={<UserPlus size={16} />}
+              label="Register Now"
+              variant="ghost"
+              onClick={() => handleNavigate("register")}
+            />
           )}
           {isVotingOpen && (
-            <CTA icon={<Star size={16} />} label="Vote Now" variant="accent" onClick={() => handleNavigate("contestants")} />
+            <CTA
+              icon={<Star size={16} />}
+              label="Vote Now"
+              variant="accent"
+              onClick={() => handleNavigate("contestants")}
+            />
           )}
         </div>
       </div>
