@@ -18,11 +18,13 @@ function RegistrationFormContent() {
   const [access, setAccess] = useState<{
     reference: string;
     state: RegistrationAccessState;
+    eventId: string;
     errorTitle: string;
     errorMessage: string;
   }>({
     reference: "",
     state: "loading",
+    eventId: "",
     errorTitle: "Access Restricted",
     errorMessage: "",
   });
@@ -61,6 +63,7 @@ function RegistrationFormContent() {
           setAccess({
             reference,
             state: response.status >= 500 ? "error" : "denied",
+            eventId: "",
             errorTitle:
               response.status === 404
                 ? "Unverified Reference"
@@ -82,6 +85,7 @@ function RegistrationFormContent() {
         setAccess({
           reference,
           state: "allowed",
+          eventId: "",
           errorTitle: "Access Restricted",
           errorMessage: "",
         });
@@ -92,6 +96,7 @@ function RegistrationFormContent() {
         setAccess({
           reference,
           state: "error",
+          eventId: "",
           errorTitle: "System Error",
           errorMessage:
             error instanceof Error
@@ -108,7 +113,7 @@ function RegistrationFormContent() {
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-[#F5EDD6] flex items-center justify-center p-6">
       {accessState === "allowed" ? (
-        <ApplicationForm reference={reference} />
+        <ApplicationForm reference={reference} eventId={access.eventId} />
       ) : (
         <div className="max-w-[520px] w-full bg-[#121212] border border-[#C9A84C]/20 p-8 sm:p-10 text-center relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#C9A84C] to-transparent" />
