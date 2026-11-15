@@ -148,7 +148,7 @@ export function RegistrationContent({ eventId }: RegistrationContentProps) {
   return (
     <div id="apply" ref={ref} className="max-w-[760px] mx-auto pt-24 pb-32 px-8">
       {paid ? (
-        <ApplicationForm reference={paymentReference} />
+        <ApplicationForm reference={paymentReference} eventId={eventId} />
       ) : (
         <div
           className={`transition-all duration-1000 ease-out ${inView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
