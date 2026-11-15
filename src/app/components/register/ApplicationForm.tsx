@@ -9,6 +9,11 @@ import { STATES, TRIBES } from "./constants";
 
 type ContestantCategory = "MALE" | "FEMALE";
 
+interface ApplicationFormProps {
+  reference: string;
+  eventId: string;
+}
+
 interface CountryOption {
   name: string;
   code: string;
@@ -78,7 +83,7 @@ function isValidUrl(value: string) {
   }
 }
 
-export function ApplicationForm({ reference }: { reference: string }) {
+export function ApplicationForm({ reference, eventId }: ApplicationFormProps) {
   const [formData, setFormData] = useState<ApplicationFormData>(initialFormData);
   const [submitted, setSubmitted] = useState(false);
   const [section, setSection] = useState(0);
@@ -728,6 +733,7 @@ export function ApplicationForm({ reference }: { reference: string }) {
 
       const payload = {
         reference,
+        eventId,
         name: formData.name.trim(),
         email: formData.email.trim(),
         gender: formData.gender,
