@@ -8,7 +8,7 @@ import Link from "next/link";
 
 type RegistrationAccessState = "loading" | "allowed" | "denied" | "error";
 
-function RegistrationFormContent() {
+function RegistrationFormContent({ defaultEventId }: { defaultEventId: string }) {
   const searchParams = useSearchParams();
   const reference = (
     searchParams.get("reference") ||
@@ -24,7 +24,7 @@ function RegistrationFormContent() {
   }>({
     reference: "",
     state: "loading",
-    eventId: "",
+    eventId: defaultEventId,
     errorTitle: "Access Restricted",
     errorMessage: "",
   });
@@ -63,7 +63,7 @@ function RegistrationFormContent() {
           setAccess({
             reference,
             state: response.status >= 500 ? "error" : "denied",
-            eventId: "",
+            eventId: defaultEventId,
             errorTitle:
               response.status === 404
                 ? "Unverified Reference"
@@ -85,7 +85,7 @@ function RegistrationFormContent() {
         setAccess({
           reference,
           state: "allowed",
-          eventId: "",
+          eventId: defaultEventId,
           errorTitle: "Access Restricted",
           errorMessage: "",
         });
@@ -96,7 +96,7 @@ function RegistrationFormContent() {
         setAccess({
           reference,
           state: "error",
-          eventId: "",
+          eventId: defaultEventId,
           errorTitle: "System Error",
           errorMessage:
             error instanceof Error
@@ -108,7 +108,7 @@ function RegistrationFormContent() {
 
     void checkRegistrationAccess();
     return () => controller.abort();
-  }, [reference]);
+  }, [reference, defaultEventId]);
 
   return (
     <main className="min-h-screen bg-[#0A0A0A] text-[#F5EDD6] flex items-center justify-center p-6">
@@ -172,7 +172,11 @@ function RegistrationFormContent() {
   );
 }
 
-export default function RegistrationFormClient() {
+export default function RegistrationFormClient({
+  defaultEventId = "",
+}: {
+  defaultEventId?: string;
+}) {
   return (
     <Suspense
       fallback={
@@ -183,7 +187,7 @@ export default function RegistrationFormClient() {
         </main>
       }
     >
-      <RegistrationFormContent />
+      <RegistrationFormContent defaultEventId={defaultEventId} />
     </Suspense>
   );
 }
