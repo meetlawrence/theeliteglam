@@ -5,13 +5,18 @@ import { DashboardHeader } from "@/app/components/admin/dashboard/DashboardOverv
 import { DashboardStats } from "@/app/components/admin/dashboard/DashboardStats";
 import { DashboardMainGrid } from "@/app/components/admin/dashboard/DashboardMainGrid";
 import type { Contestant } from "@/app/components/admin/AdminDashboardTypes";
-import { stats } from "@/app/components/admin/dashboard/dashboardData";
 
 type ContestantsResponse = {
   success?: boolean;
   message?: string;
   data?: unknown;
 };
+
+interface DashboardMetrics {
+  revenue: number;
+  tickets: number;
+  votes: number;
+}
 
 function isContestant(value: unknown): value is Contestant {
   if (!value || typeof value !== "object") return false;
@@ -30,7 +35,15 @@ function isContestant(value: unknown): value is Contestant {
   );
 }
 
-export function OverviewView({ user }: { user?: { name?: string; role?: string } }) {
+export function OverviewView({
+  user,
+  metrics,
+  metricsError,
+}: {
+  user?: { name?: string; role?: string };
+  metrics: DashboardMetrics | null;
+  metricsError: string;
+}) {
   const [contestants, setContestants] = useState<Contestant[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
@@ -72,18 +85,18 @@ export function OverviewView({ user }: { user?: { name?: string; role?: string }
     };
   }, []);
 
-  const overviewStats = stats.map((stat) =>
-    stat.label === "Total Applicants"
-      ? { ...stat, value: String(contestants.length) }
-      : stat,
-  );
-
   return (
     <div className="space-y-6">
       <DashboardHeader user={user} />
 
       <section className="">
-        <DashboardStats stats={overviewStats} contestants={contestants} />
+        <DashboardStats
+          contestants={contestants}
+          isLoading={isLoading}
+          hasError={Boolean(loadError)}
+          metrics={metrics}
+          metricsError={metricsError}
+        />
       </section>
       <DashboardMainGrid
         contestants={contestants}

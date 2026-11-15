@@ -19,11 +19,11 @@ const menuItems = [
   { name: "Tickets", icon: Ticket, param: "tickets" },
 ];
 
-const managementItems = [{ name: "Settings", icon: Settings, param: "settings" }];
+const managementItems = [{ name: "Management", icon: Settings, param: "settings" }];
 
 export function AdminSidebar({ links, mobile = false, onClose }: AdminSidebarProps) {
   const searchParams = useSearchParams();
-  const currentSection = searchParams.get("section") || "overview";
+  const currentSection = searchParams.get("section") || "Event Management";
 
   return (
     <aside

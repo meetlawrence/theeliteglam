@@ -1,84 +1,111 @@
 import type { LucideIcon } from "lucide-react";
-import { DollarSign, Users, FileText, Eye, BarChart3, Ticket } from "lucide-react";
-import type { StatSummary, Contestant } from "@/app/components/admin/AdminDashboardTypes";
+import { Users, FileText, Eye, Ticket, BarChart3, Banknote } from "lucide-react";
+import type { Contestant } from "@/app/components/admin/AdminDashboardTypes";
+
+interface DashboardMetrics {
+  revenue: number;
+  tickets: number;
+  votes: number;
+}
 
 interface AdminStatCardProps {
   label: string;
   value: string;
-  badge?: string;
-  icon?: LucideIcon | null;
-  badgeColor?: "green" | "gold" | "neutral";
+  icon: LucideIcon;
 }
 
-export function AdminStatCard({
-  label,
-  value,
-  icon: Icon,
-  badgeColor = "neutral",
-}: AdminStatCardProps) {
+export function AdminStatCard({ label, value, icon: Icon }: AdminStatCardProps) {
   return (
     <div className="relative overflow-hidden border border-[#1a170e] bg-[#080808] p-4">
-      {/* Top Section: Icon & Badge */}
       <div className="flex justify-between items-start mb-3">
-        {Icon ? <Icon className="w-5 h-5 text-[#C9A84C]" /> : <div className="w-5 h-5" />}
+        <Icon className="w-5 h-5 text-[#C9A84C]" />
       </div>
-
-      {/* Main Stats */}
+      
       <div className="relative z-10">
         <p className="text-[0.55rem] uppercase tracking-[0.2em] text-[#9A8C6A] mb-0.5">{label}</p>
         <h3 className="text-2xl font-serif text-[#F5EDD6]">{value}</h3>
       </div>
 
-      {/* Background Watermark Icon (Absolute Positioned) */}
-      {Icon && <Icon className="absolute -bottom-3 -right-3 w-16 h-16 text-[#0d0d0d] opacity-50" />}
+      <Icon className="absolute -bottom-3 -right-3 w-16 h-16 text-[#0d0d0d] opacity-50" />
     </div>
   );
 }
 
 interface DashboardStatsProps {
-  stats: StatSummary[];
   contestants: Contestant[];
+  isLoading: boolean;
+  hasError: boolean;
+  metrics: DashboardMetrics | null;
+  metricsError: string;
 }
 
-export function DashboardStats({ stats, contestants }: DashboardStatsProps) {
-  const iconFor = (label: string): LucideIcon | null => {
-    const l = label.toLowerCase();
-    if (l.includes("ticket")) return Ticket;
-    if (l.includes("sales") || l.includes("revenue")) return DollarSign;
-    if (l.includes("applicant") || l.includes("applicants") || l.includes("users")) return Users;
-    if (l.includes("pending") || l.includes("review")) return FileText;
-    if (l.includes("votes") || l.includes("voters")) return BarChart3;
-
-    return null;
-  };
-
-  const processedStats = stats.map((stat) => {
-    const l = stat.label.toLowerCase();
-    if (l.includes("pending") || l.includes("review")) {
-      const pendingCount = contestants.filter(
-        (contestant) => contestant.status.toUpperCase() === "PENDING",
-      ).length;
-
-      return {
-        ...stat,
-        value: pendingCount.toString(),
-      };
-    }
-    return stat;
-  });
+export function DashboardStats({
+  contestants,
+  isLoading,
+  hasError,
+  metrics,
+  metricsError,
+}: DashboardStatsProps) {
+  const unavailableValue = isLoading ? "…" : "—";
+  const stats = [
+    {
+      label: "Total Applicants",
+      value: isLoading || hasError ? unavailableValue : String(contestants.length),
+      icon: Users,
+    },
+    {
+      label: "Pending Reviews",
+      value: isLoading || hasError
+        ? unavailableValue
+        : String(contestants.filter((contestant) => contestant.status.toUpperCase() === "PENDING").length),
+      icon: FileText,
+    },
+    {
+      label: "Approved Contestants",
+      value: isLoading || hasError
+        ? unavailableValue
+        : String(contestants.filter((contestant) => contestant.status.toUpperCase() === "ACTIVE").length),
+      icon: Eye,
+    },
+    {
+      label: "Revenue",
+      value: metrics ? new Intl.NumberFormat("en-NG", {
+        style: "currency",
+        currency: "NGN",
+        maximumFractionDigits: 0,
+      }).format(metrics.revenue) : "—",
+      icon: Banknote,
+    },
+    {
+      label: "Tickets Sold",
+      value: metrics ? String(metrics.tickets) : "—",
+      icon: Ticket,
+    },
+    {
+      label: "Total Votes",
+      value: metrics ? String(metrics.votes) : "—",
+      icon: BarChart3,
+    },
+  ];
 
   return (
-    <div className="mt-10 mb-12 grid gap-6 grid-cols-2 lg:grid-cols-5 items-center justify-center">
-      {processedStats.map((s) => (
-        <AdminStatCard
-          key={s.label}
-          label={s.label}
-          value={s.value}
-          badge={s.change}
-          icon={iconFor(s.label)}
-        />
-      ))}
-    </div>
+    <>
+      <div className="mt-10 mb-12 grid gap-6 grid-cols-2 lg:grid-cols-3 items-center justify-center">
+        {stats.map((stat) => (
+          <AdminStatCard
+            key={stat.label}
+            label={stat.label}
+            value={stat.value}
+            icon={stat.icon}
+          />
+        ))}
+      </div>
+      {metricsError ? (
+        <p role="alert" className="mb-6 text-sm text-red-400">
+          {metricsError}
+        </p>
+      ) : null}
+    </>
   );
 }
 

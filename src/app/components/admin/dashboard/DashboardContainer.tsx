@@ -7,7 +7,23 @@ import { FinancialsView } from "@/app/components/admin/dashboard/views/Financial
 import { TicketsView } from "@/app/components/admin/dashboard/views/TicketsView";
 import { SettingsView } from "@/app/components/admin/dashboard/views/SettingsView";
 
-export function DashboardContainer({ user }: { user?: { name?: string; role?: string } }) {
+interface DashboardMetrics {
+  revenue: number;
+  tickets: number;
+  votes: number;
+}
+
+interface DashboardContainerProps {
+  user?: { name?: string; role?: string };
+  metrics: DashboardMetrics | null;
+  metricsError: string;
+}
+
+export function DashboardContainer({
+  user,
+  metrics,
+  metricsError,
+}: DashboardContainerProps) {
   const searchParams = useSearchParams();
   const section = searchParams.get("section") || "overview";
 
@@ -23,7 +39,13 @@ export function DashboardContainer({ user }: { user?: { name?: string; role?: st
         return <SettingsView />;
       case "overview":
       default:
-        return <OverviewView user={user} />;
+        return (
+          <OverviewView
+            user={user}
+            metrics={metrics}
+            metricsError={metricsError}
+          />
+        );
     }
   };
 
