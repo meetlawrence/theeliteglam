@@ -19,7 +19,7 @@ export const createContestantSchema = z.object({
   funFact: z.string().min(2, "Fun fact is required"),
   tribe: z.string().min(2, "Tribe is required"),
   contestantCategories: z.enum(["MALE", "FEMALE"]),
-  eventId: z.string().cuid("Invalid event ID"),
+  eventId: z.string().min(1, "Invalid event ID"),
   reference: z.string().min(2),
   paymentTransactionId: z.string().min(2),
 });
@@ -44,7 +44,7 @@ export const updateContestantSchema = z.object({
   score: z.number().int().nonnegative("Score must be non-negative").optional(),
   rank: z.number().int().positive("Rank must be positive").optional(),
   contestantCategories: z.enum(["MALE", "FEMALE"]).optional(),
-  eventId: z.string().cuid("Invalid event ID").optional(),
+  eventId: z.string().min(1, "Invalid event ID").optional(),
   status: z.enum(["ACTIVE", "INACTIVE"]).optional(),
 });
 
