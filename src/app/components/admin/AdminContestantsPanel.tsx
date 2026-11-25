@@ -7,7 +7,6 @@ import AdminContestantFilters from "./AdminContestantFilters";
 import AdminContestantPieChart from "./AdminContestantPieChart";
 import AdminContestantCategorySection from "./AdminContestantCategorySection";
 import AdminContestantOtherSection from "./AdminContestantOtherSection";
-import AdminContestantModal from "./AdminContestantModal";
 import type { Contestant } from "@/app/components/contestant/types";
 
 export default function AdminContestantsPanel() {
@@ -153,20 +152,6 @@ export default function AdminContestantsPanel() {
           }}
         />
       </div>
-
-      <AdminContestantModal
-        open={modalOpen}
-        contestant={active}
-        status={active ? statusMap[active.id] : undefined}
-        onClose={() => setModalOpen(false)}
-        onSave={handleSave}
-        onDelete={(id) => {
-          handleEliminate(id);
-          setModalOpen(false);
-        }}
-        onMarkFinalist={(id) => handleMarkFinalist(id)}
-        onRestore={(id) => handleRestore(id)}
-      />
     </div>
   );
 }

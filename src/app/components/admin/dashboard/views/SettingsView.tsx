@@ -363,7 +363,7 @@ export function SettingsView() {
           Administrator Directory
         </h3>
 
-        <div className="bg-[#0A0A0A]">
+        <div className="bg-[#0A0A0A] rounded-lg">
           <div className="hidden grid-cols-12 border-b border-[#1E1E1E] bg-[#0E0E0E] px-6 py-3 text-[0.85rem] font-medium uppercase text-[#6E6656] md:grid">
             <div className="col-span-5">Administrator</div>
             <div className="col-span-3">Status</div>
@@ -442,7 +442,7 @@ export function SettingsView() {
                         disabled={
                           isCurrentUser || currentUserRole !== "SUPER_ADMIN" || isBusy
                         }
-                        className="h-8 border border-[#262626] bg-[#111111] px-2.5 text-xs text-[#E5DEC9] transition focus:border-[#C9A84C]/50 focus:outline-none disabled:cursor-not-allowed disabled:opacity-40"
+                        className="h-8 border border-[#262626] bg-[#111111] px-2.5 text-xs text-[#E5DEC9] transition focus:border-[#C9A84C]/50 focus:outline-none disabled:cursor-not-allowed disabled:opacity-40 "
                       >
                         <option value="ADMIN">Admin</option>
                         <option value="SUPER_ADMIN">Super Admin</option>

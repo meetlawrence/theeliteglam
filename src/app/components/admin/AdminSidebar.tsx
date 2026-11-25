@@ -88,7 +88,6 @@ export function AdminSidebar({ links, mobile = false, onClose }: AdminSidebarPro
       </div>
 
       <div className="mt-12 px-6">
-        <div className="text-[0.6rem] tracking-[0.25em] text-[#444] mb-4 uppercase">Management</div>
         {managementItems.map((item) => {
           const isActive = currentSection === item.param;
           const Icon = item.icon;
