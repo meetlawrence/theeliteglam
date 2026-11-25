@@ -44,15 +44,13 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
     : "Admin";
 
   return (
-    <section className="border border-[#1a170e] bg-[#080808] p-5 shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <h1 className="font-cinzel text-3xl text-cream tracking-widest leading-tight mb-1">
-            Welcome back, {profile.name || "Admin"}!
-          </h1>
-          <div className="text-[#C9A84C]">{formattedRole}</div>
-        </div>
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+      <div>
+        <h1 className="font-cinzel text-[#F5EDD6] text-2xl text-cream tracking-normal leading-tight mb-1">
+          Welcome back, {profile.name || "Admin"}!
+        </h1>
+        <div className="text-[#C9A84C]">{formattedRole}</div>
       </div>
-    </section>
+    </div>
   );
 }

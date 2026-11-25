@@ -691,11 +691,11 @@ export function ApplicationForm({ reference, eventId }: ApplicationFormProps) {
             )}
           </div>
           <FormField
-            label="Portfolio URL (optional)"
+            label="Social handle (optional)"
             type="url"
             value={formData.portfolio}
             onChange={(value) => set("portfolio", value)}
-            placeholder="https://example.com/portfolio"
+            placeholder="https://instagram.com/me"
             error={errors.portfolio}
           />
         </div>

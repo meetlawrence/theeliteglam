@@ -16,13 +16,13 @@ interface AdminStatCardProps {
 
 export function AdminStatCard({ label, value, icon: Icon }: AdminStatCardProps) {
   return (
-    <div className="relative overflow-hidden border border-[#1a170e] bg-[#080808] p-4">
+    <div className="flex flex-col justify-between rounded-xl bg-[#0D0D0D] p-5 shadow-lg transition-colors hover:border-[#2a2a2a]">
       <div className="flex justify-between items-start mb-3">
         <Icon className="w-5 h-5 text-[#C9A84C]" />
       </div>
       
       <div className="relative z-10">
-        <p className="text-[0.55rem] uppercase tracking-[0.2em] text-[#9A8C6A] mb-0.5">{label}</p>
+        <p className="font-raleway text-[0.9rem] leading-[1.7] text-muted-foreground">{label}</p>
         <h3 className="text-2xl font-serif text-[#F5EDD6]">{value}</h3>
       </div>
 

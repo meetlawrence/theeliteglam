@@ -75,8 +75,8 @@ export default function AdminAuthPage() {
               title={isCreateMode ? "Create Account" : "Admin Login"}
               description={
                 isCreateMode
-                  ? "Create your admin account to securely access the dashboard."
-                  : "Please enter your credentials to access the dashboard."
+                  ? "Create an account to access the dashboard"
+                  : "Please enter your credentials to login"
               }
             />
           </div>
@@ -183,7 +183,7 @@ export default function AdminAuthPage() {
               </p>
             ) : null}
 
-            <button className="w-full bg-[#C9A84C] py-3 text-sm font-bold uppercase tracking-[0.2em] text-[#080808] transition-all duration-300 ease-out hover:bg-accent">
+            <button className="w-full bg-[#C9A84C] rounded py-3 text-sm font-bold uppercase tracking-[0.2em] text-[#080808] transition-all duration-300 ease-out hover:bg-accent">
               {isCreateMode ? "Create Account" : "Sign In"}
             </button>
           </form>

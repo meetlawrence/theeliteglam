@@ -13,10 +13,34 @@ interface AdminContestantEditorModalProps {
   onContestantUpdated?: (contestant: Contestant) => void;
 }
 
-const inputClass =
-  "w-full bg-[#0D0D0D] border border-[rgba(201,168,76,0.2)] px-3.5 py-2.5 text-[#F5EDD6] text-xs outline-none focus:border-[#C9A84C] transition-colors";
-const labelClass =
-  "text-[#9A8C6A] block text-[10px] uppercase tracking-wider mb-1 font-raleway";
+const fieldClass =
+  "w-full rounded bg-[#141414] px-3 py-2 text-base sm:text-sm text-[#F5EDD6] outline-none ring-1 ring-white/10 focus:ring-2 focus:ring-[#C9A84C]";
+const labelClass = "mb-1.5 block text-xs text-neutral-400";
+
+function cmToFeetInches(cm: number | null | undefined): {
+  feet: string;
+  inches: string;
+} {
+  if (!cm || cm <= 0) return { feet: "", inches: "" };
+  const totalInches = Math.round(cm / 2.54);
+  const feet = Math.floor(totalInches / 12);
+  const inches = totalInches % 12;
+  return { feet: String(feet), inches: String(inches) };
+}
+
+function feetInchesToCm(feetStr: string, inchesStr: string): number | null {
+  const hasFeet = feetStr.trim() !== "";
+  const hasInches = inchesStr.trim() !== "";
+  if (!hasFeet && !hasInches) return null;
+
+  const feet = hasFeet ? Math.max(0, Number(feetStr)) : 0;
+  const inches = hasInches ? Math.max(0, Number(inchesStr)) : 0;
+  if (Number.isNaN(feet) || Number.isNaN(inches)) return null;
+
+  const totalInches = feet * 12 + inches;
+  if (totalInches <= 0) return null;
+  return Math.round(totalInches * 2.54);
+}
 
 function toDraft(contestant: Contestant): ContestantDraft {
   return {
@@ -49,6 +73,8 @@ export function AdminContestantEditorModal({
 }: AdminContestantEditorModalProps) {
   const [contestant, setContestant] = useState<Contestant | null>(null);
   const [draft, setDraft] = useState<ContestantDraft | null>(null);
+  const [heightFeet, setHeightFeet] = useState("");
+  const [heightInches, setHeightInches] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
@@ -64,6 +90,8 @@ export function AdminContestantEditorModal({
       setIsLoading(true);
       setContestant(null);
       setDraft(null);
+      setHeightFeet("");
+      setHeightInches("");
       setError("");
       setNotice("");
 
@@ -74,14 +102,15 @@ export function AdminContestantEditorModal({
         );
         const result = await response.json();
         if (!response.ok || !result.success || !result.data) {
-          throw new Error(
-            result.message || "Contestant record not found.",
-          );
+          throw new Error(result.message || "Contestant record not found.");
         }
 
         const record = result.data as Contestant;
+        const { feet, inches } = cmToFeetInches(record.height);
         setContestant(record);
         setDraft(toDraft(record));
+        setHeightFeet(feet);
+        setHeightInches(inches);
       } catch (loadError) {
         if (loadError instanceof DOMException && loadError.name === "AbortError")
           return;
@@ -125,16 +154,17 @@ export function AdminContestantEditorModal({
       );
       const result = await response.json();
       if (!response.ok || !result.success || !result.data) {
-        throw new Error(
-          result.message || "Unable to save contestant changes.",
-        );
+        throw new Error(result.message || "Unable to save contestant changes.");
       }
 
       const updated = result.data as Contestant;
+      const { feet, inches } = cmToFeetInches(updated.height);
       setContestant(updated);
       setDraft(toDraft(updated));
+      setHeightFeet(feet);
+      setHeightInches(inches);
       onContestantUpdated?.(updated);
-      setNotice("Contestant details saved.");
+      setNotice("Saved.");
     } catch (saveError) {
       setError(
         saveError instanceof Error
@@ -217,9 +247,15 @@ export function AdminContestantEditorModal({
     value: ContestantDraft[K],
   ) => setDraft((current) => (current ? { ...current, [field]: value } : current));
 
-  const textField = (
+  const handleHeightChange = (nextFeet: string, nextInches: string) => {
+    setHeightFeet(nextFeet);
+    setHeightInches(nextInches);
+    setField("height", feetInchesToCm(nextFeet, nextInches));
+  };
+
+  const renderInput = (
     label: string,
-    field: keyof ContestantDraft,
+    field: Exclude<keyof ContestantDraft, "height">,
     type = "text",
   ) => (
     <label className="block" key={field}>
@@ -229,7 +265,7 @@ export function AdminContestantEditorModal({
         value={String(draft?.[field] ?? "")}
         onChange={(event) => {
           const value = event.target.value;
-          if (field === "age" || field === "height" || field === "weight") {
+          if (field === "age" || field === "weight") {
             setField(
               field,
               (value ? Number(value) : null) as ContestantDraft[typeof field],
@@ -238,26 +274,29 @@ export function AdminContestantEditorModal({
             setField(field, value as ContestantDraft[typeof field]);
           }
         }}
-        className={inputClass}
+        className={fieldClass}
       />
     </label>
   );
 
-  const textArea = (label: string, field: "advocacy" | "funFact" | "bio") => (
+  const renderTextarea = (
+    label: string,
+    field: "advocacy" | "funFact" | "bio",
+  ) => (
     <label className="block" key={field}>
       <span className={labelClass}>{label}</span>
       <textarea
         rows={3}
         value={draft?.[field] ?? ""}
         onChange={(event) => setField(field, event.target.value)}
-        className={inputClass}
+        className={`${fieldClass} resize-y`}
       />
     </label>
   );
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-3 sm:p-6"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/75 p-4"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget && !isSaving && !isUploadingImage)
           onClose();
@@ -267,167 +306,166 @@ export function AdminContestantEditorModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="contestant-editor-title"
-        className="max-h-[94vh] w-full max-w-4xl overflow-y-auto border border-[rgba(201,168,76,0.35)] bg-[#161616] p-5 text-[#F5EDD6] shadow-2xl sm:p-8"
+        className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-lg bg-[#0E0E0E] p-6 text-[#F5EDD6] ring-1 ring-white/10"
       >
-        <header className="mb-6 flex items-center justify-between gap-4 border-b border-[rgba(201,168,76,0.2)] pb-4">
-          <div className="flex items-center gap-4">
+        <div className="mb-6 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
             {draft?.image ? (
               <img
                 src={draft.image}
-                alt=""
-                className="h-14 w-14 rounded-full border border-[#C9A84C] object-cover object-top"
+                alt={draft.name}
+                className="h-11 w-11 rounded-full object-cover object-top"
               />
             ) : (
-              <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[#C9A84C] bg-[rgba(201,168,76,0.08)] font-cinzel text-xl text-[#C9A84C]">
+              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white/5 text-sm text-[#C9A84C]">
                 {draft?.name.charAt(0).toUpperCase() ?? "?"}
               </div>
             )}
-            <div>
-              <span className="block font-cinzel text-[0.65rem] uppercase tracking-widest text-[#C9A84C]">
-                Contestant Profile
-              </span>
-              <h2 id="contestant-editor-title" className="font-cinzel text-xl">
-                {draft?.name || "Edit contestant"}
-              </h2>
-            </div>
           </div>
-          <button
-            type="button"
-            aria-label="Close contestant editor"
-            onClick={onClose}
-            disabled={isSaving || isUploadingImage}
-            className="border border-[rgba(201,168,76,0.2)] px-3 py-2 text-xs text-[#C9A84C] disabled:opacity-50"
-          >
-            Close
-          </button>
-        </header>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => imageInputRef.current?.click()}
+              disabled={isSaving || isUploadingImage}
+              className="rounded px-3 py-1.5 text-xs text-neutral-300 ring-1 ring-white/15 hover:bg-white/5 disabled:opacity-50"
+            >
+              {isUploadingImage ? "Uploading..." : "Change Photo"}
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              disabled={isSaving || isUploadingImage}
+              className="rounded px-3 py-1.5 text-xs text-neutral-400 hover:bg-white/5 hover:text-white disabled:opacity-50"
+            >
+              Close
+            </button>
+            <input
+              ref={imageInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              onChange={handleImageUpload}
+              className="hidden"
+            />
+          </div>
+        </div>
 
         {isLoading ? (
-          <p className="py-12 text-center font-raleway text-sm text-[#C4B896]">
-            Loading contestant profile...
+          <p className="py-12 text-center text-sm text-neutral-400">
+            Loading...
           </p>
         ) : draft ? (
-          <div className="space-y-6">
-            <section>
-              <h3 className="mb-3 border-b border-[rgba(201,168,76,0.15)] pb-1 font-cinzel text-xs uppercase tracking-widest text-[#C9A84C]">
-                Personal &amp; Demographic Details
-              </h3>
-              <div className="grid grid-cols-1 gap-4 font-raleway text-xs sm:grid-cols-2 lg:grid-cols-3">
-                {textField("Full Name", "name")}
-                {textField("Stage Name", "stageName")}
-                {textField("Email Address", "email", "email")}
-                {textField("Phone Number", "phone", "tel")}
-                {textField("Age", "age", "number")}
-                {textField("State", "state")}
-                {textField("Country", "country")}
-                {textField("Tribe", "tribe")}
-                {textField("Occupation", "occupation")}
-                {textField("Height (cm)", "height", "number")}
-                {textField("Weight (kg)", "weight", "number")}
-                {textField("Portfolio URL", "portfolio", "url")}
-                {(["gender", "contestantCategories"] as const).map((field) => (
-                  <label className="block" key={field}>
-                    <span className={labelClass}>
-                      {field === "gender" ? "Gender" : "Contestant Category"}
-                    </span>
-                    <select
-                      value={draft[field]}
-                      onChange={(event) =>
-                        setField(field, event.target.value)
-                      }
-                      className={inputClass}
-                    >
-                      <option value="MALE">Male</option>
-                      <option value="FEMALE">Female</option>
-                    </select>
-                  </label>
-                ))}
-              </div>
-            </section>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+              {renderInput("Full Name", "name")}
+              {renderInput("Stage Name", "stageName")}
+              {renderInput("Email", "email", "email")}
+              {renderInput("Phone", "phone", "tel")}
+              {renderInput("Age", "age", "number")}
+              {renderInput("State", "state")}
+              {renderInput("Country", "country")}
+              {renderInput("Tribe", "tribe")}
+              {renderInput("Occupation", "occupation")}
 
-            <section>
-              <h3 className="mb-3 border-b border-[rgba(201,168,76,0.15)] pb-1 font-cinzel text-xs uppercase tracking-widest text-[#C9A84C]">
-                Profile Media
-              </h3>
-              <div className="flex flex-col justify-between gap-4 border border-[rgba(201,168,76,0.15)] bg-[#171717] p-4 sm:flex-row sm:items-center">
-                <p className="font-raleway text-[11px] text-[#9A8C6A]">
-                  Upload a JPG, PNG or WebP image (max 5 MB).
-                </p>
-                <button
-                  type="button"
-                  onClick={() => imageInputRef.current?.click()}
-                  disabled={isSaving || isUploadingImage}
-                  className="border border-[rgba(201,168,76,0.4)] px-4 py-2.5 text-xs uppercase tracking-wider text-[#C9A84C] disabled:opacity-50"
+              <div className="block">
+                <span className={labelClass}>Height (ft / in)</span>
+                <div className="grid grid-cols-2 gap-2">
+                  <input
+                    type="number"
+                    min={0}
+                    max={9}
+                    placeholder="ft"
+                    aria-label="Height in feet"
+                    value={heightFeet}
+                    onChange={(event) =>
+                      handleHeightChange(event.target.value, heightInches)
+                    }
+                    className={fieldClass}
+                  />
+                  <input
+                    type="number"
+                    min={0}
+                    max={11}
+                    placeholder="in"
+                    aria-label="Height in inches"
+                    value={heightInches}
+                    onChange={(event) =>
+                      handleHeightChange(heightFeet, event.target.value)
+                    }
+                    className={fieldClass}
+                  />
+                </div>
+              </div>
+
+              {renderInput("Weight (kg)", "weight", "number")}
+              {renderInput("Social Handle", "portfolio", "url")}
+
+              <label className="block">
+                <span className={labelClass}>Gender</span>
+                <select
+                  value={draft.gender}
+                  onChange={(event) => setField("gender", event.target.value)}
+                  className={fieldClass}
                 >
-                  {isUploadingImage ? "Uploading..." : "Upload New Image"}
-                </button>
-                <input
-                  ref={imageInputRef}
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp"
-                  onChange={handleImageUpload}
-                  className="hidden"
-                />
-              </div>
-            </section>
+                  <option value="MALE">Male</option>
+                  <option value="FEMALE">Female</option>
+                </select>
+              </label>
+            </div>
 
-            <section>
-              <h3 className="mb-3 border-b border-[rgba(201,168,76,0.15)] pb-1 font-cinzel text-xs uppercase tracking-widest text-[#C9A84C]">
-                Statements &amp; Background
-              </h3>
-              <div className="space-y-4">
-                {textArea("Advocacy Statement", "advocacy")}
-                {textArea("Fun Fact", "funFact")}
-                {textArea("Biography", "bio")}
-              </div>
-            </section>
+            {renderTextarea("Advocacy", "advocacy")}
+            {renderTextarea("Fun Fact", "funFact")}
+            {renderTextarea("Bio", "bio")}
           </div>
         ) : (
-          <p role="alert" className="py-8 text-center font-raleway text-sm text-red-400">
+          <p role="alert" className="py-8 text-center text-sm text-red-400">
             {error || "Unable to load contestant."}
           </p>
         )}
 
         {error && draft && (
-          <p role="alert" className="mt-5 border border-red-900/50 bg-red-950/40 p-3.5 font-raleway text-xs text-red-400">
+          <p role="alert" className="mt-4 text-xs text-red-400">
             {error}
           </p>
         )}
         {notice && (
-          <p role="status" className="mt-5 border border-emerald-900/50 bg-emerald-950/30 p-3.5 font-raleway text-xs text-emerald-400">
+          <p role="status" className="mt-4 text-xs text-emerald-400">
             {notice}
           </p>
         )}
 
         {draft && contestant && (
-          <footer className="mt-6 flex flex-col-reverse justify-between gap-3 border-t border-[rgba(201,168,76,0.2)] pt-4 sm:flex-row sm:items-center">
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/10">
             <button
               type="button"
               onClick={() => void updateContestant({ status: "INACTIVE" })}
               disabled={isSaving || isUploadingImage}
-              className="w-full border border-red-900/50 bg-red-950/30 px-4 py-2.5 font-raleway text-xs uppercase tracking-wider text-red-400 disabled:opacity-50 sm:w-auto"
+              className="rounded px-3.5 py-2 text-xs text-red-400 hover:bg-red-950/40 disabled:opacity-50"
             >
-              {isSaving ? "Saving..." : "Decline / Inactive"}
+              Set Inactive
             </button>
-            <div className="flex flex-col gap-3 sm:flex-row">
+
+            <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => void updateContestant(buildUpdate())}
                 disabled={isSaving || isUploadingImage}
-                className="w-full border border-[rgba(201,168,76,0.4)] px-4 py-2.5 font-raleway text-xs uppercase tracking-wider text-[#F5EDD6] disabled:opacity-50 sm:w-auto"
+                className="rounded px-4 py-2 text-xs text-[#F5EDD6] ring-1 ring-white/15 hover:bg-white/5 disabled:opacity-50"
               >
-                {isSaving ? "Saving..." : "Save Changes"}
+                {isSaving ? "Saving..." : "Save"}
               </button>
               <button
                 type="button"
                 onClick={() => void updateContestant(buildUpdate("ACTIVE"))}
-                disabled={isSaving || isUploadingImage || contestant.status === "ACTIVE"}
-                className="w-full border border-[#C9A84C] bg-[#C9A84C] px-5 py-2.5 font-raleway text-xs font-medium uppercase tracking-wider text-[#101010] disabled:opacity-50 sm:w-auto"
+                disabled={
+                  isSaving || isUploadingImage || contestant.status === "ACTIVE"
+                }
+                className="rounded bg-[#C9A84C] px-4 py-2 text-xs font-medium text-black hover:opacity-90 disabled:opacity-50"
               >
                 {contestant.status === "ACTIVE" ? "Approved" : "Approve"}
               </button>
             </div>
-          </footer>
+          </div>
         )}
       </section>
     </div>

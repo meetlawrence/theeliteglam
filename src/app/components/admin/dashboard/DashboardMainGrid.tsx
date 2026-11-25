@@ -58,27 +58,24 @@ export function DashboardMainGrid({
   return (
     <>
       <section className="grid gap-6 w-full">
-        <div className="bg-[#131313] border border-[rgba(201,168,76,0.18)] p-4 sm:p-6 rounded-none relative overflow-hidden flex flex-col">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-[rgba(201,168,76,0.12)]">
+        <div className="bg-[#131313] p-4 sm:p-6 rounded relative overflow-hidden flex flex-col">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-[rgba(201,168,76,0.12)]">
           <div>
-            <span className="font-cinzel text-[0.65rem] text-[#C9A84C] uppercase block mb-1">
+            <span className="font-serif text-[0.65rem] text-[#C9A84C] uppercase block mb-1">
               Records
             </span>
             <h2 className="font-cinzel text-lg sm:text-xl text-[#F5EDD6]">
               Registered Contestants Directory
             </h2>
           </div>
-          <span className="self-start sm:self-auto font-raleway text-xs text-[#C4B896] bg-[rgba(201,168,76,0.08)] border border-[rgba(201,168,76,0.2)] px-3 py-1">
-            Total: {contestants.length}
-          </span>
         </div>
 
         <div className="overflow-x-auto w-full flex-1 -mx-4 sm:mx-0 px-4 sm:px-0">
           <table className="w-full text-left border-collapse min-w-[320px]">
             <thead>
               <tr className="border-b border-[rgba(201,168,76,0.15)] font-raleway text-[0.68rem] tracking-[0.2em] sm:tracking-[0.25em] text-[#C9A84C] uppercase">
-                <th className="py-3 px-3 sm:px-4">Contestant</th>
-                <th className="py-3 px-3 sm:px-4">Gender</th>
+                <th className="py-3 px-3 sm:px-4">Name</th>
+                <th className="py-3 px-3 sm:px-4">Category</th>
                 <th className="py-3 px-3 sm:px-4">Status</th>
               </tr>
             </thead>
